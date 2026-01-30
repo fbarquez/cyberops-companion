@@ -1,0 +1,126 @@
+[
+  {
+    "id": "48fc344b-3917-48e6-bc8c-92fe03ba9b2d",
+    "title": "Test: Ransomware Response Improvement",
+    "description": "Testing the Lessons Learned Database functionality",
+    "category": "technical",
+    "priority": "high",
+    "status": "open",
+    "incident_type": "ransomware",
+    "incident_id": null,
+    "incident_date": null,
+    "created_at": "2026-01-28T18:56:28.538439",
+    "updated_at": "2026-01-28T18:56:28.538442",
+    "created_by": "Test User",
+    "what_happened": "Ransomware encrypted critical files on workstations",
+    "what_worked": "Quick network isolation prevented lateral movement",
+    "what_failed": "Backup restoration process took 12 hours",
+    "root_cause": "Outdated backup infrastructure and missing automation",
+    "recommendations": [
+      "Upgrade backup to cloud-based solution",
+      "Implement automated backup testing",
+      "Create runbook for fast recovery"
+    ],
+    "action_items": [],
+    "tags": [
+      "ransomware",
+      "backup",
+      "recovery",
+      "test"
+    ],
+    "affected_systems": [],
+    "metrics": {}
+  },
+  {
+    "id": "5cd49bbc-2402-4226-b33e-4ce793a73914",
+    "title": "Phishing Detection Gap",
+    "description": "Users clicked on phishing links despite training",
+    "category": "training",
+    "priority": "critical",
+    "status": "in_progress",
+    "incident_type": "phishing",
+    "incident_id": null,
+    "incident_date": "2024-01-15",
+    "created_at": "2026-01-28T18:56:53.040575",
+    "updated_at": "2026-01-28T18:56:53.040578",
+    "created_by": "Security Team",
+    "what_happened": "5 users clicked phishing links leading to credential theft",
+    "what_worked": "Security team detected within 2 hours",
+    "what_failed": "User awareness training was insufficient",
+    "root_cause": "Training materials were outdated",
+    "recommendations": [
+      "Update phishing simulations",
+      "Monthly awareness training"
+    ],
+    "action_items": [],
+    "tags": [
+      "phishing",
+      "training",
+      "users"
+    ],
+    "affected_systems": [],
+    "metrics": {}
+  },
+  {
+    "id": "7080f147-e19b-4e8c-962d-3dc9ebbb1d07",
+    "title": "DDoS Mitigation Success",
+    "description": "Successfully mitigated DDoS attack using WAF",
+    "category": "response",
+    "priority": "medium",
+    "status": "implemented",
+    "incident_type": "ddos",
+    "incident_id": null,
+    "incident_date": "2024-02-20",
+    "created_at": "2026-01-28T18:56:53.040595",
+    "updated_at": "2026-01-28T18:56:53.040596",
+    "created_by": "NOC Team",
+    "what_happened": "Volumetric DDoS attack targeting web servers",
+    "what_worked": "WAF rules blocked 99% of malicious traffic",
+    "what_failed": "Initial response was slow due to lack of runbook",
+    "root_cause": "Missing automated DDoS detection alerts",
+    "recommendations": [
+      "Implement auto-scaling",
+      "Create DDoS runbook"
+    ],
+    "action_items": [],
+    "tags": [
+      "ddos",
+      "waf",
+      "mitigation"
+    ],
+    "affected_systems": [],
+    "metrics": {}
+  },
+  {
+    "id": "90cebe70-71ba-4b73-a848-1b8b9dfe00b5",
+    "title": "Insider Data Exfiltration",
+    "description": "Employee exfiltrated customer data before resignation",
+    "category": "detection",
+    "priority": "critical",
+    "status": "open",
+    "incident_type": "insider",
+    "incident_id": null,
+    "incident_date": "2024-03-10",
+    "created_at": "2026-01-28T18:56:53.040610",
+    "updated_at": "2026-01-28T18:56:53.040610",
+    "created_by": "IR Team",
+    "what_happened": "Employee copied 50GB of customer data to USB",
+    "what_worked": "DLP detected the transfer after the fact",
+    "what_failed": "No real-time blocking was configured",
+    "root_cause": "DLP was in monitor-only mode",
+    "recommendations": [
+      "Enable DLP blocking mode",
+      "Review offboarding process",
+      "Implement USB restrictions"
+    ],
+    "action_items": [],
+    "tags": [
+      "insider",
+      "dlp",
+      "data-loss",
+      "usb"
+    ],
+    "affected_systems": [],
+    "metrics": {}
+  }
+]

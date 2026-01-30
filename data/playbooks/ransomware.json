@@ -1,0 +1,199 @@
+{
+  "playbook_id": "ransomware",
+  "name": "Ransomware Incident Response Playbook",
+  "version": "1.0.0",
+  "description": "Standardized playbook for ransomware incident response based on NIST SP 800-61",
+  "created_at": "2024-01-01",
+  "phases": [
+    {
+      "id": "phase_detection",
+      "phase": "detection",
+      "name": "Detection & Triage",
+      "short_name": "Detection",
+      "description": "Initial detection and triage of the potential ransomware incident.",
+      "objective": "Confirm the incident, gather initial indicators, and initiate response.",
+      "key_questions": [
+        "What triggered this alert/report?",
+        "What systems are potentially affected?",
+        "Is this a confirmed ransomware incident?",
+        "Is the system still running?"
+      ],
+      "critical_reminders": [
+        "Do NOT power off affected systems - volatile evidence will be lost",
+        "Do NOT attempt to decrypt files",
+        "Do NOT pay the ransom without proper authorization",
+        "Document everything from the start"
+      ],
+      "common_mistakes": [
+        "Powering off systems before memory capture",
+        "Attempting to run antivirus without capturing evidence first",
+        "Not documenting the initial state"
+      ],
+      "forensic_considerations": [
+        "Preserve system state for memory forensics",
+        "Screenshot any visible ransom notes",
+        "Document file extensions of encrypted files"
+      ],
+      "icon": "🔍",
+      "order": 0
+    },
+    {
+      "id": "phase_analysis",
+      "phase": "analysis",
+      "name": "Analysis & Scoping",
+      "short_name": "Analysis",
+      "description": "Analyze the scope and impact of the ransomware incident.",
+      "objective": "Determine the full scope of compromise before containment actions.",
+      "key_questions": [
+        "What ransomware variant is this?",
+        "How did the attacker gain initial access?",
+        "What is the lateral movement scope?",
+        "Has data been exfiltrated?"
+      ],
+      "critical_reminders": [
+        "Capture volatile evidence (memory) BEFORE network isolation",
+        "Check for scheduled tasks and persistence mechanisms",
+        "Review authentication logs for compromised accounts"
+      ],
+      "common_mistakes": [
+        "Starting containment before understanding scope",
+        "Missing lateral movement indicators",
+        "Not checking for data exfiltration"
+      ],
+      "forensic_considerations": [
+        "Memory capture is highest priority",
+        "Preserve network traffic logs",
+        "Document all IOCs found"
+      ],
+      "icon": "🔬",
+      "order": 1
+    },
+    {
+      "id": "phase_containment",
+      "phase": "containment",
+      "name": "Containment",
+      "short_name": "Contain",
+      "description": "Contain the incident to prevent further damage.",
+      "objective": "Stop the spread while preserving evidence for analysis.",
+      "key_questions": [
+        "Are all affected systems identified?",
+        "Is network isolation complete?",
+        "Are compromised credentials disabled?",
+        "Is the attacker still active?"
+      ],
+      "critical_reminders": [
+        "Network isolation first, then consider shutdown if needed",
+        "Keep systems powered on if possible",
+        "Block known malicious IPs/domains",
+        "Disable compromised accounts immediately"
+      ],
+      "common_mistakes": [
+        "Shutting down systems before evidence collection",
+        "Incomplete network isolation",
+        "Not disabling compromised credentials"
+      ],
+      "forensic_considerations": [
+        "Create forensic disk images before remediation",
+        "Document all containment actions with timestamps",
+        "Preserve logs before they rotate"
+      ],
+      "icon": "🛡️",
+      "order": 2
+    },
+    {
+      "id": "phase_eradication",
+      "phase": "eradication",
+      "name": "Eradication",
+      "short_name": "Eradicate",
+      "description": "Remove the threat from the environment.",
+      "objective": "Eliminate all traces of the ransomware and attacker access.",
+      "key_questions": [
+        "Are all persistence mechanisms identified?",
+        "Have all compromised credentials been reset?",
+        "Is the initial attack vector closed?",
+        "Are all affected systems cleaned?"
+      ],
+      "critical_reminders": [
+        "Identify ALL persistence mechanisms before removal",
+        "Reset passwords for ALL potentially compromised accounts",
+        "Patch the vulnerability that allowed initial access"
+      ],
+      "common_mistakes": [
+        "Missing persistence mechanisms",
+        "Not resetting service account credentials",
+        "Leaving the initial attack vector open"
+      ],
+      "forensic_considerations": [
+        "Document all removed artifacts",
+        "Keep copies of malware samples (secure storage)",
+        "Record IOCs for threat intelligence"
+      ],
+      "icon": "🧹",
+      "order": 3
+    },
+    {
+      "id": "phase_recovery",
+      "phase": "recovery",
+      "name": "Recovery",
+      "short_name": "Recover",
+      "description": "Restore systems and return to normal operations.",
+      "objective": "Safely restore systems with enhanced monitoring for reinfection.",
+      "key_questions": [
+        "Are clean backups available?",
+        "Is the restoration process validated?",
+        "Is enhanced monitoring in place?",
+        "Are users aware of the incident?"
+      ],
+      "critical_reminders": [
+        "Verify backup integrity before restoration",
+        "Apply security patches before reconnecting",
+        "Enable enhanced monitoring and logging",
+        "Restore in phases, not all at once"
+      ],
+      "common_mistakes": [
+        "Restoring from infected backups",
+        "Not patching before reconnection",
+        "Insufficient monitoring during recovery"
+      ],
+      "forensic_considerations": [
+        "Monitor for signs of reinfection",
+        "Keep forensic copies separate from recovery",
+        "Document the recovery process"
+      ],
+      "icon": "🔄",
+      "order": 4
+    },
+    {
+      "id": "phase_post_incident",
+      "phase": "post_incident",
+      "name": "Post-Incident Review",
+      "short_name": "Review",
+      "description": "Review the incident and capture lessons learned.",
+      "objective": "Document findings, improve processes, and formally close the incident.",
+      "key_questions": [
+        "What was the root cause?",
+        "What could have been detected earlier?",
+        "What processes need improvement?",
+        "Are all documentation requirements met?"
+      ],
+      "critical_reminders": [
+        "Complete all documentation while details are fresh",
+        "Include all stakeholders in the review",
+        "Focus on process improvement, not blame",
+        "Update playbooks based on lessons learned"
+      ],
+      "common_mistakes": [
+        "Skipping the post-incident review",
+        "Not documenting lessons learned",
+        "Failing to update security controls"
+      ],
+      "forensic_considerations": [
+        "Finalize evidence chain documentation",
+        "Archive all evidence according to retention policy",
+        "Prepare materials for potential legal proceedings"
+      ],
+      "icon": "📝",
+      "order": 5
+    }
+  ]
+}

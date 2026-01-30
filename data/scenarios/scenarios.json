@@ -1,0 +1,141 @@
+{
+  "version": "1.0.0",
+  "description": "Training scenarios for IR Companion ransomware simulation",
+  "scenarios": [
+    {
+      "id": "corporate_workstation",
+      "name": "Corporate Workstation Ransomware",
+      "description": "A typical ransomware incident on a corporate workstation - ideal for beginners",
+      "difficulty": "beginner",
+      "background": "You are the on-call security analyst at a mid-sized company. At 14:30, you receive a call from an employee in the Finance department reporting strange behavior on their workstation. The employee sounds concerned but the situation appears contained to a single system.",
+      "initial_situation": "The employee reports:\n- A strange text file appeared on their desktop\n- Some of their files have unusual extensions\n- The computer seems slower than usual\n- They clicked on an email attachment about an invoice earlier today\n\nThe workstation (WS-FIN-042) is still powered on and connected to the network.",
+      "objectives": [
+        "Preserve volatile evidence (memory) before taking containment actions",
+        "Identify the ransomware variant based on available indicators",
+        "Safely contain the affected system without destroying evidence",
+        "Document all findings and actions taken",
+        "Determine if lateral movement occurred"
+      ],
+      "artifacts_config": {
+        "ransom_note": {
+          "filename": "README_RANSOMWARE.txt",
+          "variant_name": "SimulatedLocker"
+        },
+        "encrypted_files": {
+          "count": 5,
+          "extension": ".encrypted_sim"
+        },
+        "registry_key": {
+          "path": "HKCU\\Software\\SimulatedMalware"
+        },
+        "process_artifacts": {
+          "suspicious_process": "simloader.exe"
+        }
+      },
+      "expected_findings": [
+        "Ransom note with bitcoin address and instructions",
+        "Files with .encrypted_sim extension in Documents folder",
+        "Suspicious process execution in logs",
+        "Email attachment as likely infection vector"
+      ],
+      "hints": [
+        "Check the desktop for any new text files",
+        "Look for files with unusual extensions",
+        "Memory capture should be done BEFORE network isolation",
+        "Document the contents of the ransom note carefully",
+        "Check the user's email and recent downloads"
+      ]
+    },
+    {
+      "id": "lateral_movement",
+      "name": "Ransomware with Lateral Movement",
+      "description": "A more complex scenario involving multiple systems and lateral movement",
+      "difficulty": "intermediate",
+      "background": "What started as a single workstation incident has escalated. Multiple departments are now reporting similar issues. The IT team is overwhelmed and needs your expertise to coordinate the response. This appears to be a coordinated attack that has spread beyond the initial infection point.",
+      "initial_situation": "Current reports:\n- Finance department: 2 workstations affected (WS-FIN-042, WS-FIN-018)\n- HR department: 1 workstation affected (WS-HR-007)\n- IT admin workstation showing suspicious authentication events\n- File server alerts from antivirus (potentially false positive)\n\nThe incidents occurred within a 30-minute window, suggesting automated propagation.",
+      "objectives": [
+        "Identify all affected systems through systematic analysis",
+        "Determine the lateral movement method used by the attacker",
+        "Identify all potentially compromised credentials",
+        "Coordinate containment actions across multiple systems",
+        "Preserve evidence from multiple sources without cross-contamination"
+      ],
+      "artifacts_config": {
+        "ransom_note": {
+          "filename": "YOUR_FILES_ARE_ENCRYPTED.txt",
+          "variant_name": "LateralLocker"
+        },
+        "encrypted_files": {
+          "count": 10,
+          "extension": ".llocked"
+        },
+        "auth_logs": {
+          "suspicious_logins": 3,
+          "service_account_abuse": true
+        },
+        "network_indicators": {
+          "internal_scanning": true,
+          "smb_activity": true
+        }
+      },
+      "expected_findings": [
+        "Multiple systems with identical ransomware indicators",
+        "Suspicious authentication events from service account",
+        "Evidence of SMB lateral movement between systems",
+        "Internal network scanning activity",
+        "Timeline correlation showing spread pattern"
+      ],
+      "hints": [
+        "Check authentication logs for unusual patterns across all DCs",
+        "Look for evidence of PsExec or similar remote execution tools",
+        "Service accounts are often targeted for lateral movement",
+        "Create a timeline to understand the spread pattern",
+        "Check for scheduled tasks on affected systems"
+      ]
+    },
+    {
+      "id": "data_exfiltration",
+      "name": "Ransomware with Data Exfiltration",
+      "description": "Advanced scenario combining ransomware with data theft indicators",
+      "difficulty": "advanced",
+      "background": "The attackers appear to have been in the environment for some time before deploying ransomware. There are indicators that sensitive data may have been exfiltrated before the encryption began. This is a double-extortion scenario where the attackers may threaten to publish stolen data.",
+      "initial_situation": "Security team has identified:\n- Ransomware deployed across multiple systems\n- Large outbound data transfers to unknown IPs in the past week\n- Evidence of archive files created before ransomware deployment\n- Attackers have left a note threatening to publish data\n\nExecutive leadership is requesting immediate status updates.",
+      "objectives": [
+        "Assess the scope of potential data exfiltration",
+        "Identify what data may have been accessed or stolen",
+        "Coordinate with legal and compliance teams",
+        "Preserve evidence for potential law enforcement involvement",
+        "Prepare communication for affected parties"
+      ],
+      "artifacts_config": {
+        "ransom_note": {
+          "filename": "DATA_LEAKED_README.txt",
+          "variant_name": "DoubleExtort"
+        },
+        "encrypted_files": {
+          "count": 15,
+          "extension": ".dext"
+        },
+        "exfiltration_indicators": {
+          "large_archives": true,
+          "outbound_transfers": true,
+          "staging_directory": true
+        }
+      },
+      "expected_findings": [
+        "Evidence of data staging and compression",
+        "Large outbound network transfers",
+        "Access logs showing sensitive file access",
+        "Timeline of attacker activity pre-ransomware",
+        "Indicators of attacker dwell time"
+      ],
+      "hints": [
+        "Check for large archive files created recently",
+        "Review firewall logs for unusual outbound traffic",
+        "Look for evidence of staging directories",
+        "Review file server access logs for sensitive areas",
+        "Consider the legal implications of data breach"
+      ]
+    }
+  ]
+}
