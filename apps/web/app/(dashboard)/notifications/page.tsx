@@ -240,7 +240,7 @@ export default function NotificationsPage() {
         <div>
           <h1 className="text-2xl font-bold">{t("notifications.title")}</h1>
           <p className="text-muted-foreground">
-            {stats?.unread || 0} unread of {stats?.total || 0} notifications
+            {t("notifications.unreadOfTotal").replace("{unread}", String(stats?.unread || 0)).replace("{total}", String(stats?.total || 0))}
           </p>
         </div>
         <div className="flex gap-2">
@@ -259,7 +259,7 @@ export default function NotificationsPage() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Unread</CardTitle>
+            <CardTitle className="text-sm font-medium">{t("notifications.unread")}</CardTitle>
             <Bell className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -268,7 +268,7 @@ export default function NotificationsPage() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Critical</CardTitle>
+            <CardTitle className="text-sm font-medium">{t("notifications.critical")}</CardTitle>
             <AlertTriangle className="h-4 w-4 text-destructive" />
           </CardHeader>
           <CardContent>
@@ -277,7 +277,7 @@ export default function NotificationsPage() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">High</CardTitle>
+            <CardTitle className="text-sm font-medium">{t("notifications.high")}</CardTitle>
             <AlertTriangle className="h-4 w-4 text-orange-500" />
           </CardHeader>
           <CardContent>
@@ -286,7 +286,7 @@ export default function NotificationsPage() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Total</CardTitle>
+            <CardTitle className="text-sm font-medium">{t("notifications.total")}</CardTitle>
             <Bell className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -320,13 +320,13 @@ export default function NotificationsPage() {
                 checked={showUnreadOnly}
                 onCheckedChange={setShowUnreadOnly}
               />
-              <Label>Show unread only</Label>
+              <Label>{t("notifications.showUnreadOnly")}</Label>
             </div>
           </div>
 
           <div className="space-y-2">
             {loadingNotifications ? (
-              <div className="text-center py-8 text-muted-foreground">Loading...</div>
+              <div className="text-center py-8 text-muted-foreground">{t("notifications.loading")}</div>
             ) : notifications.length === 0 ? (
               <Card>
                 <CardContent className="flex flex-col items-center justify-center py-12">
@@ -367,7 +367,7 @@ export default function NotificationsPage() {
                                 href={notification.entity_url}
                                 className="flex items-center gap-1 text-primary hover:underline"
                               >
-                                View <ExternalLink className="h-3 w-3" />
+                                {t("notifications.view")} <ExternalLink className="h-3 w-3" />
                               </a>
                             )}
                           </div>
@@ -410,14 +410,14 @@ export default function NotificationsPage() {
         <TabsContent value="preferences" className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>General Settings</CardTitle>
-              <CardDescription>Configure how you receive notifications</CardDescription>
+              <CardTitle>{t("notifications.generalSettings")}</CardTitle>
+              <CardDescription>{t("notifications.configureHowYouReceive")}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <Label className="text-base">Enable Notifications</Label>
-                  <p className="text-sm text-muted-foreground">Receive in-app notifications</p>
+                  <Label className="text-base">{t("notifications.enableNotifications")}</Label>
+                  <p className="text-sm text-muted-foreground">{t("notifications.receiveInAppNotifications")}</p>
                 </div>
                 <Switch
                   checked={preferences?.notifications_enabled ?? true}
@@ -430,7 +430,7 @@ export default function NotificationsPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <Label className="text-base">{t("notifications.emailEnabled")}</Label>
-                  <p className="text-sm text-muted-foreground">Receive email notifications</p>
+                  <p className="text-sm text-muted-foreground">{t("notifications.receiveEmailNotifications")}</p>
                 </div>
                 <Switch
                   checked={preferences?.email_enabled ?? true}
@@ -462,7 +462,7 @@ export default function NotificationsPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <Label className="text-base">{t("notifications.quietHoursEnabled")}</Label>
-                  <p className="text-sm text-muted-foreground">Mute notifications during specific hours</p>
+                  <p className="text-sm text-muted-foreground">{t("notifications.muteNotificationsDuringHours")}</p>
                 </div>
                 <Switch
                   checked={preferences?.quiet_hours_enabled ?? false}
@@ -501,13 +501,13 @@ export default function NotificationsPage() {
 
           <Card>
             <CardHeader>
-              <CardTitle>Priority Thresholds</CardTitle>
-              <CardDescription>Set minimum priority for different channels</CardDescription>
+              <CardTitle>{t("notifications.priorityThresholds")}</CardTitle>
+              <CardDescription>{t("notifications.setMinimumPriority")}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label>Minimum Priority for Email</Label>
+                  <Label>{t("notifications.minPriorityEmail")}</Label>
                   <Select
                     value={preferences?.min_priority_email || "medium"}
                     onValueChange={(value) =>
@@ -518,15 +518,15 @@ export default function NotificationsPage() {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="low">Low</SelectItem>
-                      <SelectItem value="medium">Medium</SelectItem>
-                      <SelectItem value="high">High</SelectItem>
-                      <SelectItem value="critical">Critical</SelectItem>
+                      <SelectItem value="low">{t("notifications.low")}</SelectItem>
+                      <SelectItem value="medium">{t("notifications.medium")}</SelectItem>
+                      <SelectItem value="high">{t("notifications.high")}</SelectItem>
+                      <SelectItem value="critical">{t("notifications.critical")}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label>Minimum Priority for SMS</Label>
+                  <Label>{t("notifications.minPrioritySMS")}</Label>
                   <Select
                     value={preferences?.min_priority_sms || "critical"}
                     onValueChange={(value) =>
@@ -537,10 +537,10 @@ export default function NotificationsPage() {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="low">Low</SelectItem>
-                      <SelectItem value="medium">Medium</SelectItem>
-                      <SelectItem value="high">High</SelectItem>
-                      <SelectItem value="critical">Critical</SelectItem>
+                      <SelectItem value="low">{t("notifications.low")}</SelectItem>
+                      <SelectItem value="medium">{t("notifications.medium")}</SelectItem>
+                      <SelectItem value="high">{t("notifications.high")}</SelectItem>
+                      <SelectItem value="critical">{t("notifications.critical")}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -563,24 +563,24 @@ export default function NotificationsPage() {
                 <DialogHeader>
                   <DialogTitle>{t("notifications.addWebhook")}</DialogTitle>
                   <DialogDescription>
-                    Configure a webhook to receive notifications at an external URL.
+                    {t("notifications.webhookDialogDescription")}
                   </DialogDescription>
                 </DialogHeader>
                 <div className="space-y-4 py-4">
                   <div className="space-y-2">
-                    <Label>Name</Label>
+                    <Label>{t("notifications.name")}</Label>
                     <Input
                       value={webhookForm.name}
                       onChange={(e) => setWebhookForm({ ...webhookForm, name: e.target.value })}
-                      placeholder="My Webhook"
+                      placeholder={t("notifications.namePlaceholder")}
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>Description</Label>
+                    <Label>{t("notifications.description")}</Label>
                     <Textarea
                       value={webhookForm.description}
                       onChange={(e) => setWebhookForm({ ...webhookForm, description: e.target.value })}
-                      placeholder="Optional description"
+                      placeholder={t("notifications.descriptionPlaceholder")}
                     />
                   </div>
                   <div className="space-y-2">
@@ -588,11 +588,11 @@ export default function NotificationsPage() {
                     <Input
                       value={webhookForm.url}
                       onChange={(e) => setWebhookForm({ ...webhookForm, url: e.target.value })}
-                      placeholder="https://example.com/webhook"
+                      placeholder={t("notifications.urlPlaceholder")}
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>Method</Label>
+                    <Label>{t("notifications.method")}</Label>
                     <Select
                       value={webhookForm.method}
                       onValueChange={(v) => setWebhookForm({ ...webhookForm, method: v })}
@@ -609,7 +609,7 @@ export default function NotificationsPage() {
                 </div>
                 <DialogFooter>
                   <Button variant="outline" onClick={() => setIsWebhookDialogOpen(false)}>
-                    Cancel
+                    {t("notifications.cancel")}
                   </Button>
                   <Button
                     onClick={() => createWebhookMutation.mutate({
@@ -618,7 +618,7 @@ export default function NotificationsPage() {
                     })}
                     disabled={!webhookForm.name || !webhookForm.url}
                   >
-                    Create Webhook
+                    {t("notifications.createWebhook")}
                   </Button>
                 </DialogFooter>
               </DialogContent>
@@ -650,7 +650,7 @@ export default function NotificationsPage() {
                             </Badge>
                             {webhook.consecutive_failures > 0 && (
                               <Badge variant="destructive">
-                                {webhook.consecutive_failures} failures
+                                {webhook.consecutive_failures} {t("notifications.failures")}
                               </Badge>
                             )}
                           </div>
@@ -663,7 +663,7 @@ export default function NotificationsPage() {
                       <div className="flex gap-2">
                         <Button variant="outline" size="sm">
                           <RefreshCw className="h-4 w-4 mr-1" />
-                          Test
+                          {t("notifications.test")}
                         </Button>
                         <Button
                           variant="outline"

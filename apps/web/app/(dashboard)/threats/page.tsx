@@ -224,46 +224,46 @@ export default function ThreatsPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">Total IOCs</CardTitle>
+              <CardTitle className="text-sm font-medium">{t("threats.totalIOCs")}</CardTitle>
               <Crosshair className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{stats?.total_iocs || 0}</div>
               <p className="text-xs text-muted-foreground">
-                {stats?.active_iocs || 0} active
+                {stats?.active_iocs || 0} {t("threats.active").toLowerCase()}
               </p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">Threat Actors</CardTitle>
+              <CardTitle className="text-sm font-medium">{t("threats.threatActors")}</CardTitle>
               <Users className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{stats?.total_actors || 0}</div>
               <p className="text-xs text-muted-foreground">
-                {stats?.active_actors || 0} active
+                {stats?.active_actors || 0} {t("threats.active").toLowerCase()}
               </p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">Campaigns</CardTitle>
+              <CardTitle className="text-sm font-medium">{t("threats.campaigns")}</CardTitle>
               <Target className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{stats?.total_campaigns || 0}</div>
               <p className="text-xs text-muted-foreground">
-                {stats?.active_campaigns || 0} active
+                {stats?.active_campaigns || 0} {t("threats.active").toLowerCase()}
               </p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">Critical IOCs</CardTitle>
+              <CardTitle className="text-sm font-medium">{t("threats.criticalIOCs")}</CardTitle>
               <AlertTriangle className="h-4 w-4 text-red-500" />
             </CardHeader>
             <CardContent>
@@ -271,7 +271,7 @@ export default function ThreatsPage() {
                 {stats?.iocs_by_threat_level?.critical || 0}
               </div>
               <p className="text-xs text-muted-foreground">
-                {stats?.iocs_by_threat_level?.high || 0} high severity
+                {stats?.iocs_by_threat_level?.high || 0} {t("threats.highSeverity")}
               </p>
             </CardContent>
           </Card>
@@ -281,7 +281,7 @@ export default function ThreatsPage() {
         {stats?.iocs_by_type && Object.keys(stats.iocs_by_type).length > 0 && (
           <Card>
             <CardHeader>
-              <CardTitle className="text-sm">IOCs by Type</CardTitle>
+              <CardTitle className="text-sm">{t("threats.iocsByType")}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex flex-wrap gap-2">
@@ -299,7 +299,7 @@ export default function ThreatsPage() {
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <div className="flex items-center justify-between">
             <TabsList>
-              <TabsTrigger value="overview">Overview</TabsTrigger>
+              <TabsTrigger value="overview">{t("threats.overview")}</TabsTrigger>
               <TabsTrigger value="iocs">{t("threats.iocs")}</TabsTrigger>
               <TabsTrigger value="actors">{t("threats.actors")}</TabsTrigger>
               <TabsTrigger value="campaigns">{t("threats.campaigns")}</TabsTrigger>
@@ -315,16 +315,16 @@ export default function ThreatsPage() {
                 </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
-                    <DialogTitle>Enrich IOC</DialogTitle>
+                    <DialogTitle>{t("threats.enrichIOCTitle")}</DialogTitle>
                     <DialogDescription>
-                      Enter an IOC value to enrich with threat intelligence
+                      {t("threats.enrichIOCDescription")}
                     </DialogDescription>
                   </DialogHeader>
                   <div className="space-y-4">
                     <div>
-                      <Label>IOC Value</Label>
+                      <Label>{t("threats.iocValue")}</Label>
                       <Input
-                        placeholder="e.g., 192.168.1.1, evil.com, hash..."
+                        placeholder={t("threats.enrichPlaceholder")}
                         value={enrichValue}
                         onChange={(e) => setEnrichValue(e.target.value)}
                       />
@@ -335,7 +335,7 @@ export default function ThreatsPage() {
                       onClick={() => enrichMutation.mutate(enrichValue)}
                       disabled={!enrichValue || enrichMutation.isPending}
                     >
-                      {enrichMutation.isPending ? "Enriching..." : "Enrich & Save"}
+                      {enrichMutation.isPending ? t("threats.enriching") : t("threats.enrichAndSave")}
                     </Button>
                   </DialogFooter>
                 </DialogContent>
@@ -350,14 +350,14 @@ export default function ThreatsPage() {
                 </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
-                    <DialogTitle>Bulk Import IOCs</DialogTitle>
+                    <DialogTitle>{t("threats.bulkImportTitle")}</DialogTitle>
                     <DialogDescription>
-                      Enter one IOC per line. They will be auto-enriched.
+                      {t("threats.bulkImportDescription")}
                     </DialogDescription>
                   </DialogHeader>
                   <div className="space-y-4">
                     <Textarea
-                      placeholder="192.168.1.1&#10;evil-domain.com&#10;abc123hash..."
+                      placeholder={t("threats.bulkPlaceholder")}
                       rows={10}
                       value={bulkIOCs}
                       onChange={(e) => setBulkIOCs(e.target.value)}
@@ -374,8 +374,8 @@ export default function ThreatsPage() {
                       disabled={!bulkIOCs.trim() || bulkCreateMutation.isPending}
                     >
                       {bulkCreateMutation.isPending
-                        ? "Importing..."
-                        : `Import ${bulkIOCs.split("\n").filter((v) => v.trim()).length} IOCs`}
+                        ? t("threats.importing")
+                        : t("threats.importIOCs").replace("{count}", String(bulkIOCs.split("\n").filter((v) => v.trim()).length))}
                     </Button>
                   </DialogFooter>
                 </DialogContent>
@@ -390,32 +390,32 @@ export default function ThreatsPage() {
                 </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
-                    <DialogTitle>Add IOC</DialogTitle>
+                    <DialogTitle>{t("threats.addIOCTitle")}</DialogTitle>
                     <DialogDescription>
-                      Add a new indicator of compromise. It will be auto-enriched.
+                      {t("threats.addIOCDescription")}
                     </DialogDescription>
                   </DialogHeader>
                   <div className="space-y-4">
                     <div>
-                      <Label>IOC Value *</Label>
+                      <Label>{t("threats.iocValueRequired")}</Label>
                       <Input
-                        placeholder="IP, domain, hash, URL, email..."
+                        placeholder={t("threats.addIOCPlaceholder")}
                         value={newIOC.value}
                         onChange={(e) => setNewIOC({ ...newIOC, value: e.target.value })}
                       />
                     </div>
                     <div>
-                      <Label>Description</Label>
+                      <Label>{t("threats.description")}</Label>
                       <Input
-                        placeholder="Optional description"
+                        placeholder={t("threats.descriptionPlaceholder")}
                         value={newIOC.description}
                         onChange={(e) => setNewIOC({ ...newIOC, description: e.target.value })}
                       />
                     </div>
                     <div>
-                      <Label>Source</Label>
+                      <Label>{t("threats.source")}</Label>
                       <Input
-                        placeholder="Where did you find this IOC?"
+                        placeholder={t("threats.sourcePlaceholder")}
                         value={newIOC.source}
                         onChange={(e) => setNewIOC({ ...newIOC, source: e.target.value })}
                       />
@@ -426,7 +426,7 @@ export default function ThreatsPage() {
                       onClick={() => createMutation.mutate(newIOC)}
                       disabled={!newIOC.value || createMutation.isPending}
                     >
-                      {createMutation.isPending ? "Creating..." : "Create IOC"}
+                      {createMutation.isPending ? t("threats.creating") : t("threats.createIOC")}
                     </Button>
                   </DialogFooter>
                 </DialogContent>
@@ -438,14 +438,14 @@ export default function ThreatsPage() {
           <TabsContent value="overview" className="mt-4">
             <Card>
               <CardHeader>
-                <CardTitle>Recent IOCs</CardTitle>
-                <CardDescription>Latest indicators added to the system</CardDescription>
+                <CardTitle>{t("threats.recentIOCs")}</CardTitle>
+                <CardDescription>{t("threats.recentIOCsDescription")}</CardDescription>
               </CardHeader>
               <CardContent>
                 {stats?.recent_iocs && stats.recent_iocs.length > 0 ? (
                   <div className="space-y-3">
                     {stats.recent_iocs.map((ioc) => (
-                      <IOCRow key={ioc.id} ioc={ioc} onDelete={deleteMutation.mutate} />
+                      <IOCRow key={ioc.id} ioc={ioc} onDelete={deleteMutation.mutate} t={t} />
                     ))}
                   </div>
                 ) : (
@@ -463,7 +463,7 @@ export default function ThreatsPage() {
             <div className="flex gap-4">
               <div className="flex-1">
                 <Input
-                  placeholder="Search IOCs..."
+                  placeholder={t("threats.searchIOCs")}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="max-w-sm"
@@ -474,25 +474,25 @@ export default function ThreatsPage() {
                   <SelectValue placeholder="Type" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Types</SelectItem>
-                  <SelectItem value="ip">IP Address</SelectItem>
-                  <SelectItem value="domain">Domain</SelectItem>
-                  <SelectItem value="url">URL</SelectItem>
-                  <SelectItem value="sha256">SHA256</SelectItem>
-                  <SelectItem value="md5">MD5</SelectItem>
-                  <SelectItem value="email">Email</SelectItem>
+                  <SelectItem value="all">{t("threats.allTypes")}</SelectItem>
+                  <SelectItem value="ip">{t("threats.ipAddress")}</SelectItem>
+                  <SelectItem value="domain">{t("threats.domain")}</SelectItem>
+                  <SelectItem value="url">{t("threats.url")}</SelectItem>
+                  <SelectItem value="sha256">{t("threats.sha256")}</SelectItem>
+                  <SelectItem value="md5">{t("threats.md5")}</SelectItem>
+                  <SelectItem value="email">{t("threats.email")}</SelectItem>
                 </SelectContent>
               </Select>
               <Select value={threatLevelFilter} onValueChange={setThreatLevelFilter}>
                 <SelectTrigger className="w-[150px]">
-                  <SelectValue placeholder="Threat Level" />
+                  <SelectValue placeholder={t("threats.threatLevel")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Levels</SelectItem>
-                  <SelectItem value="critical">Critical</SelectItem>
-                  <SelectItem value="high">High</SelectItem>
-                  <SelectItem value="medium">Medium</SelectItem>
-                  <SelectItem value="low">Low</SelectItem>
+                  <SelectItem value="all">{t("threats.allLevels")}</SelectItem>
+                  <SelectItem value="critical">{t("threats.critical")}</SelectItem>
+                  <SelectItem value="high">{t("threats.high")}</SelectItem>
+                  <SelectItem value="medium">{t("threats.medium")}</SelectItem>
+                  <SelectItem value="low">{t("threats.low")}</SelectItem>
                 </SelectContent>
               </Select>
               <Button variant="outline" size="icon" onClick={() => refetchIOCs()}>
@@ -504,11 +504,11 @@ export default function ThreatsPage() {
             <Card>
               <CardContent className="p-0">
                 {iocsLoading ? (
-                  <div className="p-8 text-center">Loading...</div>
+                  <div className="p-8 text-center">{t("threats.loading")}</div>
                 ) : iocs.length > 0 ? (
                   <div className="divide-y">
                     {iocs.map((ioc) => (
-                      <IOCRow key={ioc.id} ioc={ioc} onDelete={deleteMutation.mutate} />
+                      <IOCRow key={ioc.id} ioc={ioc} onDelete={deleteMutation.mutate} t={t} />
                     ))}
                   </div>
                 ) : (
@@ -528,7 +528,7 @@ export default function ThreatsPage() {
                 <p>{t("threats.noActors")}</p>
                 <Button className="mt-4" variant="outline">
                   <Plus className="h-4 w-4 mr-2" />
-                  Add Threat Actor
+                  {t("threats.addThreatActor")}
                 </Button>
               </CardContent>
             </Card>
@@ -542,7 +542,7 @@ export default function ThreatsPage() {
                 <p>{t("threats.noCampaigns")}</p>
                 <Button className="mt-4" variant="outline">
                   <Plus className="h-4 w-4 mr-2" />
-                  Add Campaign
+                  {t("threats.addCampaign")}
                 </Button>
               </CardContent>
             </Card>
@@ -553,7 +553,7 @@ export default function ThreatsPage() {
   );
 }
 
-function IOCRow({ ioc, onDelete }: { ioc: IOC; onDelete: (id: string) => void }) {
+function IOCRow({ ioc, onDelete, t }: { ioc: IOC; onDelete: (id: string) => void; t: (key: string) => string }) {
   return (
     <div className="flex items-center justify-between p-4 hover:bg-muted/50">
       <div className="flex items-center gap-4">
@@ -581,7 +581,7 @@ function IOCRow({ ioc, onDelete }: { ioc: IOC; onDelete: (id: string) => void })
             {ioc.threat_level}
           </Badge>
           <div className="text-xs text-muted-foreground mt-1">
-            Score: {ioc.risk_score.toFixed(0)} | Conf: {(ioc.confidence * 100).toFixed(0)}%
+            {t("threats.score")} {ioc.risk_score.toFixed(0)} | {t("threats.conf")} {(ioc.confidence * 100).toFixed(0)}%
           </div>
         </div>
 
@@ -594,18 +594,18 @@ function IOCRow({ ioc, onDelete }: { ioc: IOC; onDelete: (id: string) => void })
           <DropdownMenuContent align="end">
             <DropdownMenuItem>
               <RefreshCw className="h-4 w-4 mr-2" />
-              Re-enrich
+              {t("threats.reEnrich")}
             </DropdownMenuItem>
             <DropdownMenuItem>
               <ExternalLink className="h-4 w-4 mr-2" />
-              View Details
+              {t("threats.viewDetails")}
             </DropdownMenuItem>
             <DropdownMenuItem
               className="text-destructive"
               onClick={() => onDelete(ioc.id)}
             >
               <Trash2 className="h-4 w-4 mr-2" />
-              Delete
+              {t("threats.delete")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

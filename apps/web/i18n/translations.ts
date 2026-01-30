@@ -177,6 +177,62 @@ const translations = {
       expired: "Expired",
       falsePositive: "False Positive",
       underReview: "Under Review",
+      // Stats cards
+      totalIOCs: "Total IOCs",
+      threatActors: "Threat Actors",
+      criticalIOCs: "Critical IOCs",
+      highSeverity: "high severity",
+      iocsByType: "IOCs by Type",
+      // Tabs
+      overview: "Overview",
+      // Dialogs
+      enrichIOCTitle: "Enrich IOC",
+      enrichIOCDescription: "Enter an IOC value to enrich with threat intelligence",
+      bulkImportTitle: "Bulk Import IOCs",
+      bulkImportDescription: "Enter one IOC per line. They will be auto-enriched.",
+      addIOCTitle: "Add IOC",
+      addIOCDescription: "Add a new indicator of compromise. It will be auto-enriched.",
+      // Labels
+      iocValue: "IOC Value",
+      iocValueRequired: "IOC Value *",
+      description: "Description",
+      // Placeholders
+      enrichPlaceholder: "e.g., 192.168.1.1, evil.com, hash...",
+      bulkPlaceholder: "192.168.1.1\nevil-domain.com\nabc123hash...",
+      addIOCPlaceholder: "IP, domain, hash, URL, email...",
+      descriptionPlaceholder: "Optional description",
+      sourcePlaceholder: "Where did you find this IOC?",
+      searchIOCs: "Search IOCs...",
+      // Buttons
+      enriching: "Enriching...",
+      enrichAndSave: "Enrich & Save",
+      importing: "Importing...",
+      importIOCs: "Import {count} IOCs",
+      creating: "Creating...",
+      createIOC: "Create IOC",
+      // Recent IOCs
+      recentIOCs: "Recent IOCs",
+      recentIOCsDescription: "Latest indicators added to the system",
+      // Filters
+      allTypes: "All Types",
+      ipAddress: "IP Address",
+      domain: "Domain",
+      url: "URL",
+      sha256: "SHA256",
+      md5: "MD5",
+      email: "Email",
+      allLevels: "All Levels",
+      // Loading
+      loading: "Loading...",
+      // Add buttons
+      addThreatActor: "Add Threat Actor",
+      addCampaign: "Add Campaign",
+      // Row actions
+      viewDetails: "View Details",
+      delete: "Delete",
+      // Score display
+      score: "Score:",
+      conf: "Conf:",
     },
     // Risk Management
     risks: {
@@ -255,6 +311,80 @@ const translations = {
       totalControls: "Total Controls",
       effectiveControls: "Effective Controls",
       financialExposure: "Financial Exposure",
+      // Actions
+      refresh: "Refresh",
+      creating: "Creating...",
+      createRisk: "Create Risk",
+      createControl: "Create Control",
+      viewDetails: "View Details",
+      // Form labels
+      titleLabel: "Title *",
+      descriptionLabel: "Description",
+      categoryLabel: "Category *",
+      departmentLabel: "Department",
+      likelihoodLabel: "Likelihood",
+      impactLabel: "Impact",
+      treatmentTypeLabel: "Treatment Type",
+      financialImpactLabel: "Financial Impact ($)",
+      riskOwnerLabel: "Risk Owner",
+      nameLabel: "Name *",
+      controlTypeLabel: "Control Type *",
+      implementationDetailsLabel: "Implementation Details",
+      effectivenessRatingLabel: "Effectiveness Rating (0-100)",
+      // Placeholders
+      riskTitlePlaceholder: "Risk title",
+      describeRiskPlaceholder: "Describe the risk...",
+      selectLikelihood: "Select likelihood",
+      selectImpact: "Select impact",
+      selectTreatment: "Select treatment",
+      departmentPlaceholder: "Department",
+      riskOwnerPlaceholder: "Risk owner name or ID",
+      controlNamePlaceholder: "Control name",
+      describeControlPlaceholder: "Describe the control...",
+      implementationPlaceholder: "How the control is implemented...",
+      effectivenessPlaceholder: "0-100",
+      searchRisksPlaceholder: "Search risks...",
+      // Filter options
+      allCategories: "All Categories",
+      allLevels: "All Levels",
+      // Stats labels
+      open: "open",
+      high: "high",
+      effective: "effective",
+      avgScore: "Avg score:",
+      // Chart titles
+      risksByCategory: "Risks by Category",
+      risksByLevel: "Risks by Level",
+      recentRisks: "Recent Risks",
+      // Table headers
+      riskId: "Risk ID",
+      titleHeader: "Title",
+      categoryHeader: "Category",
+      levelHeader: "Level",
+      statusHeader: "Status",
+      riskLevelHeader: "Risk Level",
+      scoreHeader: "Score",
+      treatmentHeader: "Treatment",
+      controlsHeader: "Controls",
+      controlId: "Control ID",
+      nameHeader: "Name",
+      typeHeader: "Type",
+      effectivenessHeader: "Effectiveness",
+      // Loading states
+      loading: "Loading...",
+      loadingRiskMatrix: "Loading risk matrix...",
+      // Matrix legend
+      legendCritical: "Critical (17-25)",
+      legendHigh: "High (10-16)",
+      legendMedium: "Medium (5-9)",
+      legendLow: "Low (1-4)",
+      // Risk detail dialog
+      unassessed: "Unassessed",
+      inherentScore: "Inherent Score",
+      residualScore: "Residual Score",
+      owner: "Owner",
+      controlsCount: "Controls",
+      treatmentActions: "Treatment Actions",
     },
     // CMDB
     cmdb: {
@@ -497,10 +627,67 @@ const translations = {
       expiringContracts30: "Expiring in 30 Days",
       expiringContracts90: "Expiring in 90 Days",
       vendorsRequiringAssessment: "Requiring Assessment",
+      // Page texts
+      subtitle: "Manage vendor risk assessments, findings, and contracts",
+      dialogDescription: "Add a new third-party vendor to the risk management system.",
+      // Form labels
+      vendorName: "Vendor Name",
+      tier: "Tier",
+      category: "Category",
+      contactEmail: "Contact Email",
+      servicesProvided: "Services Provided",
+      // Placeholders
+      vendorNamePlaceholder: "Vendor name",
+      contactEmailPlaceholder: "contact@vendor.com",
+      servicesPlaceholder: "Describe the services provided by this vendor...",
+      // Button labels
+      cancel: "Cancel",
+      createVendor: "Create Vendor",
+      // Stats subtext
+      criticalOrHighRisk: "Critical or high risk rating",
+      in90Days: "in 90 days",
+      assessmentOverdueOrDue: "Assessment overdue or due",
+      // Dashboard labels
+      findingsBySeverity: "Findings by Severity",
+      vendorsByTier: "Vendors by Tier",
+      // Badge labels (short)
+      badgeCritical: "Critical",
+      badgeHigh: "High",
+      badgeMedium: "Medium",
+      badgeLow: "Low",
+      badgeT1: "T1",
+      badgeT2: "T2",
+      badgeT3: "T3",
+      badgeT4: "T4",
+      // Filter labels
+      searchVendors: "Search vendors...",
+      allStatus: "All Status",
+      allTiers: "All Tiers",
+      allSeverities: "All Severities",
+      // Vendor card
+      noServicesDescription: "No services description",
+      risk: "risk",
+      website: "Website",
+      nextAssessment: "Next assessment:",
+      // Common
+      noDescription: "No description",
+      // Assessment labels
+      assessor: "Assessor:",
+      started: "Started:",
+      due: "Due:",
+      score: "Score:",
+      residualRisk: "residual risk",
+      // Finding labels
+      riskScoreLabel: "Risk Score:",
+      created: "Created:",
+      // Contract labels
+      start: "Start:",
+      expires: "Expires:",
     },
     // Integrations
     integrations: {
       title: "Integration Hub",
+      subtitle: "Connect external security platforms and sync data",
       dashboard: "Dashboard",
       list: "Integrations",
       templates: "Templates",
@@ -557,6 +744,59 @@ const translations = {
       syncsToday: "Syncs Today",
       webhooksToday: "Webhooks Today",
       recordsSynced: "Records Synced",
+      requireAttention: "Require attention",
+      success: "success",
+      failed: "failed",
+      today: "Today",
+      processed: "processed",
+      // Awareness
+      awarenessScore: "Awareness Score",
+      usersTracked: "users tracked",
+      phishingClickRate: "Phishing Click Rate",
+      trainingComplete: "training complete",
+      // Dashboard
+      integrationsByCategory: "Integrations by Category",
+      // Buttons
+      seedTemplates: "Seed Templates",
+      seedDefaultTemplates: "Seed Default Templates",
+      browseTemplates: "Browse Templates",
+      cancel: "Cancel",
+      creating: "Creating...",
+      createIntegration: "Create Integration",
+      // Dialog
+      configureX: "Configure {name}",
+      connectNewPlatform: "Connect a new external platform to sync security data.",
+      // Form
+      integrationName: "Integration Name",
+      baseUrlEndpoint: "Base URL / API Endpoint",
+      apiKey: "API Key",
+      description: "Description",
+      // Placeholders
+      namePlaceholder: "My Integration",
+      urlPlaceholder: "https://api.example.com",
+      apiKeyPlaceholder: "Enter API key",
+      descriptionPlaceholder: "Optional description...",
+      // Filters
+      searchIntegrations: "Search integrations...",
+      allCategories: "All Categories",
+      allStatus: "All Status",
+      // Badges
+      enabled: "Enabled",
+      disabled: "Disabled",
+      failures: "failures",
+      // Sync info
+      lastSyncLabel: "Last sync:",
+      nextLabel: "Next:",
+      // Templates
+      noDescriptionAvailable: "No description available",
+      webhook: "Webhook",
+      // Sync logs
+      selectIntegration: "Select integration",
+      selectIntegrationToViewLogs: "Select an integration to view sync logs",
+      fetched: "Fetched:",
+      created: "Created:",
+      updated: "Updated:",
+      failedLabel: "Failed:",
       // Platforms
       knowbe4: "KnowBe4",
       gophish: "GoPhish",
@@ -572,6 +812,7 @@ const translations = {
     // Reporting
     reporting: {
       title: "Reporting & Analytics",
+      subtitle: "Executive dashboards, reports, and analytics",
       executiveDashboard: "Executive Dashboard",
       templates: "Report Templates",
       reports: "Generated Reports",
@@ -581,6 +822,7 @@ const translations = {
       noReports: "No reports generated",
       noTemplates: "No templates available",
       noSchedules: "No schedules configured",
+      noDescription: "No description",
       // Report Types
       executiveSummary: "Executive Summary",
       incidentReport: "Incident Report",
@@ -596,8 +838,8 @@ const translations = {
       csv: "CSV",
       json: "JSON",
       // Status
-      pending: "Pending",
-      generating: "Generating",
+      pending: "pending",
+      generating: "Generating...",
       completed: "Completed",
       failed: "Failed",
       scheduled: "Scheduled",
@@ -614,6 +856,9 @@ const translations = {
       download: "Download",
       schedule: "Schedule",
       preview: "Preview",
+      cancel: "Cancel",
+      seedTemplates: "Seed Templates",
+      seedDefaultTemplates: "Seed Default Templates",
       // Stats
       securityScore: "Security Score",
       totalIncidents: "Total Incidents",
@@ -625,6 +870,51 @@ const translations = {
       patchCompliance: "Patch Compliance",
       mttd: "MTTD",
       mttr: "MTTR",
+      // Dialog
+      dialogDescription: "Select a template and configure your report.",
+      reportTemplate: "Report Template",
+      selectTemplate: "Select a template",
+      format: "Format",
+      periodDays: "Period (Days)",
+      last7days: "Last 7 days",
+      last30days: "Last 30 days",
+      last90days: "Last 90 days",
+      lastYear: "Last year",
+      // Dashboard labels
+      overallSecurityPosture: "Overall Security Posture",
+      keyMetrics: "Key Metrics",
+      mttdMin: "MTTD (min)",
+      mttrMin: "MTTR (min)",
+      // Badge labels
+      critical: "critical",
+      open: "open",
+      cases: "cases",
+      overdue: "overdue",
+      treatment: "treatment",
+      // Third-Party Risk
+      thirdPartyRisk: "Third-Party Risk",
+      vendors: "Vendors",
+      highRisk: "high risk",
+      // Integrations
+      integrations: "Integrations",
+      active: "Active",
+      errors: "errors",
+      allHealthy: "All healthy",
+      syncs: "syncs",
+      // Compliance
+      compliance: "Compliance",
+      controls: "controls",
+      // Report labels
+      period: "Period:",
+      generated: "Generated:",
+      time: "Time:",
+      // Schedule labels
+      enabled: "Enabled",
+      disabled: "Disabled",
+      recipients: "recipients",
+      next: "Next:",
+      last: "Last:",
+      consecutiveFailures: "consecutive failures",
     },
     // Vulnerability Management
     vulnerabilities: {
@@ -649,17 +939,86 @@ const translations = {
       open: "Open",
       inProgress: "In Progress",
       remediated: "Remediated",
-      accepted: "Risk Accepted",
+      accepted: "Accepted",
       falsePositive: "False Positive",
       mitigated: "Mitigated",
       critical: "Critical",
       high: "High",
       medium: "Medium",
       low: "Low",
-      info: "Informational",
-      overdue: "Overdue",
+      info: "Info",
+      overdue: "overdue",
       mttr: "Mean Time to Remediate",
       assetsWithVulns: "Assets with Vulnerabilities",
+      // Stats
+      totalVulnerabilities: "Total Vulnerabilities",
+      openIssues: "Open Issues",
+      assetsAtRisk: "Assets at Risk",
+      fixed: "fixed",
+      inProgressCount: "in progress",
+      ofTotalAssets: "of {count} total assets",
+      // Sections
+      bySeverity: "By Severity",
+      overview: "Overview",
+      topVulnerableAssets: "Top Vulnerable Assets",
+      recentVulnerabilities: "Recent Vulnerabilities",
+      noVulnerableAssets: "No vulnerable assets",
+      // Dialog titles and descriptions
+      addAssetTitle: "Add Asset",
+      addAssetDescription: "Add a new asset to track vulnerabilities",
+      addVulnerabilityTitle: "Add Vulnerability",
+      addVulnerabilityDescription: "Manually add a vulnerability finding",
+      // Form labels
+      nameRequired: "Name *",
+      type: "Type",
+      criticality: "Criticality",
+      hostname: "Hostname",
+      ipAddress: "IP Address",
+      environment: "Environment",
+      titleRequired: "Title *",
+      description: "Description",
+      affectedComponent: "Affected Component",
+      remediationSteps: "Remediation Steps",
+      // Placeholders
+      assetNamePlaceholder: "Asset name",
+      hostnamePlaceholder: "hostname",
+      ipAddressPlaceholder: "192.168.1.1",
+      vulnTitlePlaceholder: "Vulnerability title",
+      vulnDescriptionPlaceholder: "Describe the vulnerability...",
+      cvssScorePlaceholder: "0.0 - 10.0",
+      affectedComponentPlaceholder: "e.g., Apache HTTP Server 2.4.49",
+      remediationStepsPlaceholder: "How to fix this vulnerability...",
+      // Asset types
+      server: "Server",
+      workstation: "Workstation",
+      networkDevice: "Network Device",
+      database: "Database",
+      webApplication: "Web Application",
+      container: "Container",
+      cloudResource: "Cloud Resource",
+      // Environment options
+      production: "Production",
+      staging: "Staging",
+      development: "Development",
+      testing: "Testing",
+      // Buttons
+      creating: "Creating...",
+      createAsset: "Create Asset",
+      createVulnerability: "Create Vulnerability",
+      // Search and filters
+      searchVulnerabilities: "Search vulnerabilities...",
+      allSeverities: "All Severities",
+      allStatuses: "All Statuses",
+      // Loading
+      loading: "Loading...",
+      // Row text
+      assetCount: "asset(s)",
+      vulns: "vulns",
+      // Dropdown actions
+      markInProgress: "Mark In Progress",
+      markRemediated: "Mark Remediated",
+      acceptRisk: "Accept Risk",
+      delete: "Delete",
     },
     // Auth
     auth: {
@@ -882,6 +1241,75 @@ const translations = {
       pendingInvitations: "Pending Invitations",
       activeAPIKeys: "Active API Keys",
       recentActivity: "Recent Activity",
+      // Page subtitle
+      subtitle: "Manage users, teams, roles, and permissions",
+      // Stats
+      activeCount: "active",
+      // Invitation dialog
+      invitationDescription: "Send an invitation to a new user to join the platform.",
+      // Form labels
+      role: "Role",
+      // Role options
+      roleAdmin: "Admin",
+      roleManager: "Manager",
+      roleAnalyst: "Analyst",
+      roleViewer: "Viewer",
+      // Buttons
+      cancel: "Cancel",
+      sendInvitation: "Send Invitation",
+      createTeamButton: "Create Team",
+      createRoleButton: "Create Role",
+      createAPIKeyButton: "Create API Key",
+      // Table headers
+      roleHeader: "Role",
+      statusHeader: "Status",
+      keyPrefix: "Key Prefix",
+      expiresHeader: "Expires",
+      sentHeader: "Sent",
+      // Never (for last login)
+      never: "Never",
+      // Dropdown actions
+      viewDetails: "View Details",
+      editUser: "Edit User",
+      viewMembers: "View Members",
+      editTeam: "Edit Team",
+      deleteTeam: "Delete Team",
+      // Loading
+      loading: "Loading...",
+      // Team dialog
+      teamDialogDescription: "Create a new team to organize users.",
+      // Placeholders
+      teamNamePlaceholder: "Security Team",
+      teamDescriptionPlaceholder: "Team description...",
+      // Members
+      members: "members",
+      // Role dialog
+      roleDialogDescription: "Create a custom role with specific permissions.",
+      // Role placeholders
+      roleNamePlaceholder: "Custom Role",
+      roleDescriptionPlaceholder: "Role description...",
+      // Roles card
+      manageRolesDescription: "Manage user roles and their permissions",
+      // Permissions card
+      availablePermissions: "Available permissions in the system",
+      // Sessions
+      yourActiveSessions: "Your Active Sessions",
+      manageSessionsDescription: "Manage your active sessions across devices",
+      unknownDevice: "Unknown Device",
+      lastActive: "Last active",
+      // Activity log
+      recentActivityDescription: "Recent activity across the platform",
+      system: "System",
+      // API Key dialog
+      apiKeyDescription: "Create an API key for programmatic access.",
+      // API Key placeholder
+      apiKeyNamePlaceholder: "My API Key",
+      // Expiration
+      expirationDays: "Expiration (days)",
+      days30: "30 days",
+      days90: "90 days",
+      days180: "180 days",
+      year1: "1 year",
     },
     // Notifications
     notifications: {
@@ -940,6 +1368,45 @@ const translations = {
       disabled: "Disabled",
       active: "Active",
       inactive: "Inactive",
+      // Stats cards
+      total: "Total",
+      // Switch label
+      showUnreadOnly: "Show unread only",
+      // Loading
+      loading: "Loading...",
+      // View link
+      view: "View",
+      // Subtitle
+      unreadOfTotal: "{unread} unread of {total} notifications",
+      // General Settings
+      generalSettings: "General Settings",
+      configureHowYouReceive: "Configure how you receive notifications",
+      enableNotifications: "Enable Notifications",
+      receiveInAppNotifications: "Receive in-app notifications",
+      receiveEmailNotifications: "Receive email notifications",
+      muteNotificationsDuringHours: "Mute notifications during specific hours",
+      // Priority Thresholds
+      priorityThresholds: "Priority Thresholds",
+      setMinimumPriority: "Set minimum priority for different channels",
+      minPriorityEmail: "Minimum Priority for Email",
+      minPrioritySMS: "Minimum Priority for SMS",
+      // Webhook dialog
+      webhookDialogDescription: "Configure a webhook to receive notifications at an external URL.",
+      // Form labels
+      name: "Name",
+      description: "Description",
+      method: "Method",
+      // Placeholders
+      namePlaceholder: "My Webhook",
+      descriptionPlaceholder: "Optional description",
+      urlPlaceholder: "https://example.com/webhook",
+      // Buttons
+      cancel: "Cancel",
+      createWebhook: "Create Webhook",
+      // Failures
+      failures: "failures",
+      // Test button
+      test: "Test",
     },
   },
   de: {
@@ -1120,6 +1587,62 @@ const translations = {
       expired: "Abgelaufen",
       falsePositive: "Falsch positiv",
       underReview: "In Prufung",
+      // Stats cards
+      totalIOCs: "IOCs gesamt",
+      threatActors: "Bedrohungsakteure",
+      criticalIOCs: "Kritische IOCs",
+      highSeverity: "hoher Schweregrad",
+      iocsByType: "IOCs nach Typ",
+      // Tabs
+      overview: "Ubersicht",
+      // Dialogs
+      enrichIOCTitle: "IOC anreichern",
+      enrichIOCDescription: "IOC-Wert eingeben, um mit Bedrohungsinformationen anzureichern",
+      bulkImportTitle: "IOCs Massenimport",
+      bulkImportDescription: "Ein IOC pro Zeile eingeben. Sie werden automatisch angereichert.",
+      addIOCTitle: "IOC hinzufugen",
+      addIOCDescription: "Neuen Kompromittierungsindikator hinzufugen. Er wird automatisch angereichert.",
+      // Labels
+      iocValue: "IOC-Wert",
+      iocValueRequired: "IOC-Wert *",
+      description: "Beschreibung",
+      // Placeholders
+      enrichPlaceholder: "z.B. 192.168.1.1, evil.com, Hash...",
+      bulkPlaceholder: "192.168.1.1\nevil-domain.com\nabc123hash...",
+      addIOCPlaceholder: "IP, Domain, Hash, URL, E-Mail...",
+      descriptionPlaceholder: "Optionale Beschreibung",
+      sourcePlaceholder: "Wo haben Sie diesen IOC gefunden?",
+      searchIOCs: "IOCs suchen...",
+      // Buttons
+      enriching: "Wird angereichert...",
+      enrichAndSave: "Anreichern & Speichern",
+      importing: "Wird importiert...",
+      importIOCs: "{count} IOCs importieren",
+      creating: "Wird erstellt...",
+      createIOC: "IOC erstellen",
+      // Recent IOCs
+      recentIOCs: "Neueste IOCs",
+      recentIOCsDescription: "Zuletzt hinzugefugte Indikatoren",
+      // Filters
+      allTypes: "Alle Typen",
+      ipAddress: "IP-Adresse",
+      domain: "Domain",
+      url: "URL",
+      sha256: "SHA256",
+      md5: "MD5",
+      email: "E-Mail",
+      allLevels: "Alle Stufen",
+      // Loading
+      loading: "Laden...",
+      // Add buttons
+      addThreatActor: "Bedrohungsakteur hinzufugen",
+      addCampaign: "Kampagne hinzufugen",
+      // Row actions
+      viewDetails: "Details anzeigen",
+      delete: "Loschen",
+      // Score display
+      score: "Bewertung:",
+      conf: "Konf:",
     },
     // Risk Management
     risks: {
@@ -1198,6 +1721,80 @@ const translations = {
       totalControls: "Kontrollen gesamt",
       effectiveControls: "Wirksame Kontrollen",
       financialExposure: "Finanzielle Exposition",
+      // Actions
+      refresh: "Aktualisieren",
+      creating: "Wird erstellt...",
+      createRisk: "Risiko erstellen",
+      createControl: "Kontrolle erstellen",
+      viewDetails: "Details anzeigen",
+      // Form labels
+      titleLabel: "Titel *",
+      descriptionLabel: "Beschreibung",
+      categoryLabel: "Kategorie *",
+      departmentLabel: "Abteilung",
+      likelihoodLabel: "Wahrscheinlichkeit",
+      impactLabel: "Auswirkung",
+      treatmentTypeLabel: "Behandlungsart",
+      financialImpactLabel: "Finanzielle Auswirkung ($)",
+      riskOwnerLabel: "Risikoeigentumer",
+      nameLabel: "Name *",
+      controlTypeLabel: "Kontrolltyp *",
+      implementationDetailsLabel: "Implementierungsdetails",
+      effectivenessRatingLabel: "Wirksamkeitsbewertung (0-100)",
+      // Placeholders
+      riskTitlePlaceholder: "Risikotitel",
+      describeRiskPlaceholder: "Risiko beschreiben...",
+      selectLikelihood: "Wahrscheinlichkeit wahlen",
+      selectImpact: "Auswirkung wahlen",
+      selectTreatment: "Behandlung wahlen",
+      departmentPlaceholder: "Abteilung",
+      riskOwnerPlaceholder: "Name oder ID des Risikoeigentumers",
+      controlNamePlaceholder: "Kontrollname",
+      describeControlPlaceholder: "Kontrolle beschreiben...",
+      implementationPlaceholder: "Wie die Kontrolle implementiert wird...",
+      effectivenessPlaceholder: "0-100",
+      searchRisksPlaceholder: "Risiken suchen...",
+      // Filter options
+      allCategories: "Alle Kategorien",
+      allLevels: "Alle Stufen",
+      // Stats labels
+      open: "offen",
+      high: "hoch",
+      effective: "wirksam",
+      avgScore: "Durchschn. Bewertung:",
+      // Chart titles
+      risksByCategory: "Risiken nach Kategorie",
+      risksByLevel: "Risiken nach Stufe",
+      recentRisks: "Neueste Risiken",
+      // Table headers
+      riskId: "Risiko-ID",
+      titleHeader: "Titel",
+      categoryHeader: "Kategorie",
+      levelHeader: "Stufe",
+      statusHeader: "Status",
+      riskLevelHeader: "Risikostufe",
+      scoreHeader: "Bewertung",
+      treatmentHeader: "Behandlung",
+      controlsHeader: "Kontrollen",
+      controlId: "Kontroll-ID",
+      nameHeader: "Name",
+      typeHeader: "Typ",
+      effectivenessHeader: "Wirksamkeit",
+      // Loading states
+      loading: "Laden...",
+      loadingRiskMatrix: "Risikomatrix wird geladen...",
+      // Matrix legend
+      legendCritical: "Kritisch (17-25)",
+      legendHigh: "Hoch (10-16)",
+      legendMedium: "Mittel (5-9)",
+      legendLow: "Niedrig (1-4)",
+      // Risk detail dialog
+      unassessed: "Nicht bewertet",
+      inherentScore: "Inharente Bewertung",
+      residualScore: "Restrisikobewertung",
+      owner: "Eigentumer",
+      controlsCount: "Kontrollen",
+      treatmentActions: "Behandlungsmaßnahmen",
     },
     // CMDB
     cmdb: {
@@ -1440,10 +2037,67 @@ const translations = {
       expiringContracts30: "Ablauf in 30 Tagen",
       expiringContracts90: "Ablauf in 90 Tagen",
       vendorsRequiringAssessment: "Bewertung erforderlich",
+      // Page texts
+      subtitle: "Lieferanten-Risikobewertungen, Befunde und Vertrage verwalten",
+      dialogDescription: "Neuen Drittanbieter zum Risikomanagementsystem hinzufugen.",
+      // Form labels
+      vendorName: "Lieferantenname",
+      tier: "Stufe",
+      category: "Kategorie",
+      contactEmail: "Kontakt-E-Mail",
+      servicesProvided: "Bereitgestellte Dienste",
+      // Placeholders
+      vendorNamePlaceholder: "Lieferantenname",
+      contactEmailPlaceholder: "kontakt@lieferant.com",
+      servicesPlaceholder: "Beschreiben Sie die von diesem Lieferanten bereitgestellten Dienste...",
+      // Button labels
+      cancel: "Abbrechen",
+      createVendor: "Lieferant erstellen",
+      // Stats subtext
+      criticalOrHighRisk: "Kritische oder hohe Risikoeinstufung",
+      in90Days: "in 90 Tagen",
+      assessmentOverdueOrDue: "Bewertung uberfallig oder fallig",
+      // Dashboard labels
+      findingsBySeverity: "Befunde nach Schweregrad",
+      vendorsByTier: "Lieferanten nach Stufe",
+      // Badge labels (short)
+      badgeCritical: "Kritisch",
+      badgeHigh: "Hoch",
+      badgeMedium: "Mittel",
+      badgeLow: "Niedrig",
+      badgeT1: "S1",
+      badgeT2: "S2",
+      badgeT3: "S3",
+      badgeT4: "S4",
+      // Filter labels
+      searchVendors: "Lieferanten suchen...",
+      allStatus: "Alle Status",
+      allTiers: "Alle Stufen",
+      allSeverities: "Alle Schweregrade",
+      // Vendor card
+      noServicesDescription: "Keine Dienstleistungsbeschreibung",
+      risk: "Risiko",
+      website: "Webseite",
+      nextAssessment: "Nachste Bewertung:",
+      // Common
+      noDescription: "Keine Beschreibung",
+      // Assessment labels
+      assessor: "Bewerter:",
+      started: "Gestartet:",
+      due: "Fallig:",
+      score: "Bewertung:",
+      residualRisk: "Restrisiko",
+      // Finding labels
+      riskScoreLabel: "Risikobewertung:",
+      created: "Erstellt:",
+      // Contract labels
+      start: "Beginn:",
+      expires: "Lauft ab:",
     },
     // Integrations
     integrations: {
       title: "Integrations-Hub",
+      subtitle: "Externe Sicherheitsplattformen verbinden und Daten synchronisieren",
       dashboard: "Dashboard",
       list: "Integrationen",
       templates: "Vorlagen",
@@ -1495,6 +2149,59 @@ const translations = {
       syncsToday: "Syncs heute",
       webhooksToday: "Webhooks heute",
       recordsSynced: "Synchronisierte Datensatze",
+      requireAttention: "Erfordert Aufmerksamkeit",
+      success: "erfolgreich",
+      failed: "fehlgeschlagen",
+      today: "Heute",
+      processed: "verarbeitet",
+      // Awareness
+      awarenessScore: "Awareness-Bewertung",
+      usersTracked: "Benutzer erfasst",
+      phishingClickRate: "Phishing-Klickrate",
+      trainingComplete: "Schulung abgeschlossen",
+      // Dashboard
+      integrationsByCategory: "Integrationen nach Kategorie",
+      // Buttons
+      seedTemplates: "Vorlagen erstellen",
+      seedDefaultTemplates: "Standardvorlagen erstellen",
+      browseTemplates: "Vorlagen durchsuchen",
+      cancel: "Abbrechen",
+      creating: "Wird erstellt...",
+      createIntegration: "Integration erstellen",
+      // Dialog
+      configureX: "{name} konfigurieren",
+      connectNewPlatform: "Eine neue externe Plattform verbinden, um Sicherheitsdaten zu synchronisieren.",
+      // Form
+      integrationName: "Integrationsname",
+      baseUrlEndpoint: "Basis-URL / API-Endpunkt",
+      apiKey: "API-Schlussel",
+      description: "Beschreibung",
+      // Placeholders
+      namePlaceholder: "Meine Integration",
+      urlPlaceholder: "https://api.beispiel.com",
+      apiKeyPlaceholder: "API-Schlussel eingeben",
+      descriptionPlaceholder: "Optionale Beschreibung...",
+      // Filters
+      searchIntegrations: "Integrationen suchen...",
+      allCategories: "Alle Kategorien",
+      allStatus: "Alle Status",
+      // Badges
+      enabled: "Aktiviert",
+      disabled: "Deaktiviert",
+      failures: "Fehler",
+      // Sync info
+      lastSyncLabel: "Letzter Sync:",
+      nextLabel: "Nachster:",
+      // Templates
+      noDescriptionAvailable: "Keine Beschreibung verfugbar",
+      webhook: "Webhook",
+      // Sync logs
+      selectIntegration: "Integration auswahlen",
+      selectIntegrationToViewLogs: "Integration auswahlen, um Sync-Protokolle anzuzeigen",
+      fetched: "Abgerufen:",
+      created: "Erstellt:",
+      updated: "Aktualisiert:",
+      failedLabel: "Fehlgeschlagen:",
       knowbe4: "KnowBe4",
       gophish: "GoPhish",
       splunk: "Splunk",
@@ -1509,6 +2216,7 @@ const translations = {
     // Reporting
     reporting: {
       title: "Berichte & Analysen",
+      subtitle: "Executive Dashboards, Berichte und Analysen",
       executiveDashboard: "Executive Dashboard",
       templates: "Berichtsvorlagen",
       reports: "Generierte Berichte",
@@ -1518,6 +2226,7 @@ const translations = {
       noReports: "Keine Berichte generiert",
       noTemplates: "Keine Vorlagen verfugbar",
       noSchedules: "Keine Zeitplane konfiguriert",
+      noDescription: "Keine Beschreibung",
       executiveSummary: "Executive Summary",
       incidentReport: "Vorfallbericht",
       socMetrics: "SOC-Metriken",
@@ -1530,8 +2239,8 @@ const translations = {
       excel: "Excel",
       csv: "CSV",
       json: "JSON",
-      pending: "Ausstehend",
-      generating: "Wird generiert",
+      pending: "ausstehend",
+      generating: "Wird generiert...",
       completed: "Abgeschlossen",
       failed: "Fehlgeschlagen",
       scheduled: "Geplant",
@@ -1546,6 +2255,9 @@ const translations = {
       download: "Herunterladen",
       schedule: "Planen",
       preview: "Vorschau",
+      cancel: "Abbrechen",
+      seedTemplates: "Vorlagen initialisieren",
+      seedDefaultTemplates: "Standardvorlagen initialisieren",
       securityScore: "Sicherheitsbewertung",
       totalIncidents: "Vorfalle gesamt",
       openIncidents: "Offene Vorfalle",
@@ -1556,6 +2268,51 @@ const translations = {
       patchCompliance: "Patch-Compliance",
       mttd: "MTTD",
       mttr: "MTTR",
+      // Dialog
+      dialogDescription: "Wahlen Sie eine Vorlage und konfigurieren Sie Ihren Bericht.",
+      reportTemplate: "Berichtsvorlage",
+      selectTemplate: "Vorlage auswahlen",
+      format: "Format",
+      periodDays: "Zeitraum (Tage)",
+      last7days: "Letzte 7 Tage",
+      last30days: "Letzte 30 Tage",
+      last90days: "Letzte 90 Tage",
+      lastYear: "Letztes Jahr",
+      // Dashboard labels
+      overallSecurityPosture: "Gesamte Sicherheitslage",
+      keyMetrics: "Kennzahlen",
+      mttdMin: "MTTD (Min)",
+      mttrMin: "MTTR (Min)",
+      // Badge labels
+      critical: "kritisch",
+      open: "offen",
+      cases: "Falle",
+      overdue: "uberfällig",
+      treatment: "Behandlung",
+      // Third-Party Risk
+      thirdPartyRisk: "Drittanbieter-Risiko",
+      vendors: "Lieferanten",
+      highRisk: "hohes Risiko",
+      // Integrations
+      integrations: "Integrationen",
+      active: "Aktiv",
+      errors: "Fehler",
+      allHealthy: "Alle fehlerfrei",
+      syncs: "Syncs",
+      // Compliance
+      compliance: "Compliance",
+      controls: "Kontrollen",
+      // Report labels
+      period: "Zeitraum:",
+      generated: "Generiert:",
+      time: "Zeit:",
+      // Schedule labels
+      enabled: "Aktiviert",
+      disabled: "Deaktiviert",
+      recipients: "Empfanger",
+      next: "Nachster:",
+      last: "Letzter:",
+      consecutiveFailures: "aufeinanderfolgende Fehler",
     },
     // Vulnerability Management
     vulnerabilities: {
@@ -1580,17 +2337,86 @@ const translations = {
       open: "Offen",
       inProgress: "In Bearbeitung",
       remediated: "Behoben",
-      accepted: "Risiko akzeptiert",
+      accepted: "Akzeptiert",
       falsePositive: "Falsch positiv",
       mitigated: "Mitigiert",
       critical: "Kritisch",
       high: "Hoch",
       medium: "Mittel",
       low: "Niedrig",
-      info: "Informativ",
-      overdue: "Uberfällig",
+      info: "Info",
+      overdue: "uberfällig",
       mttr: "Mittlere Behebungszeit",
       assetsWithVulns: "Assets mit Schwachstellen",
+      // Stats
+      totalVulnerabilities: "Schwachstellen gesamt",
+      openIssues: "Offene Probleme",
+      assetsAtRisk: "Gefahrdete Assets",
+      fixed: "behoben",
+      inProgressCount: "in Bearbeitung",
+      ofTotalAssets: "von {count} Assets gesamt",
+      // Sections
+      bySeverity: "Nach Schweregrad",
+      overview: "Ubersicht",
+      topVulnerableAssets: "Gefahrdetste Assets",
+      recentVulnerabilities: "Aktuelle Schwachstellen",
+      noVulnerableAssets: "Keine gefahrdeten Assets",
+      // Dialog titles and descriptions
+      addAssetTitle: "Asset hinzufugen",
+      addAssetDescription: "Neues Asset zur Schwachstellenverfolgung hinzufugen",
+      addVulnerabilityTitle: "Schwachstelle hinzufugen",
+      addVulnerabilityDescription: "Schwachstellenbefund manuell hinzufugen",
+      // Form labels
+      nameRequired: "Name *",
+      type: "Typ",
+      criticality: "Kritikalitat",
+      hostname: "Hostname",
+      ipAddress: "IP-Adresse",
+      environment: "Umgebung",
+      titleRequired: "Titel *",
+      description: "Beschreibung",
+      affectedComponent: "Betroffene Komponente",
+      remediationSteps: "Behebungsschritte",
+      // Placeholders
+      assetNamePlaceholder: "Asset-Name",
+      hostnamePlaceholder: "hostname",
+      ipAddressPlaceholder: "192.168.1.1",
+      vulnTitlePlaceholder: "Schwachstellentitel",
+      vulnDescriptionPlaceholder: "Schwachstelle beschreiben...",
+      cvssScorePlaceholder: "0.0 - 10.0",
+      affectedComponentPlaceholder: "z.B. Apache HTTP Server 2.4.49",
+      remediationStepsPlaceholder: "Wie diese Schwachstelle behoben wird...",
+      // Asset types
+      server: "Server",
+      workstation: "Arbeitsstation",
+      networkDevice: "Netzwerkgerat",
+      database: "Datenbank",
+      webApplication: "Webanwendung",
+      container: "Container",
+      cloudResource: "Cloud-Ressource",
+      // Environment options
+      production: "Produktion",
+      staging: "Staging",
+      development: "Entwicklung",
+      testing: "Test",
+      // Buttons
+      creating: "Wird erstellt...",
+      createAsset: "Asset erstellen",
+      createVulnerability: "Schwachstelle erstellen",
+      // Search and filters
+      searchVulnerabilities: "Schwachstellen suchen...",
+      allSeverities: "Alle Schweregrade",
+      allStatuses: "Alle Status",
+      // Loading
+      loading: "Laden...",
+      // Row text
+      assetCount: "Asset(s)",
+      vulns: "Schwachst.",
+      // Dropdown actions
+      markInProgress: "In Bearbeitung setzen",
+      markRemediated: "Als behoben markieren",
+      acceptRisk: "Risiko akzeptieren",
+      delete: "Loschen",
     },
     // Auth
     auth: {
@@ -1813,6 +2639,75 @@ const translations = {
       pendingInvitations: "Ausstehende Einladungen",
       activeAPIKeys: "Aktive API-Schlussel",
       recentActivity: "Letzte Aktivitat",
+      // Page subtitle
+      subtitle: "Benutzer, Teams, Rollen und Berechtigungen verwalten",
+      // Stats
+      activeCount: "aktiv",
+      // Invitation dialog
+      invitationDescription: "Senden Sie eine Einladung an einen neuen Benutzer, um der Plattform beizutreten.",
+      // Form labels
+      role: "Rolle",
+      // Role options
+      roleAdmin: "Administrator",
+      roleManager: "Manager",
+      roleAnalyst: "Analyst",
+      roleViewer: "Betrachter",
+      // Buttons
+      cancel: "Abbrechen",
+      sendInvitation: "Einladung senden",
+      createTeamButton: "Team erstellen",
+      createRoleButton: "Rolle erstellen",
+      createAPIKeyButton: "API-Schlussel erstellen",
+      // Table headers
+      roleHeader: "Rolle",
+      statusHeader: "Status",
+      keyPrefix: "Schlussel-Prafix",
+      expiresHeader: "Ablauf",
+      sentHeader: "Gesendet",
+      // Never (for last login)
+      never: "Nie",
+      // Dropdown actions
+      viewDetails: "Details anzeigen",
+      editUser: "Benutzer bearbeiten",
+      viewMembers: "Mitglieder anzeigen",
+      editTeam: "Team bearbeiten",
+      deleteTeam: "Team loschen",
+      // Loading
+      loading: "Laden...",
+      // Team dialog
+      teamDialogDescription: "Erstellen Sie ein neues Team, um Benutzer zu organisieren.",
+      // Placeholders
+      teamNamePlaceholder: "Sicherheitsteam",
+      teamDescriptionPlaceholder: "Teambeschreibung...",
+      // Members
+      members: "Mitglieder",
+      // Role dialog
+      roleDialogDescription: "Erstellen Sie eine benutzerdefinierte Rolle mit spezifischen Berechtigungen.",
+      // Role placeholders
+      roleNamePlaceholder: "Benutzerdefinierte Rolle",
+      roleDescriptionPlaceholder: "Rollenbeschreibung...",
+      // Roles card
+      manageRolesDescription: "Benutzerrollen und deren Berechtigungen verwalten",
+      // Permissions card
+      availablePermissions: "Verfugbare Berechtigungen im System",
+      // Sessions
+      yourActiveSessions: "Ihre aktiven Sitzungen",
+      manageSessionsDescription: "Verwalten Sie Ihre aktiven Sitzungen auf verschiedenen Geraten",
+      unknownDevice: "Unbekanntes Gerat",
+      lastActive: "Zuletzt aktiv",
+      // Activity log
+      recentActivityDescription: "Aktuelle Aktivitaten auf der Plattform",
+      system: "System",
+      // API Key dialog
+      apiKeyDescription: "Erstellen Sie einen API-Schlussel fur programmgesteuerten Zugriff.",
+      // API Key placeholder
+      apiKeyNamePlaceholder: "Mein API-Schlussel",
+      // Expiration
+      expirationDays: "Ablauf (Tage)",
+      days30: "30 Tage",
+      days90: "90 Tage",
+      days180: "180 Tage",
+      year1: "1 Jahr",
     },
     // Notifications
     notifications: {
@@ -1871,6 +2766,45 @@ const translations = {
       disabled: "Deaktiviert",
       active: "Aktiv",
       inactive: "Inaktiv",
+      // Stats cards
+      total: "Gesamt",
+      // Switch label
+      showUnreadOnly: "Nur ungelesene anzeigen",
+      // Loading
+      loading: "Laden...",
+      // View link
+      view: "Anzeigen",
+      // Subtitle
+      unreadOfTotal: "{unread} ungelesen von {total} Benachrichtigungen",
+      // General Settings
+      generalSettings: "Allgemeine Einstellungen",
+      configureHowYouReceive: "Konfigurieren Sie, wie Sie Benachrichtigungen erhalten",
+      enableNotifications: "Benachrichtigungen aktivieren",
+      receiveInAppNotifications: "In-App-Benachrichtigungen erhalten",
+      receiveEmailNotifications: "E-Mail-Benachrichtigungen erhalten",
+      muteNotificationsDuringHours: "Benachrichtigungen zu bestimmten Zeiten stummschalten",
+      // Priority Thresholds
+      priorityThresholds: "Prioritatsschwellen",
+      setMinimumPriority: "Mindestprioritat fur verschiedene Kanale festlegen",
+      minPriorityEmail: "Mindestprioritat fur E-Mail",
+      minPrioritySMS: "Mindestprioritat fur SMS",
+      // Webhook dialog
+      webhookDialogDescription: "Konfigurieren Sie einen Webhook, um Benachrichtigungen an eine externe URL zu empfangen.",
+      // Form labels
+      name: "Name",
+      description: "Beschreibung",
+      method: "Methode",
+      // Placeholders
+      namePlaceholder: "Mein Webhook",
+      descriptionPlaceholder: "Optionale Beschreibung",
+      urlPlaceholder: "https://example.com/webhook",
+      // Buttons
+      cancel: "Abbrechen",
+      createWebhook: "Webhook erstellen",
+      // Failures
+      failures: "Fehler",
+      // Test button
+      test: "Testen",
     },
   },
 };
