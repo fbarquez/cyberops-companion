@@ -78,6 +78,7 @@ export default function TemplatesPage() {
 }
 
 function TemplateCard({ template }: { template: any }) {
+  const { t } = useTranslations();
   return (
     <Card>
       <CardHeader>
@@ -95,11 +96,11 @@ function TemplateCard({ template }: { template: any }) {
         <div className="flex gap-2">
           <Button variant="outline" size="sm">
             <Copy className="h-4 w-4 mr-2" />
-            Copy
+            {t("templates.copy")}
           </Button>
           <Button variant="outline" size="sm">
             <Download className="h-4 w-4 mr-2" />
-            Download
+            {t("templates.download")}
           </Button>
         </div>
       </CardContent>

@@ -84,7 +84,7 @@ export default function NavigatorPage() {
     mutationFn: (incidentId: string) =>
       toolsAPI.mapToMITRE(token!, incidentId, selectedTechniques),
     onSuccess: (data: any) => {
-      toast.success("Techniques mapped successfully");
+      toast.success(t("navigator.toastMappedSuccess"));
       // Download the layer file
       const blob = new Blob([JSON.stringify(data.navigator_layer, null, 2)], {
         type: "application/json",
@@ -97,7 +97,7 @@ export default function NavigatorPage() {
       URL.revokeObjectURL(url);
     },
     onError: () => {
-      toast.error("Failed to map techniques");
+      toast.error(t("navigator.toastMappedError"));
     },
   });
 
@@ -152,7 +152,7 @@ export default function NavigatorPage() {
               rel="noopener noreferrer"
             >
               <ExternalLink className="h-4 w-4 mr-2" />
-              Open ATT&CK
+              {t("navigator.openAttack")}
             </a>
           </Button>
         }
@@ -164,7 +164,7 @@ export default function NavigatorPage() {
           <div className="relative flex-1 min-w-[200px] max-w-md">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search techniques..."
+              placeholder={t("navigator.searchPlaceholder")}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10"
@@ -173,10 +173,10 @@ export default function NavigatorPage() {
           <Select value={selectedTactic} onValueChange={setSelectedTactic}>
             <SelectTrigger className="w-[200px]">
               <Filter className="h-4 w-4 mr-2" />
-              <SelectValue placeholder="Filter by tactic" />
+              <SelectValue placeholder={t("navigator.filterByTactic")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Tactics</SelectItem>
+              <SelectItem value="all">{t("navigator.allTactics")}</SelectItem>
               {tactics.map((tactic) => (
                 <SelectItem key={tactic.short_name} value={tactic.short_name}>
                   {tactic.name}
@@ -185,16 +185,16 @@ export default function NavigatorPage() {
             </SelectContent>
           </Select>
           <Badge variant="secondary" className="h-10 px-4 flex items-center">
-            {selectedTechniques.length} selected
+            {t("navigator.selected", { count: selectedTechniques.length })}
           </Badge>
         </div>
 
         {/* Navigator Matrix */}
         <Card>
           <CardHeader>
-            <CardTitle>MITRE ATT&CK Matrix</CardTitle>
+            <CardTitle>{t("navigator.matrixTitle")}</CardTitle>
             <CardDescription>
-              Click on techniques to select them. Selected techniques can be mapped to incidents.
+              {t("navigator.matrixDescription")}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -230,7 +230,7 @@ export default function NavigatorPage() {
                     ))}
                     {tacticTechniques.length > 10 && (
                       <div className="text-xs text-muted-foreground text-center py-1">
-                        +{tacticTechniques.length - 10} more
+                        {t("navigator.moreCount", { count: tacticTechniques.length - 10 })}
                       </div>
                     )}
                   </div>
@@ -246,7 +246,7 @@ export default function NavigatorPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <CheckSquare className="h-5 w-5" />
-                Selected Techniques ({selectedTechniques.length})
+                {t("navigator.selectedTechniques", { count: selectedTechniques.length })}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -269,7 +269,7 @@ export default function NavigatorPage() {
               <div className="flex gap-2">
                 <Button
                   onClick={() => {
-                    const incidentId = prompt("Enter incident ID to map techniques:");
+                    const incidentId = prompt(t("navigator.promptIncidentId"));
                     if (incidentId) {
                       mapMutation.mutate(incidentId);
                     }
@@ -277,7 +277,7 @@ export default function NavigatorPage() {
                   disabled={mapMutation.isPending}
                 >
                   <Map className="h-4 w-4 mr-2" />
-                  Map to Incident
+                  {t("navigator.mapToIncident")}
                 </Button>
                 <Button
                   variant="outline"
@@ -302,17 +302,17 @@ export default function NavigatorPage() {
                     a.download = "mitre-navigator-layer.json";
                     a.click();
                     URL.revokeObjectURL(url);
-                    toast.success("Navigator layer downloaded");
+                    toast.success(t("navigator.toastLayerDownloaded"));
                   }}
                 >
                   <Download className="h-4 w-4 mr-2" />
-                  Export Layer
+                  {t("navigator.exportLayer")}
                 </Button>
                 <Button
                   variant="ghost"
                   onClick={() => setSelectedTechniques([])}
                 >
-                  Clear All
+                  {t("navigator.clearAll")}
                 </Button>
               </div>
             </CardContent>
@@ -333,15 +333,13 @@ export default function NavigatorPage() {
             <div className="flex items-start gap-4">
               <Map className="h-10 w-10 text-primary flex-shrink-0" />
               <div>
-                <h3 className="font-semibold">About MITRE ATT&CK</h3>
+                <h3 className="font-semibold">{t("navigator.aboutTitle")}</h3>
                 <p className="text-sm text-muted-foreground mt-1">
-                  MITRE ATT&CK is a globally-accessible knowledge base of adversary
-                  tactics and techniques based on real-world observations. Use this
-                  navigator to map observed techniques during incident response.
+                  {t("navigator.aboutDescription")}
                 </p>
                 <p className="text-sm text-muted-foreground mt-2">
-                  Version: {(techniquesData as any)?.version || "v14"} |{" "}
-                  Techniques loaded: {techniques.length}
+                  {t("navigator.version")} {(techniquesData as any)?.version || "v14"} |{" "}
+                  {t("navigator.techniquesLoaded")} {techniques.length}
                 </p>
               </div>
             </div>
@@ -359,6 +357,7 @@ function TechniqueDetails({
   technique?: Technique;
   onClose: () => void;
 }) {
+  const { t } = useTranslations();
   if (!technique) return null;
 
   return (
@@ -369,7 +368,7 @@ function TechniqueDetails({
             {technique.technique_id}: {technique.name}
           </CardTitle>
           <CardDescription>
-            Tactics: {technique.tactics.join(", ")}
+            {t("navigator.tactics")} {technique.tactics.join(", ")}
           </CardDescription>
         </div>
         <Button variant="ghost" size="sm" onClick={onClose}>
@@ -378,12 +377,12 @@ function TechniqueDetails({
       </CardHeader>
       <CardContent className="space-y-4">
         <div>
-          <h4 className="font-medium mb-1">Description</h4>
+          <h4 className="font-medium mb-1">{t("navigator.description")}</h4>
           <p className="text-sm text-muted-foreground">{technique.description}</p>
         </div>
         {technique.platforms.length > 0 && (
           <div>
-            <h4 className="font-medium mb-1">Platforms</h4>
+            <h4 className="font-medium mb-1">{t("navigator.platforms")}</h4>
             <div className="flex flex-wrap gap-1">
               {technique.platforms.map((p) => (
                 <Badge key={p} variant="outline">
@@ -395,7 +394,7 @@ function TechniqueDetails({
         )}
         {technique.mitigations.length > 0 && (
           <div>
-            <h4 className="font-medium mb-1">Mitigations</h4>
+            <h4 className="font-medium mb-1">{t("navigator.mitigations")}</h4>
             <ul className="text-sm text-muted-foreground space-y-1">
               {technique.mitigations.map((m) => (
                 <li key={m.id}>
@@ -408,7 +407,7 @@ function TechniqueDetails({
         <Button variant="outline" asChild>
           <a href={technique.url} target="_blank" rel="noopener noreferrer">
             <ExternalLink className="h-4 w-4 mr-2" />
-            View on ATT&CK
+            {t("navigator.viewOnAttack")}
           </a>
         </Button>
       </CardContent>
