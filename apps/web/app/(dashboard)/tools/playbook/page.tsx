@@ -83,10 +83,10 @@ export default function PlaybookPage() {
     },
     onSuccess: (data) => {
       setGeneratedPlaybook(data);
-      toast.success("Playbook generated successfully");
+      toast.success(t("playbook.toastGenerated"));
     },
     onError: () => {
-      toast.error("Failed to generate playbook");
+      toast.error(t("playbook.toastGenerateFailed"));
     },
   });
 
@@ -100,10 +100,10 @@ export default function PlaybookPage() {
       a.download = `playbook-${data.playbook_id}.md`;
       a.click();
       URL.revokeObjectURL(url);
-      toast.success("Playbook exported");
+      toast.success(t("playbook.toastExported"));
     },
     onError: () => {
-      toast.error("Failed to export playbook");
+      toast.error(t("playbook.toastExportFailed"));
     },
   });
 
@@ -122,7 +122,7 @@ export default function PlaybookPage() {
     a.download = `playbook-${generatedPlaybook.incident_type}-${severity}.md`;
     a.click();
     URL.revokeObjectURL(url);
-    toast.success("Playbook downloaded");
+    toast.success(t("playbook.toastDownloaded"));
   };
 
   return (
@@ -135,19 +135,19 @@ export default function PlaybookPage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Wand2 className="h-5 w-5" />
-              Generate Playbook
+              {t("playbook.title")}
             </CardTitle>
             <CardDescription>
-              Create a customized incident response playbook based on incident type and severity
+              {t("playbook.description")}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid md:grid-cols-3 gap-4">
               <div className="space-y-2">
-                <Label>Incident Type</Label>
+                <Label>{t("playbook.incidentType")}</Label>
                 <Select value={incidentType} onValueChange={setIncidentType}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select incident type" />
+                    <SelectValue placeholder={t("playbook.selectIncidentType")} />
                   </SelectTrigger>
                   <SelectContent>
                     {typeList.map((type: any) => (
@@ -155,7 +155,7 @@ export default function PlaybookPage() {
                         {type.name}
                         {type.available && (
                           <Badge variant="secondary" className="ml-2 text-xs">
-                            Template
+                            {t("playbook.template")}
                           </Badge>
                         )}
                       </SelectItem>
@@ -165,24 +165,24 @@ export default function PlaybookPage() {
               </div>
 
               <div className="space-y-2">
-                <Label>Severity</Label>
+                <Label>{t("playbook.severity")}</Label>
                 <Select value={severity} onValueChange={setSeverity}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="critical">Critical</SelectItem>
-                    <SelectItem value="high">High</SelectItem>
-                    <SelectItem value="medium">Medium</SelectItem>
-                    <SelectItem value="low">Low</SelectItem>
+                    <SelectItem value="critical">{t("playbook.severityCritical")}</SelectItem>
+                    <SelectItem value="high">{t("playbook.severityHigh")}</SelectItem>
+                    <SelectItem value="medium">{t("playbook.severityMedium")}</SelectItem>
+                    <SelectItem value="low">{t("playbook.severityLow")}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               <div className="space-y-2">
-                <Label>Affected Systems (comma-separated)</Label>
+                <Label>{t("playbook.affectedSystems")}</Label>
                 <Input
-                  placeholder="e.g., WS-001, SRV-002"
+                  placeholder={t("playbook.affectedSystemsPlaceholder")}
                   value={affectedSystems}
                   onChange={(e) => setAffectedSystems(e.target.value)}
                 />
@@ -194,7 +194,7 @@ export default function PlaybookPage() {
               disabled={!incidentType || generateMutation.isPending}
             >
               <Wand2 className="h-4 w-4 mr-2" />
-              {generateMutation.isPending ? "Generating..." : "Generate Playbook"}
+              {generateMutation.isPending ? t("playbook.generating") : t("playbook.generatePlaybook")}
             </Button>
           </CardContent>
         </Card>
@@ -206,16 +206,16 @@ export default function PlaybookPage() {
               <div>
                 <CardTitle className="flex items-center gap-2">
                   <FileText className="h-5 w-5" />
-                  Generated Playbook: {generatedPlaybook.incident_type}
+                  {t("playbook.generatedPlaybookTitle").replace("{type}", generatedPlaybook.incident_type)}
                 </CardTitle>
                 <CardDescription>
-                  Severity: {generatedPlaybook.severity} | Generated:{" "}
+                  {t("playbook.severityLabel")} {generatedPlaybook.severity} | {t("playbook.generatedLabel")}{" "}
                   {new Date(generatedPlaybook.generated_at).toLocaleString()}
                 </CardDescription>
               </div>
               <Button variant="outline" onClick={downloadGeneratedPlaybook}>
                 <Download className="h-4 w-4 mr-2" />
-                Download
+                {t("playbook.download")}
               </Button>
             </CardHeader>
             <CardContent>
@@ -235,13 +235,13 @@ export default function PlaybookPage() {
                       </div>
 
                       <div>
-                        <h4 className="font-medium mb-2">Objective</h4>
+                        <h4 className="font-medium mb-2">{t("playbook.objective")}</h4>
                         <p className="text-sm text-muted-foreground">{phase.objective}</p>
                       </div>
 
                       {phase.key_questions && phase.key_questions.length > 0 && (
                         <div>
-                          <h4 className="font-medium mb-2">Key Questions</h4>
+                          <h4 className="font-medium mb-2">{t("playbook.keyQuestions")}</h4>
                           <ul className="list-disc list-inside text-sm text-muted-foreground space-y-1">
                             {phase.key_questions.map((q, i) => (
                               <li key={i}>{q}</li>
@@ -252,7 +252,7 @@ export default function PlaybookPage() {
 
                       {phase.critical_reminders && phase.critical_reminders.length > 0 && (
                         <div>
-                          <h4 className="font-medium mb-2 text-destructive">Critical Reminders</h4>
+                          <h4 className="font-medium mb-2 text-destructive">{t("playbook.criticalReminders")}</h4>
                           <ul className="list-disc list-inside text-sm space-y-1">
                             {phase.critical_reminders.map((r, i) => (
                               <li key={i} className="text-destructive">
@@ -266,7 +266,7 @@ export default function PlaybookPage() {
                       {phase.severity_considerations && phase.severity_considerations.length > 0 && (
                         <div>
                           <h4 className="font-medium mb-2">
-                            Severity Considerations ({generatedPlaybook.severity})
+                            {t("playbook.severityConsiderations").replace("{severity}", generatedPlaybook.severity)}
                           </h4>
                           <ul className="list-disc list-inside text-sm text-muted-foreground space-y-1">
                             {phase.severity_considerations.map((c, i) => (
@@ -278,7 +278,7 @@ export default function PlaybookPage() {
 
                       {phase.forensic_considerations && phase.forensic_considerations.length > 0 && (
                         <div>
-                          <h4 className="font-medium mb-2">Forensic Considerations</h4>
+                          <h4 className="font-medium mb-2">{t("playbook.forensicConsiderations")}</h4>
                           <ul className="list-disc list-inside text-sm text-muted-foreground space-y-1">
                             {phase.forensic_considerations.map((f, i) => (
                               <li key={i}>{f}</li>
@@ -289,7 +289,7 @@ export default function PlaybookPage() {
 
                       {phase.common_mistakes && phase.common_mistakes.length > 0 && (
                         <div>
-                          <h4 className="font-medium mb-2 text-yellow-600">Common Mistakes to Avoid</h4>
+                          <h4 className="font-medium mb-2 text-yellow-600">{t("playbook.commonMistakes")}</h4>
                           <ul className="list-disc list-inside text-sm text-yellow-600 space-y-1">
                             {phase.common_mistakes.map((m, i) => (
                               <li key={i}>{m}</li>
@@ -307,7 +307,7 @@ export default function PlaybookPage() {
 
         {/* Available Playbooks */}
         <div>
-          <h2 className="text-lg font-semibold mb-4">Available Playbook Templates</h2>
+          <h2 className="text-lg font-semibold mb-4">{t("playbook.availableTemplates")}</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {typeList.map((type: any) => (
               <Card key={type.id} className={type.available ? "" : "opacity-60"}>
@@ -329,7 +329,7 @@ export default function PlaybookPage() {
                           disabled={exportMutation.isPending}
                         >
                           <Download className="h-4 w-4 mr-2" />
-                          Export
+                          {t("playbook.export")}
                         </Button>
                         <Button
                           className="flex-1"
@@ -340,12 +340,12 @@ export default function PlaybookPage() {
                           disabled={generateMutation.isPending}
                         >
                           <Wand2 className="h-4 w-4 mr-2" />
-                          Use
+                          {t("playbook.use")}
                         </Button>
                       </>
                     ) : (
                       <Badge variant="secondary" className="w-full justify-center py-2">
-                        Coming Soon
+                        {t("playbook.comingSoon")}
                       </Badge>
                     )}
                   </div>
