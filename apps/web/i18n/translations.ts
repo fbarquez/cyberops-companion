@@ -2,8 +2,8 @@ const translations = {
   en: {
     // App
     app: {
-      title: "IR Companion",
-      subtitle: "Incident Response Decision Support Platform",
+      title: "CyberOps Companion",
+      subtitle: "Security Operations & Incident Response Platform",
     },
     // Navigation
     nav: {
@@ -837,8 +837,8 @@ const translations = {
   de: {
     // App
     app: {
-      title: "IR Companion",
-      subtitle: "Plattform zur Entscheidungsunterstutzung bei Sicherheitsvorfallen",
+      title: "CyberOps Companion",
+      subtitle: "Plattform für Security Operations & Incident Response",
     },
     // Navigation
     nav: {

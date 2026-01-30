@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Quick start script for IR Companion.
+Quick start script for CyberOps Companion.
 
 Usage:
     python run.py          # Start the web UI
@@ -27,7 +27,7 @@ def main():
     # Default: Start Streamlit UI
     app_path = project_root / "src" / "ui" / "app.py"
 
-    print("Starting IR Companion...")
+    print("Starting CyberOps Companion...")
     print("Open http://localhost:8501 in your browser")
     print("Press Ctrl+C to stop\n")
 

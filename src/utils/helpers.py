@@ -1,5 +1,5 @@
 """
-Helper utilities for IR Companion.
+Helper utilities for CyberOps Companion.
 """
 
 from datetime import datetime, timezone

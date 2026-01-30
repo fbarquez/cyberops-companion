@@ -1,5 +1,5 @@
 """
-IOC Auto-Enrichment Module for IR Companion.
+IOC Auto-Enrichment Module for CyberOps Companion.
 
 Provides automated enrichment of Indicators of Compromise (IOCs) using
 multiple threat intelligence sources:

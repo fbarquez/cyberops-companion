@@ -1,12 +1,12 @@
-# IR Companion - Makefile
+# CyberOps Companion - Makefile
 # Common commands for development and deployment
 
 .PHONY: help dev prod build up down logs clean test migrate shell db-shell
 
 # Default target
 help:
-	@echo "IR Companion - Available Commands"
-	@echo "================================="
+	@echo "CyberOps Companion - Available Commands"
+	@echo "========================================"
 	@echo ""
 	@echo "Development:"
 	@echo "  make dev          - Start development environment"
@@ -95,11 +95,11 @@ migrate:
 	docker compose exec api alembic upgrade head
 
 db-shell:
-	docker compose exec db psql -U postgres -d ir_companion
+	docker compose exec db psql -U postgres -d cyberops_companion
 
 db-backup:
 	@mkdir -p backups
-	docker compose exec db pg_dump -U postgres ir_companion > backups/backup_$$(date +%Y%m%d_%H%M%S).sql
+	docker compose exec db pg_dump -U postgres cyberops_companion > backups/backup_$$(date +%Y%m%d_%H%M%S).sql
 	@echo "Backup created in backups/"
 
 db-restore:
@@ -107,7 +107,7 @@ db-restore:
 		echo "Usage: make db-restore FILE=backups/backup_file.sql"; \
 		exit 1; \
 	fi
-	docker compose exec -T db psql -U postgres ir_companion < $(FILE)
+	docker compose exec -T db psql -U postgres cyberops_companion < $(FILE)
 	@echo "Database restored from $(FILE)"
 
 # Testing

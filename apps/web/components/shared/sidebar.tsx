@@ -75,7 +75,7 @@ export function Sidebar() {
       <div className="flex items-center h-16 px-4 border-b">
         <Shield className="h-8 w-8 text-primary flex-shrink-0" />
         {!sidebarCollapsed && (
-          <span className="ml-2 text-lg font-semibold">IR Companion</span>
+          <span className="ml-2 text-lg font-semibold">CyberOps Companion</span>
         )}
       </div>
 

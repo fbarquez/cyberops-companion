@@ -1,4 +1,4 @@
-"""Configuration module for IR Companion."""
+"""Configuration module for CyberOps Companion."""
 
 from .settings import (
     config,

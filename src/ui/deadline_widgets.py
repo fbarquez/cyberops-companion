@@ -1,5 +1,5 @@
 """
-Deadline Widgets for IR Companion
+Deadline Widgets for CyberOps Companion
 
 Reusable countdown timer widgets for regulatory compliance deadlines.
 Supports GDPR 72h, NIS2 (24h, 72h, 30d), and custom deadlines.

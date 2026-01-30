@@ -1,5 +1,5 @@
 """
-Pytest configuration and fixtures for IR Companion API tests.
+Pytest configuration and fixtures for CyberOps Companion API tests.
 """
 
 import asyncio

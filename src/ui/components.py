@@ -1,5 +1,5 @@
 """
-UI Components for IR Companion
+UI Components for CyberOps Companion
 
 Reusable Streamlit components for the incident response interface.
 """

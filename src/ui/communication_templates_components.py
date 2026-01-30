@@ -1,5 +1,5 @@
 """
-Communication Templates Components for IR Companion.
+Communication Templates Components for CyberOps Companion.
 
 Pre-defined templates for incident communication.
 """
@@ -109,7 +109,7 @@ Bitte behandeln Sie diese Information vertraulich.
 Weitere Updates folgen.
 
 ---
-IR Companion | Automatisch generiert""",
+CyberOps Companion | Automatisch generiert""",
         variables=[
             TemplateVariable("incident_title", "Titel des Vorfalls", "Ransomware-Angriff auf Produktionsserver"),
             TemplateVariable("priority", "Prioritaet (KRITISCH/HOCH/MITTEL/NIEDRIG)", "KRITISCH"),
@@ -605,7 +605,7 @@ Please treat this information as confidential.
 Further updates will follow.
 
 ---
-IR Companion | Auto-generated""",
+CyberOps Companion | Auto-generated""",
         variables=[
             TemplateVariable("incident_title", "Incident title", "Ransomware Attack on Production Server"),
             TemplateVariable("priority", "Priority (CRITICAL/HIGH/MEDIUM/LOW)", "CRITICAL"),
@@ -932,7 +932,7 @@ def _generate_html_template(template: CommunicationTemplate, subject: str, body:
     </div>
     <div class="body">{body_html}</div>
     <div class="footer">
-        Generiert mit IR Companion
+        Generiert mit CyberOps Companion
     </div>
 </body>
 </html>"""
@@ -995,7 +995,7 @@ def _generate_pdf_template(template: CommunicationTemplate, subject: str, body: 
     # Footer
     pdf.ln(10)
     pdf.set_font("Helvetica", "I", 8)
-    pdf.cell(0, 10, "Generiert mit IR Companion", align="C")
+    pdf.cell(0, 10, "Generiert mit CyberOps Companion", align="C")
 
     return bytes(pdf.output())
 

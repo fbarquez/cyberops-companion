@@ -1,5 +1,5 @@
 """
-IR Companion CLI Entry Point
+CyberOps Companion CLI Entry Point
 
 Command-line interface for launching the application.
 """
@@ -13,9 +13,9 @@ from config import ensure_directories, get_config, DATA_DIR
 
 
 @click.group()
-@click.version_option(version="0.1.0", prog_name="IR Companion")
+@click.version_option(version="0.1.0", prog_name="CyberOps Companion")
 def cli():
-    """IR Companion - Incident Response Decision Support Tool"""
+    """CyberOps Companion - Incident Response Decision Support Tool"""
     pass
 
 
@@ -28,7 +28,7 @@ def ui(port: int, host: str):
 
     app_path = Path(__file__).parent / "ui" / "app.py"
 
-    click.echo(f"Starting IR Companion on http://{host}:{port}")
+    click.echo(f"Starting CyberOps Companion on http://{host}:{port}")
     click.echo("Press Ctrl+C to stop")
 
     subprocess.run([
@@ -42,8 +42,8 @@ def ui(port: int, host: str):
 
 @cli.command()
 def init():
-    """Initialize the IR Companion environment."""
-    click.echo("Initializing IR Companion...")
+    """Initialize the CyberOps Companion environment."""
+    click.echo("Initializing CyberOps Companion...")
 
     ensure_directories()
 
@@ -103,7 +103,7 @@ def scenarios():
 def version():
     """Show version information."""
     config = get_config()
-    click.echo(f"IR Companion v{config.version}")
+    click.echo(f"CyberOps Companion v{config.version}")
     click.echo("Incident Response Decision Support Tool")
     click.echo("\nA product-oriented security tool for IHK Final Project")
 

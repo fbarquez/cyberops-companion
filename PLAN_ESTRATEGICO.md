@@ -77,7 +77,7 @@ Una plataforma europea-first que integra:
 ```
 ESTADO ACTUAL                         VISION FUTURA
 ---------------------------           ---------------------------
-IR Companion                    -->   CYBEROPS COMPANION
+CyberOps Companion                    -->   CYBEROPS COMPANION
 ---------------------------           ---------------------------
 Respuesta a ransomware          -->   Gestion integral de incidentes
 Herramienta individual          -->   Plataforma colaborativa

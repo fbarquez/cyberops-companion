@@ -1,5 +1,5 @@
 """
-Custom CSS Styles for IR Companion
+Custom CSS Styles for CyberOps Companion
 
 Professional, clean UI with clear visual hierarchy.
 Supports light and dark themes via CSS custom properties.

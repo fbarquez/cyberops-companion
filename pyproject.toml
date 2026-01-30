@@ -1,7 +1,7 @@
 [project]
-name = "ir-companion"
-version = "0.1.0"
-description = "Incident Response Decision Support Tool for Ransomware - IHK Final Project"
+name = "cyberops-companion"
+version = "2.0.0"
+description = "Security Operations & Incident Response Platform - IHK Final Project"
 readme = "README.md"
 license = {text = "MIT"}
 requires-python = ">=3.10"
@@ -40,7 +40,7 @@ vm = [
 ]
 
 [project.scripts]
-ir-companion = "src.cli:main"
+cyberops-companion = "src.cli:main"
 
 [build-system]
 requires = ["setuptools>=68.0", "wheel"]

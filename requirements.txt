@@ -1,4 +1,4 @@
-# IR Companion - Requirements
+# CyberOps Companion - Requirements
 # Install with: pip install -r requirements.txt
 
 # Core dependencies

@@ -6,8 +6,8 @@ import { Providers } from "@/components/shared/providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "IR Companion",
-  description: "Incident Response Decision Support Platform",
+  title: "CyberOps Companion",
+  description: "Security Operations & Incident Response Platform",
 };
 
 export default function RootLayout({

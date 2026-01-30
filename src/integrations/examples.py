@@ -2,7 +2,7 @@
 Compliance Hub - Usage Examples
 
 This module demonstrates how to use the Compliance Hub integrations
-in your IR Companion application.
+in your CyberOps Companion application.
 
 Run with: python -m src.integrations.examples
 """
@@ -318,17 +318,17 @@ def example_nvd_cve_search():
         print("  (This is expected if running offline or rate-limited)")
 
 
-def example_integration_with_ir_companion():
+def example_integration_with_cyberops_companion():
     """
-    Example: Integration with IR Companion's existing workflow.
+    Example: Integration with CyberOps Companion's existing workflow.
     """
     print("\n" + "="*60)
-    print("Example 8: Integration with IR Companion Workflow")
+    print("Example 8: Integration with CyberOps Companion Workflow")
     print("="*60)
 
     print("""
 This example shows how to integrate the Compliance Hub with
-IR Companion's existing incident workflow.
+CyberOps Companion's existing incident workflow.
 
 Code snippet for app.py or workflow.py:
 
@@ -346,7 +346,7 @@ compliance_hub.preload_data()
 
 # When checking phase compliance:
 def check_phase_compliance(incident, checklist, evidence_logger):
-    # Gather data from existing IR Companion models
+    # Gather data from existing CyberOps Companion models
     completed_actions = [
         item.id for item in checklist.items
         if item.status == "completed"
@@ -386,7 +386,7 @@ def enrich_incident(incident, iocs):
 def main():
     """Run all examples."""
     print("\n" + "#"*60)
-    print("# IR Companion - Compliance Hub Examples")
+    print("# CyberOps Companion - Compliance Hub Examples")
     print("#"*60)
 
     # Run examples that work offline
@@ -402,7 +402,7 @@ def main():
         print(f"\nSkipping MITRE examples (data not available): {e}")
 
     example_compliance_report()
-    example_integration_with_ir_companion()
+    example_integration_with_cyberops_companion()
 
     # Optionally run NVD example (requires network)
     # example_nvd_cve_search()

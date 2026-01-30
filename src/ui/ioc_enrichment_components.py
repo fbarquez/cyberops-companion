@@ -1,5 +1,5 @@
 """
-IOC Enrichment UI Components for IR Companion.
+IOC Enrichment UI Components for CyberOps Companion.
 
 Provides Streamlit components for IOC enrichment functionality.
 """

@@ -36,7 +36,7 @@ class ArtifactGenerator:
     - Are tracked in a manifest for complete removal
     """
 
-    SIMULATION_MARKER = "[IR_COMPANION_SIMULATION]"
+    SIMULATION_MARKER = "[CYBEROPS_COMPANION_SIMULATION]"
 
     def __init__(self):
         """Initialize the artifact generator."""
@@ -145,7 +145,7 @@ Your unique ID: {sim_id}
 
 ================================================================================
                          THIS IS A TRAINING SIMULATION
-          This file was created by IR Companion for educational purposes.
+          This file was created by CyberOps Companion for educational purposes.
                          Created: {datetime.now(timezone.utc).isoformat()}
 ================================================================================
 {self.SIMULATION_MARKER}

@@ -1,4 +1,4 @@
-"""Data models for IR Companion."""
+"""Data models for CyberOps Companion."""
 
 from .incident import Incident, IncidentStatus, IncidentSeverity
 from .evidence import EvidenceEntry, EvidenceType, ArtifactReference

@@ -183,7 +183,7 @@ class NISTOSCALIntegration:
             cache_dir: Directory for caching downloaded catalogs
             offline_mode: If True, only use cached data
         """
-        self.cache_dir = cache_dir or Path.home() / ".ir_companion" / "nist_cache"
+        self.cache_dir = cache_dir or Path.home() / ".cyberops_companion" / "nist_cache"
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         self.offline_mode = offline_mode
         self._sp800_53_catalog: Optional[Dict] = None
@@ -607,7 +607,7 @@ class NVDIntegration:
             cache_dir: Directory for caching CVE data
         """
         self.api_key = api_key
-        self.cache_dir = cache_dir or Path.home() / ".ir_companion" / "nvd_cache"
+        self.cache_dir = cache_dir or Path.home() / ".cyberops_companion" / "nvd_cache"
         self.cache_dir.mkdir(parents=True, exist_ok=True)
 
         # Rate limiting

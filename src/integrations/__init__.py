@@ -1,5 +1,5 @@
 """
-Integrations Module - Compliance Hub for IR Companion.
+Integrations Module - Compliance Hub for CyberOps Companion.
 
 Provides integrations with regulatory frameworks and threat intelligence:
 - BSI IT-Grundschutz (Germany)

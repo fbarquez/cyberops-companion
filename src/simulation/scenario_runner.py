@@ -61,7 +61,7 @@ class ScenarioRunner:
     - Cleanup artifacts after training
     """
 
-    SIMULATION_MARKER = "[IR_COMPANION_SIMULATION]"
+    SIMULATION_MARKER = "[CYBEROPS_COMPANION_SIMULATION]"
 
     def __init__(self):
         """Initialize the scenario runner."""

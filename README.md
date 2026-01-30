@@ -13,7 +13,7 @@ A comprehensive CyberOps platform for managing security operations, incident res
 ## Project Structure
 
 ```
-ir-companion/
+cyberops-companion/
 ├── apps/
 │   ├── web/                # Next.js Frontend
 │   │   ├── app/            # App Router pages
@@ -52,7 +52,7 @@ ir-companion/
 ```bash
 # Clone the repository
 git clone <repo-url>
-cd ir-companion
+cd cyberops-companion
 
 # Copy environment file
 cp .env.example .env
@@ -78,7 +78,7 @@ source venv/bin/activate  # or venv\Scripts\activate on Windows
 pip install -r requirements.txt
 
 # Set environment variables
-export DATABASE_URL="postgresql://postgres:postgres@localhost:5432/ir_companion"
+export DATABASE_URL="postgresql://postgres:postgres@localhost:5432/cyberops_companion"
 export SECRET_KEY="your-secret-key"
 export REDIS_URL="redis://localhost:6379/0"
 

@@ -2,29 +2,29 @@ services:
   # PostgreSQL Database
   db:
     image: postgres:16-alpine
-    container_name: ir-companion-db
+    container_name: cyberops-companion-db
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
-      POSTGRES_DB: ${POSTGRES_DB:-ir_companion}
+      POSTGRES_DB: ${POSTGRES_DB:-cyberops_companion}
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init.sql:ro
     ports:
       - "${POSTGRES_PORT:-5432}:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-ir_companion}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-cyberops_companion}"]
       interval: 5s
       timeout: 5s
       retries: 5
     restart: unless-stopped
     networks:
-      - ir-network
+      - cyberops-network
 
   # Redis Cache
   redis:
     image: redis:7-alpine
-    container_name: ir-companion-redis
+    container_name: cyberops-companion-redis
     command: redis-server --appendonly yes
     volumes:
       - redis_data:/data
@@ -37,16 +37,16 @@ services:
       retries: 5
     restart: unless-stopped
     networks:
-      - ir-network
+      - cyberops-network
 
   # FastAPI Backend
   api:
     build:
       context: ./apps/api
       dockerfile: Dockerfile
-    container_name: ir-companion-api
+    container_name: cyberops-companion-api
     environment:
-      - DATABASE_URL=postgresql+asyncpg://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-ir_companion}
+      - DATABASE_URL=postgresql+asyncpg://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-cyberops_companion}
       - REDIS_URL=redis://redis:6379
       - JWT_SECRET=${JWT_SECRET:-your-super-secret-jwt-key-change-in-production}
       - JWT_ALGORITHM=${JWT_ALGORITHM:-HS256}
@@ -73,7 +73,7 @@ services:
       start_period: 30s
     restart: unless-stopped
     networks:
-      - ir-network
+      - cyberops-network
 
   # Next.js Frontend
   web:
@@ -82,7 +82,7 @@ services:
       dockerfile: Dockerfile
       args:
         NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:8000}
-    container_name: ir-companion-web
+    container_name: cyberops-companion-web
     environment:
       - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-http://localhost:8000}
     ports:
@@ -98,7 +98,7 @@ services:
       start_period: 20s
     restart: unless-stopped
     networks:
-      - ir-network
+      - cyberops-network
 
 volumes:
   postgres_data:
@@ -109,5 +109,5 @@ volumes:
     driver: local
 
 networks:
-  ir-network:
+  cyberops-network:
     driver: bridge

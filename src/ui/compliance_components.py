@@ -1,5 +1,5 @@
 """
-Compliance and Threat Intelligence UI Components for IR Companion.
+Compliance and Threat Intelligence UI Components for CyberOps Companion.
 
 Provides Streamlit components for displaying:
 - Compliance validation results

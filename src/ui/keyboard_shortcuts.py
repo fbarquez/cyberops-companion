@@ -1,5 +1,5 @@
 """
-Keyboard Shortcuts for IR Companion
+Keyboard Shortcuts for CyberOps Companion
 
 Provides keyboard navigation and shortcuts for common actions.
 Uses JavaScript injection since Streamlit has limited native keyboard support.
@@ -82,7 +82,7 @@ def get_keyboard_shortcuts_js() -> str:
 
             // For phase navigation, we need to store the target phase
             if (phase) {
-                sessionStorage.setItem('ir_companion_target_phase', phase);
+                sessionStorage.setItem('cyberops_companion_target_phase', phase);
             }
         }
 
@@ -154,7 +154,7 @@ def get_keyboard_shortcuts_js() -> str:
             }
         });
 
-        console.log('IR Companion keyboard shortcuts initialized');
+        console.log('CyberOps Companion keyboard shortcuts initialized');
     })();
     </script>
     """

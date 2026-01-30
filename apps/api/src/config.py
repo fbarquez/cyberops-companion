@@ -10,12 +10,12 @@ class Settings(BaseSettings):
     """Application settings."""
 
     # App
-    APP_NAME: str = "IR Companion"
+    APP_NAME: str = "CyberOps Companion"
     DEBUG: bool = False
     SECRET_KEY: str = "your-secret-key-change-in-production"
 
     # Database
-    DATABASE_URL: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/ir_companion"
+    DATABASE_URL: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/cyberops_companion"
     DATABASE_ECHO: bool = False
 
     # Redis

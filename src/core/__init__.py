@@ -1,4 +1,4 @@
-"""Core business logic for IR Companion."""
+"""Core business logic for CyberOps Companion."""
 
 from .workflow import WorkflowEngine
 from .evidence_logger import EvidenceLogger

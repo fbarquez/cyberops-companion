@@ -1,7 +1,7 @@
 """
-IR Companion - Configuration Settings
+CyberOps Companion - Configuration Settings
 
-Central configuration for the IR Companion application.
+Central configuration for the CyberOps Companion application.
 All settings can be overridden via environment variables.
 """
 
@@ -23,7 +23,7 @@ TEMPLATES_DIR = DATA_DIR / "templates"
 @dataclass
 class DatabaseConfig:
     """SQLite database configuration."""
-    db_path: Path = field(default_factory=lambda: DATA_DIR / "ir_companion.db")
+    db_path: Path = field(default_factory=lambda: DATA_DIR / "cyberops_companion.db")
     echo: bool = False  # SQL logging
 
 
@@ -39,7 +39,7 @@ class LoggingConfig:
 @dataclass
 class UIConfig:
     """Streamlit UI configuration."""
-    page_title: str = "IR Companion"
+    page_title: str = "CyberOps Companion"
     page_icon: str = "🛡️"
     layout: str = "wide"
     initial_sidebar_state: str = "expanded"
@@ -63,7 +63,7 @@ class ForensicsConfig:
 class SimulationConfig:
     """Simulation mode settings."""
     enabled: bool = True
-    simulation_marker: str = "[IR_COMPANION_SIMULATION]"
+    simulation_marker: str = "[CYBEROPS_COMPANION_SIMULATION]"
     default_scenario: str = "corporate_workstation"
     auto_cleanup: bool = True
     vm_connection_timeout: int = 30
@@ -82,8 +82,8 @@ class ExportConfig:
 @dataclass
 class AppConfig:
     """Main application configuration."""
-    app_name: str = "IR Companion"
-    version: str = "0.1.0"
+    app_name: str = "CyberOps Companion"
+    version: str = "2.0.0"
     debug: bool = False
 
     database: DatabaseConfig = field(default_factory=DatabaseConfig)
@@ -95,12 +95,12 @@ class AppConfig:
 
     def __post_init__(self) -> None:
         """Load environment variable overrides."""
-        self.debug = os.getenv("IR_COMPANION_DEBUG", "").lower() == "true"
+        self.debug = os.getenv("CYBEROPS_COMPANION_DEBUG", "").lower() == "true"
 
-        if log_level := os.getenv("IR_COMPANION_LOG_LEVEL"):
+        if log_level := os.getenv("CYBEROPS_COMPANION_LOG_LEVEL"):
             self.logging.level = log_level
 
-        if db_path := os.getenv("IR_COMPANION_DB_PATH"):
+        if db_path := os.getenv("CYBEROPS_COMPANION_DB_PATH"):
             self.database.db_path = Path(db_path)
 
 

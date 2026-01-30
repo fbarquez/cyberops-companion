@@ -56,7 +56,7 @@ class Incident(BaseModel):
     """
     Core incident model.
 
-    Represents a security incident being managed through the IR Companion.
+    Represents a security incident being managed through the CyberOps Companion.
     All timestamps are stored in UTC ISO 8601 format.
     """
 

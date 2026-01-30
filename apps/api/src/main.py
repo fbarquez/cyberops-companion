@@ -1,6 +1,6 @@
 """
-IR Companion API - FastAPI Backend
-Incident Response Decision Support Platform
+CyberOps Companion API - FastAPI Backend
+Security Operations & Incident Response Platform
 """
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
@@ -32,9 +32,9 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="IR Companion API",
+    title="CyberOps Companion API",
     version="2.0.0",
-    description="Incident Response Decision Support Platform",
+    description="Security Operations & Incident Response Platform",
     lifespan=lifespan,
     docs_url="/api/docs",
     redoc_url="/api/redoc",
@@ -65,7 +65,7 @@ async def health_check():
 async def root():
     """Root endpoint."""
     return {
-        "name": "IR Companion API",
+        "name": "CyberOps Companion API",
         "version": "2.0.0",
         "docs": "/api/docs",
     }

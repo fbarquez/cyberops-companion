@@ -266,7 +266,7 @@ class MITREIntegration:
     def generate_navigator_layer(
         self,
         techniques: List[str],
-        layer_name: str = "IR Companion Layer",
+        layer_name: str = "CyberOps Companion Layer",
         description: str = "",
     ) -> Dict[str, Any]:
         """

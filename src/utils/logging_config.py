@@ -1,5 +1,5 @@
 """
-Logging configuration for IR Companion.
+Logging configuration for CyberOps Companion.
 """
 
 import logging
@@ -34,7 +34,7 @@ def setup_logging(
     )
 
     # Configure root logger
-    root_logger = logging.getLogger("ir_companion")
+    root_logger = logging.getLogger("cyberops_companion")
     root_logger.setLevel(getattr(logging, log_level.upper()))
 
     # Clear existing handlers
@@ -67,4 +67,4 @@ def get_logger(name: str) -> logging.Logger:
     Returns:
         Logger instance
     """
-    return logging.getLogger(f"ir_companion.{name}")
+    return logging.getLogger(f"cyberops_companion.{name}")

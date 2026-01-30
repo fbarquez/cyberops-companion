@@ -1,1 +1,1 @@
-"""IR Companion API."""
+"""CyberOps Companion API."""

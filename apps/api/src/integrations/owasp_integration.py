@@ -1,5 +1,5 @@
 """
-OWASP Integration Module for IR Companion.
+OWASP Integration Module for CyberOps Companion.
 
 Provides:
 - OWASP Top 10 (2021) vulnerability categorization

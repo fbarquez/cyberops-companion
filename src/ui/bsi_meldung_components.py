@@ -1,5 +1,5 @@
 """
-BSI Meldung UI Components for IR Companion.
+BSI Meldung UI Components for CyberOps Companion.
 
 Provides Streamlit components for:
 - BSI incident notification form

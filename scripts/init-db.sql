@@ -1,4 +1,4 @@
--- IR Companion Database Initialization Script
+-- CyberOps Companion Database Initialization Script
 -- This script runs automatically when the PostgreSQL container is first created
 
 -- Enable required extensions
@@ -6,15 +6,15 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
 -- Create schemas
-CREATE SCHEMA IF NOT EXISTS ir_companion;
+CREATE SCHEMA IF NOT EXISTS cyberops_companion;
 
 -- Set search path
-SET search_path TO ir_companion, public;
+SET search_path TO cyberops_companion, public;
 
 -- Grant permissions (for the application user)
-GRANT ALL PRIVILEGES ON SCHEMA ir_companion TO postgres;
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA ir_companion TO postgres;
-GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA ir_companion TO postgres;
+GRANT ALL PRIVILEGES ON SCHEMA cyberops_companion TO postgres;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA cyberops_companion TO postgres;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA cyberops_companion TO postgres;
 
 -- Create audit log function for evidence chain integrity
 CREATE OR REPLACE FUNCTION update_modified_timestamp()
@@ -45,5 +45,5 @@ $$ LANGUAGE plpgsql;
 -- Log initialization
 DO $$
 BEGIN
-    RAISE NOTICE 'IR Companion database initialized successfully at %', NOW();
+    RAISE NOTICE 'CyberOps Companion database initialized successfully at %', NOW();
 END $$;

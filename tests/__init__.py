@@ -1,1 +1,1 @@
-"""Tests for IR Companion."""
+"""Tests for CyberOps Companion."""

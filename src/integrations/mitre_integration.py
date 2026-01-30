@@ -159,7 +159,7 @@ class MITREATTACKIntegration:
             cache_dir: Directory for caching STIX data
             offline_mode: If True, only use cached data
         """
-        self.cache_dir = cache_dir or Path.home() / ".ir_companion" / "mitre_cache"
+        self.cache_dir = cache_dir or Path.home() / ".cyberops_companion" / "mitre_cache"
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         self.offline_mode = offline_mode
         self._attack_data: Optional[Dict] = None

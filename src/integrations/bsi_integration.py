@@ -129,7 +129,7 @@ class BSIIntegration:
             cache_dir: Directory for caching downloaded controls
             offline_mode: If True, only use cached data (no network requests)
         """
-        self.cache_dir = cache_dir or Path.home() / ".ir_companion" / "bsi_cache"
+        self.cache_dir = cache_dir or Path.home() / ".cyberops_companion" / "bsi_cache"
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         self.offline_mode = offline_mode
         self.controls_cache: Dict[str, ComplianceControl] = {}

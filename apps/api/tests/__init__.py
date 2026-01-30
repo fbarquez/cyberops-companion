@@ -1,5 +1,5 @@
 """
-IR Companion API Tests.
+CyberOps Companion API Tests.
 
 Test organization:
 - tests/api/ - API endpoint tests

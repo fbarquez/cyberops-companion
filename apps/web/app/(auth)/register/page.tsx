@@ -60,7 +60,7 @@ export default function RegisterPage() {
             <Shield className="h-12 w-12 text-primary" />
           </div>
           <CardTitle className="text-2xl">{t("auth.register")}</CardTitle>
-          <CardDescription>Create your IR Companion account</CardDescription>
+          <CardDescription>Create your CyberOps Companion account</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

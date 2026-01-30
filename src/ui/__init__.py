@@ -1,4 +1,4 @@
-"""UI module for IR Companion."""
+"""UI module for CyberOps Companion."""
 
 from .components import (
     render_phase_indicator,
