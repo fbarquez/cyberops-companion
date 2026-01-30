@@ -265,7 +265,7 @@ export default function CMDBPage() {
         <div>
           <h1 className="text-3xl font-bold">{t("cmdb.title")}</h1>
           <p className="text-muted-foreground">
-            Manage configuration items, software, and asset relationships
+            {t("cmdb.subtitle")}
           </p>
         </div>
         <div className="flex gap-2">
@@ -281,27 +281,27 @@ export default function CMDBPage() {
                 <DialogHeader>
                   <DialogTitle>{t("cmdb.addCI")}</DialogTitle>
                   <DialogDescription>
-                    Create a new configuration item in the CMDB
+                    {t("cmdb.createCIDescription")}
                   </DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
                   <div className="grid gap-2">
-                    <Label htmlFor="ci-name">Name</Label>
+                    <Label htmlFor="ci-name">{t("cmdb.ciName")}</Label>
                     <Input
                       id="ci-name"
-                      placeholder="Enter CI name"
+                      placeholder={t("cmdb.ciNamePlaceholder")}
                       value={ciForm.name}
                       onChange={(e) => setCIForm({ ...ciForm, name: e.target.value })}
                     />
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="ci-type">Type</Label>
+                    <Label htmlFor="ci-type">{t("cmdb.ciType")}</Label>
                     <Select
                       value={ciForm.ci_type}
                       onValueChange={(value) => setCIForm({ ...ciForm, ci_type: value })}
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder="Select type" />
+                        <SelectValue placeholder={t("cmdb.selectType")} />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="application">{t("cmdb.application")}</SelectItem>
@@ -315,13 +315,13 @@ export default function CMDBPage() {
                     </Select>
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="ci-env">Environment</Label>
+                    <Label htmlFor="ci-env">{t("cmdb.environment")}</Label>
                     <Select
                       value={ciForm.environment}
                       onValueChange={(value) => setCIForm({ ...ciForm, environment: value })}
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder="Select environment" />
+                        <SelectValue placeholder={t("cmdb.selectEnvironment")} />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="development">{t("cmdb.development")}</SelectItem>
@@ -332,10 +332,10 @@ export default function CMDBPage() {
                     </Select>
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="ci-desc">Description</Label>
+                    <Label htmlFor="ci-desc">{t("cmdb.description")}</Label>
                     <Textarea
                       id="ci-desc"
-                      placeholder="Enter description"
+                      placeholder={t("cmdb.descriptionPlaceholder")}
                       value={ciForm.description}
                       onChange={(e) => setCIForm({ ...ciForm, description: e.target.value })}
                     />
@@ -367,36 +367,36 @@ export default function CMDBPage() {
                 <DialogHeader>
                   <DialogTitle>{t("cmdb.addSoftware")}</DialogTitle>
                   <DialogDescription>
-                    Add a new software item to the catalog
+                    {t("cmdb.createSoftwareDescription")}
                   </DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
                   <div className="grid gap-2">
-                    <Label htmlFor="sw-name">Name</Label>
+                    <Label htmlFor="sw-name">{t("cmdb.softwareName")}</Label>
                     <Input
                       id="sw-name"
-                      placeholder="Enter software name"
+                      placeholder={t("cmdb.softwareNamePlaceholder")}
                       value={softwareForm.name}
                       onChange={(e) => setSoftwareForm({ ...softwareForm, name: e.target.value })}
                     />
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="sw-vendor">Vendor</Label>
+                    <Label htmlFor="sw-vendor">{t("cmdb.vendor")}</Label>
                     <Input
                       id="sw-vendor"
-                      placeholder="Enter vendor"
+                      placeholder={t("cmdb.vendorPlaceholder")}
                       value={softwareForm.vendor}
                       onChange={(e) => setSoftwareForm({ ...softwareForm, vendor: e.target.value })}
                     />
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="sw-category">Category</Label>
+                    <Label htmlFor="sw-category">{t("cmdb.category")}</Label>
                     <Select
                       value={softwareForm.category}
                       onValueChange={(value) => setSoftwareForm({ ...softwareForm, category: value })}
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder="Select category" />
+                        <SelectValue placeholder={t("cmdb.selectCategory")} />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="os">{t("cmdb.os")}</SelectItem>
@@ -409,10 +409,10 @@ export default function CMDBPage() {
                     </Select>
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="sw-version">Latest Version</Label>
+                    <Label htmlFor="sw-version">{t("cmdb.latestVersion")}</Label>
                     <Input
                       id="sw-version"
-                      placeholder="e.g., 1.0.0"
+                      placeholder={t("cmdb.versionPlaceholder")}
                       value={softwareForm.latest_version}
                       onChange={(e) => setSoftwareForm({ ...softwareForm, latest_version: e.target.value })}
                     />
@@ -465,7 +465,7 @@ export default function CMDBPage() {
               <CardContent>
                 <div className="text-2xl font-bold">{stats?.total_cis || 0}</div>
                 <p className="text-xs text-muted-foreground">
-                  {stats?.cis_by_status?.production || 0} in production
+                  {stats?.cis_by_status?.production || 0} {t("cmdb.inProduction")}
                 </p>
               </CardContent>
             </Card>
@@ -480,7 +480,7 @@ export default function CMDBPage() {
               <CardContent>
                 <div className="text-2xl font-bold">{stats?.total_software || 0}</div>
                 <p className="text-xs text-muted-foreground">
-                  In software catalog
+                  {t("cmdb.inSoftwareCatalog")}
                 </p>
               </CardContent>
             </Card>
@@ -495,7 +495,7 @@ export default function CMDBPage() {
               <CardContent>
                 <div className="text-2xl font-bold">{stats?.total_relationships || 0}</div>
                 <p className="text-xs text-muted-foreground">
-                  Asset dependencies
+                  {t("cmdb.assetDependencies")}
                 </p>
               </CardContent>
             </Card>
@@ -512,7 +512,7 @@ export default function CMDBPage() {
                   {stats?.expiring_licenses || 0}
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Within 90 days
+                  {t("cmdb.within90Days")}
                 </p>
               </CardContent>
             </Card>
@@ -522,7 +522,7 @@ export default function CMDBPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <Card>
               <CardHeader>
-                <CardTitle>Configuration Items by Type</CardTitle>
+                <CardTitle>{t("cmdb.cisByType")}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -536,7 +536,7 @@ export default function CMDBPage() {
                     </div>
                   ))}
                   {(!stats?.cis_by_type || Object.keys(stats.cis_by_type).length === 0) && (
-                    <p className="text-muted-foreground text-sm">No configuration items yet</p>
+                    <p className="text-muted-foreground text-sm">{t("cmdb.noCIsYet")}</p>
                   )}
                 </div>
               </CardContent>
@@ -544,7 +544,7 @@ export default function CMDBPage() {
 
             <Card>
               <CardHeader>
-                <CardTitle>Configuration Items by Status</CardTitle>
+                <CardTitle>{t("cmdb.cisByStatus")}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -556,7 +556,7 @@ export default function CMDBPage() {
                     </div>
                   ))}
                   {(!stats?.cis_by_status || Object.keys(stats.cis_by_status).length === 0) && (
-                    <p className="text-muted-foreground text-sm">No configuration items yet</p>
+                    <p className="text-muted-foreground text-sm">{t("cmdb.noCIsYet")}</p>
                   )}
                 </div>
               </CardContent>
@@ -566,7 +566,7 @@ export default function CMDBPage() {
           {/* Assets Overview */}
           <Card>
             <CardHeader>
-              <CardTitle>Assets by Type</CardTitle>
+              <CardTitle>{t("cmdb.assetsByType")}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
@@ -580,7 +580,7 @@ export default function CMDBPage() {
                   </div>
                 ))}
                 {(!stats?.assets_by_type || Object.keys(stats.assets_by_type).length === 0) && (
-                  <p className="text-muted-foreground text-sm col-span-full">No assets yet</p>
+                  <p className="text-muted-foreground text-sm col-span-full">{t("cmdb.noAssetsYet")}</p>
                 )}
               </div>
             </CardContent>
@@ -596,7 +596,7 @@ export default function CMDBPage() {
             <div className="relative flex-1 max-w-sm">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Search configuration items..."
+                placeholder={t("cmdb.searchCIs")}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="pl-10"
@@ -607,7 +607,7 @@ export default function CMDBPage() {
                 <SelectValue placeholder="Type" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Types</SelectItem>
+                <SelectItem value="all">{t("cmdb.allTypes")}</SelectItem>
                 <SelectItem value="application">{t("cmdb.application")}</SelectItem>
                 <SelectItem value="service">{t("cmdb.service")}</SelectItem>
                 <SelectItem value="database">{t("cmdb.database")}</SelectItem>
@@ -622,7 +622,7 @@ export default function CMDBPage() {
                 <SelectValue placeholder="Status" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Status</SelectItem>
+                <SelectItem value="all">{t("soc.allStatus")}</SelectItem>
                 <SelectItem value="production">{t("cmdb.production")}</SelectItem>
                 <SelectItem value="development">{t("cmdb.development")}</SelectItem>
                 <SelectItem value="testing">{t("cmdb.testing")}</SelectItem>
@@ -638,13 +638,13 @@ export default function CMDBPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>CI ID</TableHead>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Type</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Environment</TableHead>
-                  <TableHead>Owner</TableHead>
-                  <TableHead>Version</TableHead>
+                  <TableHead>{t("cmdb.ciId")}</TableHead>
+                  <TableHead>{t("cmdb.name")}</TableHead>
+                  <TableHead>{t("cmdb.type")}</TableHead>
+                  <TableHead>{t("cmdb.status")}</TableHead>
+                  <TableHead>{t("cmdb.environment")}</TableHead>
+                  <TableHead>{t("cmdb.owner")}</TableHead>
+                  <TableHead>{t("cmdb.version")}</TableHead>
                   <TableHead className="w-10"></TableHead>
                 </TableRow>
               </TableHeader>
@@ -711,7 +711,7 @@ export default function CMDBPage() {
             <div className="relative flex-1 max-w-sm">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Search software..."
+                placeholder={t("cmdb.searchSoftware")}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="pl-10"
@@ -722,7 +722,7 @@ export default function CMDBPage() {
                 <SelectValue placeholder="Category" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Categories</SelectItem>
+                <SelectItem value="all">{t("cmdb.allCategories")}</SelectItem>
                 <SelectItem value="os">{t("cmdb.os")}</SelectItem>
                 <SelectItem value="database">{t("cmdb.database")}</SelectItem>
                 <SelectItem value="security">{t("cmdb.securitySoftware")}</SelectItem>
@@ -738,13 +738,13 @@ export default function CMDBPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Vendor</TableHead>
-                  <TableHead>Category</TableHead>
-                  <TableHead>Latest Version</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Security Rating</TableHead>
-                  <TableHead>Installations</TableHead>
+                  <TableHead>{t("cmdb.name")}</TableHead>
+                  <TableHead>{t("cmdb.vendor")}</TableHead>
+                  <TableHead>{t("cmdb.category")}</TableHead>
+                  <TableHead>{t("cmdb.latestVersion")}</TableHead>
+                  <TableHead>{t("cmdb.status")}</TableHead>
+                  <TableHead>{t("cmdb.securityRating")}</TableHead>
+                  <TableHead>{t("cmdb.installations")}</TableHead>
                   <TableHead className="w-10"></TableHead>
                 </TableRow>
               </TableHeader>
@@ -768,17 +768,17 @@ export default function CMDBPage() {
                         {sw.is_prohibited ? (
                           <Badge variant="destructive">
                             <XCircle className="h-3 w-3 mr-1" />
-                            Prohibited
+                            {t("cmdb.prohibited")}
                           </Badge>
                         ) : sw.is_approved ? (
                           <Badge variant="default">
                             <CheckCircle className="h-3 w-3 mr-1" />
-                            Approved
+                            {t("cmdb.approved")}
                           </Badge>
                         ) : (
                           <Badge variant="secondary">
                             <Clock className="h-3 w-3 mr-1" />
-                            Pending
+                            {t("cmdb.pendingApproval")}
                           </Badge>
                         )}
                       </TableCell>
@@ -802,9 +802,9 @@ export default function CMDBPage() {
                           <DropdownMenuContent align="end">
                             <DropdownMenuItem>{t("common.view")}</DropdownMenuItem>
                             <DropdownMenuItem>{t("common.edit")}</DropdownMenuItem>
-                            <DropdownMenuItem>Approve</DropdownMenuItem>
+                            <DropdownMenuItem>{t("soc.approve")}</DropdownMenuItem>
                             <DropdownMenuItem className="text-destructive">
-                              Mark Prohibited
+                              {t("cmdb.markProhibited")}
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
