@@ -294,7 +294,7 @@ export default function VulnerabilitiesPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">Total Vulnerabilities</CardTitle>
+              <CardTitle className="text-sm font-medium">{t("vulnerabilities.totalVulnerabilities")}</CardTitle>
               <Bug className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
@@ -302,7 +302,7 @@ export default function VulnerabilitiesPage() {
               <div className="flex items-center gap-2 mt-2">
                 <Progress value={100 - openPercent} className="h-2" />
                 <span className="text-xs text-muted-foreground">
-                  {stats?.remediated_vulnerabilities || 0} fixed
+                  {stats?.remediated_vulnerabilities || 0} {t("vulnerabilities.fixed")}
                 </span>
               </div>
             </CardContent>
@@ -310,7 +310,7 @@ export default function VulnerabilitiesPage() {
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">Open Issues</CardTitle>
+              <CardTitle className="text-sm font-medium">{t("vulnerabilities.openIssues")}</CardTitle>
               <AlertTriangle className="h-4 w-4 text-red-500" />
             </CardHeader>
             <CardContent>
@@ -318,14 +318,14 @@ export default function VulnerabilitiesPage() {
                 {stats?.open_vulnerabilities || 0}
               </div>
               <p className="text-xs text-muted-foreground">
-                {stats?.in_progress_vulnerabilities || 0} in progress
+                {stats?.in_progress_vulnerabilities || 0} {t("vulnerabilities.inProgressCount")}
               </p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">Assets at Risk</CardTitle>
+              <CardTitle className="text-sm font-medium">{t("vulnerabilities.assetsAtRisk")}</CardTitle>
               <Server className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
@@ -333,7 +333,7 @@ export default function VulnerabilitiesPage() {
                 {stats?.assets_with_vulnerabilities || 0}
               </div>
               <p className="text-xs text-muted-foreground">
-                of {stats?.total_assets || 0} total assets
+                {t("vulnerabilities.ofTotalAssets").replace("{count}", String(stats?.total_assets || 0))}
               </p>
             </CardContent>
           </Card>
@@ -350,7 +350,7 @@ export default function VulnerabilitiesPage() {
                   : "N/A"}
               </div>
               <p className="text-xs text-muted-foreground">
-                {stats?.overdue_vulnerabilities || 0} overdue
+                {stats?.overdue_vulnerabilities || 0} {t("vulnerabilities.overdue")}
               </p>
             </CardContent>
           </Card>
@@ -360,14 +360,14 @@ export default function VulnerabilitiesPage() {
         {stats?.by_severity && Object.keys(stats.by_severity).length > 0 && (
           <Card>
             <CardHeader>
-              <CardTitle className="text-sm">By Severity</CardTitle>
+              <CardTitle className="text-sm">{t("vulnerabilities.bySeverity")}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex gap-4">
                 {["critical", "high", "medium", "low", "info"].map((severity) => (
                   <div key={severity} className="flex items-center gap-2">
                     <div className={cn("w-3 h-3 rounded-full", severityColors[severity])} />
-                    <span className="text-sm capitalize">{severity}:</span>
+                    <span className="text-sm">{t(`vulnerabilities.${severity}`)}:</span>
                     <span className="font-bold">{stats.by_severity[severity] || 0}</span>
                   </div>
                 ))}
@@ -380,7 +380,7 @@ export default function VulnerabilitiesPage() {
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <div className="flex items-center justify-between">
             <TabsList>
-              <TabsTrigger value="overview">Overview</TabsTrigger>
+              <TabsTrigger value="overview">{t("vulnerabilities.overview")}</TabsTrigger>
               <TabsTrigger value="vulnerabilities">{t("vulnerabilities.list")}</TabsTrigger>
               <TabsTrigger value="assets">{t("vulnerabilities.assets")}</TabsTrigger>
               <TabsTrigger value="scans">{t("vulnerabilities.scans")}</TabsTrigger>
@@ -396,21 +396,21 @@ export default function VulnerabilitiesPage() {
                 </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
-                    <DialogTitle>Add Asset</DialogTitle>
-                    <DialogDescription>Add a new asset to track vulnerabilities</DialogDescription>
+                    <DialogTitle>{t("vulnerabilities.addAssetTitle")}</DialogTitle>
+                    <DialogDescription>{t("vulnerabilities.addAssetDescription")}</DialogDescription>
                   </DialogHeader>
                   <div className="space-y-4">
                     <div>
-                      <Label>Name *</Label>
+                      <Label>{t("vulnerabilities.nameRequired")}</Label>
                       <Input
-                        placeholder="Asset name"
+                        placeholder={t("vulnerabilities.assetNamePlaceholder")}
                         value={newAsset.name}
                         onChange={(e) => setNewAsset({ ...newAsset, name: e.target.value })}
                       />
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <Label>Type</Label>
+                        <Label>{t("vulnerabilities.type")}</Label>
                         <Select
                           value={newAsset.asset_type}
                           onValueChange={(v) => setNewAsset({ ...newAsset, asset_type: v })}
@@ -419,18 +419,18 @@ export default function VulnerabilitiesPage() {
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="server">Server</SelectItem>
-                            <SelectItem value="workstation">Workstation</SelectItem>
-                            <SelectItem value="network_device">Network Device</SelectItem>
-                            <SelectItem value="database">Database</SelectItem>
-                            <SelectItem value="web_application">Web Application</SelectItem>
-                            <SelectItem value="container">Container</SelectItem>
-                            <SelectItem value="cloud_resource">Cloud Resource</SelectItem>
+                            <SelectItem value="server">{t("vulnerabilities.server")}</SelectItem>
+                            <SelectItem value="workstation">{t("vulnerabilities.workstation")}</SelectItem>
+                            <SelectItem value="network_device">{t("vulnerabilities.networkDevice")}</SelectItem>
+                            <SelectItem value="database">{t("vulnerabilities.database")}</SelectItem>
+                            <SelectItem value="web_application">{t("vulnerabilities.webApplication")}</SelectItem>
+                            <SelectItem value="container">{t("vulnerabilities.container")}</SelectItem>
+                            <SelectItem value="cloud_resource">{t("vulnerabilities.cloudResource")}</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
                       <div>
-                        <Label>Criticality</Label>
+                        <Label>{t("vulnerabilities.criticality")}</Label>
                         <Select
                           value={newAsset.criticality}
                           onValueChange={(v) => setNewAsset({ ...newAsset, criticality: v })}
@@ -439,34 +439,34 @@ export default function VulnerabilitiesPage() {
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="critical">Critical</SelectItem>
-                            <SelectItem value="high">High</SelectItem>
-                            <SelectItem value="medium">Medium</SelectItem>
-                            <SelectItem value="low">Low</SelectItem>
+                            <SelectItem value="critical">{t("vulnerabilities.critical")}</SelectItem>
+                            <SelectItem value="high">{t("vulnerabilities.high")}</SelectItem>
+                            <SelectItem value="medium">{t("vulnerabilities.medium")}</SelectItem>
+                            <SelectItem value="low">{t("vulnerabilities.low")}</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <Label>Hostname</Label>
+                        <Label>{t("vulnerabilities.hostname")}</Label>
                         <Input
-                          placeholder="hostname"
+                          placeholder={t("vulnerabilities.hostnamePlaceholder")}
                           value={newAsset.hostname}
                           onChange={(e) => setNewAsset({ ...newAsset, hostname: e.target.value })}
                         />
                       </div>
                       <div>
-                        <Label>IP Address</Label>
+                        <Label>{t("vulnerabilities.ipAddress")}</Label>
                         <Input
-                          placeholder="192.168.1.1"
+                          placeholder={t("vulnerabilities.ipAddressPlaceholder")}
                           value={newAsset.ip_address}
                           onChange={(e) => setNewAsset({ ...newAsset, ip_address: e.target.value })}
                         />
                       </div>
                     </div>
                     <div>
-                      <Label>Environment</Label>
+                      <Label>{t("vulnerabilities.environment")}</Label>
                       <Select
                         value={newAsset.environment}
                         onValueChange={(v) => setNewAsset({ ...newAsset, environment: v })}
@@ -475,10 +475,10 @@ export default function VulnerabilitiesPage() {
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="production">Production</SelectItem>
-                          <SelectItem value="staging">Staging</SelectItem>
-                          <SelectItem value="development">Development</SelectItem>
-                          <SelectItem value="testing">Testing</SelectItem>
+                          <SelectItem value="production">{t("vulnerabilities.production")}</SelectItem>
+                          <SelectItem value="staging">{t("vulnerabilities.staging")}</SelectItem>
+                          <SelectItem value="development">{t("vulnerabilities.development")}</SelectItem>
+                          <SelectItem value="testing">{t("vulnerabilities.testing")}</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
@@ -488,7 +488,7 @@ export default function VulnerabilitiesPage() {
                       onClick={() => createAssetMutation.mutate(newAsset)}
                       disabled={!newAsset.name || createAssetMutation.isPending}
                     >
-                      {createAssetMutation.isPending ? "Creating..." : "Create Asset"}
+                      {createAssetMutation.isPending ? t("vulnerabilities.creating") : t("vulnerabilities.createAsset")}
                     </Button>
                   </DialogFooter>
                 </DialogContent>
@@ -503,22 +503,22 @@ export default function VulnerabilitiesPage() {
                 </DialogTrigger>
                 <DialogContent className="max-w-lg">
                   <DialogHeader>
-                    <DialogTitle>Add Vulnerability</DialogTitle>
-                    <DialogDescription>Manually add a vulnerability finding</DialogDescription>
+                    <DialogTitle>{t("vulnerabilities.addVulnerabilityTitle")}</DialogTitle>
+                    <DialogDescription>{t("vulnerabilities.addVulnerabilityDescription")}</DialogDescription>
                   </DialogHeader>
                   <div className="space-y-4">
                     <div>
-                      <Label>Title *</Label>
+                      <Label>{t("vulnerabilities.titleRequired")}</Label>
                       <Input
-                        placeholder="Vulnerability title"
+                        placeholder={t("vulnerabilities.vulnTitlePlaceholder")}
                         value={newVuln.title}
                         onChange={(e) => setNewVuln({ ...newVuln, title: e.target.value })}
                       />
                     </div>
                     <div>
-                      <Label>Description</Label>
+                      <Label>{t("vulnerabilities.description")}</Label>
                       <Textarea
-                        placeholder="Describe the vulnerability..."
+                        placeholder={t("vulnerabilities.vulnDescriptionPlaceholder")}
                         value={newVuln.description}
                         onChange={(e) => setNewVuln({ ...newVuln, description: e.target.value })}
                         rows={3}
@@ -526,7 +526,7 @@ export default function VulnerabilitiesPage() {
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <Label>Severity</Label>
+                        <Label>{t("vulnerabilities.severity")}</Label>
                         <Select
                           value={newVuln.severity}
                           onValueChange={(v) => setNewVuln({ ...newVuln, severity: v })}
@@ -535,31 +535,31 @@ export default function VulnerabilitiesPage() {
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="critical">Critical</SelectItem>
-                            <SelectItem value="high">High</SelectItem>
-                            <SelectItem value="medium">Medium</SelectItem>
-                            <SelectItem value="low">Low</SelectItem>
-                            <SelectItem value="info">Informational</SelectItem>
+                            <SelectItem value="critical">{t("vulnerabilities.critical")}</SelectItem>
+                            <SelectItem value="high">{t("vulnerabilities.high")}</SelectItem>
+                            <SelectItem value="medium">{t("vulnerabilities.medium")}</SelectItem>
+                            <SelectItem value="low">{t("vulnerabilities.low")}</SelectItem>
+                            <SelectItem value="info">{t("vulnerabilities.info")}</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
                       <div>
-                        <Label>CVSS Score</Label>
+                        <Label>{t("vulnerabilities.cvssScore")}</Label>
                         <Input
                           type="number"
                           step="0.1"
                           min="0"
                           max="10"
-                          placeholder="0.0 - 10.0"
+                          placeholder={t("vulnerabilities.cvssScorePlaceholder")}
                           value={newVuln.cvss_score}
                           onChange={(e) => setNewVuln({ ...newVuln, cvss_score: e.target.value })}
                         />
                       </div>
                     </div>
                     <div>
-                      <Label>Affected Component</Label>
+                      <Label>{t("vulnerabilities.affectedComponent")}</Label>
                       <Input
-                        placeholder="e.g., Apache HTTP Server 2.4.49"
+                        placeholder={t("vulnerabilities.affectedComponentPlaceholder")}
                         value={newVuln.affected_component}
                         onChange={(e) =>
                           setNewVuln({ ...newVuln, affected_component: e.target.value })
@@ -567,9 +567,9 @@ export default function VulnerabilitiesPage() {
                       />
                     </div>
                     <div>
-                      <Label>Remediation Steps</Label>
+                      <Label>{t("vulnerabilities.remediationSteps")}</Label>
                       <Textarea
-                        placeholder="How to fix this vulnerability..."
+                        placeholder={t("vulnerabilities.remediationStepsPlaceholder")}
                         value={newVuln.remediation_steps}
                         onChange={(e) =>
                           setNewVuln({ ...newVuln, remediation_steps: e.target.value })
@@ -588,7 +588,7 @@ export default function VulnerabilitiesPage() {
                       }
                       disabled={!newVuln.title || createVulnMutation.isPending}
                     >
-                      {createVulnMutation.isPending ? "Creating..." : "Create Vulnerability"}
+                      {createVulnMutation.isPending ? t("vulnerabilities.creating") : t("vulnerabilities.createVulnerability")}
                     </Button>
                   </DialogFooter>
                 </DialogContent>
@@ -602,7 +602,7 @@ export default function VulnerabilitiesPage() {
               {/* Top Vulnerable Assets */}
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-sm">Top Vulnerable Assets</CardTitle>
+                  <CardTitle className="text-sm">{t("vulnerabilities.topVulnerableAssets")}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   {stats?.top_vulnerable_assets && stats.top_vulnerable_assets.length > 0 ? (
@@ -619,12 +619,12 @@ export default function VulnerabilitiesPage() {
                               {asset.criticality}
                             </Badge>
                           </div>
-                          <Badge variant="destructive">{asset.vulnerability_count} vulns</Badge>
+                          <Badge variant="destructive">{asset.vulnerability_count} {t("vulnerabilities.vulns")}</Badge>
                         </div>
                       ))}
                     </div>
                   ) : (
-                    <p className="text-muted-foreground text-center py-4">No vulnerable assets</p>
+                    <p className="text-muted-foreground text-center py-4">{t("vulnerabilities.noVulnerableAssets")}</p>
                   )}
                 </CardContent>
               </Card>
@@ -632,7 +632,7 @@ export default function VulnerabilitiesPage() {
               {/* Recent Vulnerabilities */}
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-sm">Recent Vulnerabilities</CardTitle>
+                  <CardTitle className="text-sm">{t("vulnerabilities.recentVulnerabilities")}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   {stats?.recent_vulnerabilities && stats.recent_vulnerabilities.length > 0 ? (
@@ -647,7 +647,7 @@ export default function VulnerabilitiesPage() {
                             <span className="font-medium truncate max-w-xs">{vuln.title}</span>
                           </div>
                           <Badge variant={severityBadgeVariants[vuln.severity]}>
-                            {vuln.severity}
+                            {t(`vulnerabilities.${vuln.severity}`)}
                           </Badge>
                         </div>
                       ))}
@@ -668,7 +668,7 @@ export default function VulnerabilitiesPage() {
             <div className="flex gap-4">
               <div className="flex-1">
                 <Input
-                  placeholder="Search vulnerabilities..."
+                  placeholder={t("vulnerabilities.searchVulnerabilities")}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="max-w-sm"
@@ -676,27 +676,27 @@ export default function VulnerabilitiesPage() {
               </div>
               <Select value={severityFilter} onValueChange={setSeverityFilter}>
                 <SelectTrigger className="w-[150px]">
-                  <SelectValue placeholder="Severity" />
+                  <SelectValue placeholder={t("vulnerabilities.severity")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Severities</SelectItem>
-                  <SelectItem value="critical">Critical</SelectItem>
-                  <SelectItem value="high">High</SelectItem>
-                  <SelectItem value="medium">Medium</SelectItem>
-                  <SelectItem value="low">Low</SelectItem>
-                  <SelectItem value="info">Info</SelectItem>
+                  <SelectItem value="all">{t("vulnerabilities.allSeverities")}</SelectItem>
+                  <SelectItem value="critical">{t("vulnerabilities.critical")}</SelectItem>
+                  <SelectItem value="high">{t("vulnerabilities.high")}</SelectItem>
+                  <SelectItem value="medium">{t("vulnerabilities.medium")}</SelectItem>
+                  <SelectItem value="low">{t("vulnerabilities.low")}</SelectItem>
+                  <SelectItem value="info">{t("vulnerabilities.info")}</SelectItem>
                 </SelectContent>
               </Select>
               <Select value={statusFilter} onValueChange={setStatusFilter}>
                 <SelectTrigger className="w-[150px]">
-                  <SelectValue placeholder="Status" />
+                  <SelectValue placeholder={t("vulnerabilities.status")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Statuses</SelectItem>
-                  <SelectItem value="open">Open</SelectItem>
-                  <SelectItem value="in_progress">In Progress</SelectItem>
-                  <SelectItem value="remediated">Remediated</SelectItem>
-                  <SelectItem value="accepted">Accepted</SelectItem>
+                  <SelectItem value="all">{t("vulnerabilities.allStatuses")}</SelectItem>
+                  <SelectItem value="open">{t("vulnerabilities.open")}</SelectItem>
+                  <SelectItem value="in_progress">{t("vulnerabilities.inProgress")}</SelectItem>
+                  <SelectItem value="remediated">{t("vulnerabilities.remediated")}</SelectItem>
+                  <SelectItem value="accepted">{t("vulnerabilities.accepted")}</SelectItem>
                 </SelectContent>
               </Select>
               <Button variant="outline" size="icon" onClick={() => refetchVulns()}>
@@ -708,7 +708,7 @@ export default function VulnerabilitiesPage() {
             <Card>
               <CardContent className="p-0">
                 {vulnsLoading ? (
-                  <div className="p-8 text-center">Loading...</div>
+                  <div className="p-8 text-center">{t("vulnerabilities.loading")}</div>
                 ) : vulnerabilities.length > 0 ? (
                   <div className="divide-y">
                     {vulnerabilities.map((vuln) => (
@@ -719,6 +719,7 @@ export default function VulnerabilitiesPage() {
                         onStatusChange={(status) =>
                           updateStatusMutation.mutate({ id: vuln.id, status })
                         }
+                        t={t}
                       />
                     ))}
                   </div>
@@ -736,11 +737,11 @@ export default function VulnerabilitiesPage() {
             <Card>
               <CardContent className="p-0">
                 {assetsLoading ? (
-                  <div className="p-8 text-center">Loading...</div>
+                  <div className="p-8 text-center">{t("vulnerabilities.loading")}</div>
                 ) : assets.length > 0 ? (
                   <div className="divide-y">
                     {assets.map((asset) => (
-                      <AssetRow key={asset.id} asset={asset} />
+                      <AssetRow key={asset.id} asset={asset} t={t} />
                     ))}
                   </div>
                 ) : (
@@ -775,10 +776,12 @@ function VulnerabilityRow({
   vulnerability,
   onDelete,
   onStatusChange,
+  t,
 }: {
   vulnerability: Vulnerability;
   onDelete: () => void;
   onStatusChange: (status: string) => void;
+  t: (key: string) => string;
 }) {
   return (
     <div className="flex items-center justify-between p-4 hover:bg-muted/50">
@@ -799,7 +802,7 @@ function VulnerabilityRow({
             )}
             {vulnerability.affected_assets?.length > 0 && (
               <span className="text-xs text-muted-foreground">
-                {vulnerability.affected_assets.length} asset(s)
+                {vulnerability.affected_assets.length} {t("vulnerabilities.assetCount")}
               </span>
             )}
           </div>
@@ -809,7 +812,7 @@ function VulnerabilityRow({
       <div className="flex items-center gap-4">
         <div className="text-right">
           <Badge variant={severityBadgeVariants[vulnerability.severity]}>
-            {vulnerability.severity}
+            {t(`vulnerabilities.${vulnerability.severity}`)}
           </Badge>
           {vulnerability.cvss_score && (
             <div className="text-xs text-muted-foreground mt-1">
@@ -828,24 +831,24 @@ function VulnerabilityRow({
             {vulnerability.status === "open" && (
               <DropdownMenuItem onClick={() => onStatusChange("in_progress")}>
                 <Clock className="h-4 w-4 mr-2" />
-                Mark In Progress
+                {t("vulnerabilities.markInProgress")}
               </DropdownMenuItem>
             )}
             {vulnerability.status !== "remediated" && (
               <DropdownMenuItem onClick={() => onStatusChange("remediated")}>
                 <CheckCircle className="h-4 w-4 mr-2" />
-                Mark Remediated
+                {t("vulnerabilities.markRemediated")}
               </DropdownMenuItem>
             )}
             {vulnerability.status !== "accepted" && (
               <DropdownMenuItem onClick={() => onStatusChange("accepted")}>
                 <Shield className="h-4 w-4 mr-2" />
-                Accept Risk
+                {t("vulnerabilities.acceptRisk")}
               </DropdownMenuItem>
             )}
             <DropdownMenuItem className="text-destructive" onClick={onDelete}>
               <Trash2 className="h-4 w-4 mr-2" />
-              Delete
+              {t("vulnerabilities.delete")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -854,7 +857,7 @@ function VulnerabilityRow({
   );
 }
 
-function AssetRow({ asset }: { asset: Asset }) {
+function AssetRow({ asset, t }: { asset: Asset; t: (key: string) => string }) {
   return (
     <div className="flex items-center justify-between p-4 hover:bg-muted/50">
       <div className="flex items-center gap-4">
@@ -877,10 +880,10 @@ function AssetRow({ asset }: { asset: Asset }) {
 
       <div className="flex items-center gap-4">
         <Badge variant={asset.criticality === "critical" ? "destructive" : "secondary"}>
-          {asset.criticality}
+          {t(`vulnerabilities.${asset.criticality}`)}
         </Badge>
         {asset.vulnerability_count > 0 && (
-          <Badge variant="outline">{asset.vulnerability_count} vulns</Badge>
+          <Badge variant="outline">{asset.vulnerability_count} {t("vulnerabilities.vulns")}</Badge>
         )}
       </div>
     </div>

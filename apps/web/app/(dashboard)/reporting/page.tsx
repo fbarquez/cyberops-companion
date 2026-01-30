@@ -239,13 +239,13 @@ export default function ReportingPage() {
         <div>
           <h1 className="text-2xl font-bold">{t("reporting.title")}</h1>
           <p className="text-muted-foreground">
-            Executive dashboards, reports, and analytics
+            {t("reporting.subtitle")}
           </p>
         </div>
         <div className="flex gap-2">
           <Button variant="outline" onClick={() => seedTemplatesMutation.mutate()}>
             <RefreshCw className="h-4 w-4 mr-2" />
-            Seed Templates
+            {t("reporting.seedTemplates")}
           </Button>
           <Dialog open={isGenerateOpen} onOpenChange={setIsGenerateOpen}>
             <DialogTrigger asChild>
@@ -258,12 +258,12 @@ export default function ReportingPage() {
               <DialogHeader>
                 <DialogTitle>{t("reporting.generateReport")}</DialogTitle>
                 <DialogDescription>
-                  Select a template and configure your report.
+                  {t("reporting.dialogDescription")}
                 </DialogDescription>
               </DialogHeader>
               <div className="space-y-4 py-4">
                 <div className="space-y-2">
-                  <Label>Report Template</Label>
+                  <Label>{t("reporting.reportTemplate")}</Label>
                   <Select
                     value={selectedTemplate?.id || ""}
                     onValueChange={(id) => {
@@ -272,7 +272,7 @@ export default function ReportingPage() {
                     }}
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder="Select a template" />
+                      <SelectValue placeholder={t("reporting.selectTemplate")} />
                     </SelectTrigger>
                     <SelectContent>
                       {templatesData?.map((template: ReportTemplate) => (
@@ -285,7 +285,7 @@ export default function ReportingPage() {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label>Format</Label>
+                    <Label>{t("reporting.format")}</Label>
                     <Select
                       value={reportConfig.format}
                       onValueChange={(v) => setReportConfig({ ...reportConfig, format: v })}
@@ -302,7 +302,7 @@ export default function ReportingPage() {
                     </Select>
                   </div>
                   <div className="space-y-2">
-                    <Label>Period (Days)</Label>
+                    <Label>{t("reporting.periodDays")}</Label>
                     <Select
                       value={reportConfig.period_days.toString()}
                       onValueChange={(v) => setReportConfig({ ...reportConfig, period_days: parseInt(v) })}
@@ -311,10 +311,10 @@ export default function ReportingPage() {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="7">Last 7 days</SelectItem>
-                        <SelectItem value="30">Last 30 days</SelectItem>
-                        <SelectItem value="90">Last 90 days</SelectItem>
-                        <SelectItem value="365">Last year</SelectItem>
+                        <SelectItem value="7">{t("reporting.last7days")}</SelectItem>
+                        <SelectItem value="30">{t("reporting.last30days")}</SelectItem>
+                        <SelectItem value="90">{t("reporting.last90days")}</SelectItem>
+                        <SelectItem value="365">{t("reporting.lastYear")}</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -322,13 +322,13 @@ export default function ReportingPage() {
               </div>
               <DialogFooter>
                 <Button variant="outline" onClick={() => setIsGenerateOpen(false)}>
-                  Cancel
+                  {t("reporting.cancel")}
                 </Button>
                 <Button
                   onClick={handleGenerateReport}
                   disabled={!selectedTemplate || generateReportMutation.isPending}
                 >
-                  {generateReportMutation.isPending ? "Generating..." : t("reporting.generate")}
+                  {generateReportMutation.isPending ? t("reporting.generating") : t("reporting.generate")}
                 </Button>
               </DialogFooter>
             </DialogContent>
@@ -404,32 +404,32 @@ export default function ReportingPage() {
                   </div>
                 </div>
                 <p className="text-center text-sm text-muted-foreground mt-2">
-                  Overall Security Posture
+                  {t("reporting.overallSecurityPosture")}
                 </p>
               </CardContent>
             </Card>
 
             <Card className="lg:col-span-2">
               <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium">Key Metrics</CardTitle>
+                <CardTitle className="text-sm font-medium">{t("reporting.keyMetrics")}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   <div className="text-center p-3 bg-muted rounded-lg">
                     <p className="text-2xl font-bold">{stats?.mttd_minutes || 0}</p>
-                    <p className="text-xs text-muted-foreground">MTTD (min)</p>
+                    <p className="text-xs text-muted-foreground">{t("reporting.mttdMin")}</p>
                   </div>
                   <div className="text-center p-3 bg-muted rounded-lg">
                     <p className="text-2xl font-bold">{stats?.mttr_minutes || 0}</p>
-                    <p className="text-xs text-muted-foreground">MTTR (min)</p>
+                    <p className="text-xs text-muted-foreground">{t("reporting.mttrMin")}</p>
                   </div>
                   <div className="text-center p-3 bg-muted rounded-lg">
                     <p className="text-2xl font-bold">{stats?.patch_compliance_rate || 0}%</p>
-                    <p className="text-xs text-muted-foreground">Patch Compliance</p>
+                    <p className="text-xs text-muted-foreground">{t("reporting.patchCompliance")}</p>
                   </div>
                   <div className="text-center p-3 bg-muted rounded-lg">
                     <p className="text-2xl font-bold">{stats?.compliance_score || 0}%</p>
-                    <p className="text-xs text-muted-foreground">Compliance Score</p>
+                    <p className="text-xs text-muted-foreground">{t("reporting.complianceScore")}</p>
                   </div>
                 </div>
               </CardContent>
@@ -448,8 +448,8 @@ export default function ReportingPage() {
               <CardContent>
                 <div className="text-2xl font-bold">{stats?.incidents_total || 0}</div>
                 <div className="flex gap-2 mt-1">
-                  <Badge variant="destructive">{stats?.incidents_critical || 0} critical</Badge>
-                  <Badge variant="secondary">{stats?.incidents_open || 0} open</Badge>
+                  <Badge variant="destructive">{stats?.incidents_critical || 0} {t("reporting.critical")}</Badge>
+                  <Badge variant="secondary">{stats?.incidents_open || 0} {t("reporting.open")}</Badge>
                 </div>
               </CardContent>
             </Card>
@@ -464,8 +464,8 @@ export default function ReportingPage() {
               <CardContent>
                 <div className="text-2xl font-bold">{stats?.alerts_today || 0}</div>
                 <div className="flex gap-2 mt-1">
-                  <Badge variant="destructive">{stats?.alerts_critical || 0} critical</Badge>
-                  <Badge variant="secondary">{stats?.cases_open || 0} cases</Badge>
+                  <Badge variant="destructive">{stats?.alerts_critical || 0} {t("reporting.critical")}</Badge>
+                  <Badge variant="secondary">{stats?.cases_open || 0} {t("reporting.cases")}</Badge>
                 </div>
               </CardContent>
             </Card>
@@ -480,8 +480,8 @@ export default function ReportingPage() {
               <CardContent>
                 <div className="text-2xl font-bold">{stats?.vulnerabilities_total || 0}</div>
                 <div className="flex gap-2 mt-1">
-                  <Badge variant="destructive">{stats?.vulnerabilities_critical || 0} critical</Badge>
-                  <Badge variant="secondary">{stats?.vulnerabilities_overdue || 0} overdue</Badge>
+                  <Badge variant="destructive">{stats?.vulnerabilities_critical || 0} {t("reporting.critical")}</Badge>
+                  <Badge variant="secondary">{stats?.vulnerabilities_overdue || 0} {t("reporting.overdue")}</Badge>
                 </div>
               </CardContent>
             </Card>
@@ -496,8 +496,8 @@ export default function ReportingPage() {
               <CardContent>
                 <div className="text-2xl font-bold">{stats?.risks_total || 0}</div>
                 <div className="flex gap-2 mt-1">
-                  <Badge variant="destructive">{stats?.risks_critical || 0} critical</Badge>
-                  <Badge variant="secondary">{stats?.risks_requiring_treatment || 0} treatment</Badge>
+                  <Badge variant="destructive">{stats?.risks_critical || 0} {t("reporting.critical")}</Badge>
+                  <Badge variant="secondary">{stats?.risks_requiring_treatment || 0} {t("reporting.treatment")}</Badge>
                 </div>
               </CardContent>
             </Card>
@@ -507,45 +507,45 @@ export default function ReportingPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium">Third-Party Risk</CardTitle>
+                <CardTitle className="text-sm font-medium">{t("reporting.thirdPartyRisk")}</CardTitle>
                 <Users className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{stats?.vendors_total || 0} Vendors</div>
+                <div className="text-2xl font-bold">{stats?.vendors_total || 0} {t("reporting.vendors")}</div>
                 <div className="flex gap-2 mt-1">
-                  <Badge variant="destructive">{stats?.vendors_high_risk || 0} high risk</Badge>
-                  <Badge variant="secondary">{stats?.assessments_pending || 0} pending</Badge>
+                  <Badge variant="destructive">{stats?.vendors_high_risk || 0} {t("reporting.highRisk")}</Badge>
+                  <Badge variant="secondary">{stats?.assessments_pending || 0} {t("reporting.pending")}</Badge>
                 </div>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium">Integrations</CardTitle>
+                <CardTitle className="text-sm font-medium">{t("reporting.integrations")}</CardTitle>
                 <RefreshCw className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{stats?.integrations_active || 0} Active</div>
+                <div className="text-2xl font-bold">{stats?.integrations_active || 0} {t("reporting.active")}</div>
                 <div className="flex gap-2 mt-1">
                   {stats?.integrations_with_errors ? (
-                    <Badge variant="destructive">{stats.integrations_with_errors} errors</Badge>
+                    <Badge variant="destructive">{stats.integrations_with_errors} {t("reporting.errors")}</Badge>
                   ) : (
-                    <Badge variant="default">All healthy</Badge>
+                    <Badge variant="default">{t("reporting.allHealthy")}</Badge>
                   )}
-                  <Badge variant="secondary">{stats?.syncs_today || 0} syncs</Badge>
+                  <Badge variant="secondary">{stats?.syncs_today || 0} {t("reporting.syncs")}</Badge>
                 </div>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium">Compliance</CardTitle>
+                <CardTitle className="text-sm font-medium">{t("reporting.compliance")}</CardTitle>
                 <CheckCircle className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">{stats?.compliance_score || 0}%</div>
                 <p className="text-sm text-muted-foreground mt-1">
-                  {stats?.controls_implemented || 0} / {stats?.controls_total || 0} controls
+                  {stats?.controls_implemented || 0} / {stats?.controls_total || 0} {t("reporting.controls")}
                 </p>
               </CardContent>
             </Card>
@@ -565,7 +565,7 @@ export default function ReportingPage() {
                     className="mt-4"
                     onClick={() => seedTemplatesMutation.mutate()}
                   >
-                    Seed Default Templates
+                    {t("reporting.seedDefaultTemplates")}
                   </Button>
                 </CardContent>
               </Card>
@@ -580,7 +580,7 @@ export default function ReportingPage() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-muted-foreground mb-3">
-                    {template.description || "No description"}
+                    {template.description || t("reporting.noDescription")}
                   </p>
                   <div className="flex flex-wrap gap-1 mb-3">
                     {template.supported_formats?.map((format) => (
@@ -598,7 +598,7 @@ export default function ReportingPage() {
                     }}
                   >
                     <Play className="h-4 w-4 mr-2" />
-                    Generate Report
+                    {t("reporting.generateReport")}
                   </Button>
                 </CardContent>
               </Card>
@@ -639,7 +639,7 @@ export default function ReportingPage() {
                           </p>
                           {report.period_start && report.period_end && (
                             <p className="text-xs text-muted-foreground">
-                              Period: {new Date(report.period_start).toLocaleDateString()} -{" "}
+                              {t("reporting.period")} {new Date(report.period_start).toLocaleDateString()} -{" "}
                               {new Date(report.period_end).toLocaleDateString()}
                             </p>
                           )}
@@ -650,16 +650,16 @@ export default function ReportingPage() {
                           {report.status === "completed" && (
                             <Button variant="outline" size="sm">
                               <Download className="h-4 w-4 mr-1" />
-                              Download
+                              {t("reporting.download")}
                             </Button>
                           )}
                         </div>
                         <div className="text-xs text-muted-foreground text-right">
                           {report.generated_at && (
-                            <p>Generated: {new Date(report.generated_at).toLocaleString()}</p>
+                            <p>{t("reporting.generated")} {new Date(report.generated_at).toLocaleString()}</p>
                           )}
                           {report.generation_time_seconds && (
-                            <p>Time: {report.generation_time_seconds.toFixed(1)}s</p>
+                            <p>{t("reporting.time")} {report.generation_time_seconds.toFixed(1)}s</p>
                           )}
                         </div>
                       </div>
@@ -699,13 +699,13 @@ export default function ReportingPage() {
                         <div className="flex items-center gap-2">
                           <h3 className="font-medium">{schedule.name}</h3>
                           {schedule.is_enabled ? (
-                            <Badge variant="default">Enabled</Badge>
+                            <Badge variant="default">{t("reporting.enabled")}</Badge>
                           ) : (
-                            <Badge variant="secondary">Disabled</Badge>
+                            <Badge variant="secondary">{t("reporting.disabled")}</Badge>
                           )}
                         </div>
                         <p className="text-sm text-muted-foreground">
-                          {schedule.frequency} • {schedule.recipients.length} recipients
+                          {schedule.frequency} • {schedule.recipients.length} {t("reporting.recipients")}
                         </p>
                         {schedule.description && (
                           <p className="text-xs text-muted-foreground">{schedule.description}</p>
@@ -715,17 +715,17 @@ export default function ReportingPage() {
                     <div className="text-right text-sm">
                       {schedule.next_run_at && (
                         <p className="text-muted-foreground">
-                          Next: {new Date(schedule.next_run_at).toLocaleString()}
+                          {t("reporting.next")} {new Date(schedule.next_run_at).toLocaleString()}
                         </p>
                       )}
                       {schedule.last_run_at && (
                         <p className="text-muted-foreground">
-                          Last: {new Date(schedule.last_run_at).toLocaleString()}
+                          {t("reporting.last")} {new Date(schedule.last_run_at).toLocaleString()}
                         </p>
                       )}
                       {schedule.consecutive_failures > 0 && (
                         <p className="text-destructive">
-                          {schedule.consecutive_failures} consecutive failures
+                          {schedule.consecutive_failures} {t("reporting.consecutiveFailures")}
                         </p>
                       )}
                     </div>

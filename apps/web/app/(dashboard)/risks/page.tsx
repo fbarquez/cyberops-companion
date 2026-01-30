@@ -320,7 +320,7 @@ export default function RisksPage() {
           <div className="flex gap-2">
             <Button variant="outline" size="sm" onClick={() => refetchRisks()}>
               <RefreshCw className="h-4 w-4 mr-2" />
-              Refresh
+              {t("risks.refresh")}
             </Button>
             <Dialog open={isAddRiskOpen} onOpenChange={setIsAddRiskOpen}>
               <DialogTrigger asChild>
@@ -335,24 +335,24 @@ export default function RisksPage() {
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
                   <div className="grid gap-2">
-                    <Label>Title *</Label>
+                    <Label>{t("risks.titleLabel")}</Label>
                     <Input
                       value={newRisk.title}
                       onChange={(e) => setNewRisk({ ...newRisk, title: e.target.value })}
-                      placeholder="Risk title"
+                      placeholder={t("risks.riskTitlePlaceholder")}
                     />
                   </div>
                   <div className="grid gap-2">
-                    <Label>Description</Label>
+                    <Label>{t("risks.descriptionLabel")}</Label>
                     <Textarea
                       value={newRisk.description}
                       onChange={(e) => setNewRisk({ ...newRisk, description: e.target.value })}
-                      placeholder="Describe the risk..."
+                      placeholder={t("risks.describeRiskPlaceholder")}
                     />
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="grid gap-2">
-                      <Label>Category *</Label>
+                      <Label>{t("risks.categoryLabel")}</Label>
                       <Select
                         value={newRisk.category}
                         onValueChange={(value) => setNewRisk({ ...newRisk, category: value })}
@@ -370,23 +370,23 @@ export default function RisksPage() {
                       </Select>
                     </div>
                     <div className="grid gap-2">
-                      <Label>Department</Label>
+                      <Label>{t("risks.departmentLabel")}</Label>
                       <Input
                         value={newRisk.department}
                         onChange={(e) => setNewRisk({ ...newRisk, department: e.target.value })}
-                        placeholder="Department"
+                        placeholder={t("risks.departmentPlaceholder")}
                       />
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="grid gap-2">
-                      <Label>Likelihood</Label>
+                      <Label>{t("risks.likelihoodLabel")}</Label>
                       <Select
                         value={newRisk.inherent_likelihood}
                         onValueChange={(value) => setNewRisk({ ...newRisk, inherent_likelihood: value })}
                       >
                         <SelectTrigger>
-                          <SelectValue placeholder="Select likelihood" />
+                          <SelectValue placeholder={t("risks.selectLikelihood")} />
                         </SelectTrigger>
                         <SelectContent>
                           {LIKELIHOOD_LEVELS.map((level) => (
@@ -398,13 +398,13 @@ export default function RisksPage() {
                       </Select>
                     </div>
                     <div className="grid gap-2">
-                      <Label>Impact</Label>
+                      <Label>{t("risks.impactLabel")}</Label>
                       <Select
                         value={newRisk.inherent_impact}
                         onValueChange={(value) => setNewRisk({ ...newRisk, inherent_impact: value })}
                       >
                         <SelectTrigger>
-                          <SelectValue placeholder="Select impact" />
+                          <SelectValue placeholder={t("risks.selectImpact")} />
                         </SelectTrigger>
                         <SelectContent>
                           {IMPACT_LEVELS.map((level) => (
@@ -418,13 +418,13 @@ export default function RisksPage() {
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="grid gap-2">
-                      <Label>Treatment Type</Label>
+                      <Label>{t("risks.treatmentTypeLabel")}</Label>
                       <Select
                         value={newRisk.treatment_type}
                         onValueChange={(value) => setNewRisk({ ...newRisk, treatment_type: value })}
                       >
                         <SelectTrigger>
-                          <SelectValue placeholder="Select treatment" />
+                          <SelectValue placeholder={t("risks.selectTreatment")} />
                         </SelectTrigger>
                         <SelectContent>
                           {TREATMENT_TYPES.map((type) => (
@@ -436,7 +436,7 @@ export default function RisksPage() {
                       </Select>
                     </div>
                     <div className="grid gap-2">
-                      <Label>Financial Impact ($)</Label>
+                      <Label>{t("risks.financialImpactLabel")}</Label>
                       <Input
                         type="number"
                         value={newRisk.financial_impact}
@@ -446,18 +446,18 @@ export default function RisksPage() {
                     </div>
                   </div>
                   <div className="grid gap-2">
-                    <Label>Risk Owner</Label>
+                    <Label>{t("risks.riskOwnerLabel")}</Label>
                     <Input
                       value={newRisk.risk_owner}
                       onChange={(e) => setNewRisk({ ...newRisk, risk_owner: e.target.value })}
-                      placeholder="Risk owner name or ID"
+                      placeholder={t("risks.riskOwnerPlaceholder")}
                     />
                   </div>
                   <Button
                     onClick={() => createRiskMutation.mutate(newRisk)}
                     disabled={!newRisk.title || createRiskMutation.isPending}
                   >
-                    {createRiskMutation.isPending ? "Creating..." : "Create Risk"}
+                    {createRiskMutation.isPending ? t("risks.creating") : t("risks.createRisk")}
                   </Button>
                 </div>
               </DialogContent>
@@ -499,7 +499,7 @@ export default function RisksPage() {
                 <CardContent>
                   <div className="text-2xl font-bold">{stats?.total_risks || 0}</div>
                   <p className="text-xs text-muted-foreground">
-                    {stats?.open_risks || 0} open
+                    {stats?.open_risks || 0} {t("risks.open")}
                   </p>
                 </CardContent>
               </Card>
@@ -512,7 +512,7 @@ export default function RisksPage() {
                 <CardContent>
                   <div className="text-2xl font-bold text-red-600">{stats?.critical_risks || 0}</div>
                   <p className="text-xs text-muted-foreground">
-                    {stats?.high_risks || 0} high
+                    {stats?.high_risks || 0} {t("risks.high")}
                   </p>
                 </CardContent>
               </Card>
@@ -525,7 +525,7 @@ export default function RisksPage() {
                 <CardContent>
                   <div className="text-2xl font-bold">{stats?.total_controls || 0}</div>
                   <p className="text-xs text-muted-foreground">
-                    {stats?.effective_controls || 0} effective
+                    {stats?.effective_controls || 0} {t("risks.effective")}
                   </p>
                 </CardContent>
               </Card>
@@ -540,7 +540,7 @@ export default function RisksPage() {
                     {formatCurrency(stats?.total_financial_exposure || null)}
                   </div>
                   <p className="text-xs text-muted-foreground">
-                    Avg score: {stats?.average_risk_score?.toFixed(1) || "-"}
+                    {t("risks.avgScore")} {stats?.average_risk_score?.toFixed(1) || "-"}
                   </p>
                 </CardContent>
               </Card>
@@ -581,7 +581,7 @@ export default function RisksPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-sm">Risks by Category</CardTitle>
+                  <CardTitle className="text-sm">{t("risks.risksByCategory")}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
@@ -605,7 +605,7 @@ export default function RisksPage() {
 
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-sm">Risks by Level</CardTitle>
+                  <CardTitle className="text-sm">{t("risks.risksByLevel")}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
@@ -641,17 +641,17 @@ export default function RisksPage() {
             {/* Recent Risks */}
             <Card>
               <CardHeader>
-                <CardTitle className="text-sm">Recent Risks</CardTitle>
+                <CardTitle className="text-sm">{t("risks.recentRisks")}</CardTitle>
               </CardHeader>
               <CardContent>
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Risk ID</TableHead>
-                      <TableHead>Title</TableHead>
-                      <TableHead>Category</TableHead>
-                      <TableHead>Level</TableHead>
-                      <TableHead>Status</TableHead>
+                      <TableHead>{t("risks.riskId")}</TableHead>
+                      <TableHead>{t("risks.titleHeader")}</TableHead>
+                      <TableHead>{t("risks.categoryHeader")}</TableHead>
+                      <TableHead>{t("risks.levelHeader")}</TableHead>
+                      <TableHead>{t("risks.statusHeader")}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -686,7 +686,7 @@ export default function RisksPage() {
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
-                    placeholder="Search risks..."
+                    placeholder={t("risks.searchRisksPlaceholder")}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="pl-10"
@@ -695,10 +695,10 @@ export default function RisksPage() {
               </div>
               <Select value={selectedCategory} onValueChange={setSelectedCategory}>
                 <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="All Categories" />
+                  <SelectValue placeholder={t("risks.allCategories")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Categories</SelectItem>
+                  <SelectItem value="">{t("risks.allCategories")}</SelectItem>
                   {CATEGORIES.map((cat) => (
                     <SelectItem key={cat} value={cat}>
                       {getCategoryLabel(cat)}
@@ -708,14 +708,14 @@ export default function RisksPage() {
               </Select>
               <Select value={selectedLevel} onValueChange={setSelectedLevel}>
                 <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="All Levels" />
+                  <SelectValue placeholder={t("risks.allLevels")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Levels</SelectItem>
-                  <SelectItem value="critical">Critical</SelectItem>
-                  <SelectItem value="high">High</SelectItem>
-                  <SelectItem value="medium">Medium</SelectItem>
-                  <SelectItem value="low">Low</SelectItem>
+                  <SelectItem value="">{t("risks.allLevels")}</SelectItem>
+                  <SelectItem value="critical">{t("risks.critical")}</SelectItem>
+                  <SelectItem value="high">{t("risks.high")}</SelectItem>
+                  <SelectItem value="medium">{t("risks.medium")}</SelectItem>
+                  <SelectItem value="low">{t("risks.low")}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -726,14 +726,14 @@ export default function RisksPage() {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Risk ID</TableHead>
-                      <TableHead>Title</TableHead>
-                      <TableHead>Category</TableHead>
-                      <TableHead>Risk Level</TableHead>
-                      <TableHead>Score</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Treatment</TableHead>
-                      <TableHead>Controls</TableHead>
+                      <TableHead>{t("risks.riskId")}</TableHead>
+                      <TableHead>{t("risks.titleHeader")}</TableHead>
+                      <TableHead>{t("risks.categoryHeader")}</TableHead>
+                      <TableHead>{t("risks.riskLevelHeader")}</TableHead>
+                      <TableHead>{t("risks.scoreHeader")}</TableHead>
+                      <TableHead>{t("risks.statusHeader")}</TableHead>
+                      <TableHead>{t("risks.treatmentHeader")}</TableHead>
+                      <TableHead>{t("risks.controlsHeader")}</TableHead>
                       <TableHead className="w-[50px]"></TableHead>
                     </TableRow>
                   </TableHeader>
@@ -741,7 +741,7 @@ export default function RisksPage() {
                     {risksLoading ? (
                       <TableRow>
                         <TableCell colSpan={9} className="text-center py-8">
-                          Loading...
+                          {t("risks.loading")}
                         </TableCell>
                       </TableRow>
                     ) : risksData?.risks?.length === 0 ? (
@@ -794,14 +794,14 @@ export default function RisksPage() {
                               <DropdownMenuContent align="end">
                                 <DropdownMenuItem onClick={() => setSelectedRisk(risk)}>
                                   <Eye className="h-4 w-4 mr-2" />
-                                  View Details
+                                  {t("risks.viewDetails")}
                                 </DropdownMenuItem>
                                 <DropdownMenuItem
                                   className="text-red-600"
                                   onClick={() => deleteRiskMutation.mutate(risk.id)}
                                 >
                                   <Trash2 className="h-4 w-4 mr-2" />
-                                  Delete
+                                  {t("common.delete")}
                                 </DropdownMenuItem>
                               </DropdownMenuContent>
                             </DropdownMenu>
@@ -868,25 +868,25 @@ export default function RisksPage() {
                     <div className="mt-4 flex gap-4 justify-center">
                       <div className="flex items-center gap-2">
                         <div className="w-4 h-4 bg-red-500 rounded" />
-                        <span className="text-sm">Critical (17-25)</span>
+                        <span className="text-sm">{t("risks.legendCritical")}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <div className="w-4 h-4 bg-orange-500 rounded" />
-                        <span className="text-sm">High (10-16)</span>
+                        <span className="text-sm">{t("risks.legendHigh")}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <div className="w-4 h-4 bg-yellow-400 rounded" />
-                        <span className="text-sm">Medium (5-9)</span>
+                        <span className="text-sm">{t("risks.legendMedium")}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <div className="w-4 h-4 bg-green-400 rounded" />
-                        <span className="text-sm">Low (1-4)</span>
+                        <span className="text-sm">{t("risks.legendLow")}</span>
                       </div>
                     </div>
                   </div>
                 ) : (
                   <div className="text-center py-8 text-muted-foreground">
-                    Loading risk matrix...
+                    {t("risks.loadingRiskMatrix")}
                   </div>
                 )}
               </CardContent>
@@ -909,23 +909,23 @@ export default function RisksPage() {
                   </DialogHeader>
                   <div className="grid gap-4 py-4">
                     <div className="grid gap-2">
-                      <Label>Name *</Label>
+                      <Label>{t("risks.nameLabel")}</Label>
                       <Input
                         value={newControl.name}
                         onChange={(e) => setNewControl({ ...newControl, name: e.target.value })}
-                        placeholder="Control name"
+                        placeholder={t("risks.controlNamePlaceholder")}
                       />
                     </div>
                     <div className="grid gap-2">
-                      <Label>Description</Label>
+                      <Label>{t("risks.descriptionLabel")}</Label>
                       <Textarea
                         value={newControl.description}
                         onChange={(e) => setNewControl({ ...newControl, description: e.target.value })}
-                        placeholder="Describe the control..."
+                        placeholder={t("risks.describeControlPlaceholder")}
                       />
                     </div>
                     <div className="grid gap-2">
-                      <Label>Control Type *</Label>
+                      <Label>{t("risks.controlTypeLabel")}</Label>
                       <Select
                         value={newControl.control_type}
                         onValueChange={(value) => setNewControl({ ...newControl, control_type: value })}
@@ -943,29 +943,29 @@ export default function RisksPage() {
                       </Select>
                     </div>
                     <div className="grid gap-2">
-                      <Label>Implementation Details</Label>
+                      <Label>{t("risks.implementationDetailsLabel")}</Label>
                       <Textarea
                         value={newControl.implementation_details}
                         onChange={(e) => setNewControl({ ...newControl, implementation_details: e.target.value })}
-                        placeholder="How the control is implemented..."
+                        placeholder={t("risks.implementationPlaceholder")}
                       />
                     </div>
                     <div className="grid gap-2">
-                      <Label>Effectiveness Rating (0-100)</Label>
+                      <Label>{t("risks.effectivenessRatingLabel")}</Label>
                       <Input
                         type="number"
                         min="0"
                         max="100"
                         value={newControl.effectiveness_rating}
                         onChange={(e) => setNewControl({ ...newControl, effectiveness_rating: e.target.value })}
-                        placeholder="0-100"
+                        placeholder={t("risks.effectivenessPlaceholder")}
                       />
                     </div>
                     <Button
                       onClick={() => createControlMutation.mutate(newControl)}
                       disabled={!newControl.name || createControlMutation.isPending}
                     >
-                      {createControlMutation.isPending ? "Creating..." : "Create Control"}
+                      {createControlMutation.isPending ? t("risks.creating") : t("risks.createControl")}
                     </Button>
                   </div>
                 </DialogContent>
@@ -977,11 +977,11 @@ export default function RisksPage() {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Control ID</TableHead>
-                      <TableHead>Name</TableHead>
-                      <TableHead>Type</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Effectiveness</TableHead>
+                      <TableHead>{t("risks.controlId")}</TableHead>
+                      <TableHead>{t("risks.nameHeader")}</TableHead>
+                      <TableHead>{t("risks.typeHeader")}</TableHead>
+                      <TableHead>{t("risks.statusHeader")}</TableHead>
+                      <TableHead>{t("risks.effectivenessHeader")}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -1054,7 +1054,7 @@ export default function RisksPage() {
             <div className="space-y-4">
               <div className="flex gap-2">
                 <Badge className={getRiskLevelColor(selectedRisk.inherent_risk_level)}>
-                  {selectedRisk.inherent_risk_level || "Unassessed"}
+                  {selectedRisk.inherent_risk_level || t("risks.unassessed")}
                 </Badge>
                 <Badge variant="outline" className={getStatusColor(selectedRisk.status)}>
                   {selectedRisk.status.replace(/_/g, " ")}
@@ -1066,41 +1066,41 @@ export default function RisksPage() {
 
               {selectedRisk.description && (
                 <div>
-                  <Label className="text-muted-foreground">Description</Label>
+                  <Label className="text-muted-foreground">{t("risks.descriptionLabel")}</Label>
                   <p className="mt-1">{selectedRisk.description}</p>
                 </div>
               )}
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <Label className="text-muted-foreground">Inherent Score</Label>
+                  <Label className="text-muted-foreground">{t("risks.inherentScore")}</Label>
                   <p className="text-lg font-semibold">{selectedRisk.inherent_risk_score?.toFixed(1) || "-"}</p>
                 </div>
                 <div>
-                  <Label className="text-muted-foreground">Residual Score</Label>
+                  <Label className="text-muted-foreground">{t("risks.residualScore")}</Label>
                   <p className="text-lg font-semibold">{selectedRisk.residual_risk_score?.toFixed(1) || "-"}</p>
                 </div>
                 <div>
-                  <Label className="text-muted-foreground">Treatment</Label>
+                  <Label className="text-muted-foreground">{t("risks.treatment")}</Label>
                   <p className="capitalize">{selectedRisk.treatment_type || "-"}</p>
                 </div>
                 <div>
-                  <Label className="text-muted-foreground">Financial Impact</Label>
+                  <Label className="text-muted-foreground">{t("risks.financialImpactLabel")}</Label>
                   <p>{formatCurrency(selectedRisk.financial_impact)}</p>
                 </div>
                 <div>
-                  <Label className="text-muted-foreground">Department</Label>
+                  <Label className="text-muted-foreground">{t("risks.departmentLabel")}</Label>
                   <p>{selectedRisk.department || "-"}</p>
                 </div>
                 <div>
-                  <Label className="text-muted-foreground">Owner</Label>
+                  <Label className="text-muted-foreground">{t("risks.owner")}</Label>
                   <p>{selectedRisk.risk_owner || "-"}</p>
                 </div>
               </div>
 
               {selectedRisk.controls && selectedRisk.controls.length > 0 && (
                 <div>
-                  <Label className="text-muted-foreground">Controls ({selectedRisk.controls.length})</Label>
+                  <Label className="text-muted-foreground">{t("risks.controlsCount")} ({selectedRisk.controls.length})</Label>
                   <div className="mt-2 space-y-2">
                     {selectedRisk.controls.map((control) => (
                       <div key={control.id} className="flex items-center justify-between p-2 bg-muted rounded">
@@ -1114,7 +1114,7 @@ export default function RisksPage() {
 
               {selectedRisk.treatment_actions && selectedRisk.treatment_actions.length > 0 && (
                 <div>
-                  <Label className="text-muted-foreground">Treatment Actions ({selectedRisk.treatment_actions.length})</Label>
+                  <Label className="text-muted-foreground">{t("risks.treatmentActions")} ({selectedRisk.treatment_actions.length})</Label>
                   <div className="mt-2 space-y-2">
                     {selectedRisk.treatment_actions.map((action) => (
                       <div key={action.id} className="flex items-center justify-between p-2 bg-muted rounded">

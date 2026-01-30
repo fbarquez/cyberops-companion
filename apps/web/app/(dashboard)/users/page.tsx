@@ -390,7 +390,7 @@ export default function UsersPage() {
         <div>
           <h1 className="text-2xl font-bold">{t("users.title")}</h1>
           <p className="text-muted-foreground">
-            Manage users, teams, roles, and permissions
+            {t("users.subtitle")}
           </p>
         </div>
       </div>
@@ -405,7 +405,7 @@ export default function UsersPage() {
           <CardContent>
             <div className="text-2xl font-bold">{stats?.total_users || 0}</div>
             <p className="text-xs text-muted-foreground">
-              {stats?.active_users || 0} active
+              {stats?.active_users || 0} {t("users.activeCount")}
             </p>
           </CardContent>
         </Card>
@@ -485,7 +485,7 @@ export default function UsersPage() {
                 <DialogHeader>
                   <DialogTitle>{t("users.inviteUser")}</DialogTitle>
                   <DialogDescription>
-                    Send an invitation to a new user to join the platform.
+                    {t("users.invitationDescription")}
                   </DialogDescription>
                 </DialogHeader>
                 <div className="space-y-4 py-4">
@@ -499,7 +499,7 @@ export default function UsersPage() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>Role</Label>
+                    <Label>{t("users.role")}</Label>
                     <Select
                       value={invitationForm.role}
                       onValueChange={(v) => setInvitationForm({ ...invitationForm, role: v })}
@@ -508,23 +508,23 @@ export default function UsersPage() {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="admin">Admin</SelectItem>
-                        <SelectItem value="manager">Manager</SelectItem>
-                        <SelectItem value="analyst">Analyst</SelectItem>
-                        <SelectItem value="viewer">Viewer</SelectItem>
+                        <SelectItem value="admin">{t("users.roleAdmin")}</SelectItem>
+                        <SelectItem value="manager">{t("users.roleManager")}</SelectItem>
+                        <SelectItem value="analyst">{t("users.roleAnalyst")}</SelectItem>
+                        <SelectItem value="viewer">{t("users.roleViewer")}</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                 </div>
                 <DialogFooter>
                   <Button variant="outline" onClick={() => setIsInvitationDialogOpen(false)}>
-                    Cancel
+                    {t("users.cancel")}
                   </Button>
                   <Button
                     onClick={() => createInvitationMutation.mutate(invitationForm)}
                     disabled={!invitationForm.email}
                   >
-                    Send Invitation
+                    {t("users.sendInvitation")}
                   </Button>
                 </DialogFooter>
               </DialogContent>
@@ -537,8 +537,8 @@ export default function UsersPage() {
                 <TableRow>
                   <TableHead>{t("users.fullName")}</TableHead>
                   <TableHead>{t("users.email")}</TableHead>
-                  <TableHead>Role</TableHead>
-                  <TableHead>Status</TableHead>
+                  <TableHead>{t("users.roleHeader")}</TableHead>
+                  <TableHead>{t("users.statusHeader")}</TableHead>
                   <TableHead>{t("users.lastLogin")}</TableHead>
                   <TableHead className="text-right">{t("common.actions")}</TableHead>
                 </TableRow>
@@ -547,7 +547,7 @@ export default function UsersPage() {
                 {loadingUsers ? (
                   <TableRow>
                     <TableCell colSpan={6} className="text-center py-8">
-                      Loading...
+                      {t("users.loading")}
                     </TableCell>
                   </TableRow>
                 ) : users.length === 0 ? (
@@ -566,7 +566,7 @@ export default function UsersPage() {
                       <TableCell>
                         {user.last_login
                           ? formatDistanceToNow(new Date(user.last_login), { addSuffix: true })
-                          : "Never"}
+                          : t("users.never")}
                       </TableCell>
                       <TableCell className="text-right">
                         <DropdownMenu>
@@ -578,11 +578,11 @@ export default function UsersPage() {
                           <DropdownMenuContent align="end">
                             <DropdownMenuItem>
                               <Eye className="h-4 w-4 mr-2" />
-                              View Details
+                              {t("users.viewDetails")}
                             </DropdownMenuItem>
                             <DropdownMenuItem>
                               <Edit className="h-4 w-4 mr-2" />
-                              Edit User
+                              {t("users.editUser")}
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
                             {user.is_active ? (
@@ -626,7 +626,7 @@ export default function UsersPage() {
                 <DialogHeader>
                   <DialogTitle>{t("users.createTeam")}</DialogTitle>
                   <DialogDescription>
-                    Create a new team to organize users.
+                    {t("users.teamDialogDescription")}
                   </DialogDescription>
                 </DialogHeader>
                 <div className="space-y-4 py-4">
@@ -635,7 +635,7 @@ export default function UsersPage() {
                     <Input
                       value={teamForm.name}
                       onChange={(e) => setTeamForm({ ...teamForm, name: e.target.value })}
-                      placeholder="Security Team"
+                      placeholder={t("users.teamNamePlaceholder")}
                     />
                   </div>
                   <div className="space-y-2">
@@ -643,19 +643,19 @@ export default function UsersPage() {
                     <Textarea
                       value={teamForm.description}
                       onChange={(e) => setTeamForm({ ...teamForm, description: e.target.value })}
-                      placeholder="Team description..."
+                      placeholder={t("users.teamDescriptionPlaceholder")}
                     />
                   </div>
                 </div>
                 <DialogFooter>
                   <Button variant="outline" onClick={() => setIsTeamDialogOpen(false)}>
-                    Cancel
+                    {t("users.cancel")}
                   </Button>
                   <Button
                     onClick={() => createTeamMutation.mutate(teamForm)}
                     disabled={!teamForm.name}
                   >
-                    Create Team
+                    {t("users.createTeamButton")}
                   </Button>
                 </DialogFooter>
               </DialogContent>
@@ -665,7 +665,7 @@ export default function UsersPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {loadingTeams ? (
               <div className="col-span-full text-center py-8 text-muted-foreground">
-                Loading...
+                {t("users.loading")}
               </div>
             ) : teams.length === 0 ? (
               <div className="col-span-full">
@@ -694,7 +694,7 @@ export default function UsersPage() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Users className="h-4 w-4" />
-                        {team.member_count || 0} members
+                        {team.member_count || 0} {t("users.members")}
                       </div>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
@@ -705,11 +705,11 @@ export default function UsersPage() {
                         <DropdownMenuContent align="end">
                           <DropdownMenuItem>
                             <Eye className="h-4 w-4 mr-2" />
-                            View Members
+                            {t("users.viewMembers")}
                           </DropdownMenuItem>
                           <DropdownMenuItem>
                             <Edit className="h-4 w-4 mr-2" />
-                            Edit Team
+                            {t("users.editTeam")}
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
                           <DropdownMenuItem
@@ -717,7 +717,7 @@ export default function UsersPage() {
                             onClick={() => deleteTeamMutation.mutate(team.id)}
                           >
                             <Trash2 className="h-4 w-4 mr-2" />
-                            Delete Team
+                            {t("users.deleteTeam")}
                           </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
@@ -743,7 +743,7 @@ export default function UsersPage() {
                 <DialogHeader>
                   <DialogTitle>{t("users.createRole")}</DialogTitle>
                   <DialogDescription>
-                    Create a custom role with specific permissions.
+                    {t("users.roleDialogDescription")}
                   </DialogDescription>
                 </DialogHeader>
                 <div className="space-y-4 py-4">
@@ -752,7 +752,7 @@ export default function UsersPage() {
                     <Input
                       value={roleForm.name}
                       onChange={(e) => setRoleForm({ ...roleForm, name: e.target.value })}
-                      placeholder="Custom Role"
+                      placeholder={t("users.roleNamePlaceholder")}
                     />
                   </div>
                   <div className="space-y-2">
@@ -760,19 +760,19 @@ export default function UsersPage() {
                     <Textarea
                       value={roleForm.description}
                       onChange={(e) => setRoleForm({ ...roleForm, description: e.target.value })}
-                      placeholder="Role description..."
+                      placeholder={t("users.roleDescriptionPlaceholder")}
                     />
                   </div>
                 </div>
                 <DialogFooter>
                   <Button variant="outline" onClick={() => setIsRoleDialogOpen(false)}>
-                    Cancel
+                    {t("users.cancel")}
                   </Button>
                   <Button
                     onClick={() => createRoleMutation.mutate(roleForm)}
                     disabled={!roleForm.name}
                   >
-                    Create Role
+                    {t("users.createRoleButton")}
                   </Button>
                 </DialogFooter>
               </DialogContent>
@@ -783,12 +783,12 @@ export default function UsersPage() {
             <Card>
               <CardHeader>
                 <CardTitle>{t("users.roles")}</CardTitle>
-                <CardDescription>Manage user roles and their permissions</CardDescription>
+                <CardDescription>{t("users.manageRolesDescription")}</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
                   {loadingRoles ? (
-                    <div className="text-center py-4 text-muted-foreground">Loading...</div>
+                    <div className="text-center py-4 text-muted-foreground">{t("users.loading")}</div>
                   ) : roles.length === 0 ? (
                     <div className="text-center py-4 text-muted-foreground">{t("users.noRoles")}</div>
                   ) : (
@@ -827,7 +827,7 @@ export default function UsersPage() {
             <Card>
               <CardHeader>
                 <CardTitle>{t("users.permissions")}</CardTitle>
-                <CardDescription>Available permissions in the system</CardDescription>
+                <CardDescription>{t("users.availablePermissions")}</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-2 max-h-96 overflow-y-auto">
@@ -857,13 +857,13 @@ export default function UsersPage() {
         <TabsContent value="sessions" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Your Active Sessions</CardTitle>
-              <CardDescription>Manage your active sessions across devices</CardDescription>
+              <CardTitle>{t("users.yourActiveSessions")}</CardTitle>
+              <CardDescription>{t("users.manageSessionsDescription")}</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
                 {loadingSessions ? (
-                  <div className="text-center py-8 text-muted-foreground">Loading...</div>
+                  <div className="text-center py-8 text-muted-foreground">{t("users.loading")}</div>
                 ) : sessions.length === 0 ? (
                   <div className="text-center py-8 text-muted-foreground">{t("users.noSessions")}</div>
                 ) : (
@@ -879,7 +879,7 @@ export default function UsersPage() {
                         <div>
                           <div className="flex items-center gap-2">
                             <span className="font-medium">
-                              {session.user_agent || "Unknown Device"}
+                              {session.user_agent || t("users.unknownDevice")}
                             </span>
                             <Badge variant={session.status === "active" ? "default" : "secondary"}>
                               {session.status}
@@ -894,7 +894,7 @@ export default function UsersPage() {
                             )}
                             <span className="flex items-center gap-1">
                               <Clock className="h-3 w-3" />
-                              Last active {formatDistanceToNow(new Date(session.last_activity_at || session.created_at), { addSuffix: true })}
+                              {t("users.lastActive")} {formatDistanceToNow(new Date(session.last_activity_at || session.created_at), { addSuffix: true })}
                             </span>
                           </div>
                         </div>
@@ -928,10 +928,10 @@ export default function UsersPage() {
               <TableHeader>
                 <TableRow>
                   <TableHead>{t("users.email")}</TableHead>
-                  <TableHead>Role</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Expires</TableHead>
-                  <TableHead>Sent</TableHead>
+                  <TableHead>{t("users.roleHeader")}</TableHead>
+                  <TableHead>{t("users.statusHeader")}</TableHead>
+                  <TableHead>{t("users.expiresHeader")}</TableHead>
+                  <TableHead>{t("users.sentHeader")}</TableHead>
                   <TableHead className="text-right">{t("common.actions")}</TableHead>
                 </TableRow>
               </TableHeader>
@@ -939,7 +939,7 @@ export default function UsersPage() {
                 {loadingInvitations ? (
                   <TableRow>
                     <TableCell colSpan={6} className="text-center py-8">
-                      Loading...
+                      {t("users.loading")}
                     </TableCell>
                   </TableRow>
                 ) : invitations.length === 0 ? (
@@ -984,12 +984,12 @@ export default function UsersPage() {
           <Card>
             <CardHeader>
               <CardTitle>{t("users.activityLog")}</CardTitle>
-              <CardDescription>Recent activity across the platform</CardDescription>
+              <CardDescription>{t("users.recentActivityDescription")}</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
                 {loadingActivityLogs ? (
-                  <div className="text-center py-8 text-muted-foreground">Loading...</div>
+                  <div className="text-center py-8 text-muted-foreground">{t("users.loading")}</div>
                 ) : activityLogs.length === 0 ? (
                   <div className="text-center py-8 text-muted-foreground">{t("users.noActivityLogs")}</div>
                 ) : (
@@ -1003,7 +1003,7 @@ export default function UsersPage() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
-                          <span className="font-medium">{log.user_name || "System"}</span>
+                          <span className="font-medium">{log.user_name || t("users.system")}</span>
                           <span className="text-muted-foreground">{log.action}</span>
                           <Badge variant="outline">{log.resource_type}</Badge>
                         </div>
@@ -1034,7 +1034,7 @@ export default function UsersPage() {
                 <DialogHeader>
                   <DialogTitle>{t("users.createAPIKey")}</DialogTitle>
                   <DialogDescription>
-                    Create an API key for programmatic access.
+                    {t("users.apiKeyDescription")}
                   </DialogDescription>
                 </DialogHeader>
                 <div className="space-y-4 py-4">
@@ -1043,11 +1043,11 @@ export default function UsersPage() {
                     <Input
                       value={apiKeyForm.name}
                       onChange={(e) => setApiKeyForm({ ...apiKeyForm, name: e.target.value })}
-                      placeholder="My API Key"
+                      placeholder={t("users.apiKeyNamePlaceholder")}
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>Expiration (days)</Label>
+                    <Label>{t("users.expirationDays")}</Label>
                     <Select
                       value={String(apiKeyForm.expires_in_days)}
                       onValueChange={(v) => setApiKeyForm({ ...apiKeyForm, expires_in_days: parseInt(v) })}
@@ -1056,23 +1056,23 @@ export default function UsersPage() {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="30">30 days</SelectItem>
-                        <SelectItem value="90">90 days</SelectItem>
-                        <SelectItem value="180">180 days</SelectItem>
-                        <SelectItem value="365">1 year</SelectItem>
+                        <SelectItem value="30">{t("users.days30")}</SelectItem>
+                        <SelectItem value="90">{t("users.days90")}</SelectItem>
+                        <SelectItem value="180">{t("users.days180")}</SelectItem>
+                        <SelectItem value="365">{t("users.year1")}</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                 </div>
                 <DialogFooter>
                   <Button variant="outline" onClick={() => setIsAPIKeyDialogOpen(false)}>
-                    Cancel
+                    {t("users.cancel")}
                   </Button>
                   <Button
                     onClick={() => createAPIKeyMutation.mutate(apiKeyForm)}
                     disabled={!apiKeyForm.name}
                   >
-                    Create API Key
+                    {t("users.createAPIKeyButton")}
                   </Button>
                 </DialogFooter>
               </DialogContent>
@@ -1084,9 +1084,9 @@ export default function UsersPage() {
               <TableHeader>
                 <TableRow>
                   <TableHead>{t("users.keyName")}</TableHead>
-                  <TableHead>Key Prefix</TableHead>
+                  <TableHead>{t("users.keyPrefix")}</TableHead>
                   <TableHead>{t("users.scopes")}</TableHead>
-                  <TableHead>Status</TableHead>
+                  <TableHead>{t("users.statusHeader")}</TableHead>
                   <TableHead>{t("users.lastUsed")}</TableHead>
                   <TableHead>{t("users.expiresAt")}</TableHead>
                   <TableHead className="text-right">{t("common.actions")}</TableHead>
@@ -1096,7 +1096,7 @@ export default function UsersPage() {
                 {loadingAPIKeys ? (
                   <TableRow>
                     <TableCell colSpan={7} className="text-center py-8">
-                      Loading...
+                      {t("users.loading")}
                     </TableCell>
                   </TableRow>
                 ) : apiKeys.length === 0 ? (
@@ -1125,12 +1125,12 @@ export default function UsersPage() {
                       <TableCell>
                         {apiKey.last_used_at
                           ? formatDistanceToNow(new Date(apiKey.last_used_at), { addSuffix: true })
-                          : "Never"}
+                          : t("users.never")}
                       </TableCell>
                       <TableCell>
                         {apiKey.expires_at
                           ? format(new Date(apiKey.expires_at), "MMM d, yyyy")
-                          : "Never"}
+                          : t("users.never")}
                       </TableCell>
                       <TableCell className="text-right">
                         {apiKey.is_active && (

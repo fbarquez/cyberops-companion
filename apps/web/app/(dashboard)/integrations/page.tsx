@@ -318,13 +318,13 @@ export default function IntegrationsPage() {
         <div>
           <h1 className="text-2xl font-bold">{t("integrations.title")}</h1>
           <p className="text-muted-foreground">
-            Connect external security platforms and sync data
+            {t("integrations.subtitle")}
           </p>
         </div>
         <div className="flex gap-2">
           <Button variant="outline" onClick={() => seedTemplatesMutation.mutate()}>
             <RefreshCw className="h-4 w-4 mr-2" />
-            Seed Templates
+            {t("integrations.seedTemplates")}
           </Button>
           <Dialog open={isAddIntegrationOpen} onOpenChange={setIsAddIntegrationOpen}>
             <DialogTrigger asChild>
@@ -336,39 +336,39 @@ export default function IntegrationsPage() {
             <DialogContent className="max-w-lg">
               <DialogHeader>
                 <DialogTitle>
-                  {selectedTemplate ? `Configure ${selectedTemplate.name}` : t("integrations.addIntegration")}
+                  {selectedTemplate ? t("integrations.configureX").replace("{name}", selectedTemplate.name) : t("integrations.addIntegration")}
                 </DialogTitle>
                 <DialogDescription>
                   {selectedTemplate
                     ? selectedTemplate.description
-                    : "Connect a new external platform to sync security data."}
+                    : t("integrations.connectNewPlatform")}
                 </DialogDescription>
               </DialogHeader>
               <div className="space-y-4 py-4">
                 <div className="space-y-2">
-                  <Label htmlFor="name">Integration Name</Label>
+                  <Label htmlFor="name">{t("integrations.integrationName")}</Label>
                   <Input
                     id="name"
                     value={newIntegration.name}
                     onChange={(e) =>
                       setNewIntegration({ ...newIntegration, name: e.target.value })
                     }
-                    placeholder="My Integration"
+                    placeholder={t("integrations.namePlaceholder")}
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="base_url">Base URL / API Endpoint</Label>
+                  <Label htmlFor="base_url">{t("integrations.baseUrlEndpoint")}</Label>
                   <Input
                     id="base_url"
                     value={newIntegration.base_url}
                     onChange={(e) =>
                       setNewIntegration({ ...newIntegration, base_url: e.target.value })
                     }
-                    placeholder="https://api.example.com"
+                    placeholder={t("integrations.urlPlaceholder")}
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="api_key">API Key</Label>
+                  <Label htmlFor="api_key">{t("integrations.apiKey")}</Label>
                   <Input
                     id="api_key"
                     type="password"
@@ -376,7 +376,7 @@ export default function IntegrationsPage() {
                     onChange={(e) =>
                       setNewIntegration({ ...newIntegration, api_key: e.target.value })
                     }
-                    placeholder="Enter API key"
+                    placeholder={t("integrations.apiKeyPlaceholder")}
                   />
                 </div>
                 <div className="space-y-2">
@@ -400,26 +400,26 @@ export default function IntegrationsPage() {
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="description">Description</Label>
+                  <Label htmlFor="description">{t("integrations.description")}</Label>
                   <Textarea
                     id="description"
                     value={newIntegration.description}
                     onChange={(e) =>
                       setNewIntegration({ ...newIntegration, description: e.target.value })
                     }
-                    placeholder="Optional description..."
+                    placeholder={t("integrations.descriptionPlaceholder")}
                   />
                 </div>
               </div>
               <DialogFooter>
                 <Button variant="outline" onClick={() => setIsAddIntegrationOpen(false)}>
-                  Cancel
+                  {t("integrations.cancel")}
                 </Button>
                 <Button
                   onClick={handleCreateIntegration}
                   disabled={!newIntegration.name || createIntegrationMutation.isPending}
                 >
-                  {createIntegrationMutation.isPending ? "Creating..." : "Create Integration"}
+                  {createIntegrationMutation.isPending ? t("integrations.creating") : t("integrations.createIntegration")}
                 </Button>
               </DialogFooter>
             </DialogContent>
@@ -478,7 +478,7 @@ export default function IntegrationsPage() {
                 <div className="text-2xl font-bold text-destructive">
                   {stats?.integrations_with_errors || 0}
                 </div>
-                <p className="text-xs text-muted-foreground">Require attention</p>
+                <p className="text-xs text-muted-foreground">{t("integrations.requireAttention")}</p>
               </CardContent>
             </Card>
 
@@ -493,10 +493,10 @@ export default function IntegrationsPage() {
                 <div className="text-2xl font-bold">{stats?.total_syncs_today || 0}</div>
                 <div className="flex gap-2 text-xs">
                   <span className="text-green-600">
-                    {stats?.successful_syncs_today || 0} success
+                    {stats?.successful_syncs_today || 0} {t("integrations.success")}
                   </span>
                   <span className="text-destructive">
-                    {stats?.failed_syncs_today || 0} failed
+                    {stats?.failed_syncs_today || 0} {t("integrations.failed")}
                   </span>
                 </div>
               </CardContent>
@@ -513,7 +513,7 @@ export default function IntegrationsPage() {
                 <div className="text-2xl font-bold">
                   {(stats?.records_synced_today || 0).toLocaleString()}
                 </div>
-                <p className="text-xs text-muted-foreground">Today</p>
+                <p className="text-xs text-muted-foreground">{t("integrations.today")}</p>
               </CardContent>
             </Card>
           </div>
@@ -531,10 +531,10 @@ export default function IntegrationsPage() {
                 <div className="text-2xl font-bold">{stats?.webhooks_received_today || 0}</div>
                 <div className="flex gap-2 text-xs">
                   <span className="text-green-600">
-                    {stats?.webhooks_processed_today || 0} processed
+                    {stats?.webhooks_processed_today || 0} {t("integrations.processed")}
                   </span>
                   <span className="text-destructive">
-                    {stats?.webhooks_failed_today || 0} failed
+                    {stats?.webhooks_failed_today || 0} {t("integrations.failed")}
                   </span>
                 </div>
               </CardContent>
@@ -545,28 +545,28 @@ export default function IntegrationsPage() {
               <>
                 <Card>
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-sm font-medium">Awareness Score</CardTitle>
+                    <CardTitle className="text-sm font-medium">{t("integrations.awarenessScore")}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">
                       {stats.awareness_metrics.average_score || 0}%
                     </div>
                     <p className="text-xs text-muted-foreground">
-                      {stats.awareness_metrics.total_users || 0} users tracked
+                      {stats.awareness_metrics.total_users || 0} {t("integrations.usersTracked")}
                     </p>
                   </CardContent>
                 </Card>
 
                 <Card>
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-sm font-medium">Phishing Click Rate</CardTitle>
+                    <CardTitle className="text-sm font-medium">{t("integrations.phishingClickRate")}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">
                       {stats.awareness_metrics.phishing_click_rate || 0}%
                     </div>
                     <p className="text-xs text-muted-foreground">
-                      {stats.awareness_metrics.training_completion_rate || 0}% training complete
+                      {stats.awareness_metrics.training_completion_rate || 0}% {t("integrations.trainingComplete")}
                     </p>
                   </CardContent>
                 </Card>
@@ -577,7 +577,7 @@ export default function IntegrationsPage() {
           {/* Category Breakdown */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-sm font-medium">Integrations by Category</CardTitle>
+              <CardTitle className="text-sm font-medium">{t("integrations.integrationsByCategory")}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex flex-wrap gap-3">
@@ -604,7 +604,7 @@ export default function IntegrationsPage() {
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
-                  placeholder="Search integrations..."
+                  placeholder={t("integrations.searchIntegrations")}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pl-10"
@@ -617,7 +617,7 @@ export default function IntegrationsPage() {
                 <SelectValue placeholder="Category" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Categories</SelectItem>
+                <SelectItem value="all">{t("integrations.allCategories")}</SelectItem>
                 <SelectItem value="security_awareness">{t("integrations.securityAwareness")}</SelectItem>
                 <SelectItem value="siem">{t("integrations.siem")}</SelectItem>
                 <SelectItem value="edr_xdr">{t("integrations.edrXdr")}</SelectItem>
@@ -633,7 +633,7 @@ export default function IntegrationsPage() {
                 <SelectValue placeholder="Status" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Status</SelectItem>
+                <SelectItem value="all">{t("integrations.allStatus")}</SelectItem>
                 <SelectItem value="active">{t("integrations.active")}</SelectItem>
                 <SelectItem value="inactive">{t("integrations.inactive")}</SelectItem>
                 <SelectItem value="error">{t("integrations.error")}</SelectItem>
@@ -650,7 +650,7 @@ export default function IntegrationsPage() {
                   <Plug className="h-12 w-12 text-muted-foreground mb-4" />
                   <p className="text-muted-foreground">{t("integrations.noIntegrations")}</p>
                   <Button variant="outline" className="mt-4" onClick={() => setActiveTab("templates")}>
-                    Browse Templates
+                    {t("integrations.browseTemplates")}
                   </Button>
                 </CardContent>
               </Card>
@@ -673,9 +673,9 @@ export default function IntegrationsPage() {
                               {integration.status}
                             </Badge>
                             {integration.is_enabled ? (
-                              <Badge variant="default" className="bg-green-600">Enabled</Badge>
+                              <Badge variant="default" className="bg-green-600">{t("integrations.enabled")}</Badge>
                             ) : (
-                              <Badge variant="secondary">Disabled</Badge>
+                              <Badge variant="secondary">{t("integrations.disabled")}</Badge>
                             )}
                           </div>
                           <p className="text-sm text-muted-foreground">
@@ -692,7 +692,7 @@ export default function IntegrationsPage() {
                             </Badge>
                             {integration.consecutive_failures > 0 && (
                               <Badge variant="destructive">
-                                {integration.consecutive_failures} failures
+                                {integration.consecutive_failures} {t("integrations.failures")}
                               </Badge>
                             )}
                           </div>
@@ -742,12 +742,12 @@ export default function IntegrationsPage() {
                         </div>
                         {integration.last_sync_at && (
                           <p className="text-xs text-muted-foreground">
-                            Last sync: {new Date(integration.last_sync_at).toLocaleString()}
+                            {t("integrations.lastSyncLabel")} {new Date(integration.last_sync_at).toLocaleString()}
                           </p>
                         )}
                         {integration.next_sync_at && (
                           <p className="text-xs text-muted-foreground">
-                            Next: {new Date(integration.next_sync_at).toLocaleString()}
+                            {t("integrations.nextLabel")} {new Date(integration.next_sync_at).toLocaleString()}
                           </p>
                         )}
                       </div>
@@ -769,7 +769,7 @@ export default function IntegrationsPage() {
                 <SelectValue placeholder="Category" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Categories</SelectItem>
+                <SelectItem value="all">{t("integrations.allCategories")}</SelectItem>
                 <SelectItem value="security_awareness">{t("integrations.securityAwareness")}</SelectItem>
                 <SelectItem value="siem">{t("integrations.siem")}</SelectItem>
                 <SelectItem value="edr_xdr">{t("integrations.edrXdr")}</SelectItem>
@@ -793,7 +793,7 @@ export default function IntegrationsPage() {
                     className="mt-4"
                     onClick={() => seedTemplatesMutation.mutate()}
                   >
-                    Seed Default Templates
+                    {t("integrations.seedDefaultTemplates")}
                   </Button>
                 </CardContent>
               </Card>
@@ -819,7 +819,7 @@ export default function IntegrationsPage() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-muted-foreground mb-3">
-                      {template.description || "No description available"}
+                      {template.description || t("integrations.noDescriptionAvailable")}
                     </p>
                     <div className="flex flex-wrap gap-2 mb-3">
                       <Badge variant="secondary" className="capitalize">
@@ -828,19 +828,19 @@ export default function IntegrationsPage() {
                       {template.supports_inbound && (
                         <Badge variant="outline">
                           <ArrowDownToLine className="h-3 w-3 mr-1" />
-                          Inbound
+                          {t("integrations.inbound")}
                         </Badge>
                       )}
                       {template.supports_outbound && (
                         <Badge variant="outline">
                           <ArrowUpFromLine className="h-3 w-3 mr-1" />
-                          Outbound
+                          {t("integrations.outbound")}
                         </Badge>
                       )}
                       {template.supports_webhook && (
                         <Badge variant="outline">
                           <Webhook className="h-3 w-3 mr-1" />
-                          Webhook
+                          {t("integrations.webhook")}
                         </Badge>
                       )}
                     </div>
@@ -850,7 +850,7 @@ export default function IntegrationsPage() {
                       onClick={() => handleSelectTemplate(template)}
                     >
                       <Plus className="h-4 w-4 mr-2" />
-                      Configure
+                      {t("integrations.configure")}
                     </Button>
                   </CardContent>
                 </Card>
@@ -871,7 +871,7 @@ export default function IntegrationsPage() {
               }}
             >
               <SelectTrigger className="w-[300px]">
-                <SelectValue placeholder="Select integration" />
+                <SelectValue placeholder={t("integrations.selectIntegration")} />
               </SelectTrigger>
               <SelectContent>
                 {integrationsData?.items?.map((integration) => (
@@ -889,7 +889,7 @@ export default function IntegrationsPage() {
               <Card>
                 <CardContent className="flex flex-col items-center justify-center py-12">
                   <Clock className="h-12 w-12 text-muted-foreground mb-4" />
-                  <p className="text-muted-foreground">Select an integration to view sync logs</p>
+                  <p className="text-muted-foreground">{t("integrations.selectIntegrationToViewLogs")}</p>
                 </CardContent>
               </Card>
             )}
@@ -928,15 +928,15 @@ export default function IntegrationsPage() {
                     </div>
                     <div className="text-right text-sm">
                       <p>
-                        <span className="text-muted-foreground">Fetched:</span> {log.records_fetched}
+                        <span className="text-muted-foreground">{t("integrations.fetched")}</span> {log.records_fetched}
                       </p>
                       <p>
-                        <span className="text-muted-foreground">Created:</span> {log.records_created}
+                        <span className="text-muted-foreground">{t("integrations.created")}</span> {log.records_created}
                         <span className="mx-1">|</span>
-                        <span className="text-muted-foreground">Updated:</span> {log.records_updated}
+                        <span className="text-muted-foreground">{t("integrations.updated")}</span> {log.records_updated}
                       </p>
                       {log.records_failed > 0 && (
-                        <p className="text-destructive">Failed: {log.records_failed}</p>
+                        <p className="text-destructive">{t("integrations.failedLabel")} {log.records_failed}</p>
                       )}
                     </div>
                   </div>

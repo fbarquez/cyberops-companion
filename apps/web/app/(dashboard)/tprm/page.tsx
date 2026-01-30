@@ -316,7 +316,7 @@ export default function TPRMPage() {
         <div>
           <h1 className="text-2xl font-bold">{t("tprm.title")}</h1>
           <p className="text-muted-foreground">
-            Manage vendor risk assessments, findings, and contracts
+            {t("tprm.subtitle")}
           </p>
         </div>
         <Dialog open={isAddVendorOpen} onOpenChange={setIsAddVendorOpen}>
@@ -330,24 +330,24 @@ export default function TPRMPage() {
             <DialogHeader>
               <DialogTitle>{t("tprm.addVendor")}</DialogTitle>
               <DialogDescription>
-                Add a new third-party vendor to the risk management system.
+                {t("tprm.dialogDescription")}
               </DialogDescription>
             </DialogHeader>
             <div className="space-y-4 py-4">
               <div className="space-y-2">
-                <Label htmlFor="name">Vendor Name</Label>
+                <Label htmlFor="name">{t("tprm.vendorName")}</Label>
                 <Input
                   id="name"
                   value={newVendor.name}
                   onChange={(e) =>
                     setNewVendor({ ...newVendor, name: e.target.value })
                   }
-                  placeholder="Vendor name"
+                  placeholder={t("tprm.vendorNamePlaceholder")}
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="tier">Tier</Label>
+                  <Label htmlFor="tier">{t("tprm.tier")}</Label>
                   <Select
                     value={newVendor.tier}
                     onValueChange={(v) =>
@@ -366,7 +366,7 @@ export default function TPRMPage() {
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="category">Category</Label>
+                  <Label htmlFor="category">{t("tprm.category")}</Label>
                   <Select
                     value={newVendor.category}
                     onValueChange={(v) =>
@@ -401,7 +401,7 @@ export default function TPRMPage() {
                 </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="email">Contact Email</Label>
+                <Label htmlFor="email">{t("tprm.contactEmail")}</Label>
                 <Input
                   id="email"
                   type="email"
@@ -412,11 +412,11 @@ export default function TPRMPage() {
                       primary_contact_email: e.target.value,
                     })
                   }
-                  placeholder="contact@vendor.com"
+                  placeholder={t("tprm.contactEmailPlaceholder")}
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="services">Services Provided</Label>
+                <Label htmlFor="services">{t("tprm.servicesProvided")}</Label>
                 <Textarea
                   id="services"
                   value={newVendor.services_provided}
@@ -426,7 +426,7 @@ export default function TPRMPage() {
                       services_provided: e.target.value,
                     })
                   }
-                  placeholder="Describe the services provided by this vendor..."
+                  placeholder={t("tprm.servicesPlaceholder")}
                 />
               </div>
             </div>
@@ -435,10 +435,10 @@ export default function TPRMPage() {
                 variant="outline"
                 onClick={() => setIsAddVendorOpen(false)}
               >
-                Cancel
+                {t("tprm.cancel")}
               </Button>
               <Button onClick={handleCreateVendor} disabled={!newVendor.name}>
-                Create Vendor
+                {t("tprm.createVendor")}
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -503,7 +503,7 @@ export default function TPRMPage() {
                   {stats?.high_risk_vendors || 0}
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Critical or high risk rating
+                  {t("tprm.criticalOrHighRisk")}
                 </p>
               </CardContent>
             </Card>
@@ -557,7 +557,7 @@ export default function TPRMPage() {
                   {stats?.contracts_expiring_30_days || 0}
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  {stats?.contracts_expiring_90_days || 0} in 90 days
+                  {stats?.contracts_expiring_90_days || 0} {t("tprm.in90Days")}
                 </p>
               </CardContent>
             </Card>
@@ -574,7 +574,7 @@ export default function TPRMPage() {
                   {stats?.vendors_requiring_assessment || 0}
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Assessment overdue or due
+                  {t("tprm.assessmentOverdueOrDue")}
                 </p>
               </CardContent>
             </Card>
@@ -582,22 +582,22 @@ export default function TPRMPage() {
             <Card>
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-medium">
-                  Findings by Severity
+                  {t("tprm.findingsBySeverity")}
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex gap-2 flex-wrap">
                   <Badge variant="destructive">
-                    {stats?.findings_by_severity?.critical || 0} Critical
+                    {stats?.findings_by_severity?.critical || 0} {t("tprm.badgeCritical")}
                   </Badge>
                   <Badge variant="destructive">
-                    {stats?.findings_by_severity?.high || 0} High
+                    {stats?.findings_by_severity?.high || 0} {t("tprm.badgeHigh")}
                   </Badge>
                   <Badge variant="secondary">
-                    {stats?.findings_by_severity?.medium || 0} Medium
+                    {stats?.findings_by_severity?.medium || 0} {t("tprm.badgeMedium")}
                   </Badge>
                   <Badge variant="outline">
-                    {stats?.findings_by_severity?.low || 0} Low
+                    {stats?.findings_by_severity?.low || 0} {t("tprm.badgeLow")}
                   </Badge>
                 </div>
               </CardContent>
@@ -606,22 +606,22 @@ export default function TPRMPage() {
             <Card>
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-medium">
-                  Vendors by Tier
+                  {t("tprm.vendorsByTier")}
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex gap-2 flex-wrap">
                   <Badge variant="destructive">
-                    {stats?.vendors_by_tier?.tier_1 || 0} T1
+                    {stats?.vendors_by_tier?.tier_1 || 0} {t("tprm.badgeT1")}
                   </Badge>
                   <Badge variant="secondary">
-                    {stats?.vendors_by_tier?.tier_2 || 0} T2
+                    {stats?.vendors_by_tier?.tier_2 || 0} {t("tprm.badgeT2")}
                   </Badge>
                   <Badge variant="outline">
-                    {stats?.vendors_by_tier?.tier_3 || 0} T3
+                    {stats?.vendors_by_tier?.tier_3 || 0} {t("tprm.badgeT3")}
                   </Badge>
                   <Badge variant="outline">
-                    {stats?.vendors_by_tier?.tier_4 || 0} T4
+                    {stats?.vendors_by_tier?.tier_4 || 0} {t("tprm.badgeT4")}
                   </Badge>
                 </div>
               </CardContent>
@@ -637,7 +637,7 @@ export default function TPRMPage() {
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
-                  placeholder="Search vendors..."
+                  placeholder={t("tprm.searchVendors")}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pl-10"
@@ -650,7 +650,7 @@ export default function TPRMPage() {
                 <SelectValue placeholder="Status" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Status</SelectItem>
+                <SelectItem value="all">{t("tprm.allStatus")}</SelectItem>
                 <SelectItem value="prospect">{t("tprm.prospect")}</SelectItem>
                 <SelectItem value="under_review">{t("tprm.underReview")}</SelectItem>
                 <SelectItem value="approved">{t("tprm.approved")}</SelectItem>
@@ -661,10 +661,10 @@ export default function TPRMPage() {
             </Select>
             <Select value={vendorTier} onValueChange={setVendorTier}>
               <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Tier" />
+                <SelectValue placeholder={t("tprm.tier")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Tiers</SelectItem>
+                <SelectItem value="all">{t("tprm.allTiers")}</SelectItem>
                 <SelectItem value="tier_1">{t("tprm.tier1")}</SelectItem>
                 <SelectItem value="tier_2">{t("tprm.tier2")}</SelectItem>
                 <SelectItem value="tier_3">{t("tprm.tier3")}</SelectItem>
@@ -696,7 +696,7 @@ export default function TPRMPage() {
                         </Badge>
                       </div>
                       <p className="text-sm text-muted-foreground">
-                        {vendor.services_provided || "No services description"}
+                        {vendor.services_provided || t("tprm.noServicesDescription")}
                       </p>
                       <div className="flex flex-wrap gap-2 mt-2">
                         <Badge variant="secondary">
@@ -704,7 +704,7 @@ export default function TPRMPage() {
                         </Badge>
                         {vendor.current_risk_rating && (
                           <Badge variant={getRiskBadgeVariant(vendor.current_risk_rating)}>
-                            {vendor.current_risk_rating} risk
+                            {vendor.current_risk_rating} {t("tprm.risk")}
                           </Badge>
                         )}
                         {vendor.has_pii_access && (
@@ -728,12 +728,12 @@ export default function TPRMPage() {
                           rel="noopener noreferrer"
                           className="text-sm text-primary hover:underline flex items-center gap-1"
                         >
-                          Website <ExternalLink className="h-3 w-3" />
+                          {t("tprm.website")} <ExternalLink className="h-3 w-3" />
                         </a>
                       )}
                       {vendor.next_assessment_due && (
                         <p className="text-xs text-muted-foreground">
-                          Next assessment: {new Date(vendor.next_assessment_due).toLocaleDateString()}
+                          {t("tprm.nextAssessment")} {new Date(vendor.next_assessment_due).toLocaleDateString()}
                         </p>
                       )}
                     </div>
@@ -754,7 +754,7 @@ export default function TPRMPage() {
                 <SelectValue placeholder="Status" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Status</SelectItem>
+                <SelectItem value="all">{t("tprm.allStatus")}</SelectItem>
                 <SelectItem value="draft">{t("tprm.draft")}</SelectItem>
                 <SelectItem value="questionnaire_sent">{t("tprm.questionnaireSent")}</SelectItem>
                 <SelectItem value="questionnaire_received">{t("tprm.questionnaireReceived")}</SelectItem>
@@ -787,18 +787,18 @@ export default function TPRMPage() {
                         </Badge>
                       </div>
                       <p className="text-sm text-muted-foreground">
-                        {assessment.description || "No description"}
+                        {assessment.description || t("tprm.noDescription")}
                       </p>
                       <div className="flex flex-wrap gap-2 mt-2">
                         <Badge variant="secondary">{assessment.assessment_type}</Badge>
                         {assessment.overall_score !== undefined && (
                           <Badge variant={assessment.overall_score >= 70 ? "default" : "destructive"}>
-                            Score: {assessment.overall_score}%
+                            {t("tprm.score")} {assessment.overall_score}%
                           </Badge>
                         )}
                         {assessment.residual_risk && (
                           <Badge variant={getRiskBadgeVariant(assessment.residual_risk)}>
-                            {assessment.residual_risk} residual risk
+                            {assessment.residual_risk} {t("tprm.residualRisk")}
                           </Badge>
                         )}
                       </div>
@@ -806,15 +806,15 @@ export default function TPRMPage() {
                     <div className="flex flex-col items-end gap-2 text-sm">
                       {assessment.assessor && (
                         <span className="text-muted-foreground">
-                          Assessor: {assessment.assessor}
+                          {t("tprm.assessor")} {assessment.assessor}
                         </span>
                       )}
                       <span className="text-muted-foreground">
-                        Started: {new Date(assessment.initiated_date).toLocaleDateString()}
+                        {t("tprm.started")} {new Date(assessment.initiated_date).toLocaleDateString()}
                       </span>
                       {assessment.questionnaire_due_date && (
                         <span className="text-muted-foreground">
-                          Due: {new Date(assessment.questionnaire_due_date).toLocaleDateString()}
+                          {t("tprm.due")} {new Date(assessment.questionnaire_due_date).toLocaleDateString()}
                         </span>
                       )}
                     </div>
@@ -835,7 +835,7 @@ export default function TPRMPage() {
                 <SelectValue placeholder="Severity" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Severities</SelectItem>
+                <SelectItem value="all">{t("tprm.allSeverities")}</SelectItem>
                 <SelectItem value="critical">{t("tprm.critical")}</SelectItem>
                 <SelectItem value="high">{t("tprm.high")}</SelectItem>
                 <SelectItem value="medium">{t("tprm.medium")}</SelectItem>
@@ -848,7 +848,7 @@ export default function TPRMPage() {
                 <SelectValue placeholder="Status" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Status</SelectItem>
+                <SelectItem value="all">{t("tprm.allStatus")}</SelectItem>
                 <SelectItem value="open">{t("tprm.open")}</SelectItem>
                 <SelectItem value="in_progress">{t("tprm.inProgress")}</SelectItem>
                 <SelectItem value="remediated">{t("tprm.remediated")}</SelectItem>
@@ -884,25 +884,25 @@ export default function TPRMPage() {
                         </Badge>
                       </div>
                       <p className="text-sm text-muted-foreground">
-                        {finding.description || "No description"}
+                        {finding.description || t("tprm.noDescription")}
                       </p>
                       <div className="flex flex-wrap gap-2 mt-2">
                         {finding.control_domain && (
                           <Badge variant="secondary">{finding.control_domain}</Badge>
                         )}
                         {finding.risk_score && (
-                          <Badge variant="outline">Risk Score: {finding.risk_score}</Badge>
+                          <Badge variant="outline">{t("tprm.riskScoreLabel")} {finding.risk_score}</Badge>
                         )}
                       </div>
                     </div>
                     <div className="flex flex-col items-end gap-2 text-sm">
                       {finding.remediation_due_date && (
                         <span className="text-muted-foreground">
-                          Due: {new Date(finding.remediation_due_date).toLocaleDateString()}
+                          {t("tprm.due")} {new Date(finding.remediation_due_date).toLocaleDateString()}
                         </span>
                       )}
                       <span className="text-muted-foreground">
-                        Created: {new Date(finding.created_at).toLocaleDateString()}
+                        {t("tprm.created")} {new Date(finding.created_at).toLocaleDateString()}
                       </span>
                     </div>
                   </div>
@@ -937,7 +937,7 @@ export default function TPRMPage() {
                         </Badge>
                       </div>
                       <p className="text-sm text-muted-foreground">
-                        {contract.description || contract.contract_type || "No description"}
+                        {contract.description || contract.contract_type || t("tprm.noDescription")}
                       </p>
                       <div className="flex flex-wrap gap-2 mt-2">
                         {contract.has_dpa && (
@@ -962,12 +962,12 @@ export default function TPRMPage() {
                       )}
                       {contract.effective_date && (
                         <span className="text-muted-foreground">
-                          Start: {new Date(contract.effective_date).toLocaleDateString()}
+                          {t("tprm.start")} {new Date(contract.effective_date).toLocaleDateString()}
                         </span>
                       )}
                       {contract.expiration_date && (
                         <span className="text-muted-foreground">
-                          Expires: {new Date(contract.expiration_date).toLocaleDateString()}
+                          {t("tprm.expires")} {new Date(contract.expiration_date).toLocaleDateString()}
                         </span>
                       )}
                     </div>
