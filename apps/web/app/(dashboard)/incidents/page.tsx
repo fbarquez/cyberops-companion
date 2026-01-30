@@ -136,7 +136,7 @@ function IncidentCard({ incident }: { incident: Incident }) {
                 {t("status." + incident.status)}
               </span>
               <span>
-                {incident.affected_systems?.length || 0} systems
+                {incident.affected_systems?.length || 0} {t("incidents.systems")}
               </span>
             </div>
             <span>{formatDate(incident.created_at)}</span>

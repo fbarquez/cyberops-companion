@@ -35,7 +35,7 @@ export default function LessonsPage() {
       <Header title={t("nav.lessons")}>
         <Button>
           <Plus className="h-4 w-4 mr-2" />
-          Add Lesson
+          {t("lessons.addLesson")}
         </Button>
       </Header>
 
@@ -45,7 +45,7 @@ export default function LessonsPage() {
           <div className="relative flex-1 max-w-md">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search lessons..."
+              placeholder={t("lessons.searchPlaceholder")}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10"
@@ -69,13 +69,13 @@ export default function LessonsPage() {
           <Card>
             <CardContent className="py-12 text-center">
               <GraduationCap className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-              <h3 className="text-lg font-medium">No lessons recorded yet</h3>
+              <h3 className="text-lg font-medium">{t("lessons.noLessons")}</h3>
               <p className="text-muted-foreground mt-1">
-                Document learnings from incidents to improve future response
+                {t("lessons.emptyDescription")}
               </p>
               <Button className="mt-4">
                 <Plus className="h-4 w-4 mr-2" />
-                Add First Lesson
+                {t("lessons.addFirstLesson")}
               </Button>
             </CardContent>
           </Card>
@@ -92,6 +92,8 @@ export default function LessonsPage() {
 }
 
 function LessonCard({ lesson }: { lesson: any }) {
+  const { t } = useTranslations();
+
   return (
     <Card>
       <CardHeader>
@@ -108,7 +110,7 @@ function LessonCard({ lesson }: { lesson: any }) {
       <CardContent>
         {lesson.recommendations?.length > 0 && (
           <div className="space-y-2">
-            <p className="text-sm font-medium">Recommendations:</p>
+            <p className="text-sm font-medium">{t("lessons.recommendations")}</p>
             <ul className="list-disc list-inside text-sm text-muted-foreground">
               {lesson.recommendations.map((rec: string, idx: number) => (
                 <li key={idx}>{rec}</li>
