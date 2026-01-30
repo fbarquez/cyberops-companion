@@ -311,7 +311,7 @@ export default function SOCPage() {
         <div>
           <h1 className="text-3xl font-bold">{t("soc.title")}</h1>
           <p className="text-muted-foreground">
-            Monitor alerts, manage cases, and automate response workflows
+            {t("soc.subtitle")}
           </p>
         </div>
         <div className="flex gap-2">
@@ -327,27 +327,27 @@ export default function SOCPage() {
                 <DialogHeader>
                   <DialogTitle>{t("soc.addAlert")}</DialogTitle>
                   <DialogDescription>
-                    Create a new security alert manually
+                    {t("soc.createAlertDescription")}
                   </DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
                   <div className="grid gap-2">
-                    <Label htmlFor="alert-title">Title</Label>
+                    <Label htmlFor="alert-title">{t("soc.alertTitle")}</Label>
                     <Input
                       id="alert-title"
-                      placeholder="Alert title"
+                      placeholder={t("soc.alertTitlePlaceholder")}
                       value={alertForm.title}
                       onChange={(e) => setAlertForm({ ...alertForm, title: e.target.value })}
                     />
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="alert-severity">Severity</Label>
+                    <Label htmlFor="alert-severity">{t("common.severity")}</Label>
                     <Select
                       value={alertForm.severity}
                       onValueChange={(value) => setAlertForm({ ...alertForm, severity: value })}
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder="Select severity" />
+                        <SelectValue placeholder={t("soc.selectSeverity")} />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="critical">{t("soc.critical")}</SelectItem>
@@ -359,13 +359,13 @@ export default function SOCPage() {
                     </Select>
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="alert-source">Source</Label>
+                    <Label htmlFor="alert-source">{t("soc.source")}</Label>
                     <Select
                       value={alertForm.source}
                       onValueChange={(value) => setAlertForm({ ...alertForm, source: value })}
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder="Select source" />
+                        <SelectValue placeholder={t("soc.selectSource")} />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="siem">{t("soc.siem")}</SelectItem>
@@ -377,10 +377,10 @@ export default function SOCPage() {
                     </Select>
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="alert-desc">Description</Label>
+                    <Label htmlFor="alert-desc">{t("common.description")}</Label>
                     <Textarea
                       id="alert-desc"
-                      placeholder="Describe the alert..."
+                      placeholder={t("soc.describeAlert")}
                       value={alertForm.description}
                       onChange={(e) => setAlertForm({ ...alertForm, description: e.target.value })}
                     />
@@ -412,27 +412,27 @@ export default function SOCPage() {
                 <DialogHeader>
                   <DialogTitle>{t("soc.addCase")}</DialogTitle>
                   <DialogDescription>
-                    Create a new investigation case
+                    {t("soc.createCaseDescription")}
                   </DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
                   <div className="grid gap-2">
-                    <Label htmlFor="case-title">Title</Label>
+                    <Label htmlFor="case-title">{t("soc.caseTitle")}</Label>
                     <Input
                       id="case-title"
-                      placeholder="Case title"
+                      placeholder={t("soc.caseTitlePlaceholder")}
                       value={caseForm.title}
                       onChange={(e) => setCaseForm({ ...caseForm, title: e.target.value })}
                     />
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="case-priority">Priority</Label>
+                    <Label htmlFor="case-priority">{t("common.priority")}</Label>
                     <Select
                       value={caseForm.priority}
                       onValueChange={(value) => setCaseForm({ ...caseForm, priority: value })}
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder="Select priority" />
+                        <SelectValue placeholder={t("soc.selectPriority")} />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="critical">{t("soc.priorityCritical")}</SelectItem>
@@ -443,28 +443,28 @@ export default function SOCPage() {
                     </Select>
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="case-type">Case Type</Label>
+                    <Label htmlFor="case-type">{t("soc.caseType")}</Label>
                     <Select
                       value={caseForm.case_type}
                       onValueChange={(value) => setCaseForm({ ...caseForm, case_type: value })}
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder="Select type" />
+                        <SelectValue placeholder={t("soc.selectType")} />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="malware">Malware</SelectItem>
-                        <SelectItem value="phishing">Phishing</SelectItem>
-                        <SelectItem value="data_breach">Data Breach</SelectItem>
-                        <SelectItem value="unauthorized_access">Unauthorized Access</SelectItem>
-                        <SelectItem value="other">Other</SelectItem>
+                        <SelectItem value="malware">{t("soc.malware")}</SelectItem>
+                        <SelectItem value="phishing">{t("soc.phishing")}</SelectItem>
+                        <SelectItem value="data_breach">{t("soc.dataBreach")}</SelectItem>
+                        <SelectItem value="unauthorized_access">{t("soc.unauthorizedAccess")}</SelectItem>
+                        <SelectItem value="other">{t("soc.other")}</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="case-desc">Description</Label>
+                    <Label htmlFor="case-desc">{t("common.description")}</Label>
                     <Textarea
                       id="case-desc"
-                      placeholder="Describe the case..."
+                      placeholder={t("soc.describeCase")}
                       value={caseForm.description}
                       onChange={(e) => setCaseForm({ ...caseForm, description: e.target.value })}
                     />
@@ -519,7 +519,7 @@ export default function SOCPage() {
                   {stats?.critical_alerts || 0}
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  +{stats?.high_alerts || 0} high severity
+                  +{stats?.high_alerts || 0} {t("soc.highSeverity")}
                 </p>
               </CardContent>
             </Card>
@@ -534,7 +534,7 @@ export default function SOCPage() {
               <CardContent>
                 <div className="text-2xl font-bold">{stats?.new_alerts || 0}</div>
                 <p className="text-xs text-muted-foreground">
-                  {stats?.in_progress_alerts || 0} in progress
+                  {stats?.in_progress_alerts || 0} {t("soc.inProgress").toLowerCase()}
                 </p>
               </CardContent>
             </Card>
@@ -549,7 +549,7 @@ export default function SOCPage() {
               <CardContent>
                 <div className="text-2xl font-bold">{stats?.open_cases || 0}</div>
                 <p className="text-xs text-muted-foreground">
-                  {stats?.escalated_cases || 0} escalated
+                  {stats?.escalated_cases || 0} {t("soc.escalated").toLowerCase()}
                 </p>
               </CardContent>
             </Card>
@@ -566,7 +566,7 @@ export default function SOCPage() {
                   {((stats?.automation_rate || 0) * 100).toFixed(0)}%
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  {stats?.playbook_runs_today || 0} playbook runs today
+                  {stats?.playbook_runs_today || 0} {t("soc.playbookRunsToday")}
                 </p>
               </CardContent>
             </Card>
@@ -584,7 +584,7 @@ export default function SOCPage() {
                   {stats?.mttd ? `${Math.round(stats.mttd / 60)}m` : "N/A"}
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Mean Time to Detect
+                  {t("soc.meanTimeToDetect")}
                 </p>
               </CardContent>
             </Card>
@@ -599,20 +599,20 @@ export default function SOCPage() {
                   {stats?.mttr ? `${Math.round(stats.mttr / 60)}m` : "N/A"}
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Mean Time to Respond
+                  {t("soc.meanTimeToRespond")}
                 </p>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium">Alerts Today</CardTitle>
+                <CardTitle className="text-sm font-medium">{t("soc.alertsToday")}</CardTitle>
                 <TrendingUp className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">{stats?.total_alerts_today || 0}</div>
                 <p className="text-xs text-muted-foreground">
-                  Total alerts received
+                  {t("soc.totalAlertsReceived")}
                 </p>
               </CardContent>
             </Card>
@@ -622,7 +622,7 @@ export default function SOCPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <Card>
               <CardHeader>
-                <CardTitle>Alerts by Severity</CardTitle>
+                <CardTitle>{t("soc.alertsBySeverity")}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -633,7 +633,7 @@ export default function SOCPage() {
                     </div>
                   ))}
                   {(!stats?.alerts_by_severity || Object.keys(stats.alerts_by_severity).length === 0) && (
-                    <p className="text-muted-foreground text-sm">No active alerts</p>
+                    <p className="text-muted-foreground text-sm">{t("soc.noActiveAlerts")}</p>
                   )}
                 </div>
               </CardContent>
@@ -641,7 +641,7 @@ export default function SOCPage() {
 
             <Card>
               <CardHeader>
-                <CardTitle>Analyst Workload</CardTitle>
+                <CardTitle>{t("soc.analystWorkload")}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -651,11 +651,11 @@ export default function SOCPage() {
                         <User className="h-4 w-4" />
                         <span>{analyst}</span>
                       </div>
-                      <Badge variant="secondary">{count} alerts</Badge>
+                      <Badge variant="secondary">{count} {t("soc.alerts").toLowerCase()}</Badge>
                     </div>
                   ))}
                   {(!stats?.alerts_per_analyst || Object.keys(stats.alerts_per_analyst).length === 0) && (
-                    <p className="text-muted-foreground text-sm">No assignments</p>
+                    <p className="text-muted-foreground text-sm">{t("soc.noAssignments")}</p>
                   )}
                 </div>
               </CardContent>
@@ -672,7 +672,7 @@ export default function SOCPage() {
             <div className="relative flex-1 max-w-sm">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Search alerts..."
+                placeholder={t("soc.searchAlerts")}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="pl-10"
@@ -680,10 +680,10 @@ export default function SOCPage() {
             </div>
             <Select value={severityFilter} onValueChange={setSeverityFilter}>
               <SelectTrigger className="w-40">
-                <SelectValue placeholder="Severity" />
+                <SelectValue placeholder={t("common.severity")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Severities</SelectItem>
+                <SelectItem value="all">{t("soc.allSeverities")}</SelectItem>
                 <SelectItem value="critical">{t("soc.critical")}</SelectItem>
                 <SelectItem value="high">{t("soc.high")}</SelectItem>
                 <SelectItem value="medium">{t("soc.medium")}</SelectItem>
@@ -692,10 +692,10 @@ export default function SOCPage() {
             </Select>
             <Select value={statusFilter} onValueChange={setStatusFilter}>
               <SelectTrigger className="w-40">
-                <SelectValue placeholder="Status" />
+                <SelectValue placeholder={t("common.status")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Status</SelectItem>
+                <SelectItem value="all">{t("soc.allStatus")}</SelectItem>
                 <SelectItem value="new">{t("soc.new")}</SelectItem>
                 <SelectItem value="assigned">{t("soc.assigned")}</SelectItem>
                 <SelectItem value="in_progress">{t("soc.inProgress")}</SelectItem>
@@ -709,13 +709,13 @@ export default function SOCPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Alert ID</TableHead>
-                  <TableHead>Title</TableHead>
-                  <TableHead>Severity</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Source</TableHead>
-                  <TableHead>Assigned To</TableHead>
-                  <TableHead>Detected</TableHead>
+                  <TableHead>{t("soc.alertId")}</TableHead>
+                  <TableHead>{t("soc.alertTitle")}</TableHead>
+                  <TableHead>{t("common.severity")}</TableHead>
+                  <TableHead>{t("common.status")}</TableHead>
+                  <TableHead>{t("soc.source")}</TableHead>
+                  <TableHead>{t("soc.assignedTo")}</TableHead>
+                  <TableHead>{t("soc.detected")}</TableHead>
                   <TableHead className="w-10"></TableHead>
                 </TableRow>
               </TableHeader>
@@ -784,7 +784,7 @@ export default function SOCPage() {
             <div className="relative flex-1 max-w-sm">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Search cases..."
+                placeholder={t("soc.searchCases")}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="pl-10"
@@ -792,10 +792,10 @@ export default function SOCPage() {
             </div>
             <Select value={statusFilter} onValueChange={setStatusFilter}>
               <SelectTrigger className="w-40">
-                <SelectValue placeholder="Status" />
+                <SelectValue placeholder={t("common.status")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Status</SelectItem>
+                <SelectItem value="all">{t("soc.allStatus")}</SelectItem>
                 <SelectItem value="open">{t("soc.open")}</SelectItem>
                 <SelectItem value="in_progress">{t("soc.inProgress")}</SelectItem>
                 <SelectItem value="escalated">{t("soc.escalated")}</SelectItem>
@@ -805,10 +805,10 @@ export default function SOCPage() {
             </Select>
             <Select value={priorityFilter} onValueChange={setPriorityFilter}>
               <SelectTrigger className="w-40">
-                <SelectValue placeholder="Priority" />
+                <SelectValue placeholder={t("common.priority")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Priorities</SelectItem>
+                <SelectItem value="all">{t("soc.allPriorities")}</SelectItem>
                 <SelectItem value="critical">{t("soc.priorityCritical")}</SelectItem>
                 <SelectItem value="high">{t("soc.priorityHigh")}</SelectItem>
                 <SelectItem value="medium">{t("soc.priorityMedium")}</SelectItem>
@@ -822,13 +822,13 @@ export default function SOCPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Case #</TableHead>
-                  <TableHead>Title</TableHead>
-                  <TableHead>Priority</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Assigned To</TableHead>
-                  <TableHead>Alerts</TableHead>
-                  <TableHead>Due Date</TableHead>
+                  <TableHead>{t("soc.caseNumber")}</TableHead>
+                  <TableHead>{t("soc.caseTitle")}</TableHead>
+                  <TableHead>{t("common.priority")}</TableHead>
+                  <TableHead>{t("common.status")}</TableHead>
+                  <TableHead>{t("soc.assignedTo")}</TableHead>
+                  <TableHead>{t("soc.alerts")}</TableHead>
+                  <TableHead>{t("soc.dueDate")}</TableHead>
                   <TableHead className="w-10"></TableHead>
                 </TableRow>
               </TableHeader>
@@ -855,7 +855,7 @@ export default function SOCPage() {
                       <TableCell>{getStatusBadge(caseItem.status)}</TableCell>
                       <TableCell>{caseItem.assigned_to || "-"}</TableCell>
                       <TableCell>
-                        <Badge variant="outline">{caseItem.alert_count} alerts</Badge>
+                        <Badge variant="outline">{caseItem.alert_count} {t("soc.alerts").toLowerCase()}</Badge>
                       </TableCell>
                       <TableCell>
                         {caseItem.due_date
@@ -900,7 +900,7 @@ export default function SOCPage() {
             <div className="relative flex-1 max-w-sm">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Search playbooks..."
+                placeholder={t("soc.searchPlaybooks")}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="pl-10"
@@ -925,11 +925,11 @@ export default function SOCPage() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-muted-foreground mb-4">
-                      {playbook.description || "No description"}
+                      {playbook.description || t("soc.noDescription")}
                     </p>
                     <div className="flex items-center justify-between text-sm">
                       <span className="text-muted-foreground">
-                        Trigger: {playbook.trigger_type.replace(/_/g, " ")}
+                        {t("soc.trigger")}: {playbook.trigger_type.replace(/_/g, " ")}
                       </span>
                       <div className="flex items-center gap-2">
                         <CheckCircle className="h-4 w-4 text-green-500" />
