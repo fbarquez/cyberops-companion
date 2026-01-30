@@ -94,22 +94,22 @@ export default function SimulationPage() {
     onSuccess: (data) => {
       setActiveSession(data);
       setShowSessionDialog(true);
-      toast.success("Simulation started!");
+      toast.success(t("simulation.simulationStarted"));
     },
     onError: () => {
-      toast.error("Failed to start simulation");
+      toast.error(t("simulation.failedToStart"));
     },
   });
 
   const completeMutation = useMutation({
     mutationFn: (sessionId: string) => toolsAPI.completeSimulation(token!, sessionId),
     onSuccess: (data: any) => {
-      toast.success(`Simulation completed! Score: ${data.score}%`);
+      toast.success(t("simulation.simulationCompleted").replace("{score}", data.score));
       setShowSessionDialog(false);
       setActiveSession(null);
     },
     onError: () => {
-      toast.error("Failed to complete simulation");
+      toast.error(t("simulation.failedToComplete"));
     },
   });
 
@@ -133,28 +133,26 @@ export default function SimulationPage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <PlayCircle className="h-5 w-5 text-primary" />
-              Training Simulations
+              {t("simulation.title")}
             </CardTitle>
             <CardDescription>
-              Practice incident response procedures with realistic scenarios in a safe
-              environment. All actions are logged but marked as simulations and do not
-              affect production systems.
+              {t("simulation.description")}
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-4">
               <div className="space-y-1">
-                <span className="text-sm text-muted-foreground">Filter by difficulty:</span>
+                <span className="text-sm text-muted-foreground">{t("simulation.filterByDifficulty")}</span>
               </div>
               <Select value={difficultyFilter} onValueChange={setDifficultyFilter}>
                 <SelectTrigger className="w-[180px]">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Levels</SelectItem>
-                  <SelectItem value="beginner">Beginner</SelectItem>
-                  <SelectItem value="intermediate">Intermediate</SelectItem>
-                  <SelectItem value="advanced">Advanced</SelectItem>
+                  <SelectItem value="all">{t("simulation.allLevels")}</SelectItem>
+                  <SelectItem value="beginner">{t("simulation.beginner")}</SelectItem>
+                  <SelectItem value="intermediate">{t("simulation.intermediate")}</SelectItem>
+                  <SelectItem value="advanced">{t("simulation.advanced")}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -179,7 +177,7 @@ export default function SimulationPage() {
             <CardContent className="py-12 text-center">
               <PlayCircle className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
               <p className="text-muted-foreground">
-                No scenarios available for the selected difficulty level.
+                {t("simulation.noScenarios")}
               </p>
             </CardContent>
           </Card>
@@ -197,14 +195,14 @@ export default function SimulationPage() {
                   {activeSession.scenario.name}
                 </DialogTitle>
                 <DialogDescription>
-                  Phase: {activeSession.current_phase} | Status: {activeSession.status}
+                  {t("simulation.phase")} {activeSession.current_phase} | {t("simulation.status")} {activeSession.status}
                 </DialogDescription>
               </DialogHeader>
 
               <div className="space-y-6">
                 {/* Background */}
                 <div>
-                  <h3 className="font-semibold mb-2">Background</h3>
+                  <h3 className="font-semibold mb-2">{t("simulation.background")}</h3>
                   <p className="text-sm text-muted-foreground whitespace-pre-line">
                     {activeSession.scenario.background}
                   </p>
@@ -214,7 +212,7 @@ export default function SimulationPage() {
                 <div>
                   <h3 className="font-semibold mb-2 flex items-center gap-2">
                     <AlertTriangle className="h-4 w-4 text-yellow-500" />
-                    Current Situation
+                    {t("simulation.currentSituation")}
                   </h3>
                   <div className="bg-muted p-4 rounded-lg text-sm whitespace-pre-line">
                     {activeSession.scenario.initial_situation}
@@ -225,7 +223,7 @@ export default function SimulationPage() {
                 <div>
                   <h3 className="font-semibold mb-2 flex items-center gap-2">
                     <Target className="h-4 w-4" />
-                    Objectives
+                    {t("simulation.objectives")}
                   </h3>
                   <ul className="space-y-2">
                     {activeSession.scenario.objectives.map((obj, i) => (
@@ -240,12 +238,12 @@ export default function SimulationPage() {
                 {/* Artifacts */}
                 {activeSession.artifacts && Object.keys(activeSession.artifacts).length > 0 && (
                   <div>
-                    <h3 className="font-semibold mb-2">Available Artifacts</h3>
+                    <h3 className="font-semibold mb-2">{t("simulation.availableArtifacts")}</h3>
                     <div className="space-y-4">
                       {activeSession.artifacts.ransom_note && (
                         <div className="bg-destructive/10 border border-destructive/20 p-4 rounded-lg">
                           <h4 className="font-medium text-destructive mb-2">
-                            Ransom Note: {activeSession.artifacts.ransom_note.filename}
+                            {t("simulation.ransomNote")} {activeSession.artifacts.ransom_note.filename}
                           </h4>
                           <pre className="text-xs whitespace-pre-wrap bg-background p-2 rounded">
                             {activeSession.artifacts.ransom_note.content}
@@ -256,7 +254,7 @@ export default function SimulationPage() {
                       {activeSession.artifacts.encrypted_files &&
                         activeSession.artifacts.encrypted_files.length > 0 && (
                           <div>
-                            <h4 className="font-medium mb-2">Encrypted Files Found:</h4>
+                            <h4 className="font-medium mb-2">{t("simulation.encryptedFilesFound")}</h4>
                             <div className="grid grid-cols-2 gap-2">
                               {activeSession.artifacts.encrypted_files.map((file, i) => (
                                 <div
@@ -273,7 +271,7 @@ export default function SimulationPage() {
                       {activeSession.artifacts.suspicious_processes &&
                         activeSession.artifacts.suspicious_processes.length > 0 && (
                           <div>
-                            <h4 className="font-medium mb-2">Suspicious Processes:</h4>
+                            <h4 className="font-medium mb-2">{t("simulation.suspiciousProcesses")}</h4>
                             <div className="space-y-1">
                               {activeSession.artifacts.suspicious_processes.map((proc, i) => (
                                 <div
@@ -299,14 +297,14 @@ export default function SimulationPage() {
                       setActiveSession(null);
                     }}
                   >
-                    Abandon Simulation
+                    {t("simulation.abandonSimulation")}
                   </Button>
                   <Button
                     onClick={() => completeMutation.mutate(activeSession.session_id)}
                     disabled={completeMutation.isPending}
                   >
                     <Award className="h-4 w-4 mr-2" />
-                    Complete Simulation
+                    {t("simulation.completeSimulation")}
                   </Button>
                 </div>
               </div>
@@ -329,6 +327,7 @@ function ScenarioCard({
   onStart: () => void;
   isStarting: boolean;
 }) {
+  const { t } = useTranslations();
   const [showDetails, setShowDetails] = useState(false);
 
   return (
@@ -351,7 +350,7 @@ function ScenarioCard({
           </div>
           <div className="flex items-center gap-1">
             <Target className="h-4 w-4" />
-            {scenario.objectives.length} objectives
+            {scenario.objectives.length} {t("simulation.objectivesSuffix")}
           </div>
         </div>
 
@@ -364,7 +363,7 @@ function ScenarioCard({
             <ChevronRight
               className={cn("h-4 w-4 transition-transform", showDetails && "rotate-90")}
             />
-            View objectives
+            {t("simulation.viewObjectives")}
           </button>
           {showDetails && (
             <ul className="mt-2 space-y-1 text-sm text-muted-foreground pl-5">
@@ -379,7 +378,7 @@ function ScenarioCard({
 
         <Button className="w-full" onClick={onStart} disabled={isStarting}>
           <PlayCircle className="h-4 w-4 mr-2" />
-          {isStarting ? "Starting..." : "Start Simulation"}
+          {isStarting ? t("simulation.starting") : t("simulation.startSimulation")}
         </Button>
       </CardContent>
     </Card>
