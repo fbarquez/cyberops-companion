@@ -15,6 +15,7 @@ from src.services.integrations_service import IntegrationsService
 from src.services.reporting_service import ReportingService
 from src.services.notification_service import NotificationService
 from src.services.user_management_service import UserManagementService
+from src.services.storage_service import StorageService
 
 __all__ = [
     "ComplianceService",
@@ -33,4 +34,5 @@ __all__ = [
     "ReportingService",
     "NotificationService",
     "UserManagementService",
+    "StorageService",
 ]

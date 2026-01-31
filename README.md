@@ -135,6 +135,7 @@ pnpm dev      # or npm run dev
 - **NVD Integration**: Real-time CVE lookup with EPSS and KEV data
 - **User Onboarding**: Guided 5-step wizard for new users
 - **Real-time Updates**: WebSocket notifications with instant delivery
+- **File Attachments**: Upload evidence, screenshots, logs with SHA-256 integrity verification
 
 ## User Roles
 
@@ -181,11 +182,10 @@ See `.env.example` for all configuration options. Key variables:
 
 Current MVP limitations to be aware of:
 
-1. **No file uploads**: Evidence attachments are metadata-only (file storage not implemented)
-2. **Basic search**: Full-text search is pattern-based, not indexed
-3. **Single tenant**: Multi-tenancy not implemented
-4. **Manual backups**: No automated backup system
-5. **Simulated scans**: Vulnerability scans are simulated (real scanner integration planned)
+1. **Basic search**: Full-text search is pattern-based, not indexed
+2. **Single tenant**: Multi-tenancy not implemented
+3. **Manual backups**: No automated backup system
+4. **Simulated scans**: Vulnerability scans are simulated (real scanner integration planned)
 
 ## Development Status
 
@@ -193,11 +193,11 @@ This project is under active development.
 
 - **Phase 0 (Foundation)**: ✅ Complete
 - **Phase 1 (Enhanced Features)**: ✅ Complete
-- **Phase 2 (Advanced Features)**: 🔄 In Progress (25%)
+- **Phase 2 (Advanced Features)**: 🔄 In Progress (50%)
 
 Current Phase 2 Progress:
 - ✅ Real-time WebSocket Notifications
-- 🔲 File upload/attachment system
+- ✅ File upload/attachment system
 - 🔲 Advanced analytics/ML
 - 🔲 Mobile responsive improvements
 

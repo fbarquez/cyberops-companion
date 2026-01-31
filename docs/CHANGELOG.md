@@ -10,8 +10,49 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Planned
 - Real scanner integration (Nessus, OpenVAS, Qualys)
-- File upload/attachment system
 - Advanced analytics/ML
+- Mobile responsive improvements
+
+---
+
+## [0.7.0] - 2026-01-31
+
+### Added
+
+#### File Upload/Attachment System
+- Full file attachment support for incidents, cases, vulnerabilities, and other entities
+- Backend:
+  - `Attachment` model with SHA-256 hash verification
+  - `StorageService` with pluggable storage backends
+  - `LocalStorageBackend` for filesystem storage
+  - `S3StorageBackend` for AWS S3 and S3-compatible services (MinIO)
+  - File validation (size limits, allowed extensions)
+  - Duplicate detection by file hash
+  - Soft delete with optional permanent deletion
+  - Download tracking (count, last downloaded)
+- Frontend:
+  - `FileUpload` component with drag-and-drop (react-dropzone)
+  - `useAttachments` hook for file management
+  - Category selection (evidence, screenshot, log_file, pcap, etc.)
+  - Upload progress indicators
+  - File list with download/delete/verify actions
+  - Integrity verification UI
+- API endpoints:
+  - `POST /api/v1/attachments/upload/{entity_type}/{entity_id}` - Upload file
+  - `GET /api/v1/attachments/{entity_type}/{entity_id}` - List attachments
+  - `GET /api/v1/attachments/download/{id}` - Download file
+  - `DELETE /api/v1/attachments/{id}` - Delete attachment
+  - `POST /api/v1/attachments/verify/{id}` - Verify file integrity
+- Configuration options:
+  - `STORAGE_BACKEND` - "local" or "s3"
+  - `STORAGE_LOCAL_PATH` - Local storage directory
+  - `STORAGE_MAX_FILE_SIZE_MB` - Maximum file size (default 50MB)
+  - `STORAGE_ALLOWED_EXTENSIONS` - Whitelist of allowed file types
+  - S3 configuration: bucket, region, credentials, endpoint URL
+- Integration with Evidence page (new Attachments tab)
+
+### Documentation
+- Added `docs/features/FILE_UPLOADS.md` with full architecture and usage guide
 
 ---
 

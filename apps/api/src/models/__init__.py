@@ -62,6 +62,9 @@ from src.models.user_management import (
     TeamRole, InvitationStatus, SessionStatus,
     role_permissions, user_roles
 )
+from src.models.attachment import (
+    Attachment, AttachmentEntityType, AttachmentCategory
+)
 
 __all__ = [
     "User",
@@ -218,4 +221,8 @@ __all__ = [
     "SessionStatus",
     "role_permissions",
     "user_roles",
+    # Attachments
+    "Attachment",
+    "AttachmentEntityType",
+    "AttachmentCategory",
 ]

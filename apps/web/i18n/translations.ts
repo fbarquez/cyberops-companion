@@ -1094,6 +1094,9 @@ const translations = {
       },
       chainValid: "Chain integrity verified",
       chainInvalid: "Chain integrity compromised",
+      chain: "Evidence Chain",
+      attachments: "Attachments",
+      fileAttachments: "File Attachments",
     },
     // Checklist
     checklist: {
@@ -2601,6 +2604,9 @@ const translations = {
       },
       chainValid: "Kettenintegritat verifiziert",
       chainInvalid: "Kettenintegritat kompromittiert",
+      chain: "Beweiskette",
+      attachments: "Anhange",
+      fileAttachments: "Dateianhange",
     },
     // Checklist
     checklist: {

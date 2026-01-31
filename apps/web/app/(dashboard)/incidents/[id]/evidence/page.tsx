@@ -14,6 +14,8 @@ import {
   Clock,
   User,
   Tag,
+  FileText,
+  Paperclip,
 } from "lucide-react";
 import { Header } from "@/components/shared/header";
 import { Button } from "@/components/ui/button";
@@ -30,6 +32,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { PageLoading } from "@/components/shared/loading";
+import { FileUpload } from "@/components/shared/file-upload";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuthStore } from "@/stores/auth-store";
 import { useIncidentStore } from "@/stores/incident-store";
 import { useTranslations } from "@/hooks/use-translations";
@@ -130,64 +134,97 @@ export default function EvidencePage() {
           </div>
         )}
 
-        {/* Chain Status */}
-        <Card>
-          <CardContent className="pt-6">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                {chainData?.chain_valid !== false ? (
-                  <>
-                    <CheckCircle className="h-8 w-8 text-green-500" />
-                    <div>
-                      <p className="font-semibold text-green-700 dark:text-green-400">
-                        {t("evidence.chainValid")}
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        {chainData?.total_entries || 0} entries
-                      </p>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <XCircle className="h-8 w-8 text-red-500" />
-                    <div>
-                      <p className="font-semibold text-red-700 dark:text-red-400">
-                        {t("evidence.chainInvalid")}
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        Chain integrity compromised
-                      </p>
-                    </div>
-                  </>
-                )}
-              </div>
-              <Button variant="outline" size="sm">
-                <Download className="h-4 w-4 mr-2" />
-                {t("evidence.export")}
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+        <Tabs defaultValue="chain" className="w-full">
+          <TabsList className="grid w-full grid-cols-2 max-w-md">
+            <TabsTrigger value="chain" className="flex items-center gap-2">
+              <FileText className="h-4 w-4" />
+              {t("evidence.chain")}
+            </TabsTrigger>
+            <TabsTrigger value="attachments" className="flex items-center gap-2">
+              <Paperclip className="h-4 w-4" />
+              {t("evidence.attachments")}
+            </TabsTrigger>
+          </TabsList>
 
-        {/* Evidence Timeline */}
-        <div className="space-y-4">
-          {entries.length === 0 ? (
+          <TabsContent value="chain" className="space-y-6 mt-6">
+            {/* Chain Status */}
             <Card>
-              <CardContent className="py-8 text-center text-muted-foreground">
-                No evidence entries yet. Click "Add Evidence" to create the first entry.
+              <CardContent className="pt-6">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    {chainData?.chain_valid !== false ? (
+                      <>
+                        <CheckCircle className="h-8 w-8 text-green-500" />
+                        <div>
+                          <p className="font-semibold text-green-700 dark:text-green-400">
+                            {t("evidence.chainValid")}
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            {chainData?.total_entries || 0} entries
+                          </p>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <XCircle className="h-8 w-8 text-red-500" />
+                        <div>
+                          <p className="font-semibold text-red-700 dark:text-red-400">
+                            {t("evidence.chainInvalid")}
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            Chain integrity compromised
+                          </p>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                  <Button variant="outline" size="sm">
+                    <Download className="h-4 w-4 mr-2" />
+                    {t("evidence.export")}
+                  </Button>
+                </div>
               </CardContent>
             </Card>
-          ) : (
-            entries.map((entry: any, index: number) => (
-              <EvidenceEntryCard
-                key={entry.id}
-                entry={entry}
-                isFirst={index === 0}
-                isLast={index === entries.length - 1}
-              />
-            ))
-          )}
-        </div>
+
+            {/* Evidence Timeline */}
+            <div className="space-y-4">
+              {entries.length === 0 ? (
+                <Card>
+                  <CardContent className="py-8 text-center text-muted-foreground">
+                    No evidence entries yet. Click "Add Evidence" to create the first entry.
+                  </CardContent>
+                </Card>
+              ) : (
+                entries.map((entry: any, index: number) => (
+                  <EvidenceEntryCard
+                    key={entry.id}
+                    entry={entry}
+                    isFirst={index === 0}
+                    isLast={index === entries.length - 1}
+                  />
+                ))
+              )}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="attachments" className="mt-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Paperclip className="h-5 w-5" />
+                  {t("evidence.fileAttachments")}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <FileUpload
+                  entityType="incident"
+                  entityId={incidentId}
+                  showList={true}
+                />
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );

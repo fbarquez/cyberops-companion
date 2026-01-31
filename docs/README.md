@@ -85,6 +85,7 @@ docs/
 | Feature | Status | Documentation |
 |---------|--------|---------------|
 | WebSocket Notifications | ✅ Complete | [WEBSOCKET_NOTIFICATIONS.md](./features/WEBSOCKET_NOTIFICATIONS.md) |
+| File Uploads | ✅ Complete | [FILE_UPLOADS.md](./features/FILE_UPLOADS.md) |
 
 ---
 

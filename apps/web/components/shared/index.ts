@@ -36,3 +36,6 @@ export { NotificationBell } from "./notification-bell";
 
 // Providers
 export { Providers } from "./providers";
+
+// File upload
+export { FileUpload, CATEGORY_LABELS, CATEGORY_COLORS } from "./file-upload";
