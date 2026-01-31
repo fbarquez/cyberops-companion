@@ -9,10 +9,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### Planned
-- Landing page for unauthenticated users
 - In-app onboarding flow
 - UX pattern unification
 - Real scanner integration (Nessus, OpenVAS, Qualys)
+
+---
+
+## [0.3.0] - 2026-01-31
+
+### Added
+
+#### Landing Page
+- Created professional landing page for unauthenticated users
+- Components:
+  - `LandingNavbar` - Responsive navigation with mobile menu
+  - `HeroSection` - Value proposition with dashboard preview
+  - `FeaturesSection` - Key platform capabilities (6 features)
+  - `ModulesSection` - All 10 security modules showcase
+  - `CTASection` - Call-to-action for trial signup
+  - `Footer` - Links and social media
+- Responsive design for mobile and desktop
+- Dark mode support
 
 ---
 
