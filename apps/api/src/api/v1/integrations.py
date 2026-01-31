@@ -4,8 +4,8 @@ from fastapi import APIRouter, Depends, HTTPException, Query, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.db.database import get_db
-from src.api.deps import get_current_user
-from src.models.user import User
+from src.api.deps import get_current_user, DBSession, CurrentUser, AdminUser, ManagerUser
+from src.models.user import User, UserRole
 from src.models.integrations import IntegrationCategory, IntegrationStatus, IntegrationType
 from src.schemas.integrations import (
     IntegrationCreate, IntegrationUpdate, IntegrationResponse, IntegrationListResponse,
@@ -63,10 +63,10 @@ async def get_template(
 
 @router.post("/templates/seed")
 async def seed_templates(
-    db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user),
+    db: DBSession,
+    current_user: AdminUser,
 ):
-    """Seed default integration templates."""
+    """Seed default integration templates (admin only)."""
     service = IntegrationsService(db)
     await service.seed_templates()
     return {"message": "Templates seeded successfully"}
@@ -77,10 +77,10 @@ async def seed_templates(
 @router.post("", response_model=IntegrationResponse)
 async def create_integration(
     data: IntegrationCreate,
-    db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user),
+    db: DBSession,
+    current_user: AdminUser,
 ):
-    """Create a new integration."""
+    """Create a new integration (admin only)."""
     service = IntegrationsService(db)
     integration = await service.create_integration(data, created_by=current_user.id)
     return IntegrationResponse.model_validate(integration)
@@ -127,10 +127,10 @@ async def get_integration(
 async def update_integration(
     integration_id: str,
     data: IntegrationUpdate,
-    db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user),
+    db: DBSession,
+    current_user: AdminUser,
 ):
-    """Update an integration."""
+    """Update an integration (admin only)."""
     service = IntegrationsService(db)
     integration = await service.update_integration(integration_id, data)
     if not integration:
@@ -141,10 +141,10 @@ async def update_integration(
 @router.delete("/{integration_id}")
 async def delete_integration(
     integration_id: str,
-    db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user),
+    db: DBSession,
+    current_user: AdminUser,
 ):
-    """Delete an integration."""
+    """Delete an integration (admin only)."""
     service = IntegrationsService(db)
     success = await service.delete_integration(integration_id)
     if not success:
@@ -155,10 +155,10 @@ async def delete_integration(
 @router.post("/{integration_id}/enable", response_model=IntegrationResponse)
 async def enable_integration(
     integration_id: str,
-    db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user),
+    db: DBSession,
+    current_user: AdminUser,
 ):
-    """Enable an integration."""
+    """Enable an integration (admin only)."""
     service = IntegrationsService(db)
     integration = await service.enable_integration(integration_id)
     if not integration:
@@ -169,10 +169,10 @@ async def enable_integration(
 @router.post("/{integration_id}/disable", response_model=IntegrationResponse)
 async def disable_integration(
     integration_id: str,
-    db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user),
+    db: DBSession,
+    current_user: AdminUser,
 ):
-    """Disable an integration."""
+    """Disable an integration (admin only)."""
     service = IntegrationsService(db)
     integration = await service.disable_integration(integration_id)
     if not integration:
@@ -185,10 +185,10 @@ async def disable_integration(
 @router.post("/test-connection", response_model=TestConnectionResponse)
 async def test_connection(
     data: TestConnectionRequest,
-    db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user),
+    db: DBSession,
+    current_user: AdminUser,
 ):
-    """Test connection to an external platform."""
+    """Test connection to an external platform (admin only)."""
     service = IntegrationsService(db)
     return await service.test_connection(
         integration_type=data.integration_type,
@@ -206,11 +206,11 @@ async def test_connection(
 @router.post("/{integration_id}/sync", response_model=ManualSyncResponse)
 async def trigger_sync(
     integration_id: str,
+    db: DBSession,
+    current_user: ManagerUser,
     data: Optional[ManualSyncRequest] = None,
-    db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user),
 ):
-    """Trigger a manual sync for an integration."""
+    """Trigger a manual sync for an integration (manager+ only)."""
     service = IntegrationsService(db)
     result = await service.trigger_sync(
         integration_id=integration_id,

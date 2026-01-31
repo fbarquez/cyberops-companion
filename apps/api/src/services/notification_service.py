@@ -499,7 +499,6 @@ class NotificationService:
 
                 elif channel == NotificationChannel.EMAIL:
                     if preferences and preferences.email_enabled:
-                        # TODO: Send email using email service
                         await self._send_email_notification(notification)
                         channels_sent.append("email")
                         delivery_status["email"] = {
@@ -540,7 +539,8 @@ class NotificationService:
         action_url = notification.entity_url
         if not action_url and notification.entity_type and notification.entity_id:
             # Build URL based on entity type
-            base_url = "http://localhost:3000"  # TODO: Get from config
+            from src.config import settings
+            base_url = settings.FRONTEND_URL
             entity_routes = {
                 "incident": f"/incidents/{notification.entity_id}",
                 "alert": f"/soc?tab=alerts&id={notification.entity_id}",
