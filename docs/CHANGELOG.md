@@ -9,9 +9,30 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### Planned
-- In-app onboarding flow
 - UX pattern unification
 - Real scanner integration (Nessus, OpenVAS, Qualys)
+
+---
+
+## [0.4.0] - 2026-01-31
+
+### Added
+
+#### Onboarding Flow
+- Implemented 5-step onboarding wizard for new users
+- Created `onboarding-store.ts` with Zustand for state management
+- Persistent state with localStorage (resume if user leaves)
+- Step components:
+  - `WelcomeStep` - Introduction with overview of what's coming
+  - `OrganizationStep` - Organization profile (name, size, industry, job title)
+  - `ModulesStep` - Security module selection with recommendations
+  - `TourStep` - Interactive feature tour carousel
+  - `CompleteStep` - Success page with quick start actions
+- Progress indicator in header showing current step
+- Redirects:
+  - New users (register) → Onboarding
+  - Dashboard access without onboarding → Onboarding
+  - Completed onboarding → Dashboard
 
 ---
 

@@ -46,7 +46,8 @@ export default function RegisterPage() {
     setError(null);
     try {
       await registerUser(data.email, data.password, data.fullName);
-      router.push("/incidents");
+      // Redirect new users to onboarding
+      router.push("/onboarding");
     } catch (err: any) {
       setError(err.message || "Registration failed");
     }
