@@ -11,6 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useUIStore } from "@/stores/ui-store";
+import { NotificationBell } from "./notification-bell";
 
 interface HeaderProps {
   title?: string;
@@ -41,6 +42,9 @@ export function Header({ title, children, actions, backHref }: HeaderProps) {
       <div className="flex items-center gap-4">
         {/* Page-specific actions */}
         {actions || children}
+
+        {/* Notification Bell */}
+        <NotificationBell />
 
         {/* Language Switcher */}
         <Select value={language} onValueChange={(v) => setLanguage(v as "en" | "de")}>

@@ -23,6 +23,52 @@ from src.services.email_service import get_email_service
 logger = logging.getLogger(__name__)
 
 
+# =============================================================================
+# WebSocket Integration Helper
+# =============================================================================
+
+async def _broadcast_notification_websocket(notification: Notification):
+    """Broadcast notification to user via WebSocket if connected."""
+    try:
+        from src.api.websocket import broadcast_notification
+        await broadcast_notification(
+            user_id=notification.user_id,
+            notification_data={
+                "id": notification.id,
+                "type": notification.notification_type.value if notification.notification_type else None,
+                "priority": notification.priority.value if notification.priority else None,
+                "title": notification.title,
+                "message": notification.message,
+                "entity_type": notification.entity_type,
+                "entity_id": notification.entity_id,
+                "entity_url": notification.entity_url,
+                "is_read": notification.is_read,
+                "created_at": notification.created_at.isoformat() if notification.created_at else None,
+            },
+            event_type="notification:new"
+        )
+    except Exception as e:
+        # Don't fail notification creation if WebSocket broadcast fails
+        logger.debug(f"WebSocket broadcast failed (non-critical): {e}")
+
+
+async def _broadcast_stats_websocket(user_id: str, stats: NotificationStats):
+    """Broadcast updated stats to user via WebSocket."""
+    try:
+        from src.api.websocket import broadcast_stats_update
+        await broadcast_stats_update(
+            user_id=user_id,
+            stats={
+                "total": stats.total,
+                "unread": stats.unread,
+                "by_type": stats.by_type,
+                "by_priority": stats.by_priority,
+            }
+        )
+    except Exception as e:
+        logger.debug(f"WebSocket stats broadcast failed (non-critical): {e}")
+
+
 class NotificationService:
     """Service for notification operations."""
 
@@ -168,6 +214,11 @@ class NotificationService:
 
         result = await self.db.execute(query)
         await self.db.commit()
+
+        # Broadcast updated stats via WebSocket
+        if result.rowcount > 0:
+            stats = await self.get_notification_stats(user_id)
+            await _broadcast_stats_websocket(user_id, stats)
 
         return result.rowcount
 
@@ -520,6 +571,9 @@ class NotificationService:
         notification.channels_sent = channels_sent
         notification.delivery_status = delivery_status
         await self.db.commit()
+
+        # Broadcast via WebSocket for real-time updates
+        await _broadcast_notification_websocket(notification)
 
     async def _send_email_notification(self, notification: Notification):
         """Send email notification via SMTP."""

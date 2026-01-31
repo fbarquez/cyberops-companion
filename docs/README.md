@@ -80,6 +80,12 @@ docs/
 | Onboarding Flow | ✅ Complete | [ONBOARDING.md](./features/ONBOARDING.md) |
 | UX Patterns | ✅ Complete | [UX_PATTERNS.md](./UX_PATTERNS.md) |
 
+### Phase 2 - Advanced Features
+
+| Feature | Status | Documentation |
+|---------|--------|---------------|
+| WebSocket Notifications | ✅ Complete | [WEBSOCKET_NOTIFICATIONS.md](./features/WEBSOCKET_NOTIFICATIONS.md) |
+
 ---
 
 ## API Documentation
@@ -104,4 +110,4 @@ When adding new features:
 
 ## Last Updated
 
-**2026-01-31** - Phase 1 Complete
+**2026-01-31** - Phase 2 in Progress (WebSocket Notifications)

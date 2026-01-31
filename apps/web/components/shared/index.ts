@@ -32,6 +32,7 @@ export { FormDialog, ConfirmDialog } from "./form-dialog";
 // Layout components
 export { Header } from "./header";
 export { Sidebar } from "./sidebar";
+export { NotificationBell } from "./notification-bell";
 
 // Providers
 export { Providers } from "./providers";

@@ -10,8 +10,35 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Planned
 - Real scanner integration (Nessus, OpenVAS, Qualys)
-- Real-time WebSocket notifications
 - File upload/attachment system
+- Advanced analytics/ML
+
+---
+
+## [0.6.0] - 2026-01-31
+
+### Added
+
+#### WebSocket Notifications
+- Real-time notification delivery via WebSocket
+- Backend:
+  - `NotificationConnectionManager` - Manages user WebSocket connections
+  - Supports multiple connections per user (tabs/devices)
+  - JWT authentication via query parameter
+  - Automatic dead connection cleanup
+  - Integration with NotificationService for broadcast on creation
+- Frontend:
+  - `useNotificationWebSocket` hook with auto-reconnect
+  - `NotificationBell` component in header
+  - Unread count badge with real-time updates
+  - Toast notifications for new alerts
+  - Connection status indicator
+- WebSocket endpoint: `/api/v1/ws/notifications?token=<jwt>`
+- Events: notification:new, stats:updated, connection:established
+- Ping/pong keep-alive (30 second interval)
+
+### Documentation
+- Added `docs/features/WEBSOCKET_NOTIFICATIONS.md` with full architecture
 
 ---
 

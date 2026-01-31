@@ -134,6 +134,7 @@ pnpm dev      # or npm run dev
 - **Email Notifications**: SMTP integration with HTML templates
 - **NVD Integration**: Real-time CVE lookup with EPSS and KEV data
 - **User Onboarding**: Guided 5-step wizard for new users
+- **Real-time Updates**: WebSocket notifications with instant delivery
 
 ## User Roles
 
@@ -192,7 +193,13 @@ This project is under active development.
 
 - **Phase 0 (Foundation)**: ✅ Complete
 - **Phase 1 (Enhanced Features)**: ✅ Complete
-- **Phase 2 (Advanced Features)**: 🔲 Planned
+- **Phase 2 (Advanced Features)**: 🔄 In Progress (25%)
+
+Current Phase 2 Progress:
+- ✅ Real-time WebSocket Notifications
+- 🔲 File upload/attachment system
+- 🔲 Advanced analytics/ML
+- 🔲 Mobile responsive improvements
 
 See `docs/PROJECT_STATUS.md` for detailed progress and `docs/CHANGELOG.md` for version history.
 
