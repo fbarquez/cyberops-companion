@@ -62,6 +62,7 @@ docs/
 | NVD API | ✅ Complete | [NVD_API.md](./features/NVD_API.md) |
 | Role-Based Access | ✅ Complete | [ROLE_BASED_ACCESS.md](./features/ROLE_BASED_ACCESS.md) |
 | i18n Translations | ✅ Complete | [I18N_TRANSLATIONS.md](./features/I18N_TRANSLATIONS.md) |
+| Celery Tasks | ✅ Complete | [CELERY_TASKS.md](./features/CELERY_TASKS.md) |
 
 ---
 
