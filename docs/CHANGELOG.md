@@ -11,7 +11,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Planned (Phase 3 - Enterprise)
 - Multi-tenancy support
 - SSO/SAML integration (Azure AD, Okta, etc.)
-- Audit logging system
 - API rate limiting
 
 ### Planned (Future)
@@ -21,6 +20,71 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Incident prediction
 
 See [FUTURE_ROADMAP.md](./FUTURE_ROADMAP.md) for detailed specifications.
+
+---
+
+## [0.10.0] - 2026-01-31
+
+### Added
+
+#### Audit Logging System (Phase 3)
+
+Complete audit trail system for compliance and forensics.
+
+**Backend:**
+- Enhanced `ActivityLog` model with new fields:
+  - `action_category` - Categorization (auth, crud, data, system)
+  - `resource_name` - Human-readable resource name
+  - `changes_summary` - Auto-generated change description
+  - `request_id` - Request correlation ID
+  - `severity` - Log severity (info, warning, critical)
+  - Database indices for performance
+- `AuditService` (`services/audit_service.py`):
+  - `log_action()` - Create audit log entries
+  - `list_logs()` - Query with filters and pagination
+  - `get_stats()` - Aggregate statistics
+  - `export_logs()` - Export to CSV/JSON
+  - Automatic sensitive data filtering (passwords, tokens, etc.)
+  - Auto-generated severity based on action type
+  - Auto-generated changes summary for updates
+- `audit_decorator.py` - Decorator for automatic endpoint logging
+- Pydantic schemas (`schemas/audit.py`):
+  - `ActivityLogResponse`, `ActivityLogDetailResponse`
+  - `ActivityLogListResponse`, `AuditStatsResponse`
+  - `AuditExportRequest`, `AuditLogFilter`
+
+**API Endpoints:**
+- `GET /api/v1/audit/logs` - List logs with filters and pagination
+- `GET /api/v1/audit/logs/{id}` - Get log detail with old/new values
+- `GET /api/v1/audit/stats` - Statistics (admin only)
+- `POST /api/v1/audit/export` - Export CSV/JSON (admin only)
+- `GET /api/v1/audit/actions` - Available filter options
+
+**Frontend:**
+- `/audit` page with:
+  - Stats cards (total logs, logs today, critical, failures)
+  - Filter bar (search, action, resource, severity)
+  - Logs table with pagination
+  - Log detail dialog with old/new values
+  - Export dropdown (CSV/JSON)
+- `auditAPI` client (`lib/api-client.ts`)
+- Sidebar navigation link
+- EN/DE translations
+
+**Integrations:**
+- Auth endpoints log login/logout/failed attempts
+- Incident endpoints log create/update/delete
+
+**Access Control:**
+- All authenticated users can view their own logs
+- Admin/Manager can view all logs
+- Admin only can export and view stats
+
+### Documentation
+- Added `docs/features/AUDIT_LOGGING.md` with full API reference
+- Added `docs/features/MOBILE_RESPONSIVE.md` with responsive patterns
+- Updated `docs/README.md` with current feature status
+- Updated `docs/PROJECT_STATUS.md` with Phase 3 progress
 
 ---
 

@@ -12,30 +12,44 @@ This document outlines features planned for future development phases.
 |-------|--------|------------|
 | Phase 0 - Foundation | ✅ Complete | 100% |
 | Phase 1 - Enhanced Features | ✅ Complete | 100% |
-| Phase 2 - Advanced Features | 🔄 In Progress | 75% |
-| Phase 3 - Enterprise Features | 🔲 Not Started | 0% |
+| Phase 2 - Advanced Features | ✅ Complete | 100% |
+| Phase 3 - Enterprise Features | 🔄 In Progress | 25% |
 
 ---
 
-## Phase 2 - Remaining Items
+## Phase 2 - Completed Items
 
-### Mobile Responsive Improvements
+### Mobile Responsive Improvements ✅
 
-**Priority:** Medium
-**Effort:** Medium
-**Status:** Not Started
+**Status:** Complete (2026-01-31)
 
-**Scope:**
-- Responsive navigation improvements for mobile devices
-- Touch-friendly interactions
-- Mobile-optimized charts and data tables
-- Bottom navigation for mobile users
-- Swipe gestures for common actions
+**Implemented:**
+- Mobile drawer sidebar (Sheet component)
+- Hamburger menu in header
+- Responsive tables with column hiding
+- Responsive forms (single/multi-column)
+- Touch-friendly dialogs
+- Responsive charts
 
-**Files to modify:**
-- `apps/web/components/layout/` - Navigation components
-- `apps/web/components/dashboard/charts/` - Chart responsiveness
-- All page components for mobile layouts
+**Documentation:** [MOBILE_RESPONSIVE.md](./features/MOBILE_RESPONSIVE.md)
+
+---
+
+## Phase 3 - Completed Items
+
+### Audit Logging ✅
+
+**Status:** Complete (2026-01-31)
+
+**Implemented:**
+- Complete audit trail for all user actions
+- AuditService with log_action, list_logs, export_logs
+- API endpoints with filters and pagination
+- Frontend page with stats, filters, table, export
+- Automatic sensitive data filtering
+- EN/DE translations
+
+**Documentation:** [AUDIT_LOGGING.md](./features/AUDIT_LOGGING.md)
 
 ---
 
@@ -180,46 +194,9 @@ POST /auth/sso/logout             # SSO logout
 
 ---
 
-### Audit Logging
+### Audit Logging ✅ COMPLETED
 
-**Priority:** Medium
-**Effort:** Medium
-**Status:** Not Started
-
-**Description:**
-Comprehensive audit trail for compliance and forensics.
-
-**Events to log:**
-- Authentication (login, logout, failed attempts)
-- Authorization (permission checks, role changes)
-- Data access (reads of sensitive data)
-- Data modifications (CRUD operations)
-- Configuration changes
-- Export operations
-- API access
-
-**Audit log model:**
-```python
-class AuditLog(Base):
-    id = Column(UUID)
-    timestamp = Column(DateTime, index=True)
-    user_id = Column(UUID, nullable=True)
-    action = Column(String)  # CREATE, READ, UPDATE, DELETE, LOGIN, etc.
-    resource_type = Column(String)  # incident, user, alert, etc.
-    resource_id = Column(UUID, nullable=True)
-    details = Column(JSON)  # Additional context
-    ip_address = Column(String)
-    user_agent = Column(String)
-    success = Column(Boolean)
-    tenant_id = Column(UUID)  # For multi-tenancy
-```
-
-**Features:**
-- Tamper-evident logging (hash chain)
-- Log retention policies
-- Search and filter UI
-- Export for SIEM integration
-- Compliance reports (who accessed what)
+See [Phase 3 - Completed Items](#phase-3---completed-items) above and [AUDIT_LOGGING.md](./features/AUDIT_LOGGING.md).
 
 ---
 
