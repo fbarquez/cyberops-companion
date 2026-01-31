@@ -286,3 +286,59 @@ async def cleanup_notifications(
     service = NotificationService(db)
     count = await service.cleanup_expired_notifications(days_old)
     return {"deleted_count": count}
+
+
+@router.post("/email/test")
+async def test_email(
+    current_user: CurrentUser,
+    email: Optional[str] = Query(None, description="Email to send test to (defaults to current user's email)")
+):
+    """
+    Send a test email to verify email configuration.
+
+    This endpoint is useful for verifying that SMTP settings are correctly configured.
+    """
+    from src.services.email_service import get_email_service
+
+    email_service = get_email_service()
+
+    if not email_service.is_configured():
+        return {
+            "success": False,
+            "message": "Email service is not configured. Set EMAIL_ENABLED=true and configure SMTP settings in .env"
+        }
+
+    target_email = email or current_user.email
+    if not target_email:
+        return {
+            "success": False,
+            "message": "No email address provided and current user has no email"
+        }
+
+    success = await email_service.send_test_email(target_email)
+
+    return {
+        "success": success,
+        "message": f"Test email {'sent successfully' if success else 'failed to send'} to {target_email}",
+        "email": target_email
+    }
+
+
+@router.get("/email/status")
+async def email_status(current_user: CurrentUser):
+    """
+    Check email service configuration status.
+    """
+    from src.services.email_service import get_email_service
+    from src.config import settings
+
+    email_service = get_email_service()
+
+    return {
+        "enabled": settings.EMAIL_ENABLED,
+        "configured": email_service.is_configured(),
+        "smtp_host": settings.SMTP_HOST if settings.SMTP_HOST else None,
+        "smtp_port": settings.SMTP_PORT,
+        "smtp_from": settings.SMTP_FROM if settings.SMTP_FROM else None,
+        "smtp_tls": settings.SMTP_TLS,
+    }

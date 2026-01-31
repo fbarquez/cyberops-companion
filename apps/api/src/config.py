@@ -30,6 +30,17 @@ class Settings(BaseSettings):
     # CORS
     CORS_ORIGINS: List[str] = ["http://localhost:3000", "http://127.0.0.1:3000"]
 
+    # Email / SMTP
+    SMTP_HOST: str = ""
+    SMTP_PORT: int = 587
+    SMTP_USER: str = ""
+    SMTP_PASSWORD: str = ""
+    SMTP_FROM: str = ""
+    SMTP_FROM_NAME: str = "CyberOps Companion"
+    SMTP_TLS: bool = True
+    SMTP_SSL: bool = False
+    EMAIL_ENABLED: bool = False  # Set to True when SMTP is configured
+
     # Forensics
     HASH_ALGORITHM: str = "sha256"
     ENABLE_HASH_CHAIN: bool = True

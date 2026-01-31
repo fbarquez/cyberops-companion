@@ -1,6 +1,7 @@
 """Notification service for managing notifications."""
 import asyncio
 import httpx
+import logging
 from datetime import datetime, timedelta
 from typing import Optional, List, Dict, Any
 from sqlalchemy import select, func, update, and_, or_
@@ -17,6 +18,9 @@ from src.schemas.notifications import (
     NotificationPreferenceCreate, NotificationPreferenceUpdate,
     WebhookSubscriptionCreate, WebhookSubscriptionUpdate, WebhookTestResult
 )
+from src.services.email_service import get_email_service
+
+logger = logging.getLogger(__name__)
 
 
 class NotificationService:
@@ -519,9 +523,56 @@ class NotificationService:
         await self.db.commit()
 
     async def _send_email_notification(self, notification: Notification):
-        """Send email notification (placeholder)."""
-        # TODO: Implement email sending with SMTP or email service
-        pass
+        """Send email notification via SMTP."""
+        email_service = get_email_service()
+
+        if not email_service.is_configured():
+            logger.debug("Email service not configured, skipping email notification")
+            return
+
+        # Get user email
+        user = await self.db.get(User, notification.user_id)
+        if not user or not user.email:
+            logger.warning(f"User {notification.user_id} not found or has no email")
+            return
+
+        # Build action URL if entity exists
+        action_url = notification.entity_url
+        if not action_url and notification.entity_type and notification.entity_id:
+            # Build URL based on entity type
+            base_url = "http://localhost:3000"  # TODO: Get from config
+            entity_routes = {
+                "incident": f"/incidents/{notification.entity_id}",
+                "alert": f"/soc?tab=alerts&id={notification.entity_id}",
+                "case": f"/soc?tab=cases&id={notification.entity_id}",
+                "vulnerability": f"/vulnerabilities?id={notification.entity_id}",
+                "risk": f"/risks?id={notification.entity_id}",
+                "vendor": f"/tprm?vendor={notification.entity_id}",
+            }
+            route = entity_routes.get(notification.entity_type, "")
+            if route:
+                action_url = f"{base_url}{route}"
+
+        # Send email
+        try:
+            success = await email_service.send_notification_email(
+                to=user.email,
+                title=notification.title,
+                message=notification.message or "",
+                priority=notification.priority.value if notification.priority else "normal",
+                notification_type=notification.notification_type.value if notification.notification_type else "general",
+                entity_type=notification.entity_type,
+                entity_id=notification.entity_id,
+                action_url=action_url,
+            )
+
+            if success:
+                logger.info(f"Email notification sent to {user.email}")
+            else:
+                logger.warning(f"Failed to send email notification to {user.email}")
+
+        except Exception as e:
+            logger.error(f"Error sending email notification: {e}")
 
     async def _trigger_webhooks(self, notification: Notification):
         """Trigger webhooks for notification."""
