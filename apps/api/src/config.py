@@ -77,6 +77,30 @@ class Settings(BaseSettings):
     S3_SECRET_KEY: str = ""
     S3_ENDPOINT_URL: str = ""  # For S3-compatible services (MinIO, etc.)
 
+    # SSO / OAuth2 Configuration
+    # Google OAuth2
+    SSO_GOOGLE_ENABLED: bool = False
+    SSO_GOOGLE_CLIENT_ID: str = ""
+    SSO_GOOGLE_CLIENT_SECRET: str = ""
+
+    # Microsoft Entra ID (Azure AD)
+    SSO_AZURE_ENABLED: bool = False
+    SSO_AZURE_CLIENT_ID: str = ""
+    SSO_AZURE_CLIENT_SECRET: str = ""
+    SSO_AZURE_TENANT_ID: str = "common"  # Use "common" for multi-tenant
+
+    # Okta
+    SSO_OKTA_ENABLED: bool = False
+    SSO_OKTA_CLIENT_ID: str = ""
+    SSO_OKTA_CLIENT_SECRET: str = ""
+    SSO_OKTA_DOMAIN: str = ""  # e.g., "dev-123456.okta.com"
+
+    # General SSO Settings
+    SSO_AUTO_CREATE_USERS: bool = True
+    SSO_DEFAULT_ROLE: str = "analyst"
+    SSO_ALLOWED_DOMAINS: str = ""  # Comma-separated list of allowed email domains
+    SSO_CALLBACK_URL: str = ""  # Override callback URL (defaults to FRONTEND_URL/auth/callback)
+
     class Config:
         env_file = ".env"
         case_sensitive = True

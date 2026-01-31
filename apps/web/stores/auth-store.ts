@@ -3,7 +3,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { User } from "@/types";
-import { authAPI } from "@/lib/api-client";
+import { authAPI, ssoAPI, SSOCallbackResponse } from "@/lib/api-client";
 import { saveTokens, clearTokens, getTokens, isTokenExpired } from "@/lib/auth";
 
 interface AuthState {
@@ -12,9 +12,11 @@ interface AuthState {
   refreshToken: string | null;
   isLoading: boolean;
   isAuthenticated: boolean;
+  ssoProvider: string | null;
 
   login: (email: string, password: string) => Promise<void>;
   register: (email: string, password: string, fullName: string) => Promise<void>;
+  loginWithSSO: (provider: string, code: string, state: string) => Promise<SSOCallbackResponse>;
   logout: () => void;
   refreshAuth: () => Promise<void>;
   loadUser: () => Promise<void>;
@@ -28,6 +30,7 @@ export const useAuthStore = create<AuthState>()(
       refreshToken: null,
       isLoading: false,
       isAuthenticated: false,
+      ssoProvider: null,
 
       login: async (email: string, password: string) => {
         set({ isLoading: true });
@@ -62,6 +65,37 @@ export const useAuthStore = create<AuthState>()(
         }
       },
 
+      loginWithSSO: async (provider: string, code: string, state: string) => {
+        set({ isLoading: true });
+        try {
+          const response = await ssoAPI.callback(provider, code, state);
+          saveTokens({
+            access_token: response.access_token,
+            refresh_token: response.refresh_token,
+          });
+
+          set({
+            user: {
+              id: response.user.id,
+              email: response.user.email,
+              full_name: response.user.full_name,
+              role: response.user.role,
+              is_active: true,
+            } as User,
+            token: response.access_token,
+            refreshToken: response.refresh_token,
+            isAuthenticated: true,
+            isLoading: false,
+            ssoProvider: response.user.sso_provider || provider,
+          });
+
+          return response;
+        } catch (error) {
+          set({ isLoading: false });
+          throw error;
+        }
+      },
+
       logout: () => {
         clearTokens();
         set({
@@ -69,6 +103,7 @@ export const useAuthStore = create<AuthState>()(
           token: null,
           refreshToken: null,
           isAuthenticated: false,
+          ssoProvider: null,
         });
       },
 

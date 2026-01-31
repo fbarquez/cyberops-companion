@@ -48,6 +48,12 @@ class User(Base):
     timezone: Mapped[Optional[str]] = mapped_column(String(50), nullable=True, default="UTC")
     language: Mapped[Optional[str]] = mapped_column(String(10), nullable=True, default="en")
 
+    # SSO fields
+    sso_provider: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)  # google, azure, okta
+    sso_id: Mapped[Optional[str]] = mapped_column(String(255), nullable=True, index=True)  # Provider's unique user ID
+    sso_email: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)  # Email from SSO provider
+    sso_linked_at: Mapped[Optional[datetime]] = mapped_column(DateTime, nullable=True)  # When SSO was linked
+
     # Relationships
     notifications = relationship("Notification", back_populates="user", cascade="all, delete-orphan")
     notification_preferences = relationship("NotificationPreference", back_populates="user", uselist=False, cascade="all, delete-orphan")

@@ -66,6 +66,59 @@ export const authAPI = {
     }),
 };
 
+// SSO
+export interface SSOProvider {
+  slug: string;
+  name: string;
+  icon?: string;
+  button_text?: string;
+}
+
+export interface SSOAuthorizeResponse {
+  authorization_url: string;
+  state: string;
+}
+
+export interface SSOCallbackResponse {
+  access_token: string;
+  refresh_token: string;
+  token_type: string;
+  user: {
+    id: string;
+    email: string;
+    full_name: string;
+    role: string;
+    sso_provider?: string;
+    is_new_user: boolean;
+  };
+}
+
+export const ssoAPI = {
+  getProviders: () =>
+    request<{ providers: SSOProvider[] }>("/api/v1/auth/sso/providers"),
+
+  getAuthorizeUrl: (provider: string, redirectUri?: string) => {
+    const params = new URLSearchParams();
+    if (redirectUri) params.set("redirect_uri", redirectUri);
+    const query = params.toString();
+    return request<SSOAuthorizeResponse>(
+      `/api/v1/auth/sso/${provider}/authorize${query ? `?${query}` : ""}`
+    );
+  },
+
+  callback: (provider: string, code: string, state: string) =>
+    request<SSOCallbackResponse>(`/api/v1/auth/sso/${provider}/callback`, {
+      method: "POST",
+      body: JSON.stringify({ code, state }),
+    }),
+
+  unlink: (provider: string, token: string) =>
+    request<{ message: string }>(`/api/v1/auth/sso/${provider}/unlink`, {
+      method: "POST",
+      token,
+    }),
+};
+
 // Incidents
 export const incidentsAPI = {
   list: (token: string, params?: { status?: string; page?: number; size?: number }) => {
@@ -2716,6 +2769,89 @@ export const analyticsAPI = {
   // Risk Trends
   getRiskTrends: (token: string, periodDays = 30) =>
     request(`/api/v1/analytics/risks/trends?period_days=${periodDays}`, { token }),
+};
+
+// Audit API
+export const auditAPI = {
+  // List audit logs with filters
+  list: (
+    token: string,
+    params?: {
+      user_id?: string;
+      action?: string;
+      action_category?: string;
+      resource_type?: string;
+      resource_id?: string;
+      start_date?: string;
+      end_date?: string;
+      success?: boolean;
+      severity?: string;
+      search?: string;
+      page?: number;
+      size?: number;
+    }
+  ) => {
+    const query = new URLSearchParams();
+    if (params?.user_id) query.set("user_id", params.user_id);
+    if (params?.action) query.set("action", params.action);
+    if (params?.action_category) query.set("action_category", params.action_category);
+    if (params?.resource_type) query.set("resource_type", params.resource_type);
+    if (params?.resource_id) query.set("resource_id", params.resource_id);
+    if (params?.start_date) query.set("start_date", params.start_date);
+    if (params?.end_date) query.set("end_date", params.end_date);
+    if (params?.success !== undefined) query.set("success", params.success.toString());
+    if (params?.severity) query.set("severity", params.severity);
+    if (params?.search) query.set("search", params.search);
+    if (params?.page) query.set("page", params.page.toString());
+    if (params?.size) query.set("size", params.size.toString());
+    return request(`/api/v1/audit/logs?${query}`, { token });
+  },
+
+  // Get single audit log with full details
+  get: (token: string, logId: string) =>
+    request(`/api/v1/audit/logs/${logId}`, { token }),
+
+  // Get audit statistics
+  getStats: (token: string) =>
+    request("/api/v1/audit/stats", { token }),
+
+  // Export audit logs
+  export: async (
+    token: string,
+    params: {
+      format?: string;
+      user_id?: string;
+      action?: string;
+      resource_type?: string;
+      start_date?: string;
+      end_date?: string;
+      severity?: string;
+    }
+  ) => {
+    const response = await fetch(`${API_BASE_URL}/api/v1/audit/export`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(params),
+    });
+
+    if (!response.ok) {
+      throw new APIError(response.status, "Export failed");
+    }
+
+    const blob = await response.blob();
+    const contentDisposition = response.headers.get("Content-Disposition");
+    const filenameMatch = contentDisposition?.match(/filename="(.+)"/);
+    const filename = filenameMatch ? filenameMatch[1] : `audit_logs.${params.format || "csv"}`;
+
+    return { blob, filename };
+  },
+
+  // Get available actions and filters
+  getActions: (token: string) =>
+    request("/api/v1/audit/actions", { token }),
 };
 
 export { APIError };

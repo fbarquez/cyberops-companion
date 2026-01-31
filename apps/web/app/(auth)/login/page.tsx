@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { useAuthStore } from "@/stores/auth-store";
 import { useTranslations } from "@/hooks/use-translations";
+import { SSOButtons } from "@/components/auth/sso-buttons";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -91,14 +92,16 @@ export default function LoginPage() {
             <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading ? t("common.loading") : t("auth.login")}
             </Button>
-
-            <p className="text-center text-sm text-muted-foreground">
-              {t("auth.noAccount")}{" "}
-              <Link href="/register" className="text-primary hover:underline">
-                {t("auth.register")}
-              </Link>
-            </p>
           </form>
+
+          <SSOButtons onError={(err) => setError(err)} />
+
+          <p className="text-center text-sm text-muted-foreground mt-4">
+            {t("auth.noAccount")}{" "}
+            <Link href="/register" className="text-primary hover:underline">
+              {t("auth.register")}
+            </Link>
+          </p>
         </CardContent>
       </Card>
     </div>
