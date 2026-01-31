@@ -11,6 +11,7 @@ from src.schemas.incident import (
 )
 from src.services.incident_service import IncidentService
 from src.services.phase_service import PhaseService
+from src.services.audit_service import AuditService
 
 
 router = APIRouter()
@@ -25,6 +26,19 @@ async def create_incident(
     """Create a new incident."""
     service = IncidentService(db)
     incident = await service.create(data, current_user.id)
+
+    # Log audit action
+    audit_service = AuditService(db)
+    await audit_service.log_action(
+        user_id=current_user.id,
+        action="create",
+        resource_type="incident",
+        resource_id=incident.id,
+        resource_name=incident.title,
+        description=f"{current_user.full_name} created incident: {incident.title}",
+        new_values={"title": incident.title, "severity": incident.severity.value, "status": incident.status.value},
+    )
+
     return incident
 
 
@@ -82,13 +96,41 @@ async def update_incident(
 ):
     """Update an incident."""
     service = IncidentService(db)
-    incident = await service.update(incident_id, data)
 
-    if not incident:
+    # Get old values for audit
+    old_incident = await service.get_by_id(incident_id)
+    if not old_incident:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Incident not found",
         )
+
+    old_values = {
+        "title": old_incident.title,
+        "severity": old_incident.severity.value if old_incident.severity else None,
+        "status": old_incident.status.value if old_incident.status else None,
+    }
+
+    incident = await service.update(incident_id, data)
+
+    # Log audit action
+    audit_service = AuditService(db)
+    new_values = data.model_dump(exclude_unset=True)
+    # Convert enums to strings
+    for key in ["severity", "status"]:
+        if key in new_values and hasattr(new_values[key], "value"):
+            new_values[key] = new_values[key].value
+
+    await audit_service.log_action(
+        user_id=current_user.id,
+        action="update",
+        resource_type="incident",
+        resource_id=incident_id,
+        resource_name=incident.title,
+        description=f"{current_user.full_name} updated incident: {incident.title}",
+        old_values=old_values,
+        new_values=new_values,
+    )
 
     return incident
 
@@ -101,6 +143,16 @@ async def delete_incident(
 ):
     """Soft delete an incident (requires lead role)."""
     service = IncidentService(db)
+
+    # Get incident info for audit before deletion
+    incident = await service.get_by_id(incident_id)
+    if not incident:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Incident not found",
+        )
+
+    incident_title = incident.title
     success = await service.soft_delete(incident_id)
 
     if not success:
@@ -108,6 +160,18 @@ async def delete_incident(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Incident not found",
         )
+
+    # Log audit action
+    audit_service = AuditService(db)
+    await audit_service.log_action(
+        user_id=current_user.id,
+        action="delete",
+        resource_type="incident",
+        resource_id=incident_id,
+        resource_name=incident_title,
+        description=f"{current_user.full_name} deleted incident: {incident_title}",
+        severity="warning",
+    )
 
 
 @router.post("/{incident_id}/systems", response_model=AffectedSystemResponse)
