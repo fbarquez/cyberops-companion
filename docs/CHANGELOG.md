@@ -9,8 +9,43 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### Planned
-- UX pattern unification
 - Real scanner integration (Nessus, OpenVAS, Qualys)
+- Real-time WebSocket notifications
+- File upload/attachment system
+
+---
+
+## [0.5.0] - 2026-01-31
+
+### Added
+
+#### UX Pattern Unification
+- Created standardized shared components for consistent UI patterns
+- New components:
+  - `LoadingButton` - Button with built-in loading spinner
+  - `FormField` - Unified form field (input, textarea, select) with label and error
+  - `FormDialog` - Standardized dialog for forms with size presets
+  - `ConfirmDialog` - Confirmation dialog for dangerous actions
+  - `TableSkeleton` - Skeleton loading state for tables
+  - `CardSkeleton` - Skeleton loading for cards
+  - `StatCardSkeleton` - Skeleton for dashboard stat cards
+  - `Skeleton` - Base skeleton component
+- Enhanced empty state components:
+  - `TableEmptyState` - Now supports icon, description, and action
+  - `NoItemsEmptyState` - Preset for "no items created yet"
+  - `NoResultsEmptyState` - Preset for "search returned nothing"
+  - `ErrorEmptyState` - Preset for error states
+- Created barrel export `components/shared/index.ts` for cleaner imports
+- Created `docs/UX_PATTERNS.md` comprehensive documentation
+
+### Documentation
+- Added UX Patterns Guide with:
+  - Button variants and loading states
+  - Form field patterns and validation
+  - Dialog sizes and structure
+  - Table patterns with loading/empty states
+  - Icon sizing guidelines
+  - Migration guide for updating existing code
 
 ---
 
