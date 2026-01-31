@@ -26,6 +26,7 @@ import {
   Building2,
   Plug,
   BarChart3,
+  ClipboardList,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useUIStore } from "@/stores/ui-store";
@@ -45,6 +46,7 @@ const navItems = [
   { href: "/reporting", icon: BarChart3, labelKey: "nav.reporting" },
   { href: "/notifications", icon: Bell, labelKey: "nav.notifications" },
   { href: "/users", icon: Users, labelKey: "nav.users" },
+  { href: "/audit", icon: ClipboardList, labelKey: "nav.audit" },
   { href: "/simulation", icon: PlayCircle, labelKey: "nav.simulation" },
   {
     label: "Tools",

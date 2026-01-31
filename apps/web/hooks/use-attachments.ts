@@ -1,10 +1,9 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { useAuthStore } from "@/stores/auth";
+import { useAuthStore } from "@/stores/auth-store";
 import { attachmentsAPI } from "@/lib/api-client";
 import { toast } from "sonner";
-import { useTranslation } from "@/i18n/client";
 
 export type AttachmentCategory =
   | "evidence"
@@ -63,7 +62,6 @@ interface UseAttachmentsOptions {
 
 export function useAttachments(options: UseAttachmentsOptions) {
   const { entityType, entityId, onUploadComplete, onDeleteComplete } = options;
-  const { t } = useTranslation();
   const token = useAuthStore((state) => state.token);
 
   const [attachments, setAttachments] = useState<Attachment[]>([]);
@@ -82,7 +80,7 @@ export function useAttachments(options: UseAttachmentsOptions) {
           entityType,
           entityId,
           category
-        );
+        ) as { items: Attachment[] };
         setAttachments(response.items || []);
       } catch (error: any) {
         toast.error(error.message || "Failed to load attachments");
@@ -125,7 +123,7 @@ export function useAttachments(options: UseAttachmentsOptions) {
           file,
           category,
           description
-        );
+        ) as { attachment: Attachment };
 
         // Update status to success
         setUploadQueue((prev) =>
@@ -187,7 +185,7 @@ export function useAttachments(options: UseAttachmentsOptions) {
         const { blob, filename } = await attachmentsAPI.download(
           token,
           attachmentId
-        );
+        ) as { blob: Blob; filename: string };
 
         // Create download link
         const url = URL.createObjectURL(blob);
@@ -235,7 +233,7 @@ export function useAttachments(options: UseAttachmentsOptions) {
       if (!token) return null;
 
       try {
-        const result = await attachmentsAPI.verify(token, attachmentId);
+        const result = await attachmentsAPI.verify(token, attachmentId) as { is_valid: boolean; message: string };
         if (result.is_valid) {
           toast.success("File integrity verified");
         } else {

@@ -158,7 +158,7 @@ export function useTrend(
   return useQuery<TrendResponse>({
     queryKey: ["analytics", "trend", entity, metric, periodDays, aggregation],
     queryFn: () =>
-      analyticsAPI.getTrend(token!, entity, metric, periodDays, aggregation),
+      analyticsAPI.getTrend(token!, entity, metric, periodDays, aggregation) as Promise<TrendResponse>,
     enabled: !!token,
     staleTime: 60000, // 1 minute
   });
@@ -169,7 +169,7 @@ export function useDistribution(entity: string, groupBy: string) {
 
   return useQuery<DistributionResponse>({
     queryKey: ["analytics", "distribution", entity, groupBy],
-    queryFn: () => analyticsAPI.getDistribution(token!, entity, groupBy),
+    queryFn: () => analyticsAPI.getDistribution(token!, entity, groupBy) as Promise<DistributionResponse>,
     enabled: !!token,
     staleTime: 60000,
   });
@@ -180,7 +180,7 @@ export function useHeatmap(type: string) {
 
   return useQuery<RiskHeatmapResponse>({
     queryKey: ["analytics", "heatmap", type],
-    queryFn: () => analyticsAPI.getHeatmap(token!, type),
+    queryFn: () => analyticsAPI.getHeatmap(token!, type) as Promise<RiskHeatmapResponse>,
     enabled: !!token,
     staleTime: 60000,
   });
@@ -191,7 +191,7 @@ export function useSecurityScore() {
 
   return useQuery<SecurityScoreResponse>({
     queryKey: ["analytics", "security-score"],
-    queryFn: () => analyticsAPI.getSecurityScore(token!),
+    queryFn: () => analyticsAPI.getSecurityScore(token!) as Promise<SecurityScoreResponse>,
     enabled: !!token,
     staleTime: 60000,
     refetchInterval: 300000, // 5 minutes
@@ -214,7 +214,7 @@ export function useSLACompliance(type: string, periodDays: number = 30) {
 
   return useQuery<SLAComplianceResponse>({
     queryKey: ["analytics", "sla", type, periodDays],
-    queryFn: () => analyticsAPI.getSLACompliance(token!, type, periodDays),
+    queryFn: () => analyticsAPI.getSLACompliance(token!, type, periodDays) as Promise<SLAComplianceResponse>,
     enabled: !!token,
     staleTime: 60000,
   });
@@ -236,7 +236,7 @@ export function useAnalystMetrics(periodDays: number = 30) {
 
   return useQuery<AnalystMetricsResponse>({
     queryKey: ["analytics", "analyst-metrics", periodDays],
-    queryFn: () => analyticsAPI.getAnalystMetrics(token!, periodDays),
+    queryFn: () => analyticsAPI.getAnalystMetrics(token!, periodDays) as Promise<AnalystMetricsResponse>,
     enabled: !!token,
     staleTime: 60000,
   });
@@ -247,7 +247,7 @@ export function useVulnerabilityAging() {
 
   return useQuery<VulnerabilityAgingResponse>({
     queryKey: ["analytics", "vulnerability-aging"],
-    queryFn: () => analyticsAPI.getVulnerabilityAging(token!),
+    queryFn: () => analyticsAPI.getVulnerabilityAging(token!) as Promise<VulnerabilityAgingResponse>,
     enabled: !!token,
     staleTime: 60000,
   });
@@ -258,7 +258,7 @@ export function useRiskTrends(periodDays: number = 30) {
 
   return useQuery<RiskTrendsResponse>({
     queryKey: ["analytics", "risk-trends", periodDays],
-    queryFn: () => analyticsAPI.getRiskTrends(token!, periodDays),
+    queryFn: () => analyticsAPI.getRiskTrends(token!, periodDays) as Promise<RiskTrendsResponse>,
     enabled: !!token,
     staleTime: 60000,
   });

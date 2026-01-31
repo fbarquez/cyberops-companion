@@ -238,10 +238,10 @@ export default function SOCPage() {
   });
 
   // Analytics for charts
-  const { data: alertTrend } = useTrend("alerts", "count", 30, "daily");
-  const { data: alertDistribution } = useDistribution("alerts", "severity");
-  const { data: analystMetrics } = useAnalystMetrics(30);
-  const { data: responseSLA } = useSLACompliance("response", 30);
+  const { data: alertTrend } = useTrend("alerts", "count", 30, "daily") as { data: { data: Array<{ date: string; value: number }> } | undefined };
+  const { data: alertDistribution } = useDistribution("alerts", "severity") as { data: { data: Array<{ name: string; value: number }> } | undefined };
+  const { data: analystMetrics } = useAnalystMetrics(30) as { data: { analysts: Array<{ analyst_id: string; analyst_name: string; alerts_handled: number; cases_worked: number; avg_response_time: number; alerts_assigned: number; workload_score: number }> } | undefined };
+  const { data: responseSLA } = useSLACompliance("response", 30) as { data: { compliant_items: number; total_items: number; breached_items: number; at_risk_items: number } | undefined };
 
   // Create Alert mutation
   const createAlertMutation = useMutation({

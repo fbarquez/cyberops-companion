@@ -237,28 +237,35 @@ class ActivityLog(Base):
     __tablename__ = "activity_logs"
 
     id = Column(String, primary_key=True, default=generate_uuid)
-    user_id = Column(String, ForeignKey("users.id"))
+    user_id = Column(String, ForeignKey("users.id"), index=True)
 
     # Action details
-    action = Column(String, nullable=False)  # login, logout, create, update, delete, etc.
-    resource_type = Column(String)  # incident, alert, user, etc.
+    action = Column(String(50), nullable=False, index=True)  # login, logout, create, update, delete, etc.
+    action_category = Column(String(50))  # auth, crud, system
+
+    # Resource
+    resource_type = Column(String(50), index=True)  # incident, alert, user, etc.
     resource_id = Column(String)
+    resource_name = Column(String)  # For display without join
 
     # Details
     description = Column(Text)
     old_values = Column(JSON)
     new_values = Column(JSON)
+    changes_summary = Column(Text)  # "Changed status from 'open' to 'closed'"
 
     # Request info
-    ip_address = Column(String)
-    user_agent = Column(String)
+    ip_address = Column(String(45))  # IPv6 compatible
+    user_agent = Column(String(500))
+    request_id = Column(String)  # For correlation
 
     # Status
     success = Column(Boolean, default=True)
     error_message = Column(Text)
+    severity = Column(String(20), default="info")  # info, warning, critical
 
     # Timestamp
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.utcnow, index=True)
 
     # Relationships
     user = relationship("User", back_populates="activity_logs")

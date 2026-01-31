@@ -224,9 +224,9 @@ export default function RisksPage() {
   });
 
   // Analytics hooks for charts
-  const { data: riskHeatmap } = useHeatmap("risk_matrix");
-  const { data: riskTrends } = useRiskTrends(30);
-  const { data: riskDistribution } = useDistribution("risks", "status");
+  const { data: riskHeatmap } = useHeatmap("risk_matrix") as { data: { cells: Array<{ x: number; y: number; value: number }> } | undefined };
+  const { data: riskTrends } = useRiskTrends(30) as { data: { trend_data: Array<{ date: string; total: number }> } | undefined };
+  const { data: riskDistribution } = useDistribution("risks", "status") as { data: { data: Array<{ name: string; value: number }> } | undefined };
 
   // Mutations
   const createRiskMutation = useMutation({
@@ -511,7 +511,7 @@ export default function RisksPage() {
                 <CardContent>
                   <div className="text-2xl font-bold">{stats?.total_risks || 0}</div>
                   <p className="text-xs text-muted-foreground">
-                    {stats?.open_risks || 0} {t("risks.open")}
+                    {stats?.open_risks || 0} {t("risks.openLabel")}
                   </p>
                 </CardContent>
               </Card>
@@ -524,7 +524,7 @@ export default function RisksPage() {
                 <CardContent>
                   <div className="text-2xl font-bold text-red-600">{stats?.critical_risks || 0}</div>
                   <p className="text-xs text-muted-foreground">
-                    {stats?.high_risks || 0} {t("risks.high")}
+                    {stats?.high_risks || 0} {t("risks.highLabel")}
                   </p>
                 </CardContent>
               </Card>
@@ -537,7 +537,7 @@ export default function RisksPage() {
                 <CardContent>
                   <div className="text-2xl font-bold">{stats?.total_controls || 0}</div>
                   <p className="text-xs text-muted-foreground">
-                    {stats?.effective_controls || 0} {t("risks.effective")}
+                    {stats?.effective_controls || 0} {t("risks.effectiveLabel")}
                   </p>
                 </CardContent>
               </Card>

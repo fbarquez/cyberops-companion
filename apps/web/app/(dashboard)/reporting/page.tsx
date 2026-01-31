@@ -194,13 +194,13 @@ export default function ReportingPage() {
   });
 
   // Analytics hooks for charts
-  const { data: securityScore } = useSecurityScore();
-  const { data: incidentTrend } = useTrend("incidents", "count", 30, "daily");
-  const { data: alertTrend } = useTrend("alerts", "count", 30, "daily");
-  const { data: incidentDistribution } = useDistribution("incidents", "severity");
-  const { data: vulnerabilityDistribution } = useDistribution("vulnerabilities", "severity");
-  const { data: responseSLA } = useSLACompliance("response", 30);
-  const { data: vulnAging } = useVulnerabilityAging();
+  const { data: securityScore } = useSecurityScore() as { data: { overall_score: number; grade: string; trend: string } | undefined };
+  const { data: incidentTrend } = useTrend("incidents", "count", 30, "daily") as { data: { data: Array<{ date: string; value: number }> } | undefined };
+  const { data: alertTrend } = useTrend("alerts", "count", 30, "daily") as { data: { data: Array<{ date: string; value: number }> } | undefined };
+  const { data: incidentDistribution } = useDistribution("incidents", "severity") as { data: { data: Array<{ name: string; value: number }> } | undefined };
+  const { data: vulnerabilityDistribution } = useDistribution("vulnerabilities", "severity") as { data: { data: Array<{ name: string; value: number }> } | undefined };
+  const { data: responseSLA } = useSLACompliance("response", 30) as { data: { compliant_items: number; total_items: number; breached_items: number; at_risk_items: number } | undefined };
+  const { data: vulnAging } = useVulnerabilityAging() as { data: { aging_buckets: Array<{ bucket: string; count: number }> } | undefined };
 
   // Seed templates mutation
   const seedTemplatesMutation = useMutation({

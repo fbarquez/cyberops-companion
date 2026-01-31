@@ -83,7 +83,7 @@ export function NotificationBell() {
   // Fetch notification stats
   const { data: stats } = useQuery<NotificationStatsResponse>({
     queryKey: ["notification-stats"],
-    queryFn: () => notificationsAPI.getStats(token!),
+    queryFn: () => notificationsAPI.getStats(token!) as Promise<NotificationStatsResponse>,
     enabled: !!token && isAuthenticated,
     refetchInterval: 60000, // Fallback polling every minute
   });
@@ -93,9 +93,9 @@ export function NotificationBell() {
     queryKey: ["notifications-recent"],
     queryFn: () =>
       notificationsAPI.listNotifications(token!, {
-        limit: 5,
+        size: 5,
         unread_only: false,
-      }),
+      }) as Promise<{ items: Notification[] }>,
     enabled: !!token && isAuthenticated && isOpen,
   });
 

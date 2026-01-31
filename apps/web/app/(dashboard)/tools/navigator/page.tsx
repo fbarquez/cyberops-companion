@@ -185,7 +185,7 @@ export default function NavigatorPage() {
             </SelectContent>
           </Select>
           <Badge variant="secondary" className="h-10 px-4 flex items-center">
-            {t("navigator.selected", { count: selectedTechniques.length })}
+            {selectedTechniques.length} {t("navigator.selected")}
           </Badge>
         </div>
 
@@ -230,7 +230,7 @@ export default function NavigatorPage() {
                     ))}
                     {tacticTechniques.length > 10 && (
                       <div className="text-xs text-muted-foreground text-center py-1">
-                        {t("navigator.moreCount", { count: tacticTechniques.length - 10 })}
+                        +{tacticTechniques.length - 10} {t("navigator.more")}
                       </div>
                     )}
                   </div>
@@ -246,7 +246,7 @@ export default function NavigatorPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <CheckSquare className="h-5 w-5" />
-                {t("navigator.selectedTechniques", { count: selectedTechniques.length })}
+                {t("navigator.selectedTechniques")} ({selectedTechniques.length})
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">

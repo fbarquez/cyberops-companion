@@ -39,7 +39,7 @@ import {
   AttachmentEntityType,
   UploadProgress,
 } from "@/hooks/use-attachments";
-import { useTranslation } from "@/i18n/client";
+import { useTranslations } from "@/hooks/use-translations";
 import { ConfirmDialog } from "./form-dialog";
 
 const CATEGORY_LABELS: Record<AttachmentCategory, string> = {
@@ -91,7 +91,7 @@ export function FileUpload({
   compact = false,
   className,
 }: FileUploadProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslations();
   const [selectedCategory, setSelectedCategory] =
     useState<AttachmentCategory>("other");
   const [description, setDescription] = useState("");
@@ -315,9 +315,9 @@ export function FileUpload({
         onOpenChange={setDeleteDialogOpen}
         title="Delete Attachment"
         description="Are you sure you want to delete this attachment? This action cannot be undone."
-        confirmText="Delete"
+        confirmLabel="Delete"
         onConfirm={confirmDelete}
-        variant="destructive"
+        destructive
       />
     </div>
   );
