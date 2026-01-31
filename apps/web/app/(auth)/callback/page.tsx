@@ -75,8 +75,8 @@ function CallbackContent() {
       setStatus("success");
       setMessage(
         response.user.is_new_user
-          ? t("auth.ssoWelcomeNew", { name: response.user.full_name })
-          : t("auth.ssoWelcomeBack", { name: response.user.full_name })
+          ? `${t("auth.ssoWelcomeNew")} ${response.user.full_name}!`
+          : `${t("auth.ssoWelcomeBack")} ${response.user.full_name}!`
       );
 
       // Redirect after brief delay
