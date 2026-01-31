@@ -3,7 +3,7 @@ from typing import Optional, List
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.api.deps import DBSession, CurrentUser
+from src.api.deps import DBSession, CurrentUser, AdminUser
 from src.models.notifications import NotificationType, NotificationPriority
 from src.schemas.notifications import (
     NotificationCreate, NotificationResponse, NotificationUpdate,
@@ -266,10 +266,9 @@ async def test_webhook(
 async def send_notification(
     data: NotificationCreate,
     db: DBSession,
-    current_user: CurrentUser
+    current_user: AdminUser
 ):
     """Send a notification to a user (admin only)."""
-    # TODO: Add role check for admin
     service = NotificationService(db)
     notification = await service.create_notification(data)
     return NotificationResponse.model_validate(notification)
@@ -278,11 +277,10 @@ async def send_notification(
 @router.post("/cleanup")
 async def cleanup_notifications(
     db: DBSession,
-    current_user: CurrentUser,
+    current_user: AdminUser,
     days_old: int = Query(30, ge=1, le=365)
 ):
     """Clean up old notifications (admin only)."""
-    # TODO: Add role check for admin
     service = NotificationService(db)
     count = await service.cleanup_expired_notifications(days_old)
     return {"deleted_count": count}
@@ -290,7 +288,7 @@ async def cleanup_notifications(
 
 @router.post("/email/test")
 async def test_email(
-    current_user: CurrentUser,
+    current_user: AdminUser,
     email: Optional[str] = Query(None, description="Email to send test to (defaults to current user's email)")
 ):
     """
@@ -325,7 +323,7 @@ async def test_email(
 
 
 @router.get("/email/status")
-async def email_status(current_user: CurrentUser):
+async def email_status(current_user: AdminUser):
     """
     Check email service configuration status.
     """

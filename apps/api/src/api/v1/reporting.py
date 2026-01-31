@@ -4,8 +4,8 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.db.database import get_db
-from src.api.deps import get_current_user
-from src.models.user import User
+from src.api.deps import get_current_user, DBSession, CurrentUser, AdminUser, ManagerUser
+from src.models.user import User, UserRole
 from src.models.reporting import ReportType, ReportStatus, WidgetType
 from src.schemas.reporting import (
     ReportTemplateCreate, ReportTemplateUpdate, ReportTemplateResponse,
@@ -49,10 +49,10 @@ async def list_templates(
 @router.post("/templates", response_model=ReportTemplateResponse)
 async def create_template(
     data: ReportTemplateCreate,
-    db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user),
+    db: DBSession,
+    current_user: ManagerUser,
 ):
-    """Create a report template."""
+    """Create a report template (manager+ only)."""
     service = ReportingService(db)
     template = await service.create_template(data, created_by=current_user.id)
     return ReportTemplateResponse.model_validate(template)
@@ -60,10 +60,10 @@ async def create_template(
 
 @router.post("/templates/seed")
 async def seed_templates(
-    db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user),
+    db: DBSession,
+    current_user: AdminUser,
 ):
-    """Seed default report templates."""
+    """Seed default report templates (admin only)."""
     service = ReportingService(db)
     await service.seed_default_templates()
     return {"message": "Templates seeded successfully"}
@@ -87,10 +87,10 @@ async def get_template(
 async def update_template(
     template_id: str,
     data: ReportTemplateUpdate,
-    db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user),
+    db: DBSession,
+    current_user: ManagerUser,
 ):
-    """Update a report template."""
+    """Update a report template (manager+ only)."""
     service = ReportingService(db)
     template = await service.update_template(template_id, data)
     if not template:
@@ -197,10 +197,10 @@ async def download_report(
 @router.post("/schedules", response_model=ReportScheduleResponse)
 async def create_schedule(
     data: ReportScheduleCreate,
-    db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user),
+    db: DBSession,
+    current_user: ManagerUser,
 ):
-    """Create a report schedule."""
+    """Create a report schedule (manager+ only)."""
     service = ReportingService(db)
     schedule = await service.create_schedule(data, created_by=current_user.id)
     return ReportScheduleResponse.model_validate(schedule)
