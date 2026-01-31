@@ -5,7 +5,7 @@ from sqlalchemy import select, func, and_, or_, case, extract
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.models.incident import Incident, IncidentStatus, IncidentSeverity
-from src.models.soc import Alert, AlertSeverity, AlertStatus, Case, CaseStatus
+from src.models.soc import SOCAlert, AlertSeverity, AlertStatus, SOCCase, CaseStatus
 from src.models.vulnerability import Vulnerability, VulnerabilitySeverity, VulnerabilityStatus
 from src.models.risk import Risk, RiskStatus
 from src.schemas.analytics import (
@@ -130,10 +130,10 @@ class AnalyticsService:
         """Get model and date field for an entity."""
         mapping = {
             TrendEntity.INCIDENTS: (Incident, Incident.created_at, Incident.id),
-            TrendEntity.ALERTS: (Alert, Alert.created_at, Alert.id),
+            TrendEntity.ALERTS: (SOCAlert, SOCAlert.created_at, SOCAlert.id),
             TrendEntity.VULNERABILITIES: (Vulnerability, Vulnerability.created_at, Vulnerability.id),
             TrendEntity.RISKS: (Risk, Risk.created_at, Risk.id),
-            TrendEntity.CASES: (Case, Case.created_at, Case.id),
+            TrendEntity.CASES: (SOCCase, SOCCase.created_at, SOCCase.id),
         }
         return mapping.get(entity, (None, None, None))
 
@@ -273,14 +273,14 @@ class AnalyticsService:
 
         query = (
             select(
-                extract('hour', Alert.created_at).label('hour'),
-                extract('dow', Alert.created_at).label('day'),
+                extract('hour', SOCAlert.created_at).label('hour'),
+                extract('dow', SOCAlert.created_at).label('day'),
                 func.count().label('count')
             )
-            .where(Alert.created_at >= start_date)
+            .where(SOCAlert.created_at >= start_date)
             .group_by(
-                extract('hour', Alert.created_at),
-                extract('dow', Alert.created_at)
+                extract('hour', SOCAlert.created_at),
+                extract('dow', SOCAlert.created_at)
             )
         )
 

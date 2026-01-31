@@ -5,7 +5,7 @@ from sqlalchemy import select, func, and_, or_
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.models.incident import Incident, IncidentStatus, IncidentSeverity
-from src.models.soc import Alert, AlertSeverity, AlertStatus, Case, CaseStatus
+from src.models.soc import SOCAlert as Alert, AlertSeverity, AlertStatus, SOCCase as Case, CaseStatus
 from src.models.vulnerability import Vulnerability, VulnerabilitySeverity, VulnerabilityStatus
 from src.models.risk import Risk, RiskStatus
 from src.schemas.analytics import (

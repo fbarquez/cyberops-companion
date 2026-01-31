@@ -4,7 +4,7 @@ from typing import Optional, List, Dict, Any
 from sqlalchemy import select, func, and_, or_
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.models.soc import Alert, AlertSeverity, AlertStatus, Case, CaseStatus
+from src.models.soc import SOCAlert as Alert, AlertSeverity, AlertStatus, SOCCase as Case, CaseStatus
 from src.models.user import User, UserRole
 from src.schemas.analytics import (
     AnalystMetrics, AnalystMetricsResponse, DistributionDataPoint
