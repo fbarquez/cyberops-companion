@@ -309,6 +309,57 @@ async def start_scan(
     return ScanResponse(**{k: v for k, v in scan.__dict__.items() if not k.startswith('_')})
 
 
+@router.post("/scans/{scan_id}/cancel")
+async def cancel_scan(
+    scan_id: str,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """Cancel a running or pending scan."""
+    from src.tasks.scan_tasks import cancel_scan as cancel_scan_task
+    result = cancel_scan_task(scan_id)
+    if result.get("status") == "not_found":
+        raise HTTPException(status_code=404, detail="Scan not found")
+    return result
+
+
+@router.get("/scans/{scan_id}/status")
+async def get_scan_task_status(
+    scan_id: str,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """
+    Get the Celery task status for a running scan.
+
+    Returns task state and progress information.
+    """
+    scan = await service.get_scan(db, scan_id)
+    if not scan:
+        raise HTTPException(status_code=404, detail="Scan not found")
+
+    result = {
+        "scan_id": scan_id,
+        "scan_status": scan.status.value if hasattr(scan.status, 'value') else str(scan.status),
+        "task_id": scan.celery_task_id,
+        "task_state": None,
+        "task_info": None,
+    }
+
+    if scan.celery_task_id:
+        from src.celery_app import celery_app
+        task_result = celery_app.AsyncResult(scan.celery_task_id)
+        result["task_state"] = task_result.state
+        if task_result.state == "PROGRESS":
+            result["task_info"] = task_result.info
+        elif task_result.state == "SUCCESS":
+            result["task_info"] = task_result.result
+        elif task_result.state == "FAILURE":
+            result["task_info"] = {"error": str(task_result.result)}
+
+    return result
+
+
 # ==================== Import Endpoints ====================
 
 @router.post("/import", response_model=ImportResult)

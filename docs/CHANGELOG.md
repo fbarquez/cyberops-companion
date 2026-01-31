@@ -9,10 +9,45 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### Planned
-- Celery integration for background scan execution
 - Landing page for unauthenticated users
 - In-app onboarding flow
 - UX pattern unification
+- Real scanner integration (Nessus, OpenVAS, Qualys)
+
+---
+
+## [0.2.0] - 2026-01-31
+
+### Added
+
+#### Celery Background Tasks
+- Added Celery integration with Redis broker for background task execution
+- Created `celery_app.py` with task configuration and queues
+- Implemented scan execution tasks:
+  - `execute_vulnerability_scan` - Run vulnerability scans in background
+  - `sync_nvd_updates` - Sync CVE updates from NVD (schedulable)
+  - `cancel_scan` - Cancel running or pending scans
+- Implemented notification tasks:
+  - `send_notification_async` - Async notification delivery
+  - `send_scan_completion_notification` - Notify on scan completion
+  - `cleanup_old_notifications` - Periodic cleanup task
+- Added task queues: `default`, `scans`, `notifications`
+- Added progress tracking with custom task states
+
+#### New API Endpoints
+- `POST /vulnerabilities/scans/{id}/cancel` - Cancel a running scan
+- `GET /vulnerabilities/scans/{id}/status` - Get Celery task status
+
+#### Docker Services
+- Added `celery-worker` service for task execution
+- Added `celery-beat` service for scheduled tasks
+
+#### Database Changes
+- Added `celery_task_id` field to `VulnerabilityScan` model
+
+### Changed
+- Updated `vulnerability_service.py` to trigger Celery tasks on scan start
+- Updated `docker-compose.yml` with worker services
 
 ---
 

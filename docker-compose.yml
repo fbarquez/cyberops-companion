@@ -75,6 +75,43 @@ services:
     networks:
       - cyberops-network
 
+  # Celery Worker (for background tasks)
+  celery-worker:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile
+    container_name: cyberops-companion-celery-worker
+    command: celery -A src.celery_app worker --loglevel=info --concurrency=2 -Q default,scans,notifications
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-cyberops_companion}
+      - REDIS_URL=redis://redis:6379/0
+      - SECRET_KEY=${SECRET_KEY:-your-super-secret-key-change-in-production}
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - cyberops-network
+
+  # Celery Beat (for scheduled tasks)
+  celery-beat:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile
+    container_name: cyberops-companion-celery-beat
+    command: celery -A src.celery_app beat --loglevel=info
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-cyberops_companion}
+      - REDIS_URL=redis://redis:6379/0
+      - SECRET_KEY=${SECRET_KEY:-your-super-secret-key-change-in-production}
+    depends_on:
+      - celery-worker
+    restart: unless-stopped
+    networks:
+      - cyberops-network
+
   # Next.js Frontend
   web:
     build:
