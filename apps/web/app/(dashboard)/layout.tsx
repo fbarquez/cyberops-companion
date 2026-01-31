@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Sidebar } from "@/components/shared/sidebar";
 import { useAuthStore } from "@/stores/auth-store";
+import { useOnboardingStore } from "@/stores/onboarding-store";
 import { PageLoading } from "@/components/shared/loading";
 
 export default function DashboardLayout({
@@ -13,6 +14,7 @@ export default function DashboardLayout({
 }) {
   const router = useRouter();
   const { isAuthenticated, isLoading, loadUser } = useAuthStore();
+  const { isComplete: isOnboardingComplete } = useOnboardingStore();
 
   useEffect(() => {
     loadUser();
@@ -24,7 +26,23 @@ export default function DashboardLayout({
     }
   }, [isAuthenticated, isLoading, router]);
 
+  useEffect(() => {
+    // Redirect to onboarding if not complete (only for authenticated users)
+    if (!isLoading && isAuthenticated && !isOnboardingComplete) {
+      router.push("/onboarding");
+    }
+  }, [isAuthenticated, isLoading, isOnboardingComplete, router]);
+
   if (isLoading || !isAuthenticated) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <PageLoading />
+      </div>
+    );
+  }
+
+  // Show loading while checking onboarding status
+  if (!isOnboardingComplete) {
     return (
       <div className="flex items-center justify-center h-screen">
         <PageLoading />
