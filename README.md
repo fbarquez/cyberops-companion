@@ -130,6 +130,10 @@ pnpm dev      # or npm run dev
 - **Training Simulations**: Practice IR procedures safely
 - **Multi-language**: German (DE) and English (EN)
 - **Dark/Light Mode**: System-aware theme switching
+- **Background Tasks**: Celery-powered async operations (scans, notifications)
+- **Email Notifications**: SMTP integration with HTML templates
+- **NVD Integration**: Real-time CVE lookup with EPSS and KEV data
+- **User Onboarding**: Guided 5-step wizard for new users
 
 ## User Roles
 
@@ -176,15 +180,21 @@ See `.env.example` for all configuration options. Key variables:
 
 Current MVP limitations to be aware of:
 
-1. **No email service**: Email notifications are logged but not sent (requires SMTP configuration)
-2. **No file uploads**: Evidence attachments are metadata-only (file storage not implemented)
-3. **Basic search**: Full-text search is pattern-based, not indexed
-4. **Single tenant**: Multi-tenancy not implemented
-5. **Manual backups**: No automated backup system
+1. **No file uploads**: Evidence attachments are metadata-only (file storage not implemented)
+2. **Basic search**: Full-text search is pattern-based, not indexed
+3. **Single tenant**: Multi-tenancy not implemented
+4. **Manual backups**: No automated backup system
+5. **Simulated scans**: Vulnerability scans are simulated (real scanner integration planned)
 
 ## Development Status
 
-This project is under active development. See `PLAN_ESTRATEGICO.md` for the full roadmap and strategic plan.
+This project is under active development.
+
+- **Phase 0 (Foundation)**: ✅ Complete
+- **Phase 1 (Enhanced Features)**: ✅ Complete
+- **Phase 2 (Advanced Features)**: 🔲 Planned
+
+See `docs/PROJECT_STATUS.md` for detailed progress and `docs/CHANGELOG.md` for version history.
 
 ## Testing
 
