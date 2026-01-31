@@ -322,6 +322,143 @@ async def import_vulnerabilities(
     return ImportResult(**result)
 
 
+# ==================== CVE / NVD Endpoints ====================
+
+@router.get("/cve/{cve_id}")
+async def lookup_cve(
+    cve_id: str,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """
+    Lookup CVE information from NVD (National Vulnerability Database).
+
+    Fetches comprehensive data including:
+    - CVE details and description
+    - CVSS scores (v2.0, v3.0, v3.1)
+    - EPSS (Exploit Prediction Scoring System) data
+    - CISA KEV (Known Exploited Vulnerabilities) status
+    - CWE mappings
+    - References and affected products
+
+    Rate limits apply (5 requests/30s without API key, 50 with key).
+    """
+    result = await service.lookup_cve(db, cve_id.upper())
+    if not result:
+        raise HTTPException(
+            status_code=404,
+            detail=f"CVE {cve_id} not found in NVD or invalid format"
+        )
+    return result
+
+
+@router.post("/cve/{cve_id}/enrich")
+async def enrich_cve(
+    cve_id: str,
+    create_if_missing: bool = Query(True, description="Create CVE entry if not in database"),
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """
+    Enrich a CVE entry with data from NVD.
+
+    If the CVE exists in the database, updates it with fresh data.
+    If create_if_missing is True and CVE doesn't exist, creates a new entry.
+
+    Returns the enriched CVE entry.
+    """
+    cve_entry = await service.enrich_cve(db, cve_id.upper(), create_if_missing)
+    if not cve_entry:
+        raise HTTPException(
+            status_code=404,
+            detail=f"CVE {cve_id} not found in NVD"
+        )
+    return CVEResponse(**{k: v for k, v in cve_entry.__dict__.items() if not k.startswith('_')})
+
+
+@router.get("/cve/search/")
+async def search_cves(
+    keyword: Optional[str] = Query(None, description="Keyword search in CVE descriptions"),
+    severity: Optional[str] = Query(None, description="Filter by severity (critical, high, medium, low)"),
+    days: Optional[int] = Query(None, ge=1, le=365, description="CVEs published in last N days"),
+    limit: int = Query(20, ge=1, le=100, description="Maximum results to return"),
+    current_user: User = Depends(get_current_user)
+):
+    """
+    Search CVEs in NVD database.
+
+    Supports filtering by:
+    - Keyword search in descriptions
+    - Severity level
+    - Publication date range
+
+    Note: Rate limits apply. Consider caching results.
+    """
+    from src.services.nvd_service import get_nvd_service
+    from datetime import datetime, timedelta
+
+    nvd_service = get_nvd_service()
+
+    pub_start = None
+    pub_end = None
+    if days:
+        pub_end = datetime.utcnow()
+        pub_start = pub_end - timedelta(days=days)
+
+    result = await nvd_service.search_cves(
+        keyword=keyword,
+        cvss_severity=severity,
+        pub_start_date=pub_start,
+        pub_end_date=pub_end,
+        results_per_page=limit
+    )
+
+    return result
+
+
+@router.get("/kev/catalog")
+async def get_kev_catalog(
+    current_user: User = Depends(get_current_user)
+):
+    """
+    Get CISA KEV (Known Exploited Vulnerabilities) catalog.
+
+    Returns a list of all known exploited vulnerabilities that
+    require immediate attention according to CISA.
+
+    This endpoint is cached for 1 hour.
+    """
+    from src.services.nvd_service import get_nvd_service
+
+    nvd_service = get_nvd_service()
+    catalog = await nvd_service.get_kev_catalog()
+
+    return {
+        "total": len(catalog),
+        "vulnerabilities": catalog
+    }
+
+
+@router.get("/nvd/status")
+async def nvd_status(
+    current_user: User = Depends(get_current_user)
+):
+    """
+    Check NVD API configuration status.
+    """
+    from src.config import settings
+
+    return {
+        "api_key_configured": bool(settings.NVD_API_KEY),
+        "rate_limit": "50 requests/30s" if settings.NVD_API_KEY else "5 requests/30s",
+        "endpoints": {
+            "nvd_api": "https://services.nvd.nist.gov/rest/json/cves/2.0",
+            "epss_api": "https://api.first.org/data/v1/epss",
+            "kev_catalog": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json"
+        }
+    }
+
+
 # ==================== Helper Functions ====================
 
 def _vuln_to_response(vuln) -> VulnerabilityResponse:
