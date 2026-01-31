@@ -30,6 +30,9 @@ class Settings(BaseSettings):
     # CORS
     CORS_ORIGINS: List[str] = ["http://localhost:3000", "http://127.0.0.1:3000"]
 
+    # NVD API (National Vulnerability Database)
+    NVD_API_KEY: str = ""  # Optional: increases rate limit from 5 to 50 requests/30s
+
     # Email / SMTP
     SMTP_HOST: str = ""
     SMTP_PORT: int = 587
