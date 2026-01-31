@@ -24,6 +24,13 @@ import { useAuthStore } from "@/stores/auth-store";
 import { useTranslations } from "@/hooks/use-translations";
 import { risksAPI } from "@/lib/api-client";
 import { Header } from "@/components/shared/header";
+import { useHeatmap, useRiskTrends, useDistribution } from "@/hooks/useAnalytics";
+import {
+  RiskHeatMap,
+  TrendLineChart,
+  DistributionChart,
+} from "@/components/dashboard/charts";
+import { ChartCard } from "@/components/dashboard/widgets";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -215,6 +222,11 @@ export default function RisksPage() {
     queryFn: () => risksAPI.listControls(token!) as Promise<{ controls: RiskControl[]; total: number }>,
     enabled: !!token && activeTab === "controls",
   });
+
+  // Analytics hooks for charts
+  const { data: riskHeatmap } = useHeatmap("risk_matrix");
+  const { data: riskTrends } = useRiskTrends(30);
+  const { data: riskDistribution } = useDistribution("risks", "status");
 
   // Mutations
   const createRiskMutation = useMutation({
@@ -636,6 +648,41 @@ export default function RisksPage() {
                   </div>
                 </CardContent>
               </Card>
+            </div>
+
+            {/* Risk Heatmap and Trends */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <ChartCard title="Risk Heat Map (Impact vs Likelihood)" icon={Target}>
+                {riskHeatmap?.cells && (
+                  <div className="flex justify-center py-4">
+                    <RiskHeatMap
+                      data={riskHeatmap.cells.map(cell => ({
+                        impact: cell.y,
+                        likelihood: cell.x,
+                        count: cell.value,
+                      }))}
+                      size="md"
+                    />
+                  </div>
+                )}
+              </ChartCard>
+
+              <ChartCard title="Risk Trends (30 days)" icon={TrendingUp}>
+                {riskTrends?.trend_data && riskTrends.trend_data.length > 0 ? (
+                  <TrendLineChart
+                    data={riskTrends.trend_data.map(p => ({
+                      date: p.date,
+                      value: p.total,
+                    }))}
+                    height={250}
+                    showArea={true}
+                  />
+                ) : (
+                  <div className="flex items-center justify-center h-[250px]">
+                    <p className="text-muted-foreground text-sm">No trend data available</p>
+                  </div>
+                )}
+              </ChartCard>
             </div>
 
             {/* Recent Risks */}

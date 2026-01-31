@@ -8,10 +8,105 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
-### Planned
-- Real scanner integration (Nessus, OpenVAS, Qualys)
-- Advanced analytics/ML
+### Planned (Phase 2 Remaining)
 - Mobile responsive improvements
+
+### Planned (Phase 3 - Enterprise)
+- Multi-tenancy support
+- SSO/SAML integration (Azure AD, Okta, etc.)
+- Audit logging system
+- API rate limiting
+
+### Planned (Future)
+- ML/Predictive Analytics (Phase 2C - when more data is available)
+- Real scanner integration (Nessus, OpenVAS, Qualys)
+- Anomaly detection
+- Incident prediction
+
+See [FUTURE_ROADMAP.md](./FUTURE_ROADMAP.md) for detailed specifications.
+
+---
+
+## [0.8.0] - 2026-01-31
+
+### Added
+
+#### Advanced Analytics System (Phase 2A + 2B)
+
+**Backend Services:**
+- `AnalyticsService` - Trend analysis, distributions, heatmaps
+- `SecurityScoreService` - Weighted security posture scoring (0-100)
+- `SLAService` - Response and remediation SLA tracking
+- `AnalystMetricsService` - SOC analyst performance metrics
+
+**New API Endpoints:**
+- `GET /api/v1/analytics/trends/{entity}/{metric}` - Time-series trend data
+- `GET /api/v1/analytics/distribution/{entity}/{group_by}` - Distribution analysis
+- `GET /api/v1/analytics/heatmap/{type}` - Risk matrix and time-based heatmaps
+- `GET /api/v1/analytics/security-score` - Overall security score with component breakdown
+- `GET /api/v1/analytics/security-score/history` - Score history for trends
+- `GET /api/v1/analytics/sla/compliance/{type}` - SLA compliance metrics
+- `GET /api/v1/analytics/sla/breaches` - List of SLA breaches
+- `GET /api/v1/analytics/analysts/metrics` - Analyst workload and performance
+- `GET /api/v1/analytics/analysts/leaderboard` - Top performers
+- `GET /api/v1/analytics/vulnerabilities/aging` - Vulnerability aging buckets
+- `GET /api/v1/analytics/risks/trends` - Risk velocity and mitigation trends
+
+**Frontend Chart Components:**
+- `TrendLineChart` - Line/area charts with gradients
+- `DistributionChart` - Bar charts (horizontal/vertical)
+- `PieChart` / `DonutChart` - Pie and donut charts
+- `RiskHeatMap` - 5x5 risk matrix with click handlers
+- `SparkLine` - Inline trend indicators
+- `TrendIndicator` - Value with trend arrow
+
+**Frontend Widget Components:**
+- `TrendCard` - Metric card with sparkline
+- `ChartCard` - Container with header, actions, loading state
+- `ScoreGaugeCard` - Circular gauge for security score
+- `SLAStatusCard` - SLA compliance summary
+
+**React Hooks:**
+- `useTrend` - Trend data fetching
+- `useDistribution` - Distribution data fetching
+- `useHeatmap` - Heatmap data fetching
+- `useSecurityScore` - Security score with auto-refresh
+- `useSLACompliance` - SLA compliance metrics
+- `useAnalystMetrics` - Analyst performance data
+- `useVulnerabilityAging` - Vulnerability aging buckets
+- `useRiskTrends` - Risk trend analysis
+
+**Security Score Components (weighted):**
+| Component | Weight |
+|-----------|--------|
+| Vulnerabilities | 25% |
+| Incidents | 20% |
+| Compliance | 20% |
+| Risks | 15% |
+| SOC Operations | 10% |
+| Patch Compliance | 10% |
+
+**SLA Targets (default):**
+| Severity | Response | Remediation |
+|----------|----------|-------------|
+| Critical | 15 min | 1 day |
+| High | 1 hour | 7 days |
+| Medium | 4 hours | 30 days |
+| Low | 8 hours | 90 days |
+
+**Dashboard Integrations:**
+- `/reporting` - Security score gauge, SLA compliance, trend charts, distributions
+- `/soc` - Alert trends, response SLA, analyst workload visualization
+- `/risks` - 5x5 risk heatmap, risk trends over time
+
+**Utilities:**
+- `chart-colors.ts` - Consistent color palettes (severity, status, trends, gradients)
+
+### Documentation
+- Added `docs/ANALYTICS.md` with full API reference and component usage
+- Added `docs/FUTURE_ROADMAP.md` with planned features and technical debt
+- Updated `docs/README.md` with complete documentation structure
+- Updated `docs/PROJECT_STATUS.md` with implementation details
 
 ---
 

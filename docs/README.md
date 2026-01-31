@@ -10,6 +10,8 @@ Welcome to the CyberOps Companion documentation.
 |----------|-------------|
 | [Project Status](./PROJECT_STATUS.md) | Current state and progress |
 | [Changelog](./CHANGELOG.md) | Version history and changes |
+| [Analytics](./ANALYTICS.md) | Analytics system documentation |
+| [Future Roadmap](./FUTURE_ROADMAP.md) | Planned features and technical debt |
 | [UX Patterns](./UX_PATTERNS.md) | UI/UX component guidelines |
 
 ---
@@ -21,6 +23,8 @@ docs/
 ├── README.md                    # This file
 ├── PROJECT_STATUS.md            # Current project state
 ├── CHANGELOG.md                 # Version history
+├── ANALYTICS.md                 # Analytics system docs
+├── FUTURE_ROADMAP.md            # Planned features
 ├── UX_PATTERNS.md               # UI/UX guidelines
 │
 ├── architecture/
@@ -29,11 +33,13 @@ docs/
 ├── features/
 │   ├── CELERY_TASKS.md          # Background task execution
 │   ├── EMAIL_SERVICE.md         # Email/SMTP service
+│   ├── FILE_UPLOADS.md          # File attachment system
 │   ├── I18N_TRANSLATIONS.md     # Internationalization
 │   ├── LANDING_PAGE.md          # Public landing page
 │   ├── NVD_API.md               # NVD/CVE integration
 │   ├── ONBOARDING.md            # User onboarding flow
-│   └── ROLE_BASED_ACCESS.md     # RBAC system
+│   ├── ROLE_BASED_ACCESS.md     # RBAC system
+│   └── WEBSOCKET_NOTIFICATIONS.md # Real-time notifications
 │
 ├── api/                         # API documentation
 │   └── (auto-generated)
@@ -86,6 +92,24 @@ docs/
 |---------|--------|---------------|
 | WebSocket Notifications | ✅ Complete | [WEBSOCKET_NOTIFICATIONS.md](./features/WEBSOCKET_NOTIFICATIONS.md) |
 | File Uploads | ✅ Complete | [FILE_UPLOADS.md](./features/FILE_UPLOADS.md) |
+| Advanced Analytics | ✅ Complete | [ANALYTICS.md](./ANALYTICS.md) |
+| Mobile Responsive | 🔲 Pending | - |
+
+### Phase 3 - Enterprise Features (Planned)
+
+| Feature | Status | Documentation |
+|---------|--------|---------------|
+| Multi-tenancy | 🔲 Planned | - |
+| SSO/SAML Integration | 🔲 Planned | - |
+| Audit Logging | 🔲 Planned | - |
+| API Rate Limiting | 🔲 Planned | - |
+
+### Future Enhancements
+
+| Feature | Status | Documentation |
+|---------|--------|---------------|
+| ML/Predictive Analytics | 🔲 Future | [FUTURE_ROADMAP.md](./FUTURE_ROADMAP.md) |
+| Real Scanner Integration | 🔲 Future | [FUTURE_ROADMAP.md](./FUTURE_ROADMAP.md) |
 
 ---
 
@@ -111,4 +135,4 @@ When adding new features:
 
 ## Last Updated
 
-**2026-01-31** - Phase 2 in Progress (WebSocket Notifications)
+**2026-01-31** - Phase 2 at 75% (Analytics Complete)

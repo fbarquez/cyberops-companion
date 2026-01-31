@@ -2671,4 +2671,51 @@ export const attachmentsAPI = {
     request(`/api/v1/attachments/count/${entityType}/${entityId}`, { token }),
 };
 
+// Analytics API
+export const analyticsAPI = {
+  // Trends
+  getTrend: (token: string, entity: string, metric: string, periodDays = 30, aggregation = "daily") =>
+    request(`/api/v1/analytics/trends/${entity}/${metric}?period_days=${periodDays}&aggregation=${aggregation}`, { token }),
+
+  getPeriodComparison: (token: string, entity: string, periodDays = 30) =>
+    request(`/api/v1/analytics/trends/${entity}/comparison?period_days=${periodDays}`, { token }),
+
+  // Distribution
+  getDistribution: (token: string, entity: string, groupBy: string) =>
+    request(`/api/v1/analytics/distribution/${entity}/${groupBy}`, { token }),
+
+  // Heatmaps
+  getHeatmap: (token: string, type: string) =>
+    request(`/api/v1/analytics/heatmap/${type}`, { token }),
+
+  // Security Score
+  getSecurityScore: (token: string) =>
+    request("/api/v1/analytics/security-score", { token }),
+
+  getSecurityScoreHistory: (token: string, periodDays = 30) =>
+    request(`/api/v1/analytics/security-score/history?period_days=${periodDays}`, { token }),
+
+  // SLA
+  getSLACompliance: (token: string, type: string, periodDays = 30) =>
+    request(`/api/v1/analytics/sla/compliance/${type}?period_days=${periodDays}`, { token }),
+
+  getSLABreaches: (token: string, periodDays = 30) =>
+    request(`/api/v1/analytics/sla/breaches?period_days=${periodDays}`, { token }),
+
+  // Analyst Metrics
+  getAnalystMetrics: (token: string, periodDays = 30) =>
+    request(`/api/v1/analytics/analysts/metrics?period_days=${periodDays}`, { token }),
+
+  getAnalystLeaderboard: (token: string, periodDays = 30, limit = 10) =>
+    request(`/api/v1/analytics/analysts/leaderboard?period_days=${periodDays}&limit=${limit}`, { token }),
+
+  // Vulnerability Aging
+  getVulnerabilityAging: (token: string) =>
+    request("/api/v1/analytics/vulnerabilities/aging", { token }),
+
+  // Risk Trends
+  getRiskTrends: (token: string, periodDays = 30) =>
+    request(`/api/v1/analytics/risks/trends?period_days=${periodDays}`, { token }),
+};
+
 export { APIError };

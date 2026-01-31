@@ -48,6 +48,23 @@ import { Input } from "@/components/ui/input";
 import { useAuthStore } from "@/stores/auth-store";
 import { useTranslations } from "@/hooks/use-translations";
 import { reportingAPI } from "@/lib/api-client";
+import {
+  useSecurityScore,
+  useTrend,
+  useDistribution,
+  useSLACompliance,
+  useVulnerabilityAging,
+} from "@/hooks/useAnalytics";
+import {
+  TrendLineChart,
+  DistributionChart,
+  DonutChart,
+} from "@/components/dashboard/charts";
+import {
+  ChartCard,
+  ScoreGaugeCard,
+  SLAStatusCard,
+} from "@/components/dashboard/widgets";
 
 interface ExecutiveDashboardStats {
   security_score: number;
@@ -175,6 +192,15 @@ export default function ReportingPage() {
     queryFn: () => reportingAPI.listSchedules(token!, { size: 50 }) as Promise<PaginatedResponse<ReportSchedule>>,
     enabled: !!token && activeTab === "schedules",
   });
+
+  // Analytics hooks for charts
+  const { data: securityScore } = useSecurityScore();
+  const { data: incidentTrend } = useTrend("incidents", "count", 30, "daily");
+  const { data: alertTrend } = useTrend("alerts", "count", 30, "daily");
+  const { data: incidentDistribution } = useDistribution("incidents", "severity");
+  const { data: vulnerabilityDistribution } = useDistribution("vulnerabilities", "severity");
+  const { data: responseSLA } = useSLACompliance("response", 30);
+  const { data: vulnAging } = useVulnerabilityAging();
 
   // Seed templates mutation
   const seedTemplatesMutation = useMutation({
@@ -359,55 +385,23 @@ export default function ReportingPage() {
 
         {/* Executive Dashboard Tab */}
         <TabsContent value="dashboard" className="space-y-6">
-          {/* Security Score */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-            <Card className="lg:col-span-1">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium flex items-center justify-between">
-                  {t("reporting.securityScore")}
-                  {getTrendIcon(stats?.security_score_trend)}
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-center justify-center">
-                  <div className="relative w-32 h-32">
-                    <svg className="w-full h-full transform -rotate-90">
-                      <circle
-                        cx="64"
-                        cy="64"
-                        r="56"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="12"
-                        className="text-muted"
-                      />
-                      <circle
-                        cx="64"
-                        cy="64"
-                        r="56"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="12"
-                        strokeDasharray={`${(stats?.security_score || 0) * 3.52} 352`}
-                        className={
-                          (stats?.security_score || 0) >= 80
-                            ? "text-green-500"
-                            : (stats?.security_score || 0) >= 60
-                              ? "text-yellow-500"
-                              : "text-red-500"
-                        }
-                      />
-                    </svg>
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-3xl font-bold">{stats?.security_score || 0}</span>
-                    </div>
-                  </div>
-                </div>
-                <p className="text-center text-sm text-muted-foreground mt-2">
-                  {t("reporting.overallSecurityPosture")}
-                </p>
-              </CardContent>
-            </Card>
+          {/* Security Score & SLA */}
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+            <ScoreGaugeCard
+              title={t("reporting.securityScore")}
+              score={securityScore?.overall_score || stats?.security_score || 0}
+              label={securityScore?.grade || "N/A"}
+              description={t("reporting.overallSecurityPosture")}
+              trend={securityScore?.trend as "up" | "down" | "neutral" | undefined}
+            />
+
+            <SLAStatusCard
+              title="Response SLA"
+              compliant={responseSLA?.compliant_items || 0}
+              total={responseSLA?.total_items || 0}
+              breached={responseSLA?.breached_items || 0}
+              atRisk={responseSLA?.at_risk_items || 0}
+            />
 
             <Card className="lg:col-span-2">
               <CardHeader className="pb-2">
@@ -434,6 +428,64 @@ export default function ReportingPage() {
                 </div>
               </CardContent>
             </Card>
+          </div>
+
+          {/* Trend Charts */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <ChartCard title="Incident Trend (30 days)" icon={AlertTriangle}>
+              {incidentTrend?.data && (
+                <TrendLineChart
+                  data={incidentTrend.data}
+                  height={200}
+                  showArea={true}
+                />
+              )}
+            </ChartCard>
+
+            <ChartCard title="Alert Volume (30 days)" icon={Shield}>
+              {alertTrend?.data && (
+                <TrendLineChart
+                  data={alertTrend.data}
+                  height={200}
+                  showArea={true}
+                />
+              )}
+            </ChartCard>
+          </div>
+
+          {/* Distribution Charts */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <ChartCard title="Incidents by Severity">
+              {incidentDistribution?.data && (
+                <DonutChart
+                  data={incidentDistribution.data}
+                  colorScheme="severity"
+                  height={200}
+                />
+              )}
+            </ChartCard>
+
+            <ChartCard title="Vulnerabilities by Severity">
+              {vulnerabilityDistribution?.data && (
+                <DistributionChart
+                  data={vulnerabilityDistribution.data}
+                  colorScheme="severity"
+                  height={200}
+                />
+              )}
+            </ChartCard>
+
+            <ChartCard title="Vulnerability Aging">
+              {vulnAging?.aging_buckets && (
+                <DistributionChart
+                  data={vulnAging.aging_buckets.map(b => ({
+                    name: b.bucket,
+                    value: b.count,
+                  }))}
+                  height={200}
+                />
+              )}
+            </ChartCard>
           </div>
 
           {/* Incidents & SOC */}

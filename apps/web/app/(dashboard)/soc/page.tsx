@@ -24,6 +24,18 @@ import {
 import { socAPI } from "@/lib/api-client";
 import { useAuthStore } from "@/stores/auth-store";
 import { useTranslations } from "@/hooks/use-translations";
+import {
+  useTrend,
+  useDistribution,
+  useAnalystMetrics,
+  useSLACompliance,
+} from "@/hooks/useAnalytics";
+import {
+  TrendLineChart,
+  DistributionChart,
+  DonutChart,
+} from "@/components/dashboard/charts";
+import { ChartCard, SLAStatusCard } from "@/components/dashboard/widgets";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -224,6 +236,12 @@ export default function SOCPage() {
       }) as Promise<PlaybookList>,
     enabled: !!token && activeTab === "playbooks",
   });
+
+  // Analytics for charts
+  const { data: alertTrend } = useTrend("alerts", "count", 30, "daily");
+  const { data: alertDistribution } = useDistribution("alerts", "severity");
+  const { data: analystMetrics } = useAnalystMetrics(30);
+  const { data: responseSLA } = useSLACompliance("response", 30);
 
   // Create Alert mutation
   const createAlertMutation = useMutation({
@@ -618,46 +636,86 @@ export default function SOCPage() {
             </Card>
           </div>
 
-          {/* Alerts by Severity and Source */}
+          {/* Alert Trend Chart */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>{t("soc.alertsBySeverity")}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {stats?.alerts_by_severity && Object.entries(stats.alerts_by_severity).map(([severity, count]) => (
-                    <div key={severity} className="flex items-center justify-between">
-                      {getSeverityBadge(severity)}
-                      <span className="font-medium">{count}</span>
-                    </div>
-                  ))}
-                  {(!stats?.alerts_by_severity || Object.keys(stats.alerts_by_severity).length === 0) && (
-                    <p className="text-muted-foreground text-sm">{t("soc.noActiveAlerts")}</p>
-                  )}
+            <ChartCard title="Alert Volume (30 days)" icon={Bell}>
+              {alertTrend?.data && (
+                <TrendLineChart
+                  data={alertTrend.data}
+                  height={200}
+                  showArea={true}
+                />
+              )}
+            </ChartCard>
+
+            <SLAStatusCard
+              title="Response SLA Compliance"
+              compliant={responseSLA?.compliant_items || 0}
+              total={responseSLA?.total_items || 0}
+              breached={responseSLA?.breached_items || 0}
+              atRisk={responseSLA?.at_risk_items || 0}
+            />
+          </div>
+
+          {/* Alerts by Severity and Analyst Metrics */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <ChartCard title={t("soc.alertsBySeverity")}>
+              {alertDistribution?.data && alertDistribution.data.length > 0 ? (
+                <DonutChart
+                  data={alertDistribution.data}
+                  colorScheme="severity"
+                  height={200}
+                />
+              ) : (
+                <div className="flex items-center justify-center h-[200px]">
+                  <p className="text-muted-foreground text-sm">{t("soc.noActiveAlerts")}</p>
                 </div>
-              </CardContent>
-            </Card>
+              )}
+            </ChartCard>
 
             <Card>
               <CardHeader>
-                <CardTitle>{t("soc.analystWorkload")}</CardTitle>
+                <CardTitle className="flex items-center gap-2">
+                  <Users className="h-4 w-4" />
+                  {t("soc.analystWorkload")}
+                </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  {stats?.alerts_per_analyst && Object.entries(stats.alerts_per_analyst).map(([analyst, count]) => (
-                    <div key={analyst} className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <User className="h-4 w-4" />
-                        <span>{analyst}</span>
+                {analystMetrics?.analysts && analystMetrics.analysts.length > 0 ? (
+                  <div className="space-y-3">
+                    {analystMetrics.analysts.slice(0, 5).map((analyst) => (
+                      <div key={analyst.analyst_id} className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <User className="h-4 w-4" />
+                          <span className="text-sm">{analyst.analyst_name}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Badge variant="secondary">{analyst.alerts_assigned} alerts</Badge>
+                          <Badge
+                            variant={analyst.workload_score > 80 ? "destructive" : analyst.workload_score > 50 ? "default" : "outline"}
+                          >
+                            {analyst.workload_score.toFixed(0)}%
+                          </Badge>
+                        </div>
                       </div>
-                      <Badge variant="secondary">{count} {t("soc.alerts").toLowerCase()}</Badge>
-                    </div>
-                  ))}
-                  {(!stats?.alerts_per_analyst || Object.keys(stats.alerts_per_analyst).length === 0) && (
-                    <p className="text-muted-foreground text-sm">{t("soc.noAssignments")}</p>
-                  )}
-                </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {stats?.alerts_per_analyst && Object.entries(stats.alerts_per_analyst).map(([analyst, count]) => (
+                      <div key={analyst} className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <User className="h-4 w-4" />
+                          <span>{analyst}</span>
+                        </div>
+                        <Badge variant="secondary">{count} {t("soc.alerts").toLowerCase()}</Badge>
+                      </div>
+                    ))}
+                    {(!stats?.alerts_per_analyst || Object.keys(stats.alerts_per_analyst).length === 0) && (
+                      <p className="text-muted-foreground text-sm">{t("soc.noAssignments")}</p>
+                    )}
+                  </div>
+                )}
               </CardContent>
             </Card>
           </div>
