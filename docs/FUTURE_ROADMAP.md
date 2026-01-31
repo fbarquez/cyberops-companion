@@ -1,6 +1,6 @@
 # CyberOps Companion - Future Roadmap
 
-**Last Updated:** 2026-01-31
+**Last Updated:** 2026-02-01
 
 This document outlines features planned for future development phases.
 
@@ -13,7 +13,7 @@ This document outlines features planned for future development phases.
 | Phase 0 - Foundation | ✅ Complete | 100% |
 | Phase 1 - Enhanced Features | ✅ Complete | 100% |
 | Phase 2 - Advanced Features | ✅ Complete | 100% |
-| Phase 3 - Enterprise Features | 🔄 In Progress | 25% |
+| Phase 3 - Enterprise Features | 🔄 In Progress | 50% |
 
 ---
 
@@ -50,6 +50,26 @@ This document outlines features planned for future development phases.
 - EN/DE translations
 
 **Documentation:** [AUDIT_LOGGING.md](./features/AUDIT_LOGGING.md)
+
+---
+
+### SSO/SAML Integration ✅
+
+**Status:** Complete (2026-02-01)
+
+**Implemented:**
+- OAuth2/OIDC protocol support
+- Providers: Google Workspace, Microsoft Entra ID (Azure AD), Okta
+- SSOProvider and SSOState models
+- User model extended with SSO fields
+- SSOService with full OAuth2 flow
+- CSRF protection via state tokens
+- JIT (Just-in-Time) user provisioning
+- Email domain validation
+- Frontend: SSO buttons, callback page
+- EN/DE translations
+
+**Documentation:** [SSO_SAML.md](./features/SSO_SAML.md)
 
 ---
 
@@ -161,36 +181,9 @@ class Tenant(Base):
 
 ---
 
-### SSO/SAML Integration
+### SSO/SAML Integration ✅ COMPLETED
 
-**Priority:** High
-**Effort:** Medium
-**Status:** Not Started
-
-**Description:**
-Enterprise Single Sign-On support for corporate identity providers.
-
-**Planned providers:**
-- SAML 2.0 (generic)
-- Azure AD / Entra ID
-- Okta
-- Google Workspace
-- LDAP/Active Directory
-
-**Technical approach:**
-- python3-saml library for SAML
-- OAuth2/OIDC for modern providers
-- JIT (Just-in-Time) user provisioning
-- Group-to-role mapping
-- SSO session management
-
-**New endpoints:**
-```
-GET  /auth/sso/providers          # List configured providers
-GET  /auth/sso/{provider}/login   # Initiate SSO flow
-POST /auth/sso/{provider}/callback # SSO callback
-POST /auth/sso/logout             # SSO logout
-```
+See [Phase 3 - Completed Items](#phase-3---completed-items) above and [SSO_SAML.md](./features/SSO_SAML.md).
 
 ---
 

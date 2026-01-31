@@ -10,7 +10,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Planned (Phase 3 - Enterprise)
 - Multi-tenancy support
-- SSO/SAML integration (Azure AD, Okta, etc.)
 - API rate limiting
 
 ### Planned (Future)
@@ -20,6 +19,92 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Incident prediction
 
 See [FUTURE_ROADMAP.md](./FUTURE_ROADMAP.md) for detailed specifications.
+
+---
+
+## [0.11.0] - 2026-02-01
+
+### Added
+
+#### SSO/SAML Integration (Phase 3)
+
+Enterprise Single Sign-On with OAuth2/OIDC protocol support.
+
+**Supported Providers:**
+- Google Workspace
+- Microsoft Entra ID (Azure AD)
+- Okta
+
+**Backend:**
+- `SSOProvider` model for provider configuration
+- `SSOState` model for CSRF protection (state tokens)
+- Extended `User` model with SSO fields:
+  - `sso_provider` - Provider slug (google, azure, okta)
+  - `sso_id` - Provider's unique user identifier
+  - `sso_email` - Email from SSO provider
+  - `sso_linked_at` - Timestamp when SSO was linked
+- `SSOService` (`services/sso_service.py`):
+  - OAuth2 flow management
+  - State token generation and validation
+  - Code-to-token exchange
+  - User info retrieval
+  - JIT (Just-in-Time) user provisioning
+  - Account linking
+- Pydantic schemas (`schemas/sso.py`):
+  - `SSOProviderPublic`, `SSOProvidersResponse`
+  - `SSOAuthorizeResponse`, `SSOCallbackRequest`
+  - `SSOCallbackResponse`, `SSOUserInfo`
+
+**API Endpoints:**
+- `GET /api/v1/auth/sso/providers` - List enabled SSO providers
+- `GET /api/v1/auth/sso/{provider}/authorize` - Get OAuth2 authorization URL
+- `POST /api/v1/auth/sso/{provider}/callback` - Exchange code for tokens
+- `POST /api/v1/auth/sso/{provider}/unlink` - Remove SSO from account
+
+**Frontend:**
+- `SSOButtons` component with provider icons
+- `/auth/callback` page for OAuth2 callback handling
+- Updated login page with SSO options
+- Updated auth store with `loginWithSSO`
+- EN/DE translations for SSO messages
+
+**Security Features:**
+- CSRF protection via state tokens (32 bytes, URL-safe)
+- State tokens expire after 10 minutes
+- One-time use tokens (deleted after validation)
+- Email domain validation (`allowed_domains`)
+- SSO provider tokens NOT stored (only internal JWTs)
+
+**Configuration:**
+```bash
+SSO_GOOGLE_ENABLED=true
+SSO_GOOGLE_CLIENT_ID=...
+SSO_GOOGLE_CLIENT_SECRET=...
+
+SSO_AZURE_ENABLED=true
+SSO_AZURE_CLIENT_ID=...
+SSO_AZURE_CLIENT_SECRET=...
+SSO_AZURE_TENANT_ID=common
+
+SSO_OKTA_ENABLED=true
+SSO_OKTA_CLIENT_ID=...
+SSO_OKTA_CLIENT_SECRET=...
+SSO_OKTA_DOMAIN=dev-123456.okta.com
+
+SSO_AUTO_CREATE_USERS=true
+SSO_DEFAULT_ROLE=analyst
+SSO_ALLOWED_DOMAINS=company.com
+```
+
+**Database Migrations:**
+- Added SSO columns to users table
+- Created sso_providers table
+- Created sso_states table
+
+### Documentation
+- Added `docs/features/SSO_SAML.md` with full implementation guide
+- Updated `docs/PROJECT_STATUS.md` with Phase 3 progress
+- Added `docs/DOCUMENTACION_COMPLETA.md` (Spanish comprehensive docs)
 
 ---
 
