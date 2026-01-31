@@ -362,7 +362,7 @@ export default function RisksPage() {
                       placeholder={t("risks.describeRiskPlaceholder")}
                     />
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="grid gap-2">
                       <Label>{t("risks.categoryLabel")}</Label>
                       <Select
@@ -390,7 +390,7 @@ export default function RisksPage() {
                       />
                     </div>
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="grid gap-2">
                       <Label>{t("risks.likelihoodLabel")}</Label>
                       <Select
@@ -428,7 +428,7 @@ export default function RisksPage() {
                       </Select>
                     </div>
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="grid gap-2">
                       <Label>{t("risks.treatmentTypeLabel")}</Label>
                       <Select
@@ -478,7 +478,7 @@ export default function RisksPage() {
         }
       />
 
-      <div className="flex-1 p-6 space-y-6 overflow-y-auto">
+      <div className="flex-1 p-4 md:p-6 space-y-4 md:space-y-6 overflow-y-auto">
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <TabsList>
             <TabsTrigger value="dashboard">
@@ -1118,7 +1118,7 @@ export default function RisksPage() {
                 </div>
               )}
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <Label className="text-muted-foreground">{t("risks.inherentScore")}</Label>
                   <p className="text-lg font-semibold">{selectedRisk.inherent_risk_score?.toFixed(1) || "-"}</p>

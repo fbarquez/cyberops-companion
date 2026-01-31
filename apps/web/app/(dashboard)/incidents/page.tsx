@@ -55,10 +55,10 @@ export default function IncidentsPage() {
         </Link>
       </Header>
 
-      <div className="p-6 space-y-6">
+      <div className="p-4 md:p-6 space-y-4 md:space-y-6">
         {/* Filters */}
-        <div className="flex gap-4">
-          <div className="relative flex-1 max-w-md">
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
+          <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
               placeholder={t("common.search")}
@@ -68,7 +68,7 @@ export default function IncidentsPage() {
             />
           </div>
           <Select value={statusFilter} onValueChange={setStatusFilter}>
-            <SelectTrigger className="w-40">
+            <SelectTrigger className="w-full sm:w-40">
               <Filter className="h-4 w-4 mr-2" />
               <SelectValue placeholder={t("common.filter")} />
             </SelectTrigger>
@@ -111,15 +111,15 @@ function IncidentCard({ incident }: { incident: Incident }) {
     <Link href={`/incidents/${incident.id}`}>
       <Card className="hover:shadow-md transition-shadow cursor-pointer">
         <CardHeader className="pb-2">
-          <div className="flex items-start justify-between">
-            <div className="space-y-1">
-              <CardTitle className="text-lg">{incident.title}</CardTitle>
-              <p className="text-sm text-muted-foreground">
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
+            <div className="space-y-1 min-w-0 flex-1">
+              <CardTitle className="text-base md:text-lg truncate">{incident.title}</CardTitle>
+              <p className="text-sm text-muted-foreground line-clamp-2">
                 {incident.description?.slice(0, 100)}
                 {(incident.description?.length || 0) > 100 ? "..." : ""}
               </p>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-shrink-0">
               <Badge variant={incident.severity as any}>
                 {t(`severity.${incident.severity}`)}
               </Badge>
@@ -130,7 +130,7 @@ function IncidentCard({ incident }: { incident: Incident }) {
           </div>
         </CardHeader>
         <CardContent>
-          <div className="flex items-center justify-between text-sm text-muted-foreground">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-sm text-muted-foreground">
             <div className="flex gap-4">
               <span>
                 {t("status." + incident.status)}
@@ -139,7 +139,7 @@ function IncidentCard({ incident }: { incident: Incident }) {
                 {incident.affected_systems?.length || 0} {t("incidents.systems")}
               </span>
             </div>
-            <span>{formatDate(incident.created_at)}</span>
+            <span className="text-xs sm:text-sm">{formatDate(incident.created_at)}</span>
           </div>
 
           {/* Phase Progress */}

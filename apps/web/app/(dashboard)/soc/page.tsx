@@ -323,12 +323,12 @@ export default function SOCPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="p-4 md:p-6 space-y-4 md:space-y-6">
       {/* Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold">{t("soc.title")}</h1>
-          <p className="text-muted-foreground">
+          <h1 className="text-2xl md:text-3xl font-bold">{t("soc.title")}</h1>
+          <p className="text-sm text-muted-foreground">
             {t("soc.subtitle")}
           </p>
         </div>
@@ -506,16 +506,17 @@ export default function SOCPage() {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-2 border-b pb-2">
+      <div className="flex gap-1 md:gap-2 border-b pb-2 overflow-x-auto">
         {tabs.map((tab) => (
           <Button
             key={tab.id}
             variant={activeTab === tab.id ? "default" : "ghost"}
             onClick={() => setActiveTab(tab.id)}
-            className="flex items-center gap-2"
+            className="flex items-center gap-1 md:gap-2 text-xs md:text-sm whitespace-nowrap"
+            size="sm"
           >
-            <tab.icon className="h-4 w-4" />
-            {t(tab.labelKey)}
+            <tab.icon className="h-3 w-3 md:h-4 md:w-4" />
+            <span className="hidden sm:inline">{t(tab.labelKey)}</span>
           </Button>
         ))}
       </div>
@@ -726,8 +727,8 @@ export default function SOCPage() {
       {activeTab === "alerts" && (
         <div className="space-y-4">
           {/* Filters */}
-          <div className="flex gap-4">
-            <div className="relative flex-1 max-w-sm">
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
+            <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 placeholder={t("soc.searchAlerts")}
@@ -736,47 +737,50 @@ export default function SOCPage() {
                 className="pl-10"
               />
             </div>
-            <Select value={severityFilter} onValueChange={setSeverityFilter}>
-              <SelectTrigger className="w-40">
-                <SelectValue placeholder={t("common.severity")} />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">{t("soc.allSeverities")}</SelectItem>
-                <SelectItem value="critical">{t("soc.critical")}</SelectItem>
-                <SelectItem value="high">{t("soc.high")}</SelectItem>
-                <SelectItem value="medium">{t("soc.medium")}</SelectItem>
-                <SelectItem value="low">{t("soc.low")}</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="w-40">
-                <SelectValue placeholder={t("common.status")} />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">{t("soc.allStatus")}</SelectItem>
-                <SelectItem value="new">{t("soc.new")}</SelectItem>
-                <SelectItem value="assigned">{t("soc.assigned")}</SelectItem>
-                <SelectItem value="in_progress">{t("soc.inProgress")}</SelectItem>
-                <SelectItem value="resolved">{t("soc.resolved")}</SelectItem>
-              </SelectContent>
-            </Select>
+            <div className="flex gap-2">
+              <Select value={severityFilter} onValueChange={setSeverityFilter}>
+                <SelectTrigger className="w-full sm:w-32">
+                  <SelectValue placeholder={t("common.severity")} />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">{t("soc.allSeverities")}</SelectItem>
+                  <SelectItem value="critical">{t("soc.critical")}</SelectItem>
+                  <SelectItem value="high">{t("soc.high")}</SelectItem>
+                  <SelectItem value="medium">{t("soc.medium")}</SelectItem>
+                  <SelectItem value="low">{t("soc.low")}</SelectItem>
+                </SelectContent>
+              </Select>
+              <Select value={statusFilter} onValueChange={setStatusFilter}>
+                <SelectTrigger className="w-full sm:w-32">
+                  <SelectValue placeholder={t("common.status")} />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">{t("soc.allStatus")}</SelectItem>
+                  <SelectItem value="new">{t("soc.new")}</SelectItem>
+                  <SelectItem value="assigned">{t("soc.assigned")}</SelectItem>
+                  <SelectItem value="in_progress">{t("soc.inProgress")}</SelectItem>
+                  <SelectItem value="resolved">{t("soc.resolved")}</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
 
           {/* Alerts Table */}
-          <Card>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>{t("soc.alertId")}</TableHead>
-                  <TableHead>{t("soc.alertTitle")}</TableHead>
-                  <TableHead>{t("common.severity")}</TableHead>
-                  <TableHead>{t("common.status")}</TableHead>
-                  <TableHead>{t("soc.source")}</TableHead>
-                  <TableHead>{t("soc.assignedTo")}</TableHead>
-                  <TableHead>{t("soc.detected")}</TableHead>
-                  <TableHead className="w-10"></TableHead>
-                </TableRow>
-              </TableHeader>
+          <Card className="overflow-hidden">
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="whitespace-nowrap">{t("soc.alertId")}</TableHead>
+                    <TableHead className="min-w-[200px]">{t("soc.alertTitle")}</TableHead>
+                    <TableHead className="whitespace-nowrap">{t("common.severity")}</TableHead>
+                    <TableHead className="whitespace-nowrap">{t("common.status")}</TableHead>
+                    <TableHead className="whitespace-nowrap hidden md:table-cell">{t("soc.source")}</TableHead>
+                    <TableHead className="whitespace-nowrap hidden lg:table-cell">{t("soc.assignedTo")}</TableHead>
+                    <TableHead className="whitespace-nowrap hidden lg:table-cell">{t("soc.detected")}</TableHead>
+                    <TableHead className="w-10"></TableHead>
+                  </TableRow>
+                </TableHeader>
               <TableBody>
                 {alertsLoading ? (
                   <TableRow>
@@ -787,7 +791,7 @@ export default function SOCPage() {
                 ) : alertList?.items && alertList.items.length > 0 ? (
                   alertList.items.map((alert) => (
                     <TableRow key={alert.id}>
-                      <TableCell className="font-mono text-sm">{alert.alert_id}</TableCell>
+                      <TableCell className="font-mono text-sm whitespace-nowrap">{alert.alert_id}</TableCell>
                       <TableCell>
                         <div className="font-medium">{alert.title}</div>
                         {alert.mitre_techniques && alert.mitre_techniques.length > 0 && (
@@ -798,9 +802,9 @@ export default function SOCPage() {
                       </TableCell>
                       <TableCell>{getSeverityBadge(alert.severity)}</TableCell>
                       <TableCell>{getStatusBadge(alert.status)}</TableCell>
-                      <TableCell className="capitalize">{alert.source.replace(/_/g, " ")}</TableCell>
-                      <TableCell>{alert.assigned_to || "-"}</TableCell>
-                      <TableCell>
+                      <TableCell className="capitalize hidden md:table-cell">{alert.source.replace(/_/g, " ")}</TableCell>
+                      <TableCell className="hidden lg:table-cell">{alert.assigned_to || "-"}</TableCell>
+                      <TableCell className="hidden lg:table-cell whitespace-nowrap">
                         {new Date(alert.detected_at).toLocaleString()}
                       </TableCell>
                       <TableCell>
@@ -829,7 +833,8 @@ export default function SOCPage() {
                   </TableRow>
                 )}
               </TableBody>
-            </Table>
+              </Table>
+            </div>
           </Card>
         </div>
       )}
@@ -838,8 +843,8 @@ export default function SOCPage() {
       {activeTab === "cases" && (
         <div className="space-y-4">
           {/* Filters */}
-          <div className="flex gap-4">
-            <div className="relative flex-1 max-w-sm">
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
+            <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 placeholder={t("soc.searchCases")}
@@ -848,49 +853,52 @@ export default function SOCPage() {
                 className="pl-10"
               />
             </div>
-            <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="w-40">
-                <SelectValue placeholder={t("common.status")} />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">{t("soc.allStatus")}</SelectItem>
-                <SelectItem value="open">{t("soc.open")}</SelectItem>
-                <SelectItem value="in_progress">{t("soc.inProgress")}</SelectItem>
-                <SelectItem value="escalated">{t("soc.escalated")}</SelectItem>
-                <SelectItem value="resolved">{t("soc.resolved")}</SelectItem>
-                <SelectItem value="closed">{t("soc.closed")}</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select value={priorityFilter} onValueChange={setPriorityFilter}>
-              <SelectTrigger className="w-40">
-                <SelectValue placeholder={t("common.priority")} />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">{t("soc.allPriorities")}</SelectItem>
-                <SelectItem value="critical">{t("soc.priorityCritical")}</SelectItem>
-                <SelectItem value="high">{t("soc.priorityHigh")}</SelectItem>
-                <SelectItem value="medium">{t("soc.priorityMedium")}</SelectItem>
-                <SelectItem value="low">{t("soc.priorityLow")}</SelectItem>
-              </SelectContent>
-            </Select>
+            <div className="flex gap-2">
+              <Select value={statusFilter} onValueChange={setStatusFilter}>
+                <SelectTrigger className="w-full sm:w-32">
+                  <SelectValue placeholder={t("common.status")} />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">{t("soc.allStatus")}</SelectItem>
+                  <SelectItem value="open">{t("soc.open")}</SelectItem>
+                  <SelectItem value="in_progress">{t("soc.inProgress")}</SelectItem>
+                  <SelectItem value="escalated">{t("soc.escalated")}</SelectItem>
+                  <SelectItem value="resolved">{t("soc.resolved")}</SelectItem>
+                  <SelectItem value="closed">{t("soc.closed")}</SelectItem>
+                </SelectContent>
+              </Select>
+              <Select value={priorityFilter} onValueChange={setPriorityFilter}>
+                <SelectTrigger className="w-full sm:w-32">
+                  <SelectValue placeholder={t("common.priority")} />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">{t("soc.allPriorities")}</SelectItem>
+                  <SelectItem value="critical">{t("soc.priorityCritical")}</SelectItem>
+                  <SelectItem value="high">{t("soc.priorityHigh")}</SelectItem>
+                  <SelectItem value="medium">{t("soc.priorityMedium")}</SelectItem>
+                  <SelectItem value="low">{t("soc.priorityLow")}</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
 
           {/* Cases Table */}
-          <Card>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>{t("soc.caseNumber")}</TableHead>
-                  <TableHead>{t("soc.caseTitle")}</TableHead>
-                  <TableHead>{t("common.priority")}</TableHead>
-                  <TableHead>{t("common.status")}</TableHead>
-                  <TableHead>{t("soc.assignedTo")}</TableHead>
-                  <TableHead>{t("soc.alerts")}</TableHead>
-                  <TableHead>{t("soc.dueDate")}</TableHead>
-                  <TableHead className="w-10"></TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
+          <Card className="overflow-hidden">
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="whitespace-nowrap">{t("soc.caseNumber")}</TableHead>
+                    <TableHead className="min-w-[200px]">{t("soc.caseTitle")}</TableHead>
+                    <TableHead className="whitespace-nowrap">{t("common.priority")}</TableHead>
+                    <TableHead className="whitespace-nowrap">{t("common.status")}</TableHead>
+                    <TableHead className="whitespace-nowrap hidden md:table-cell">{t("soc.assignedTo")}</TableHead>
+                    <TableHead className="whitespace-nowrap hidden lg:table-cell">{t("soc.alerts")}</TableHead>
+                    <TableHead className="whitespace-nowrap hidden lg:table-cell">{t("soc.dueDate")}</TableHead>
+                    <TableHead className="w-10"></TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
                 {casesLoading ? (
                   <TableRow>
                     <TableCell colSpan={8} className="text-center py-8">
@@ -900,7 +908,7 @@ export default function SOCPage() {
                 ) : caseList?.items && caseList.items.length > 0 ? (
                   caseList.items.map((caseItem) => (
                     <TableRow key={caseItem.id}>
-                      <TableCell className="font-mono text-sm">{caseItem.case_number}</TableCell>
+                      <TableCell className="font-mono text-sm whitespace-nowrap">{caseItem.case_number}</TableCell>
                       <TableCell>
                         <div className="font-medium">{caseItem.title}</div>
                         {caseItem.assigned_team && (
@@ -911,11 +919,11 @@ export default function SOCPage() {
                       </TableCell>
                       <TableCell>{getPriorityBadge(caseItem.priority)}</TableCell>
                       <TableCell>{getStatusBadge(caseItem.status)}</TableCell>
-                      <TableCell>{caseItem.assigned_to || "-"}</TableCell>
-                      <TableCell>
+                      <TableCell className="hidden md:table-cell">{caseItem.assigned_to || "-"}</TableCell>
+                      <TableCell className="hidden lg:table-cell">
                         <Badge variant="outline">{caseItem.alert_count} {t("soc.alerts").toLowerCase()}</Badge>
                       </TableCell>
-                      <TableCell>
+                      <TableCell className="hidden lg:table-cell whitespace-nowrap">
                         {caseItem.due_date
                           ? new Date(caseItem.due_date).toLocaleDateString()
                           : "-"}
@@ -944,8 +952,9 @@ export default function SOCPage() {
                     </TableCell>
                   </TableRow>
                 )}
-              </TableBody>
-            </Table>
+                </TableBody>
+              </Table>
+            </div>
           </Card>
         </div>
       )}
@@ -954,8 +963,8 @@ export default function SOCPage() {
       {activeTab === "playbooks" && (
         <div className="space-y-4">
           {/* Filters */}
-          <div className="flex gap-4">
-            <div className="relative flex-1 max-w-sm">
+          <div className="flex gap-2 sm:gap-4">
+            <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 placeholder={t("soc.searchPlaybooks")}

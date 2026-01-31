@@ -30,17 +30,17 @@ export function ChartCard({
 }: ChartCardProps) {
   return (
     <Card className={cn("relative", className)}>
-      <CardHeader className="flex flex-row items-start justify-between pb-2">
+      <CardHeader className="flex flex-col sm:flex-row sm:items-start sm:justify-between pb-2 gap-2">
         <div className="flex items-center gap-2">
           {Icon && (
-            <Icon className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+            <Icon className="h-4 w-4 md:h-5 md:w-5 text-gray-500 dark:text-gray-400 flex-shrink-0" />
           )}
           <div>
-            <CardTitle className="text-base font-semibold">
+            <CardTitle className="text-sm md:text-base font-semibold">
               {title}
             </CardTitle>
             {description && (
-              <CardDescription className="text-sm text-gray-500 dark:text-gray-400">
+              <CardDescription className="text-xs md:text-sm text-gray-500 dark:text-gray-400">
                 {description}
               </CardDescription>
             )}
@@ -65,7 +65,7 @@ export function ChartCard({
       </CardHeader>
       <CardContent className={cn("relative", contentClassName)}>
         {loading ? (
-          <div className="flex items-center justify-center h-64">
+          <div className="flex items-center justify-center h-48 md:h-64">
             <RefreshCw className="h-8 w-8 animate-spin text-gray-400" />
           </div>
         ) : (

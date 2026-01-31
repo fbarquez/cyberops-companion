@@ -8,9 +8,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
-### Planned (Phase 2 Remaining)
-- Mobile responsive improvements
-
 ### Planned (Phase 3 - Enterprise)
 - Multi-tenancy support
 - SSO/SAML integration (Azure AD, Okta, etc.)
@@ -24,6 +21,63 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Incident prediction
 
 See [FUTURE_ROADMAP.md](./FUTURE_ROADMAP.md) for detailed specifications.
+
+---
+
+## [0.9.0] - 2026-01-31
+
+### Added
+
+#### Mobile Responsive Improvements (Phase 2 Complete)
+
+**New Components:**
+- `Sheet` (`components/ui/sheet.tsx`) - Drawer component from shadcn/ui for mobile sidebar
+- `MobileSidebar` (`components/shared/mobile-sidebar.tsx`) - Mobile drawer sidebar with navigation
+- `ResponsiveTable` (`components/shared/responsive-table.tsx`) - Adaptive table/cards component with helpers:
+  - `MobileCardRow` - Helper for mobile card data rows
+  - `MobileCardHeader` - Helper for mobile card headers
+  - `ScrollableTable` - Wrapper for horizontal scrolling tables
+
+**Layout Changes:**
+- Sidebar now hidden on mobile (`hidden md:flex`), visible on tablet/desktop
+- Mobile sidebar drawer opens via hamburger menu in header
+- Dashboard layout integrates both desktop sidebar and mobile drawer
+
+**Header Improvements:**
+- Added hamburger menu button (visible only on mobile, `md:hidden`)
+- Responsive height (`h-14 md:h-16`)
+- Responsive padding (`px-4 md:px-6`)
+- Language switcher shows icon-only on mobile, full text on desktop
+- Title truncates on mobile to prevent overflow
+
+**Dialog Improvements:**
+- Responsive width (`w-[95vw] max-w-lg`)
+- Responsive padding (`p-4 md:p-6`)
+- Max height with overflow scroll (`max-h-[90vh] overflow-y-auto`)
+- Always rounded corners (`rounded-lg`)
+
+**ChartCard Improvements:**
+- Responsive loading height (`h-48 md:h-64`)
+- Responsive icon sizes
+- Responsive title/description text sizes
+- Flexible header layout for mobile
+
+**Page Updates:**
+- `/risks` - Form grids now `grid-cols-1 md:grid-cols-2`, responsive padding
+- `/soc` - Responsive tabs, filters stack on mobile, table columns hide on mobile/tablet
+- `/incidents` - Responsive filters, card layouts adapt to mobile
+
+**Table Improvements:**
+- Tables wrapped with horizontal scroll container
+- Less important columns hidden on mobile (`hidden md:table-cell`, `hidden lg:table-cell`)
+- Whitespace handling for cell content
+
+**Breakpoints:**
+| Breakpoint | Pixels | Usage |
+|------------|--------|-------|
+| Default | < 768px | Mobile (drawer sidebar, stacked layouts, single column forms) |
+| `md:` | >= 768px | Tablet/Desktop (fixed sidebar visible, two-column forms, tables) |
+| `lg:` | >= 1024px | Large desktop (more table columns, wider layouts) |
 
 ---
 

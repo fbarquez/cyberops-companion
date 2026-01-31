@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Sidebar } from "@/components/shared/sidebar";
+import { MobileSidebar } from "@/components/shared/mobile-sidebar";
 import { useAuthStore } from "@/stores/auth-store";
 import { useOnboardingStore } from "@/stores/onboarding-store";
 import { PageLoading } from "@/components/shared/loading";
@@ -53,7 +54,10 @@ export default function DashboardLayout({
   return (
     <div className="flex h-screen overflow-hidden">
       <Sidebar />
-      <main className="flex-1 overflow-y-auto bg-background">{children}</main>
+      <MobileSidebar />
+      <main className="flex-1 overflow-y-auto bg-background w-full">
+        {children}
+      </main>
     </div>
   );
 }
