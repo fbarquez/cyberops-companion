@@ -6,6 +6,7 @@ from sqlalchemy import Column, String, Text, DateTime, Enum, Boolean, Integer, J
 from sqlalchemy.orm import relationship
 
 from src.db.database import Base
+from src.models.mixins import TenantMixin
 
 
 def generate_uuid():
@@ -83,7 +84,7 @@ class NotificationChannel(str, enum.Enum):
     SMS = "sms"
 
 
-class Notification(Base):
+class Notification(TenantMixin, Base):
     """Individual notification records."""
     __tablename__ = "notifications"
 

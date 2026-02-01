@@ -48,7 +48,7 @@ async def login(data: UserLogin, db: DBSession, request: Request):
     # Get user for audit logging (before login attempt)
     user = await auth_service.get_user_by_email(data.email)
 
-    tokens = await auth_service.login(data.email, data.password)
+    tokens = await auth_service.login(data.email, data.password, data.tenant_id)
 
     ip_address = request.client.host if request.client else None
     user_agent = request.headers.get("user-agent", "")[:500]

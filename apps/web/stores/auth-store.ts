@@ -5,6 +5,7 @@ import { persist } from "zustand/middleware";
 import { User } from "@/types";
 import { authAPI, ssoAPI, SSOCallbackResponse } from "@/lib/api-client";
 import { saveTokens, clearTokens, getTokens, isTokenExpired } from "@/lib/auth";
+import { useTenantStore } from "./tenant-store";
 
 interface AuthState {
   user: User | null;
@@ -47,6 +48,9 @@ export const useAuthStore = create<AuthState>()(
             isAuthenticated: true,
             isLoading: false,
           });
+
+          // Load user's organizations/tenants
+          await useTenantStore.getState().loadTenants(tokens.access_token);
         } catch (error) {
           set({ isLoading: false });
           throw error;
@@ -89,6 +93,9 @@ export const useAuthStore = create<AuthState>()(
             ssoProvider: response.user.sso_provider || provider,
           });
 
+          // Load user's organizations/tenants
+          await useTenantStore.getState().loadTenants(response.access_token);
+
           return response;
         } catch (error) {
           set({ isLoading: false });
@@ -98,6 +105,7 @@ export const useAuthStore = create<AuthState>()(
 
       logout: () => {
         clearTokens();
+        useTenantStore.getState().clearTenants();
         set({
           user: null,
           token: null,
@@ -148,6 +156,9 @@ export const useAuthStore = create<AuthState>()(
             refreshToken: tokens.refresh_token,
             isAuthenticated: true,
           });
+
+          // Load user's organizations/tenants
+          await useTenantStore.getState().loadTenants(tokens.access_token);
         } catch {
           get().logout();
         }

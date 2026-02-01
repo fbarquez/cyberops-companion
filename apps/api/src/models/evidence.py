@@ -12,6 +12,7 @@ from sqlalchemy import String, Enum, DateTime, Text, ForeignKey, Integer, JSON
 from sqlalchemy.orm import Mapped, mapped_column
 
 from src.db.database import Base
+from src.models.mixins import ImmutableTenantMixin
 
 
 class EvidenceType(str, enum.Enum):
@@ -24,10 +25,12 @@ class EvidenceType(str, enum.Enum):
     SYSTEM = "system"  # System-generated entry
 
 
-class EvidenceEntry(Base):
+class EvidenceEntry(ImmutableTenantMixin, Base):
     """
     Single evidence entry in the forensic chain.
     Implements append-only logging with hash chain verification.
+    Note: Uses ImmutableTenantMixin because tenant_id must never change
+    after creation to preserve forensic integrity.
     """
     __tablename__ = "evidence_entries"
 

@@ -15,6 +15,7 @@ from sqlalchemy.dialects.postgresql import ARRAY
 import enum
 
 from src.db.database import Base
+from src.models.mixins import TenantMixin
 
 
 class RiskCategory(str, enum.Enum):
@@ -116,7 +117,7 @@ risk_threat_association = Table(
 )
 
 
-class Risk(Base):
+class Risk(TenantMixin, Base):
     """Risk Register entry."""
     __tablename__ = "risks"
 
@@ -215,7 +216,7 @@ class Risk(Base):
     incident = relationship("Incident", foreign_keys=[incident_id])
 
 
-class RiskControl(Base):
+class RiskControl(TenantMixin, Base):
     """Risk control/mitigation measure."""
     __tablename__ = "risk_controls"
 
@@ -262,7 +263,7 @@ class RiskControl(Base):
     )
 
 
-class RiskAssessment(Base):
+class RiskAssessment(TenantMixin, Base):
     """Risk assessment history."""
     __tablename__ = "risk_assessments"
 
@@ -291,7 +292,7 @@ class RiskAssessment(Base):
     risk = relationship("Risk", back_populates="assessments")
 
 
-class TreatmentAction(Base):
+class TreatmentAction(TenantMixin, Base):
     """Risk treatment action items."""
     __tablename__ = "treatment_actions"
 
@@ -328,7 +329,7 @@ class TreatmentAction(Base):
     risk = relationship("Risk", back_populates="treatment_actions")
 
 
-class RiskAppetite(Base):
+class RiskAppetite(TenantMixin, Base):
     """Organization risk appetite settings."""
     __tablename__ = "risk_appetite"
 

@@ -6,6 +6,7 @@ from sqlalchemy import Column, String, Text, DateTime, Enum, Boolean, Integer, J
 from sqlalchemy.orm import relationship
 
 from src.db.database import Base
+from src.models.mixins import TenantMixin
 
 
 def generate_uuid():
@@ -104,7 +105,7 @@ class SyncFrequency(str, enum.Enum):
     MANUAL = "manual"
 
 
-class Integration(Base):
+class Integration(TenantMixin, Base):
     """External platform integration configuration."""
     __tablename__ = "integrations"
 

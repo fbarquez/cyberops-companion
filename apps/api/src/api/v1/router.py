@@ -1,11 +1,12 @@
 """API v1 router aggregating all endpoints."""
 from fastapi import APIRouter
 
-from src.api.v1 import auth, sso, incidents, evidence, checklists, decisions, compliance, tools, threats, vulnerabilities, risks, cmdb, soc, tprm, integrations, reporting, notifications, user_management, attachments, analytics, audit
+from src.api.v1 import auth, sso, incidents, evidence, checklists, decisions, compliance, tools, threats, vulnerabilities, risks, cmdb, soc, tprm, integrations, reporting, notifications, user_management, attachments, analytics, audit, organizations
 
 api_router = APIRouter()
 
 # Include all routers
+api_router.include_router(organizations.router, tags=["Organizations"])
 api_router.include_router(auth.router, prefix="/auth", tags=["Authentication"])
 api_router.include_router(sso.router, tags=["SSO Authentication"])
 api_router.include_router(audit.router, tags=["Audit"])

@@ -11,6 +11,7 @@ from src.api.v1.router import api_router
 from src.api.websocket import websocket_router
 from src.db.database import init_db, async_session_maker
 from src.db.seed import run_seed
+from src.middleware.tenant_middleware import TenantMiddleware
 
 
 @asynccontextmanager
@@ -49,6 +50,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Tenant middleware - extracts tenant context from JWT
+app.add_middleware(TenantMiddleware)
 
 # Include routers
 app.include_router(api_router, prefix="/api/v1")

@@ -9,7 +9,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### Planned (Phase 3 - Enterprise)
-- Multi-tenancy support
 - API rate limiting
 
 ### Planned (Future)
@@ -19,6 +18,44 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Incident prediction
 
 See [FUTURE_ROADMAP.md](./FUTURE_ROADMAP.md) for detailed specifications.
+
+---
+
+## [0.12.0] - 2026-02-01
+
+### Added
+
+#### Multi-Tenancy / Organizations (Phase 3)
+
+Complete multi-tenant architecture allowing multiple organizations to use the platform with full data isolation.
+
+**Database:**
+- `Organization` model with status (active, suspended, trial, cancelled) and plans (free, starter, professional, enterprise)
+- `OrganizationMember` model with roles (owner, admin, member, viewer)
+- `tenant_id` column added to 27 domain tables
+- `is_super_admin` field added to User model
+- `TenantMixin` and `ImmutableTenantMixin` for consistent tenant_id handling
+
+**Backend:**
+- `TenantContext` using Python's ContextVar for thread-safe tenant storage
+- `TenantMiddleware` extracts tenant from JWT on every request
+- `TenantAwareService` base class with automatic query filtering
+- `OrganizationService` for CRUD operations and member management
+- JWT tokens now include `tenant_id`, `org_role`, and `available_tenants`
+- New endpoints: `/api/v1/organizations/*` for organization management
+- Super admin can access any tenant via `X-Tenant-ID` header
+
+**Frontend:**
+- `tenant-store.ts` - Zustand store for tenant state management
+- `TenantSelector` component in header for switching organizations
+- Auth store integration - loads tenants on login, clears on logout
+- EN/DE translations for all organization-related UI
+
+**Migrations:**
+- `a1b2c3d4e5f6` - Creates organization tables, adds tenant_id (nullable)
+- `b2c3d4e5f6g7` - Migrates existing data to default organization, makes tenant_id NOT NULL
+
+**Documentation:** [MULTI_TENANCY.md](./features/MULTI_TENANCY.md)
 
 ---
 

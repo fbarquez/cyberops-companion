@@ -33,6 +33,7 @@ export { FormDialog, ConfirmDialog } from "./form-dialog";
 export { Header } from "./header";
 export { Sidebar } from "./sidebar";
 export { NotificationBell } from "./notification-bell";
+export { TenantSelector } from "./tenant-selector";
 
 // Providers
 export { Providers } from "./providers";

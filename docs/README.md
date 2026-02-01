@@ -38,9 +38,11 @@ docs/
 │   ├── I18N_TRANSLATIONS.md     # Internationalization
 │   ├── LANDING_PAGE.md          # Public landing page
 │   ├── MOBILE_RESPONSIVE.md     # Mobile responsive design
+│   ├── MULTI_TENANCY.md         # Multi-tenant organizations
 │   ├── NVD_API.md               # NVD/CVE integration
 │   ├── ONBOARDING.md            # User onboarding flow
 │   ├── ROLE_BASED_ACCESS.md     # RBAC system
+│   ├── SSO_SAML.md              # SSO/OAuth2 integration
 │   └── WEBSOCKET_NOTIFICATIONS.md # Real-time notifications
 │
 ├── api/                         # API documentation
@@ -102,8 +104,8 @@ docs/
 | Feature | Status | Documentation |
 |---------|--------|---------------|
 | Audit Logging | ✅ Complete | [AUDIT_LOGGING.md](./features/AUDIT_LOGGING.md) |
-| Multi-tenancy | 🔲 Planned | - |
-| SSO/SAML Integration | 🔲 Planned | - |
+| Multi-tenancy | ✅ Complete | [MULTI_TENANCY.md](./features/MULTI_TENANCY.md) |
+| SSO/SAML Integration | ✅ Complete | [SSO_SAML.md](./features/SSO_SAML.md) |
 | API Rate Limiting | 🔲 Planned | - |
 
 ### Future Enhancements
@@ -137,4 +139,4 @@ When adding new features:
 
 ## Last Updated
 
-**2026-01-31** - Phase 3 in progress (Audit Logging Complete)
+**2026-02-01** - Phase 3 nearly complete (Multi-Tenancy, SSO, Audit Logging)

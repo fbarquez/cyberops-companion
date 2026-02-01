@@ -32,6 +32,7 @@ class User(Base):
         Enum(UserRole), default=UserRole.ANALYST
     )
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
+    is_super_admin: Mapped[bool] = mapped_column(Boolean, default=False)
     created_at: Mapped[datetime] = mapped_column(
         DateTime, default=datetime.utcnow
     )
@@ -62,6 +63,12 @@ class User(Base):
     activity_logs = relationship("ActivityLog", back_populates="user", cascade="all, delete-orphan")
     api_keys = relationship("APIKey", back_populates="user", cascade="all, delete-orphan")
     custom_roles = relationship("Role", secondary="user_roles", back_populates="users")
+    organization_memberships = relationship(
+        "OrganizationMember",
+        back_populates="user",
+        cascade="all, delete-orphan",
+        lazy="selectin"
+    )
 
     def has_permission(self, required_role: UserRole) -> bool:
         """Check if user has required role or higher."""

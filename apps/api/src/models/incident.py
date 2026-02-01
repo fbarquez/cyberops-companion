@@ -8,6 +8,7 @@ from sqlalchemy import String, Enum, DateTime, Text, ForeignKey, JSON
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.db.database import Base
+from src.models.mixins import TenantMixin
 
 
 class IncidentStatus(str, enum.Enum):
@@ -40,7 +41,7 @@ class DetectionSource(str, enum.Enum):
     OTHER = "other"
 
 
-class AffectedSystem(Base):
+class AffectedSystem(TenantMixin, Base):
     """Systems affected by an incident."""
     __tablename__ = "affected_systems"
 
@@ -59,7 +60,7 @@ class AffectedSystem(Base):
     notes: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
 
 
-class Incident(Base):
+class Incident(TenantMixin, Base):
     """Main incident model."""
     __tablename__ = "incidents"
 

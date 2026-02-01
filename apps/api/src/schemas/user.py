@@ -1,6 +1,6 @@
 """User schemas for authentication and authorization."""
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
 from pydantic import BaseModel, EmailStr, Field
 
 from src.models.user import UserRole
@@ -40,6 +40,7 @@ class UserLogin(BaseModel):
     """Schema for user login."""
     email: EmailStr
     password: str
+    tenant_id: Optional[str] = None  # Optional: specify which tenant to log into
 
 
 class Token(BaseModel):
@@ -55,3 +56,13 @@ class TokenPayload(BaseModel):
     exp: datetime
     role: UserRole
     type: str  # "access" or "refresh"
+    # Multi-tenancy fields
+    tenant_id: Optional[str] = None
+    org_role: Optional[str] = None
+    is_super_admin: bool = False
+    available_tenants: List[str] = []
+
+
+class TenantSwitch(BaseModel):
+    """Schema for switching active tenant."""
+    tenant_id: str

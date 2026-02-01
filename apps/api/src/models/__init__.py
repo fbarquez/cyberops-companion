@@ -1,5 +1,10 @@
 """SQLAlchemy models."""
 from src.models.user import User, UserRole
+from src.models.organization import (
+    Organization, OrganizationMember,
+    OrganizationStatus, OrganizationPlan, OrganizationMemberRole
+)
+from src.models.mixins import TenantMixin, ImmutableTenantMixin
 from src.models.incident import Incident, IncidentStatus, IncidentSeverity, AffectedSystem
 from src.models.evidence import EvidenceEntry, EvidenceType
 from src.models.checklist import ChecklistItem, ChecklistStatus
@@ -69,6 +74,15 @@ from src.models.attachment import (
 __all__ = [
     "User",
     "UserRole",
+    # Organization / Multi-tenancy
+    "Organization",
+    "OrganizationMember",
+    "OrganizationStatus",
+    "OrganizationPlan",
+    "OrganizationMemberRole",
+    "TenantMixin",
+    "ImmutableTenantMixin",
+    # Incidents
     "Incident",
     "IncidentStatus",
     "IncidentSeverity",

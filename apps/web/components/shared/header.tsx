@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/select";
 import { useUIStore } from "@/stores/ui-store";
 import { NotificationBell } from "./notification-bell";
+import { TenantSelector } from "./tenant-selector";
 
 interface HeaderProps {
   title?: string;
@@ -54,6 +55,9 @@ export function Header({ title, children, actions, backHref }: HeaderProps) {
       </div>
 
       <div className="flex items-center gap-2 md:gap-4">
+        {/* Tenant/Organization Selector */}
+        <TenantSelector />
+
         {/* Page-specific actions - hidden on mobile for cleaner UI */}
         <div className="hidden sm:flex items-center gap-2">
           {actions || children}

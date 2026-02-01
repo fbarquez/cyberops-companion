@@ -1574,6 +1574,67 @@ const translations = {
       userAgent: "User Agent",
       error: "Error",
     },
+    // Organizations (Multi-tenancy)
+    organizations: {
+      title: "Organizations",
+      subtitle: "Manage your organizations and team members",
+      create: "Create Organization",
+      switch: "Switch Organization",
+      members: "Members",
+      settings: "Organization Settings",
+      invite: "Invite Member",
+      inviteMember: "Invite a new member",
+      inviteDescription: "Send an invitation to join this organization",
+      removeMember: "Remove Member",
+      transferOwnership: "Transfer Ownership",
+      leaveOrganization: "Leave Organization",
+      deleteOrganization: "Delete Organization",
+      // Form fields
+      name: "Organization Name",
+      namePlaceholder: "Enter organization name",
+      slug: "URL Slug",
+      slugPlaceholder: "my-organization",
+      description: "Description",
+      descriptionPlaceholder: "Describe your organization...",
+      logo: "Logo",
+      // Status
+      active: "Active",
+      suspended: "Suspended",
+      trial: "Trial",
+      cancelled: "Cancelled",
+      // Plans
+      free: "Free",
+      starter: "Starter",
+      professional: "Professional",
+      enterprise: "Enterprise",
+      // Roles
+      owner: "Owner",
+      admin: "Admin",
+      member: "Member",
+      viewer: "Viewer",
+      // Actions
+      save: "Save",
+      cancel: "Cancel",
+      confirm: "Confirm",
+      // Messages
+      switchSuccess: "Switched to organization successfully",
+      createSuccess: "Organization created successfully",
+      updateSuccess: "Organization updated successfully",
+      deleteSuccess: "Organization deleted successfully",
+      inviteSuccess: "Invitation sent successfully",
+      removeMemberSuccess: "Member removed successfully",
+      // Errors
+      switchError: "Failed to switch organization",
+      createError: "Failed to create organization",
+      loadError: "Failed to load organizations",
+      // Empty states
+      noOrganizations: "No organizations found",
+      noMembers: "No members found",
+      // Confirmation dialogs
+      confirmDelete: "Are you sure you want to delete this organization? This action cannot be undone.",
+      confirmLeave: "Are you sure you want to leave this organization?",
+      confirmRemove: "Are you sure you want to remove this member?",
+    },
   },
   de: {
     // App
@@ -3137,6 +3198,67 @@ const translations = {
       requestId: "Anfrage-ID",
       userAgent: "User-Agent",
       error: "Fehler",
+    },
+    // Organizations (Multi-tenancy)
+    organizations: {
+      title: "Organisationen",
+      subtitle: "Verwalten Sie Ihre Organisationen und Teammitglieder",
+      create: "Organisation erstellen",
+      switch: "Organisation wechseln",
+      members: "Mitglieder",
+      settings: "Organisationseinstellungen",
+      invite: "Mitglied einladen",
+      inviteMember: "Neues Mitglied einladen",
+      inviteDescription: "Senden Sie eine Einladung, dieser Organisation beizutreten",
+      removeMember: "Mitglied entfernen",
+      transferOwnership: "Eigentum ubertragen",
+      leaveOrganisation: "Organisation verlassen",
+      deleteOrganization: "Organisation loschen",
+      // Form fields
+      name: "Organisationsname",
+      namePlaceholder: "Organisationsname eingeben",
+      slug: "URL-Slug",
+      slugPlaceholder: "meine-organisation",
+      description: "Beschreibung",
+      descriptionPlaceholder: "Beschreiben Sie Ihre Organisation...",
+      logo: "Logo",
+      // Status
+      active: "Aktiv",
+      suspended: "Gesperrt",
+      trial: "Testversion",
+      cancelled: "Gekundigt",
+      // Plans
+      free: "Kostenlos",
+      starter: "Starter",
+      professional: "Professional",
+      enterprise: "Enterprise",
+      // Roles
+      owner: "Eigentumer",
+      admin: "Admin",
+      member: "Mitglied",
+      viewer: "Betrachter",
+      // Actions
+      save: "Speichern",
+      cancel: "Abbrechen",
+      confirm: "Bestatigen",
+      // Messages
+      switchSuccess: "Organisation erfolgreich gewechselt",
+      createSuccess: "Organisation erfolgreich erstellt",
+      updateSuccess: "Organisation erfolgreich aktualisiert",
+      deleteSuccess: "Organisation erfolgreich geloscht",
+      inviteSuccess: "Einladung erfolgreich gesendet",
+      removeMemberSuccess: "Mitglied erfolgreich entfernt",
+      // Errors
+      switchError: "Organisation konnte nicht gewechselt werden",
+      createError: "Organisation konnte nicht erstellt werden",
+      loadError: "Organisationen konnten nicht geladen werden",
+      // Empty states
+      noOrganizations: "Keine Organisationen gefunden",
+      noMembers: "Keine Mitglieder gefunden",
+      // Confirmation dialogs
+      confirmDelete: "Sind Sie sicher, dass Sie diese Organisation loschen mochten? Diese Aktion kann nicht ruckgangig gemacht werden.",
+      confirmLeave: "Sind Sie sicher, dass Sie diese Organisation verlassen mochten?",
+      confirmRemove: "Sind Sie sicher, dass Sie dieses Mitglied entfernen mochten?",
     },
   },
 };

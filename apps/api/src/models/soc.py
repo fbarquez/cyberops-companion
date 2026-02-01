@@ -12,6 +12,7 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import relationship
 from src.db.database import Base
+from src.models.mixins import TenantMixin
 import uuid
 
 
@@ -140,7 +141,7 @@ case_alert_association = Table(
 
 # ==================== Models ====================
 
-class SOCAlert(Base):
+class SOCAlert(TenantMixin, Base):
     """Security alert from various sources."""
     __tablename__ = "soc_alerts"
 
@@ -205,7 +206,7 @@ class SOCAlert(Base):
     executions = relationship("PlaybookExecution", back_populates="alert")
 
 
-class AlertComment(Base):
+class AlertComment(TenantMixin, Base):
     """Comments on alerts."""
     __tablename__ = "alert_comments"
 
@@ -219,7 +220,7 @@ class AlertComment(Base):
     alert = relationship("SOCAlert", back_populates="comments")
 
 
-class SOCCase(Base):
+class SOCCase(TenantMixin, Base):
     """Investigation case combining multiple alerts."""
     __tablename__ = "soc_cases"
 
@@ -277,7 +278,7 @@ class SOCCase(Base):
     timeline_entries = relationship("CaseTimeline", back_populates="case", cascade="all, delete-orphan")
 
 
-class CaseTask(Base):
+class CaseTask(TenantMixin, Base):
     """Tasks within a case."""
     __tablename__ = "case_tasks"
 
@@ -298,7 +299,7 @@ class CaseTask(Base):
     case = relationship("SOCCase", back_populates="tasks")
 
 
-class CaseTimeline(Base):
+class CaseTimeline(TenantMixin, Base):
     """Timeline entries for case investigation."""
     __tablename__ = "case_timeline"
 
@@ -317,7 +318,7 @@ class CaseTimeline(Base):
     case = relationship("SOCCase", back_populates="timeline_entries")
 
 
-class SOCPlaybook(Base):
+class SOCPlaybook(TenantMixin, Base):
     """Automated response playbook."""
     __tablename__ = "soc_playbooks"
 
@@ -361,7 +362,7 @@ class SOCPlaybook(Base):
     executions = relationship("PlaybookExecution", back_populates="playbook")
 
 
-class PlaybookExecution(Base):
+class PlaybookExecution(TenantMixin, Base):
     """Playbook execution record."""
     __tablename__ = "playbook_executions"
 
@@ -398,7 +399,7 @@ class PlaybookExecution(Base):
     alert = relationship("SOCAlert", back_populates="executions")
 
 
-class SOCMetrics(Base):
+class SOCMetrics(TenantMixin, Base):
     """SOC performance metrics snapshot."""
     __tablename__ = "soc_metrics"
 
@@ -439,7 +440,7 @@ class SOCMetrics(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
 
-class ShiftHandover(Base):
+class ShiftHandover(TenantMixin, Base):
     """Shift handover notes."""
     __tablename__ = "shift_handovers"
 

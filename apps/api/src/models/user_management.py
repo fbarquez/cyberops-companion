@@ -6,6 +6,7 @@ from sqlalchemy import Column, String, Text, DateTime, Enum, Boolean, Integer, J
 from sqlalchemy.orm import relationship
 
 from src.db.database import Base
+from src.models.mixins import TenantMixin
 
 
 def generate_uuid():
@@ -53,7 +54,7 @@ user_roles = Table(
 )
 
 
-class Team(Base):
+class Team(TenantMixin, Base):
     """Team/Department model for grouping users."""
     __tablename__ = "teams"
 
@@ -81,7 +82,7 @@ class Team(Base):
     members = relationship("TeamMember", back_populates="team", cascade="all, delete-orphan")
 
 
-class TeamMember(Base):
+class TeamMember(TenantMixin, Base):
     """Team membership with role."""
     __tablename__ = "team_members"
 
