@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { Toaster } from "sonner";
 import { useAuthStore } from "@/stores/auth-store";
 import { useUIStore } from "@/stores/ui-store";
+import { RateLimitBanner } from "@/components/shared/rate-limit-banner";
 
 function ThemeProvider({ children }: { children: React.ReactNode }) {
   const theme = useUIStore((state) => state.theme);
@@ -53,6 +54,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         <AuthProvider>
+          <RateLimitBanner />
           {children}
           <Toaster richColors position="top-right" />
         </AuthProvider>

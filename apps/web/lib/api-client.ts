@@ -4,11 +4,61 @@ interface RequestOptions extends RequestInit {
   token?: string;
 }
 
+// Rate limit information from response headers
+export interface RateLimitInfo {
+  limit: number;
+  remaining: number;
+  resetAt: number;
+  retryAfter?: number;
+}
+
+// Rate limit event listeners
+type RateLimitListener = (info: RateLimitInfo) => void;
+const rateLimitListeners: Set<RateLimitListener> = new Set();
+
+export function onRateLimitExceeded(listener: RateLimitListener): () => void {
+  rateLimitListeners.add(listener);
+  return () => rateLimitListeners.delete(listener);
+}
+
+function notifyRateLimitExceeded(info: RateLimitInfo): void {
+  rateLimitListeners.forEach((listener) => listener(info));
+}
+
 class APIError extends Error {
   constructor(public status: number, message: string) {
     super(message);
     this.name = "APIError";
   }
+}
+
+export class RateLimitError extends APIError {
+  constructor(
+    message: string,
+    public rateLimitInfo: RateLimitInfo
+  ) {
+    super(429, message);
+    this.name = "RateLimitError";
+  }
+}
+
+// Parse rate limit headers from response
+function parseRateLimitHeaders(response: Response): RateLimitInfo | null {
+  const limit = response.headers.get("X-RateLimit-Limit");
+  const remaining = response.headers.get("X-RateLimit-Remaining");
+  const resetAt = response.headers.get("X-RateLimit-Reset");
+  const retryAfter = response.headers.get("Retry-After");
+
+  if (!limit || !remaining || !resetAt) {
+    return null;
+  }
+
+  return {
+    limit: parseInt(limit, 10),
+    remaining: parseInt(remaining, 10),
+    resetAt: parseInt(resetAt, 10),
+    retryAfter: retryAfter ? parseInt(retryAfter, 10) : undefined,
+  };
 }
 
 async function request<T>(
@@ -31,6 +81,29 @@ async function request<T>(
   });
 
   if (!response.ok) {
+    // Handle rate limit error (429)
+    if (response.status === 429) {
+      const error = await response.json().catch(() => ({
+        detail: "Rate limit exceeded",
+        error: { limit: 0, retry_after: 60, reset_at: 0 },
+      }));
+
+      const rateLimitInfo: RateLimitInfo = {
+        limit: error.error?.limit || 0,
+        remaining: 0,
+        resetAt: error.error?.reset_at || 0,
+        retryAfter: error.error?.retry_after || 60,
+      };
+
+      // Notify listeners
+      notifyRateLimitExceeded(rateLimitInfo);
+
+      throw new RateLimitError(
+        error.error?.message || "Too many requests. Please try again later.",
+        rateLimitInfo
+      );
+    }
+
     const error = await response.json().catch(() => ({ detail: "Request failed" }));
     throw new APIError(response.status, error.detail || "Request failed");
   }

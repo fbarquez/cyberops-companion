@@ -12,6 +12,8 @@ from src.api.websocket import websocket_router
 from src.db.database import init_db, async_session_maker
 from src.db.seed import run_seed
 from src.middleware.tenant_middleware import TenantMiddleware
+from src.middleware.rate_limit_middleware import RateLimitMiddleware
+from src.core.redis import RedisManager
 
 
 @asynccontextmanager
@@ -29,7 +31,7 @@ async def lifespan(app: FastAPI):
 
     yield
     # Shutdown
-    pass
+    await RedisManager.close()
 
 
 app = FastAPI(
@@ -50,6 +52,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Rate limit middleware - must be added before tenant middleware
+# Note: Middleware executes in reverse order of registration
+app.add_middleware(RateLimitMiddleware)
 
 # Tenant middleware - extracts tenant context from JWT
 app.add_middleware(TenantMiddleware)

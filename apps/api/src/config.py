@@ -101,6 +101,21 @@ class Settings(BaseSettings):
     SSO_ALLOWED_DOMAINS: str = ""  # Comma-separated list of allowed email domains
     SSO_CALLBACK_URL: str = ""  # Override callback URL (defaults to FRONTEND_URL/auth/callback)
 
+    # Rate Limiting
+    RATE_LIMIT_ENABLED: bool = True
+    RATE_LIMIT_REDIS_DB: int = 1  # Separate DB from Celery (DB 0)
+    RATE_LIMIT_BYPASS_SUPER_ADMIN: bool = True
+
+    # Per-plan limits (can be overridden via environment)
+    RATE_LIMIT_FREE_HOUR: int = 1000
+    RATE_LIMIT_FREE_MINUTE: int = 60
+    RATE_LIMIT_STARTER_HOUR: int = 5000
+    RATE_LIMIT_STARTER_MINUTE: int = 200
+    RATE_LIMIT_PROFESSIONAL_HOUR: int = 20000
+    RATE_LIMIT_PROFESSIONAL_MINUTE: int = 500
+    RATE_LIMIT_ENTERPRISE_HOUR: int = 100000
+    RATE_LIMIT_ENTERPRISE_MINUTE: int = 2000
+
     class Config:
         env_file = ".env"
         case_sensitive = True
