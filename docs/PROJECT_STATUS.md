@@ -7,7 +7,7 @@
 
 ## Quick Resume Point
 
-> **Where we left off:** Phase 3 nearly complete. Multi-tenancy, SSO/SAML, and Audit Logging all complete. Next: API Rate Limiting.
+> **Where we left off:** Phase 3 (Enterprise Features) is 100% complete. All enterprise features implemented: Multi-tenancy, SSO/SAML, Audit Logging, and API Rate Limiting. Next: Technical debt (scanner integration, test coverage) or ML features when data is available.
 
 ---
 
@@ -83,6 +83,7 @@ CyberOps Companion is a comprehensive cybersecurity operations platform that int
 | File Uploads | ✅ Complete | Local/S3 storage, integrity verification |
 | Multi-tenancy | ✅ Complete | Organization isolation, tenant context |
 | SSO/SAML | ✅ Complete | Google, Azure AD, Okta OAuth2 |
+| Rate Limiting | ✅ Complete | Redis sliding window, plan-based limits |
 
 ### Frontend (Next.js)
 
@@ -109,6 +110,7 @@ CyberOps Companion is a comprehensive cybersecurity operations platform that int
 | File Uploads | ✅ Complete | Drag-drop upload, categories, integrity |
 | Organization Selector | ✅ Complete | Multi-tenant organization switching |
 | SSO Login | ✅ Complete | OAuth2 provider buttons |
+| Rate Limit Banner | ✅ Complete | 429 handling with countdown timer |
 
 ---
 
@@ -146,13 +148,13 @@ CyberOps Companion is a comprehensive cybersecurity operations platform that int
 
 ## Pending Features (Future Phases)
 
-### Phase 3 - Enterprise Features
+### Phase 3 - Enterprise Features (COMPLETE)
 | Feature | Priority | Status | Date Completed |
 |---------|----------|--------|----------------|
 | Audit logging | Medium | ✅ Complete | 2026-01-31 |
 | SSO/SAML integration | High | ✅ Complete | 2026-02-01 |
 | Multi-tenancy | High | ✅ Complete | 2026-02-01 |
-| API rate limiting | Medium | 🔲 Not Started | - |
+| API rate limiting | Medium | ✅ Complete | 2026-02-01 |
 
 ---
 
@@ -304,14 +306,14 @@ Key services required:
 |---------|--------|-------|
 | ML/Predictive Analytics | 🔲 Deferred | Requires production data to train models |
 
-### Phase 3 - Enterprise Features (75% Complete)
+### Phase 3 - Enterprise Features (100% Complete)
 
 | Feature | Priority | Status |
 |---------|----------|--------|
 | Multi-tenancy | High | ✅ Complete |
 | SSO/SAML | High | ✅ Complete |
 | Audit Logging | Medium | ✅ Complete |
-| API Rate Limiting | Medium | 🔲 Not Started |
+| API Rate Limiting | Medium | ✅ Complete |
 
 ### Technical Debt
 
@@ -327,11 +329,13 @@ See [FUTURE_ROADMAP.md](./FUTURE_ROADMAP.md) for detailed specifications.
 
 ## Next Steps
 
-1. **If continuing Phase 3:** Implement API Rate Limiting
-2. **If deploying:** Review production configuration in `.env.example`
-3. **If onboarding developers:** See `docs/architecture/` for system design
-4. **Documentation:** See `docs/README.md` for full feature index
-5. **Multi-tenancy:** See `docs/features/MULTI_TENANCY.md` for organization management
+1. **Technical Debt:** Real scanner integration (Nessus, OpenVAS, Qualys)
+2. **Technical Debt:** Add unit/integration test coverage
+3. **If deploying:** Review production configuration in `.env.example`
+4. **If onboarding developers:** See `docs/architecture/` for system design
+5. **Documentation:** See `docs/README.md` for full feature index
+6. **Multi-tenancy:** See `docs/features/MULTI_TENANCY.md` for organization management
+7. **Rate Limiting:** See `docs/features/RATE_LIMITING.md` for API protection
 
 ---
 
@@ -347,4 +351,5 @@ See [FUTURE_ROADMAP.md](./FUTURE_ROADMAP.md) for detailed specifications.
 | 2026-01-31 | Phase 2 Complete | Mobile Responsive: sidebar drawer, header hamburger menu, responsive dialogs, tables, forms |
 | 2026-01-31 | Phase 3 Progress | Audit Logging: backend service, API endpoints, decorator, frontend page with filters/export |
 | 2026-02-01 | Phase 3 Progress | SSO/SAML: OAuth2/OIDC with Google, Microsoft, Okta; JIT provisioning; frontend integration |
-| 2026-02-01 | Phase 3 Complete | Multi-tenancy: Organization model, TenantMixin, TenantMiddleware, TenantAwareService, data migration, frontend selector |
+| 2026-02-01 | Phase 3 Progress | Multi-tenancy: Organization model, TenantMixin, TenantMiddleware, TenantAwareService, data migration, frontend selector |
+| 2026-02-01 | Phase 3 Complete | API Rate Limiting: Redis sliding window, plan-based limits (FREE/STARTER/PROFESSIONAL/ENTERPRISE), endpoint limits, RateLimitBanner component |

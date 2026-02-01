@@ -8,9 +8,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
-### Planned (Phase 3 - Enterprise)
-- API rate limiting
-
 ### Planned (Future)
 - ML/Predictive Analytics (Phase 2C - when more data is available)
 - Real scanner integration (Nessus, OpenVAS, Qualys)
@@ -18,6 +15,86 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Incident prediction
 
 See [FUTURE_ROADMAP.md](./FUTURE_ROADMAP.md) for detailed specifications.
+
+---
+
+## [0.13.0] - 2026-02-01
+
+### Added
+
+#### API Rate Limiting (Phase 3 Complete)
+
+Comprehensive rate limiting system to protect the API against abuse with plan-based limits.
+
+**Rate Limits by Plan:**
+| Plan | Requests/Hour | Requests/Minute |
+|------|---------------|-----------------|
+| FREE | 1,000 | 60 |
+| STARTER | 5,000 | 200 |
+| PROFESSIONAL | 20,000 | 500 |
+| ENTERPRISE | 100,000 | 2,000 |
+
+**Endpoint-Specific Limits (per IP):**
+- `/api/v1/auth/login` - 5/minute
+- `/api/v1/auth/register` - 3/minute
+- `/api/v1/auth/forgot-password` - 3/minute
+- `/api/v1/auth/reset-password` - 5/minute
+- Unauthenticated requests - 30/minute
+
+**Backend:**
+- `RedisManager` (`core/redis.py`) - Async Redis connection pool
+- `RateLimitService` (`services/rate_limit_service.py`) - Sliding window algorithm with Redis sorted sets
+- `RateLimitMiddleware` (`middleware/rate_limit_middleware.py`) - FastAPI middleware
+- Rate limit configuration (`core/rate_limit_config.py`) - Plan and endpoint limits
+- Redis DB 1 for rate limiting (separate from Celery on DB 0)
+- Super admin bypass option (`RATE_LIMIT_BYPASS_SUPER_ADMIN`)
+- Plan caching to reduce database queries
+
+**Response Headers:**
+```
+X-RateLimit-Limit: 60
+X-RateLimit-Remaining: 45
+X-RateLimit-Reset: 1706745720
+Retry-After: 35  (only on 429)
+```
+
+**429 Response Format:**
+```json
+{
+  "detail": "Rate limit exceeded",
+  "error": {
+    "code": "RATE_LIMIT_EXCEEDED",
+    "message": "Too many requests. Please try again later.",
+    "limit": 60,
+    "retry_after": 35,
+    "reset_at": 1706745720
+  }
+}
+```
+
+**Frontend:**
+- `RateLimitError` class with rate limit info
+- `RateLimitInfo` interface for typed rate limit data
+- `onRateLimitExceeded()` event system for global notifications
+- `RateLimitBanner` component with countdown timer
+- `useRateLimitState()` hook for components needing rate limit state
+- Auto-dismiss banner when retry period expires
+
+**Excluded Paths (no rate limiting):**
+- `/health`, `/`, `/api/docs`, `/api/redoc`, `/api/openapi.json`
+- `/api/v1/ws/*` (WebSocket connections)
+
+**Configuration:**
+```bash
+RATE_LIMIT_ENABLED=true
+RATE_LIMIT_REDIS_DB=1
+RATE_LIMIT_BYPASS_SUPER_ADMIN=true
+RATE_LIMIT_FREE_HOUR=1000
+RATE_LIMIT_FREE_MINUTE=60
+# ... etc for other plans
+```
+
+**Documentation:** [RATE_LIMITING.md](./features/RATE_LIMITING.md)
 
 ---
 

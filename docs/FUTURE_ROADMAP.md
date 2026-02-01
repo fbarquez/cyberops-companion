@@ -13,7 +13,7 @@ This document outlines features planned for future development phases.
 | Phase 0 - Foundation | ✅ Complete | 100% |
 | Phase 1 - Enhanced Features | ✅ Complete | 100% |
 | Phase 2 - Advanced Features | ✅ Complete | 100% |
-| Phase 3 - Enterprise Features | 🔄 In Progress | 50% |
+| Phase 3 - Enterprise Features | ✅ Complete | 100% |
 
 ---
 
@@ -70,6 +70,24 @@ This document outlines features planned for future development phases.
 - EN/DE translations
 
 **Documentation:** [SSO_SAML.md](./features/SSO_SAML.md)
+
+---
+
+### API Rate Limiting ✅
+
+**Status:** Complete (2026-02-01)
+
+**Implemented:**
+- Redis-based rate limiting with sliding window algorithm
+- Plan-based limits (FREE, STARTER, PROFESSIONAL, ENTERPRISE)
+- Endpoint-specific limits for auth (login, register)
+- Per-IP limits for unauthenticated requests
+- X-RateLimit-* headers on all responses
+- 429 responses with retry_after
+- Super admin bypass option
+- Frontend: RateLimitBanner with countdown, RateLimitError class
+
+**Documentation:** [RATE_LIMITING.md](./features/RATE_LIMITING.md)
 
 ---
 
@@ -145,39 +163,11 @@ apps/api/src/ml/
 
 ---
 
-## Phase 3 - Enterprise Features
+## Phase 3 - Enterprise Features (COMPLETE)
 
-### Multi-tenancy
+### Multi-tenancy ✅ COMPLETED
 
-**Priority:** High
-**Effort:** High
-**Status:** Not Started
-
-**Description:**
-Support multiple organizations/tenants on a single deployment with data isolation.
-
-**Components:**
-- Tenant model and database schema
-- Tenant-aware queries (all models)
-- Tenant context middleware
-- Tenant-specific settings
-- Tenant admin portal
-- Data isolation verification
-
-**Database changes:**
-```python
-# Add to all models
-tenant_id = Column(UUID(as_uuid=True), ForeignKey("tenants.id"), index=True)
-
-# Tenant model
-class Tenant(Base):
-    id = Column(UUID)
-    name = Column(String)
-    slug = Column(String, unique=True)
-    settings = Column(JSON)
-    created_at = Column(DateTime)
-    is_active = Column(Boolean)
-```
+See [Phase 3 - Completed Items](#phase-3---completed-items) above and [MULTI_TENANCY.md](./features/MULTI_TENANCY.md).
 
 ---
 
@@ -193,39 +183,9 @@ See [Phase 3 - Completed Items](#phase-3---completed-items) above and [AUDIT_LOG
 
 ---
 
-### API Rate Limiting
+### API Rate Limiting ✅ COMPLETED
 
-**Priority:** Medium
-**Effort:** Low
-**Status:** Not Started
-
-**Description:**
-Protect API from abuse and ensure fair usage.
-
-**Implementation:**
-- Redis-based rate limiting
-- Per-user and per-IP limits
-- Configurable limits per endpoint
-- Rate limit headers in responses
-- Graceful degradation
-
-**Configuration:**
-```python
-RATE_LIMITS = {
-    "default": "100/minute",
-    "auth": "10/minute",
-    "reports": "10/minute",
-    "uploads": "20/minute",
-    "api_heavy": "30/minute",
-}
-```
-
-**Headers:**
-```
-X-RateLimit-Limit: 100
-X-RateLimit-Remaining: 95
-X-RateLimit-Reset: 1706745600
-```
+See [Phase 3 - Completed Items](#phase-3---completed-items) above and [RATE_LIMITING.md](./features/RATE_LIMITING.md).
 
 ---
 
