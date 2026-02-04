@@ -12,8 +12,8 @@
   <a href="#features">Features</a> •
   <a href="#quick-start">Quick Start</a> •
   <a href="#documentation">Docs</a> •
-  <a href="#contributing">Contributing</a> •
-  <a href="#license">License</a>
+  <a href="#community-vs-enterprise">Editions</a> •
+  <a href="#contributing">Contributing</a>
 </p>
 
 <p align="center">
@@ -34,8 +34,42 @@ CyberOps Companion is a comprehensive, open-source cybersecurity operations plat
 - **SOC Operations** - Alert triage, case management, and SOAR playbooks
 - **Vulnerability Management** - CVE tracking with NVD integration
 - **Risk Management** - Risk register with FAIR methodology
-- **Compliance** - Multi-framework support (BSI, NIST, ISO 27001, NIS2)
+- **Compliance** - Multi-framework support (NIST, ISO 27001)
 - **Threat Intelligence** - IOC management and MITRE ATT&CK mapping
+
+---
+
+## Community vs Enterprise
+
+CyberOps Companion follows an **Open Core** model:
+
+| Feature | Community (Free) | Enterprise |
+|---------|:----------------:|:----------:|
+| Incident Management | ✅ | ✅ |
+| SOC (Alerts, Cases, Playbooks) | ✅ | ✅ |
+| Vulnerability Management | ✅ | ✅ |
+| Risk Management | ✅ | ✅ |
+| TPRM (Third-Party Risk) | ✅ | ✅ |
+| CMDB | ✅ | ✅ |
+| Threat Intelligence | ✅ | ✅ |
+| Compliance (NIST, ISO 27001) | ✅ | ✅ |
+| Reporting & Analytics | ✅ | ✅ |
+| WebSocket Notifications | ✅ | ✅ |
+| File Attachments | ✅ | ✅ |
+| Multi-language (EN/DE) | ✅ | ✅ |
+| RBAC (Role-Based Access) | ✅ | ✅ |
+| SSO/SAML | ✅ | ✅ |
+| Multi-tenancy | ✅ | ✅ |
+| Audit Logging | ✅ | ✅ |
+| **AI Copilot** | ❌ | ✅ |
+| **BSI IT-Grundschutz** | ❌ | ✅ |
+| **NIS2 Assessment** | ❌ | ✅ |
+| **Priority Support** | ❌ | ✅ |
+| **SLA Guarantee** | ❌ | ✅ |
+
+**Interested in Enterprise?** Contact us for licensing options.
+
+---
 
 ## Features
 
@@ -49,17 +83,17 @@ CyberOps Companion is a comprehensive, open-source cybersecurity operations plat
 | **Risk Management** | Risk register, FAIR methodology, Monte Carlo simulations |
 | **TPRM** | Third-party risk assessments, vendor management |
 | **CMDB** | Configuration items, asset inventory, relationships |
-| **Compliance** | BSI IT-Grundschutz, NIST CSF, ISO 27001, NIS2, DORA |
+| **Compliance** | NIST CSF, ISO 27001 frameworks |
 | **Threat Intelligence** | IOC management, threat actors, campaigns, MITRE ATT&CK |
 
-### Enterprise Features
+### Platform Features
 
 | Feature | Description |
 |---------|-------------|
 | **Multi-tenancy** | Complete data isolation per organization |
 | **SSO/SAML** | OAuth2/OIDC with Google, Microsoft, Okta |
 | **Audit Logging** | Comprehensive audit trail for compliance |
-| **Rate Limiting** | Redis-based API protection with plan tiers |
+| **Rate Limiting** | Redis-based API protection |
 | **RBAC** | Role-based access control (Admin, Manager, Lead, Analyst) |
 | **Real-time Updates** | WebSocket notifications |
 | **File Attachments** | Evidence upload with SHA-256 integrity |
@@ -72,6 +106,8 @@ CyberOps Companion is a comprehensive, open-source cybersecurity operations plat
 - **Real-time**: WebSocket notifications for instant updates
 - **API-first**: 185+ REST endpoints with OpenAPI documentation
 - **Modern Stack**: FastAPI + Next.js 14 + PostgreSQL + Redis
+
+---
 
 ## Architecture
 
@@ -96,6 +132,8 @@ CyberOps Companion is a comprehensive, open-source cybersecurity operations plat
 │  └── Redis 7 (cache, sessions, rate limiting)                   │
 └─────────────────────────────────────────────────────────────────┘
 ```
+
+---
 
 ## Quick Start
 
@@ -126,6 +164,8 @@ docker-compose up -d
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed development setup instructions.
 
+---
+
 ## Project Structure
 
 ```
@@ -150,6 +190,8 @@ cyberops-companion/
 └── scripts/                 # Utility scripts
 ```
 
+---
+
 ## Documentation
 
 | Document | Description |
@@ -168,6 +210,8 @@ cyberops-companion/
 - [WebSocket Notifications](docs/features/WEBSOCKET_NOTIFICATIONS.md)
 - [File Uploads](docs/features/FILE_UPLOADS.md)
 
+---
+
 ## Roadmap
 
 ### Completed
@@ -177,16 +221,19 @@ cyberops-companion/
 - [x] **Phase 2**: Advanced Features (WebSockets, File Uploads, Analytics, Mobile)
 - [x] **Phase 3**: Enterprise Features (Multi-tenancy, SSO, Audit, Rate Limiting)
 
-### In Progress
-
-- [ ] **Phase 4**: AI Features (Copilot with multi-LLM support)
-- [ ] **Phase 4**: Extended Compliance (BSI IT-Grundschutz, NIS2 Assessment)
-
-### Planned
+### Planned (Community)
 
 - [ ] ML-based anomaly detection
 - [ ] Predictive incident analytics
-- [ ] Real scanner integration (Nessus, OpenVAS)
+- [ ] Additional compliance frameworks
+
+### Enterprise Only
+
+- [ ] AI Copilot (multi-LLM support)
+- [ ] BSI IT-Grundschutz compliance
+- [ ] NIS2 Directive assessment
+
+---
 
 ## Contributing
 
@@ -200,10 +247,14 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guid
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
+---
+
 ## Community
 
 - [GitHub Issues](../../issues) - Bug reports and feature requests
 - [GitHub Discussions](../../discussions) - Questions and ideas
+
+---
 
 ## License
 
@@ -214,7 +265,13 @@ This project is licensed under the **AGPL-3.0 License** - see the [LICENSE](LICE
 - You can use, modify, and distribute this software
 - If you modify and distribute, you must share your changes under AGPL-3.0
 - Network use (SaaS) requires sharing source code with users
-- Commercial licensing available for proprietary use cases
+
+**Enterprise Edition** is available under a commercial license for organizations requiring:
+- AI Copilot features
+- BSI IT-Grundschutz / NIS2 compliance modules
+- Priority support and SLA guarantees
+
+---
 
 ## Acknowledgments
 
