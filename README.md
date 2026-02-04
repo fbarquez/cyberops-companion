@@ -1,41 +1,100 @@
-# CyberOps Companion
+<p align="center">
+  <h1 align="center">CyberOps Companion</h1>
+  <p align="center">
+    <strong>Open-Source Cybersecurity Operations Platform</strong>
+  </p>
+  <p align="center">
+    Unified platform for Security Operations, Incident Response, Risk Management, and Compliance
+  </p>
+</p>
 
-A comprehensive CyberOps platform for managing security operations, incident response, risk management, and compliance. Built for security teams and organizations requiring a unified security operations center.
+<p align="center">
+  <a href="#features">Features</a> •
+  <a href="#quick-start">Quick Start</a> •
+  <a href="#documentation">Docs</a> •
+  <a href="#contributing">Contributing</a> •
+  <a href="#license">License</a>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/version-2.0.0-blue.svg" alt="Version">
+  <img src="https://img.shields.io/badge/license-AGPL--3.0-green.svg" alt="License">
+  <img src="https://img.shields.io/badge/python-3.12+-blue.svg" alt="Python">
+  <img src="https://img.shields.io/badge/node-20+-green.svg" alt="Node">
+  <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome">
+</p>
+
+---
+
+## What is CyberOps Companion?
+
+CyberOps Companion is a comprehensive, open-source cybersecurity operations platform designed for security teams and organizations. It provides a unified interface for managing:
+
+- **Incident Response** - Full lifecycle management with NIST-aligned phases
+- **SOC Operations** - Alert triage, case management, and SOAR playbooks
+- **Vulnerability Management** - CVE tracking with NVD integration
+- **Risk Management** - Risk register with FAIR methodology
+- **Compliance** - Multi-framework support (BSI, NIST, ISO 27001, NIS2)
+- **Threat Intelligence** - IOC management and MITRE ATT&CK mapping
+
+## Features
+
+### Core Modules
+
+| Module | Description |
+|--------|-------------|
+| **Incident Management** | 6-phase NIST workflow, evidence chain, decision trees, checklists |
+| **SOC Module** | Alert management, case correlation, playbook automation, MTTD/MTTR metrics |
+| **Vulnerability Management** | CVE tracking, NVD/EPSS/KEV integration, CVSS scoring |
+| **Risk Management** | Risk register, FAIR methodology, Monte Carlo simulations |
+| **TPRM** | Third-party risk assessments, vendor management |
+| **CMDB** | Configuration items, asset inventory, relationships |
+| **Compliance** | BSI IT-Grundschutz, NIST CSF, ISO 27001, NIS2, DORA |
+| **Threat Intelligence** | IOC management, threat actors, campaigns, MITRE ATT&CK |
+
+### Enterprise Features
+
+| Feature | Description |
+|---------|-------------|
+| **Multi-tenancy** | Complete data isolation per organization |
+| **SSO/SAML** | OAuth2/OIDC with Google, Microsoft, Okta |
+| **Audit Logging** | Comprehensive audit trail for compliance |
+| **Rate Limiting** | Redis-based API protection with plan tiers |
+| **RBAC** | Role-based access control (Admin, Manager, Lead, Analyst) |
+| **Real-time Updates** | WebSocket notifications |
+| **File Attachments** | Evidence upload with SHA-256 integrity |
+| **i18n** | Multi-language support (EN/DE) |
+
+### Technical Highlights
+
+- **Evidence Chain**: Forensic-grade logging with SHA-256 hash verification
+- **Background Tasks**: Celery-powered async operations
+- **Real-time**: WebSocket notifications for instant updates
+- **API-first**: 185+ REST endpoints with OpenAPI documentation
+- **Modern Stack**: FastAPI + Next.js 14 + PostgreSQL + Redis
 
 ## Architecture
 
-- **Frontend**: Next.js 14 (App Router), TypeScript, Tailwind CSS, Shadcn/ui
-- **Backend**: FastAPI with SQLAlchemy ORM
-- **Database**: PostgreSQL with UUID support
-- **Cache**: Redis
-- **Auth**: JWT with role-based access control
-
-## Project Structure
-
 ```
-cyberops-companion/
-├── apps/
-│   ├── web/                # Next.js Frontend
-│   │   ├── app/            # App Router pages
-│   │   ├── components/     # React components
-│   │   ├── hooks/          # Custom hooks
-│   │   ├── lib/            # Utilities & API client
-│   │   ├── stores/         # Zustand stores
-│   │   └── i18n/           # Translations (DE/EN)
-│   │
-│   └── api/                # FastAPI Backend
-│       └── src/
-│           ├── api/        # API endpoints (routers)
-│           ├── models/     # SQLAlchemy models
-│           ├── schemas/    # Pydantic schemas
-│           ├── services/   # Business logic
-│           └── db/         # Database config
-│
-├── scripts/                # Utility scripts
-│   └── init-db.sql         # Database initialization
-├── data/                   # Data files (MITRE ATT&CK, etc.)
-├── docker-compose.yml      # Development setup
-└── docker-compose.prod.yml # Production setup
+┌─────────────────────────────────────────────────────────────────┐
+│                        CyberOps Companion                        │
+├─────────────────────────────────────────────────────────────────┤
+│  Frontend (Next.js 14)                                          │
+│  ├── App Router + TypeScript                                    │
+│  ├── Tailwind CSS + shadcn/ui                                   │
+│  ├── Zustand + React Query                                      │
+│  └── Real-time WebSocket                                        │
+├─────────────────────────────────────────────────────────────────┤
+│  Backend (FastAPI)                                              │
+│  ├── SQLAlchemy 2.0 (async)                                     │
+│  ├── Pydantic 2.0 validation                                    │
+│  ├── JWT + RBAC authentication                                  │
+│  └── Celery background tasks                                    │
+├─────────────────────────────────────────────────────────────────┤
+│  Data Layer                                                     │
+│  ├── PostgreSQL 16 (primary database)                           │
+│  └── Redis 7 (cache, sessions, rate limiting)                   │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
 ## Quick Start
@@ -43,178 +102,130 @@ cyberops-companion/
 ### Prerequisites
 
 - Docker and Docker Compose
-- Node.js 20+ (for local development)
-- Python 3.12+ (for local development)
-- pnpm (recommended) or npm
+- Git
 
-### Development with Docker
+### Run with Docker (Recommended)
 
 ```bash
 # Clone the repository
-git clone <repo-url>
+git clone https://github.com/fbarquez/cyberops-companion.git
 cd cyberops-companion
 
 # Copy environment file
 cp .env.example .env
-# Edit .env and set your SECRET_KEY and other values
 
 # Start all services
 docker-compose up -d
 
 # Access the application
 # Frontend: http://localhost:3000
-# API: http://localhost:8000
 # API Docs: http://localhost:8000/api/docs
 ```
 
 ### Local Development
 
-**Backend:**
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed development setup instructions.
 
-```bash
-cd apps/api
-python -m venv venv
-source venv/bin/activate  # or venv\Scripts\activate on Windows
-pip install -r requirements.txt
-
-# Set environment variables
-export DATABASE_URL="postgresql://postgres:postgres@localhost:5432/cyberops_companion"
-export SECRET_KEY="your-secret-key"
-export REDIS_URL="redis://localhost:6379/0"
-
-uvicorn src.main:app --reload --port 8000
-```
-
-**Frontend:**
-
-```bash
-cd apps/web
-pnpm install  # or npm install
-
-# Create .env.local with:
-# NEXT_PUBLIC_API_URL=http://localhost:8000
-
-pnpm dev      # or npm run dev
-```
-
-## Modules
-
-### Core Security Operations
-- **Incident Management**: Full incident lifecycle with NIST-aligned phases (Preparation, Detection, Containment, Eradication, Recovery, Lessons Learned)
-- **SOC Module**: Alert management, case management, and SOAR playbooks
-- **Threat Intelligence Platform (TIP)**: IOC management, threat actors, campaigns, MITRE ATT&CK mapping
-
-### Risk & Compliance
-- **Vulnerability Management**: Asset-based vulnerability tracking with CVSS scoring
-- **Risk Management**: Risk register, assessments, and treatment plans
-- **TPRM (Third-Party Risk Management)**: Vendor risk assessments and monitoring
-
-### Asset Management
-- **CMDB**: Configuration items, software catalog, and asset relationships
-- **Integrations**: API integrations with external security tools
-
-### Reporting & Notifications
-- **Reporting**: Dashboard metrics and scheduled reports
-- **Notifications**: Multi-channel alerts (email, Slack, MS Teams)
-
-### Administration
-- **User Management**: Users, roles, and access control (Admin, Manager, Lead, Analyst)
-- **Settings**: System configuration and preferences
-
-## Key Features
-
-- **Evidence Chain**: Forensic-grade logging with SHA-256 hash chain verification
-- **Decision Trees**: Guided decision-making for incident response
-- **Phase Checklists**: Task tracking with dependency awareness
-- **Multi-framework Compliance**: BSI, NIST, ISO 27001, MITRE ATT&CK, NIS2, DORA
-- **Training Simulations**: Practice IR procedures safely
-- **Multi-language**: German (DE) and English (EN)
-- **Dark/Light Mode**: System-aware theme switching
-- **Background Tasks**: Celery-powered async operations (scans, notifications)
-- **Email Notifications**: SMTP integration with HTML templates
-- **NVD Integration**: Real-time CVE lookup with EPSS and KEV data
-- **User Onboarding**: Guided 5-step wizard for new users
-- **Real-time Updates**: WebSocket notifications with instant delivery
-- **File Attachments**: Upload evidence, screenshots, logs with SHA-256 integrity verification
-
-## User Roles
-
-| Role | Permissions |
-|------|-------------|
-| Admin | Full system access, user management |
-| Manager | View all data, manage team, reports |
-| Lead | Manage incidents, approve decisions |
-| Analyst | Create and work on incidents/alerts |
-
-## API Documentation
-
-Full API documentation available at `/api/docs` (Swagger UI) or `/api/redoc` (ReDoc).
-
-### Main API Endpoints
+## Project Structure
 
 ```
-/api/v1/auth/*           - Authentication (login, register, refresh)
-/api/v1/incidents/*      - Incident management
-/api/v1/soc/*            - SOC (alerts, cases, playbooks)
-/api/v1/threats/*        - Threat intelligence (IOCs, actors, campaigns)
-/api/v1/vulnerabilities/* - Vulnerability management
-/api/v1/risks/*          - Risk management
-/api/v1/cmdb/*           - Configuration management
-/api/v1/tprm/*           - Third-party risk management
-/api/v1/integrations/*   - External integrations
-/api/v1/reporting/*      - Reports and metrics
-/api/v1/notifications/*  - Notification management
-/api/v1/users/*          - User administration
+cyberops-companion/
+├── apps/
+│   ├── api/                 # FastAPI Backend
+│   │   └── src/
+│   │       ├── api/         # REST endpoints
+│   │       ├── models/      # SQLAlchemy models
+│   │       ├── schemas/     # Pydantic schemas
+│   │       ├── services/    # Business logic
+│   │       └── tasks/       # Celery tasks
+│   │
+│   └── web/                 # Next.js Frontend
+│       ├── app/             # App Router pages
+│       ├── components/      # React components
+│       ├── hooks/           # Custom hooks
+│       └── lib/             # Utilities
+│
+├── docs/                    # Documentation
+├── data/                    # Data files (MITRE, templates)
+└── scripts/                 # Utility scripts
 ```
 
-## Environment Variables
+## Documentation
 
-See `.env.example` for all configuration options. Key variables:
+| Document | Description |
+|----------|-------------|
+| [Project Status](docs/PROJECT_STATUS.md) | Current development status |
+| [Changelog](docs/CHANGELOG.md) | Version history |
+| [Future Roadmap](docs/FUTURE_ROADMAP.md) | Planned features |
+| [API Documentation](http://localhost:8000/api/docs) | OpenAPI/Swagger |
 
-| Variable | Description | Required |
-|----------|-------------|----------|
-| DATABASE_URL | PostgreSQL connection string | Yes |
-| SECRET_KEY | JWT signing key (generate with `openssl rand -hex 32`) | Yes |
-| REDIS_URL | Redis connection string | Yes |
-| CORS_ORIGINS | Allowed CORS origins | Yes |
+### Feature Documentation
 
-## Known Limitations
+- [Multi-tenancy](docs/features/MULTI_TENANCY.md)
+- [SSO/SAML](docs/features/SSO_SAML.md)
+- [Rate Limiting](docs/features/RATE_LIMITING.md)
+- [Audit Logging](docs/features/AUDIT_LOGGING.md)
+- [WebSocket Notifications](docs/features/WEBSOCKET_NOTIFICATIONS.md)
+- [File Uploads](docs/features/FILE_UPLOADS.md)
 
-Current MVP limitations to be aware of:
+## Roadmap
 
-1. **Basic search**: Full-text search is pattern-based, not indexed
-2. **Single tenant**: Multi-tenancy not implemented
-3. **Manual backups**: No automated backup system
-4. **Simulated scans**: Vulnerability scans are simulated (real scanner integration planned)
+### Completed
 
-## Development Status
+- [x] **Phase 0**: Foundation (i18n, Email, NVD API, RBAC)
+- [x] **Phase 1**: Enhanced Features (Celery, Onboarding, Landing Page)
+- [x] **Phase 2**: Advanced Features (WebSockets, File Uploads, Analytics, Mobile)
+- [x] **Phase 3**: Enterprise Features (Multi-tenancy, SSO, Audit, Rate Limiting)
 
-This project is under active development.
+### In Progress
 
-- **Phase 0 (Foundation)**: ✅ Complete
-- **Phase 1 (Enhanced Features)**: ✅ Complete
-- **Phase 2 (Advanced Features)**: 🔄 In Progress (50%)
+- [ ] **Phase 4**: AI Features (Copilot with multi-LLM support)
+- [ ] **Phase 4**: Extended Compliance (BSI IT-Grundschutz, NIS2 Assessment)
 
-Current Phase 2 Progress:
-- ✅ Real-time WebSocket Notifications
-- ✅ File upload/attachment system
-- 🔲 Advanced analytics/ML
-- 🔲 Mobile responsive improvements
+### Planned
 
-See `docs/PROJECT_STATUS.md` for detailed progress and `docs/CHANGELOG.md` for version history.
+- [ ] ML-based anomaly detection
+- [ ] Predictive incident analytics
+- [ ] Real scanner integration (Nessus, OpenVAS)
 
-## Testing
+## Contributing
 
-```bash
-# Backend tests
-cd apps/api
-pytest tests/ -v --cov=src
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
-# Frontend tests (if configured)
-cd apps/web
-pnpm test
-```
+### Quick Contribution Guide
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## Community
+
+- [GitHub Issues](../../issues) - Bug reports and feature requests
+- [GitHub Discussions](../../discussions) - Questions and ideas
 
 ## License
 
-AGPL-3.0 (Open Core model - see LICENSE file)
+This project is licensed under the **AGPL-3.0 License** - see the [LICENSE](LICENSE) file for details.
+
+### What this means
+
+- You can use, modify, and distribute this software
+- If you modify and distribute, you must share your changes under AGPL-3.0
+- Network use (SaaS) requires sharing source code with users
+- Commercial licensing available for proprietary use cases
+
+## Acknowledgments
+
+- [FastAPI](https://fastapi.tiangolo.com/) - Modern Python web framework
+- [Next.js](https://nextjs.org/) - React framework
+- [shadcn/ui](https://ui.shadcn.com/) - UI components
+- [MITRE ATT&CK](https://attack.mitre.org/) - Threat framework
+- [NIST](https://www.nist.gov/) - Cybersecurity frameworks
+
+---
+
+<p align="center">
+  Made with dedication for the cybersecurity community
+</p>
