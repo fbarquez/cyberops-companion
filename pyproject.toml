@@ -64,6 +64,7 @@ ignore = [
     "D104",  # Missing docstring in public package
     "D413",  # Missing blank line after last section
     "B904",  # Within except clause, raise exceptions with `from`
+    "B008",  # Function call in default argument - FastAPI pattern
     "F401",  # Unused imports - need cleanup separately
 ]
 # Disabled rules:
