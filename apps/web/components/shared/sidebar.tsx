@@ -27,6 +27,7 @@ import {
   Plug,
   BarChart3,
   ClipboardList,
+  ShieldCheck,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useUIStore } from "@/stores/ui-store";
@@ -42,6 +43,13 @@ const navItems = [
   { href: "/risks", icon: Scale, labelKey: "nav.risks" },
   { href: "/cmdb", icon: Server, labelKey: "nav.cmdb" },
   { href: "/tprm", icon: Building2, labelKey: "nav.tprm" },
+  {
+    label: "Compliance",
+    labelKey: "nav.compliance",
+    children: [
+      { href: "/compliance/iso27001", icon: ShieldCheck, labelKey: "nav.iso27001" },
+    ],
+  },
   { href: "/integrations", icon: Plug, labelKey: "nav.integrations" },
   { href: "/reporting", icon: BarChart3, labelKey: "nav.reporting" },
   { href: "/notifications", icon: Bell, labelKey: "nav.notifications" },

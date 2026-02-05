@@ -2927,4 +2927,141 @@ export const auditAPI = {
     request("/api/v1/audit/actions", { token }),
 };
 
+// ISO 27001:2022 Compliance
+export const iso27001API = {
+  // Reference Data
+  getThemes: (token: string) =>
+    request("/api/v1/iso27001/themes", { token }),
+
+  getControls: (token: string, params?: {
+    theme?: string;
+    search?: string;
+    page?: number;
+    page_size?: number;
+  }) => {
+    const query = new URLSearchParams();
+    if (params?.theme) query.set("theme", params.theme);
+    if (params?.search) query.set("search", params.search);
+    if (params?.page) query.set("page", params.page.toString());
+    if (params?.page_size) query.set("page_size", params.page_size.toString());
+    return request(`/api/v1/iso27001/controls?${query}`, { token });
+  },
+
+  getControl: (token: string, controlId: string) =>
+    request(`/api/v1/iso27001/controls/${controlId}`, { token }),
+
+  // Dashboard
+  getDashboard: (token: string) =>
+    request("/api/v1/iso27001/dashboard", { token }),
+
+  // Assessment CRUD
+  createAssessment: (token: string, data: { name: string; description?: string }) =>
+    request("/api/v1/iso27001/assessments", {
+      method: "POST",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  listAssessments: (token: string, params?: {
+    status?: string;
+    page?: number;
+    page_size?: number;
+  }) => {
+    const query = new URLSearchParams();
+    if (params?.status) query.set("status", params.status);
+    if (params?.page) query.set("page", params.page.toString());
+    if (params?.page_size) query.set("page_size", params.page_size.toString());
+    return request(`/api/v1/iso27001/assessments?${query}`, { token });
+  },
+
+  getAssessment: (token: string, assessmentId: string) =>
+    request(`/api/v1/iso27001/assessments/${assessmentId}`, { token }),
+
+  deleteAssessment: (token: string, assessmentId: string) =>
+    request(`/api/v1/iso27001/assessments/${assessmentId}`, {
+      method: "DELETE",
+      token,
+    }),
+
+  // Wizard Steps
+  updateScope: (token: string, assessmentId: string, data: {
+    scope_description?: string;
+    scope_systems?: string[];
+    scope_locations?: string[];
+    scope_processes?: string[];
+    risk_appetite?: string;
+  }) =>
+    request(`/api/v1/iso27001/assessments/${assessmentId}/scope`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  getWizardState: (token: string, assessmentId: string) =>
+    request(`/api/v1/iso27001/assessments/${assessmentId}/wizard-state`, { token }),
+
+  // Statement of Applicability
+  getSoAEntries: (token: string, assessmentId: string, theme?: string) => {
+    const query = theme ? `?theme=${theme}` : "";
+    return request(`/api/v1/iso27001/assessments/${assessmentId}/soa${query}`, { token });
+  },
+
+  updateSoAEntry: (token: string, assessmentId: string, controlCode: string, data: {
+    applicability?: string;
+    justification?: string;
+    status?: string;
+    implementation_level?: number;
+    evidence?: string;
+    implementation_notes?: string;
+    gap_description?: string;
+    remediation_plan?: string;
+    remediation_owner?: string;
+    remediation_due_date?: string;
+    priority?: number;
+  }) =>
+    request(`/api/v1/iso27001/assessments/${assessmentId}/soa/${controlCode}`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  bulkUpdateSoAEntries: (token: string, assessmentId: string, entries: Record<string, any>) =>
+    request(`/api/v1/iso27001/assessments/${assessmentId}/soa`, {
+      method: "PUT",
+      body: JSON.stringify({ entries }),
+      token,
+    }),
+
+  // Analysis & Reports
+  getOverview: (token: string, assessmentId: string) =>
+    request(`/api/v1/iso27001/assessments/${assessmentId}/overview`, { token }),
+
+  getGapAnalysis: (token: string, assessmentId: string) =>
+    request(`/api/v1/iso27001/assessments/${assessmentId}/gaps`, { token }),
+
+  getCrossFrameworkMapping: (token: string, assessmentId: string) =>
+    request(`/api/v1/iso27001/assessments/${assessmentId}/mapping`, { token }),
+
+  getReport: (token: string, assessmentId: string, params?: {
+    format?: string;
+    include_gaps?: boolean;
+    include_evidence?: boolean;
+    language?: string;
+  }) => {
+    const query = new URLSearchParams();
+    if (params?.format) query.set("format", params.format);
+    if (params?.include_gaps !== undefined) query.set("include_gaps", params.include_gaps.toString());
+    if (params?.include_evidence !== undefined) query.set("include_evidence", params.include_evidence.toString());
+    if (params?.language) query.set("language", params.language);
+    return request(`/api/v1/iso27001/assessments/${assessmentId}/report?${query}`, { token });
+  },
+
+  completeAssessment: (token: string, assessmentId: string, notes?: string) =>
+    request(`/api/v1/iso27001/assessments/${assessmentId}/complete`, {
+      method: "POST",
+      body: JSON.stringify({ confirm: true, notes }),
+      token,
+    }),
+};
+
 export { APIError };

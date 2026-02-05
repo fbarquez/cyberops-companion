@@ -83,7 +83,7 @@ CyberOps Companion follows an **Open Core** model:
 | **Risk Management** | Risk register, FAIR methodology, Monte Carlo simulations |
 | **TPRM** | Third-party risk assessments, vendor management |
 | **CMDB** | Configuration items, asset inventory, relationships |
-| **Compliance** | NIST CSF, ISO 27001 frameworks |
+| **Compliance** | NIST CSF, ISO 27001:2022 (93 controls, 6-step wizard) |
 | **Threat Intelligence** | IOC management, threat actors, campaigns, MITRE ATT&CK |
 
 ### Platform Features
@@ -203,6 +203,7 @@ cyberops-companion/
 
 ### Feature Documentation
 
+- [ISO 27001:2022 Compliance](docs/features/ISO27001.md)
 - [Multi-tenancy](docs/features/MULTI_TENANCY.md)
 - [SSO/SAML](docs/features/SSO_SAML.md)
 - [Rate Limiting](docs/features/RATE_LIMITING.md)
