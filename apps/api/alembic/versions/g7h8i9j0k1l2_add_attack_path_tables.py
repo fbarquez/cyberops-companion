@@ -19,6 +19,7 @@ from typing import Sequence, Union
 
 from alembic import op
 import sqlalchemy as sa
+from sqlalchemy.dialects import postgresql
 
 
 # revision identifiers, used by Alembic.
@@ -31,9 +32,23 @@ depends_on: Union[str, Sequence[str], None] = None
 def upgrade() -> None:
     """Upgrade schema - add Attack Path Analysis tables."""
 
+    # Create enum types first (using DO block for IF NOT EXISTS support)
+    op.execute("DO $$ BEGIN CREATE TYPE asset_trust_level_enum AS ENUM ('UNTRUSTED', 'LOW', 'MEDIUM', 'HIGH', 'TRUSTED'); EXCEPTION WHEN duplicate_object THEN null; END $$;")
+    op.execute("DO $$ BEGIN CREATE TYPE graph_scope_type_enum AS ENUM ('FULL', 'ZONE', 'CUSTOM'); EXCEPTION WHEN duplicate_object THEN null; END $$;")
+    op.execute("DO $$ BEGIN CREATE TYPE graph_status_enum AS ENUM ('COMPUTING', 'READY', 'STALE', 'ERROR'); EXCEPTION WHEN duplicate_object THEN null; END $$;")
+    op.execute("DO $$ BEGIN CREATE TYPE target_criticality_enum AS ENUM ('CRITICAL', 'HIGH', 'MEDIUM', 'LOW'); EXCEPTION WHEN duplicate_object THEN null; END $$;")
+    op.execute("DO $$ BEGIN CREATE TYPE path_status_enum AS ENUM ('ACTIVE', 'MITIGATED', 'ACCEPTED', 'FALSE_POSITIVE'); EXCEPTION WHEN duplicate_object THEN null; END $$;")
+    op.execute("DO $$ BEGIN CREATE TYPE simulation_type_enum AS ENUM ('PATCH_VULNERABILITY', 'SEGMENT_NETWORK', 'REMOVE_ACCESS', 'ADD_CONTROL', 'COMPROMISE_ASSET'); EXCEPTION WHEN duplicate_object THEN null; END $$;")
+    op.execute("DO $$ BEGIN CREATE TYPE simulation_status_enum AS ENUM ('PENDING', 'COMPLETED', 'ERROR'); EXCEPTION WHEN duplicate_object THEN null; END $$;")
+    op.execute("DO $$ BEGIN CREATE TYPE jewel_type_enum AS ENUM ('DATA', 'SYSTEM', 'CREDENTIAL', 'NETWORK', 'IDENTITY'); EXCEPTION WHEN duplicate_object THEN null; END $$;")
+    op.execute("DO $$ BEGIN CREATE TYPE business_impact_enum AS ENUM ('CRITICAL', 'HIGH', 'MEDIUM'); EXCEPTION WHEN duplicate_object THEN null; END $$;")
+    op.execute("DO $$ BEGIN CREATE TYPE data_classification_enum AS ENUM ('PUBLIC', 'INTERNAL', 'CONFIDENTIAL', 'RESTRICTED'); EXCEPTION WHEN duplicate_object THEN null; END $$;")
+    op.execute("DO $$ BEGIN CREATE TYPE entry_type_enum AS ENUM ('INTERNET_FACING', 'VPN_ENDPOINT', 'EMAIL_GATEWAY', 'REMOTE_ACCESS', 'PARTNER_CONNECTION', 'PHYSICAL_ACCESS', 'SUPPLY_CHAIN'); EXCEPTION WHEN duplicate_object THEN null; END $$;")
+    op.execute("DO $$ BEGIN CREATE TYPE exposure_level_enum AS ENUM ('PUBLIC', 'SEMI_PUBLIC', 'INTERNAL'); EXCEPTION WHEN duplicate_object THEN null; END $$;")
+
     # First, extend the assets table with network topology fields
     op.add_column('assets', sa.Column('network_zone', sa.String(length=100), nullable=True))
-    op.add_column('assets', sa.Column('trust_level', sa.Enum('UNTRUSTED', 'LOW', 'MEDIUM', 'HIGH', 'TRUSTED', name='asset_trust_level_enum'), nullable=True, server_default='MEDIUM'))
+    op.add_column('assets', sa.Column('trust_level', postgresql.ENUM('UNTRUSTED', 'LOW', 'MEDIUM', 'HIGH', 'TRUSTED', name='asset_trust_level_enum', create_type=False), nullable=True, server_default='MEDIUM'))
     op.add_column('assets', sa.Column('inbound_connections', sa.JSON(), nullable=True, server_default='[]'))
     op.add_column('assets', sa.Column('outbound_connections', sa.JSON(), nullable=True, server_default='[]'))
     op.add_column('assets', sa.Column('admin_access_from', sa.JSON(), nullable=True, server_default='[]'))
@@ -47,7 +62,7 @@ def upgrade() -> None:
         sa.Column('tenant_id', sa.String(length=36), nullable=False),
         sa.Column('name', sa.String(length=255), nullable=False),
         sa.Column('description', sa.Text(), nullable=True),
-        sa.Column('scope_type', sa.Enum('FULL', 'ZONE', 'CUSTOM', name='graph_scope_type_enum'), nullable=False, server_default='FULL'),
+        sa.Column('scope_type', postgresql.ENUM('FULL', 'ZONE', 'CUSTOM', name='graph_scope_type_enum', create_type=False), nullable=False, server_default='FULL'),
         sa.Column('scope_filter', sa.JSON(), nullable=True),
         sa.Column('nodes', sa.JSON(), nullable=False, server_default='[]'),
         sa.Column('edges', sa.JSON(), nullable=False, server_default='[]'),
@@ -58,7 +73,7 @@ def upgrade() -> None:
         sa.Column('computed_at', sa.DateTime(), nullable=True),
         sa.Column('computation_duration_ms', sa.Integer(), nullable=True),
         sa.Column('data_sources', sa.JSON(), nullable=True),
-        sa.Column('status', sa.Enum('COMPUTING', 'READY', 'STALE', 'ERROR', name='graph_status_enum'), nullable=False, server_default='COMPUTING'),
+        sa.Column('status', postgresql.ENUM('COMPUTING', 'READY', 'STALE', 'ERROR', name='graph_status_enum', create_type=False), nullable=False, server_default='COMPUTING'),
         sa.Column('error_message', sa.Text(), nullable=True),
         sa.Column('last_cmdb_sync', sa.DateTime(), nullable=True),
         sa.Column('last_vuln_sync', sa.DateTime(), nullable=True),
@@ -87,7 +102,7 @@ def upgrade() -> None:
         sa.Column('target_id', sa.String(length=36), nullable=False),
         sa.Column('target_name', sa.String(length=255), nullable=False),
         sa.Column('target_type', sa.String(length=100), nullable=False),
-        sa.Column('target_criticality', sa.Enum('CRITICAL', 'HIGH', 'MEDIUM', 'LOW', name='target_criticality_enum'), nullable=False, server_default='HIGH'),
+        sa.Column('target_criticality', postgresql.ENUM('CRITICAL', 'HIGH', 'MEDIUM', 'LOW', name='target_criticality_enum', create_type=False), nullable=False, server_default='HIGH'),
         sa.Column('path_nodes', sa.JSON(), nullable=False),
         sa.Column('path_edges', sa.JSON(), nullable=False),
         sa.Column('hop_count', sa.Integer(), nullable=False),
@@ -98,7 +113,7 @@ def upgrade() -> None:
         sa.Column('exploitable_vulns', sa.Integer(), nullable=False, server_default='0'),
         sa.Column('chokepoints', sa.JSON(), nullable=True),
         sa.Column('alternative_paths', sa.Integer(), nullable=False, server_default='0'),
-        sa.Column('status', sa.Enum('ACTIVE', 'MITIGATED', 'ACCEPTED', 'FALSE_POSITIVE', name='path_status_enum'), nullable=False, server_default='ACTIVE'),
+        sa.Column('status', postgresql.ENUM('ACTIVE', 'MITIGATED', 'ACCEPTED', 'FALSE_POSITIVE', name='path_status_enum', create_type=False), nullable=False, server_default='ACTIVE'),
         sa.Column('mitigated_at', sa.DateTime(), nullable=True),
         sa.Column('mitigated_by', sa.String(length=255), nullable=True),
         sa.Column('created_at', sa.DateTime(), nullable=False),
@@ -121,7 +136,7 @@ def upgrade() -> None:
         sa.Column('graph_id', sa.String(length=36), nullable=False),
         sa.Column('name', sa.String(length=255), nullable=False),
         sa.Column('description', sa.Text(), nullable=True),
-        sa.Column('simulation_type', sa.Enum('PATCH_VULNERABILITY', 'SEGMENT_NETWORK', 'REMOVE_ACCESS', 'ADD_CONTROL', 'COMPROMISE_ASSET', name='simulation_type_enum'), nullable=False),
+        sa.Column('simulation_type', postgresql.ENUM('PATCH_VULNERABILITY', 'SEGMENT_NETWORK', 'REMOVE_ACCESS', 'ADD_CONTROL', 'COMPROMISE_ASSET', name='simulation_type_enum', create_type=False), nullable=False),
         sa.Column('parameters', sa.JSON(), nullable=False),
         sa.Column('original_paths_count', sa.Integer(), nullable=True),
         sa.Column('resulting_paths_count', sa.Integer(), nullable=True),
@@ -131,7 +146,7 @@ def upgrade() -> None:
         sa.Column('new_risk_scores', sa.JSON(), nullable=True),
         sa.Column('recommendation', sa.Text(), nullable=True),
         sa.Column('cost_estimate', sa.String(length=255), nullable=True),
-        sa.Column('status', sa.Enum('PENDING', 'COMPLETED', 'ERROR', name='simulation_status_enum'), nullable=False, server_default='PENDING'),
+        sa.Column('status', postgresql.ENUM('PENDING', 'COMPLETED', 'ERROR', name='simulation_status_enum', create_type=False), nullable=False, server_default='PENDING'),
         sa.Column('computed_at', sa.DateTime(), nullable=True),
         sa.Column('created_at', sa.DateTime(), nullable=False),
         sa.Column('created_by', sa.String(length=36), nullable=True),
@@ -149,9 +164,9 @@ def upgrade() -> None:
         sa.Column('id', sa.String(length=36), nullable=False),
         sa.Column('tenant_id', sa.String(length=36), nullable=False),
         sa.Column('asset_id', sa.String(length=36), nullable=False),
-        sa.Column('jewel_type', sa.Enum('DATA', 'SYSTEM', 'CREDENTIAL', 'NETWORK', 'IDENTITY', name='jewel_type_enum'), nullable=False),
-        sa.Column('business_impact', sa.Enum('CRITICAL', 'HIGH', 'MEDIUM', name='business_impact_enum'), nullable=False, server_default='HIGH'),
-        sa.Column('data_classification', sa.Enum('PUBLIC', 'INTERNAL', 'CONFIDENTIAL', 'RESTRICTED', name='data_classification_enum'), nullable=True),
+        sa.Column('jewel_type', postgresql.ENUM('DATA', 'SYSTEM', 'CREDENTIAL', 'NETWORK', 'IDENTITY', name='jewel_type_enum', create_type=False), nullable=False),
+        sa.Column('business_impact', postgresql.ENUM('CRITICAL', 'HIGH', 'MEDIUM', name='business_impact_enum', create_type=False), nullable=False, server_default='HIGH'),
+        sa.Column('data_classification', postgresql.ENUM('PUBLIC', 'INTERNAL', 'CONFIDENTIAL', 'RESTRICTED', name='data_classification_enum', create_type=False), nullable=True),
         sa.Column('description', sa.Text(), nullable=False),
         sa.Column('business_owner', sa.String(length=255), nullable=False),
         sa.Column('data_types', sa.JSON(), nullable=True),
@@ -176,8 +191,8 @@ def upgrade() -> None:
         sa.Column('id', sa.String(length=36), nullable=False),
         sa.Column('tenant_id', sa.String(length=36), nullable=False),
         sa.Column('asset_id', sa.String(length=36), nullable=False),
-        sa.Column('entry_type', sa.Enum('INTERNET_FACING', 'VPN_ENDPOINT', 'EMAIL_GATEWAY', 'REMOTE_ACCESS', 'PARTNER_CONNECTION', 'PHYSICAL_ACCESS', 'SUPPLY_CHAIN', name='entry_type_enum'), nullable=False),
-        sa.Column('exposure_level', sa.Enum('PUBLIC', 'SEMI_PUBLIC', 'INTERNAL', name='exposure_level_enum'), nullable=False, server_default='PUBLIC'),
+        sa.Column('entry_type', postgresql.ENUM('INTERNET_FACING', 'VPN_ENDPOINT', 'EMAIL_GATEWAY', 'REMOTE_ACCESS', 'PARTNER_CONNECTION', 'PHYSICAL_ACCESS', 'SUPPLY_CHAIN', name='entry_type_enum', create_type=False), nullable=False),
+        sa.Column('exposure_level', postgresql.ENUM('PUBLIC', 'SEMI_PUBLIC', 'INTERNAL', name='exposure_level_enum', create_type=False), nullable=False, server_default='PUBLIC'),
         sa.Column('protocols_exposed', sa.JSON(), nullable=True),
         sa.Column('ports_exposed', sa.JSON(), nullable=True),
         sa.Column('authentication_required', sa.Boolean(), nullable=False, server_default='true'),
