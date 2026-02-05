@@ -3372,4 +3372,269 @@ export const bcmAPI = {
     request(`/api/v1/bcm/assessments/${assessmentId}/report?format=${format}`, { token }),
 };
 
+// Attack Path Analysis
+export const attackPathsAPI = {
+  // Dashboard
+  getDashboard: (token: string) =>
+    request("/api/v1/attack-paths/dashboard", { token }),
+
+  getChokepoints: (token: string, limit: number = 10) =>
+    request(`/api/v1/attack-paths/chokepoints?limit=${limit}`, { token }),
+
+  // Attack Graphs
+  listGraphs: (token: string, params?: {
+    page?: number;
+    page_size?: number;
+    status?: string;
+  }) => {
+    const query = new URLSearchParams();
+    if (params?.page) query.set("page", params.page.toString());
+    if (params?.page_size) query.set("page_size", params.page_size.toString());
+    if (params?.status) query.set("status", params.status);
+    return request(`/api/v1/attack-paths/graphs?${query}`, { token });
+  },
+
+  createGraph: (token: string, data: {
+    name: string;
+    description?: string;
+    scope_type?: string;
+    scope_filter?: Record<string, unknown>;
+  }) =>
+    request("/api/v1/attack-paths/graphs", {
+      method: "POST",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  getGraph: (token: string, graphId: string) =>
+    request(`/api/v1/attack-paths/graphs/${graphId}`, { token }),
+
+  updateGraph: (token: string, graphId: string, data: {
+    name?: string;
+    description?: string;
+    scope_type?: string;
+    scope_filter?: Record<string, unknown>;
+  }) =>
+    request(`/api/v1/attack-paths/graphs/${graphId}`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  deleteGraph: (token: string, graphId: string) =>
+    request(`/api/v1/attack-paths/graphs/${graphId}`, {
+      method: "DELETE",
+      token,
+    }),
+
+  refreshGraph: (token: string, graphId: string) =>
+    request(`/api/v1/attack-paths/graphs/${graphId}/refresh`, {
+      method: "POST",
+      token,
+    }),
+
+  // Attack Paths
+  listPaths: (token: string, graphId: string, params?: {
+    page?: number;
+    page_size?: number;
+    min_risk_score?: number;
+    status?: string;
+  }) => {
+    const query = new URLSearchParams();
+    if (params?.page) query.set("page", params.page.toString());
+    if (params?.page_size) query.set("page_size", params.page_size.toString());
+    if (params?.min_risk_score !== undefined) query.set("min_risk_score", params.min_risk_score.toString());
+    if (params?.status) query.set("status", params.status);
+    return request(`/api/v1/attack-paths/graphs/${graphId}/paths?${query}`, { token });
+  },
+
+  getPath: (token: string, pathId: string) =>
+    request(`/api/v1/attack-paths/paths/${pathId}`, { token }),
+
+  updatePathStatus: (token: string, pathId: string, data: {
+    status: string;
+    reason?: string;
+  }) =>
+    request(`/api/v1/attack-paths/paths/${pathId}/status`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  // Crown Jewels
+  listCrownJewels: (token: string, params?: {
+    page?: number;
+    page_size?: number;
+    jewel_type?: string;
+    is_active?: boolean;
+  }) => {
+    const query = new URLSearchParams();
+    if (params?.page) query.set("page", params.page.toString());
+    if (params?.page_size) query.set("page_size", params.page_size.toString());
+    if (params?.jewel_type) query.set("jewel_type", params.jewel_type);
+    if (params?.is_active !== undefined) query.set("is_active", params.is_active.toString());
+    return request(`/api/v1/attack-paths/crown-jewels?${query}`, { token });
+  },
+
+  createCrownJewel: (token: string, data: {
+    asset_id: string;
+    jewel_type: string;
+    business_impact?: string;
+    data_classification?: string;
+    description: string;
+    business_owner: string;
+    data_types?: string[];
+    compliance_scope?: string[];
+    estimated_value?: number;
+  }) =>
+    request("/api/v1/attack-paths/crown-jewels", {
+      method: "POST",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  getCrownJewel: (token: string, jewelId: string) =>
+    request(`/api/v1/attack-paths/crown-jewels/${jewelId}`, { token }),
+
+  updateCrownJewel: (token: string, jewelId: string, data: {
+    jewel_type?: string;
+    business_impact?: string;
+    data_classification?: string;
+    description?: string;
+    business_owner?: string;
+    data_types?: string[];
+    compliance_scope?: string[];
+    estimated_value?: number;
+    is_active?: boolean;
+  }) =>
+    request(`/api/v1/attack-paths/crown-jewels/${jewelId}`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  deleteCrownJewel: (token: string, jewelId: string) =>
+    request(`/api/v1/attack-paths/crown-jewels/${jewelId}`, {
+      method: "DELETE",
+      token,
+    }),
+
+  // Entry Points
+  listEntryPoints: (token: string, params?: {
+    page?: number;
+    page_size?: number;
+    entry_type?: string;
+    is_active?: boolean;
+  }) => {
+    const query = new URLSearchParams();
+    if (params?.page) query.set("page", params.page.toString());
+    if (params?.page_size) query.set("page_size", params.page_size.toString());
+    if (params?.entry_type) query.set("entry_type", params.entry_type);
+    if (params?.is_active !== undefined) query.set("is_active", params.is_active.toString());
+    return request(`/api/v1/attack-paths/entry-points?${query}`, { token });
+  },
+
+  createEntryPoint: (token: string, data: {
+    asset_id: string;
+    entry_type: string;
+    exposure_level?: string;
+    protocols_exposed?: string[];
+    ports_exposed?: number[];
+    authentication_required?: boolean;
+    mfa_enabled?: boolean;
+    description: string;
+    last_pentest_date?: string;
+  }) =>
+    request("/api/v1/attack-paths/entry-points", {
+      method: "POST",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  getEntryPoint: (token: string, pointId: string) =>
+    request(`/api/v1/attack-paths/entry-points/${pointId}`, { token }),
+
+  updateEntryPoint: (token: string, pointId: string, data: {
+    entry_type?: string;
+    exposure_level?: string;
+    protocols_exposed?: string[];
+    ports_exposed?: number[];
+    authentication_required?: boolean;
+    mfa_enabled?: boolean;
+    description?: string;
+    last_pentest_date?: string;
+    is_active?: boolean;
+  }) =>
+    request(`/api/v1/attack-paths/entry-points/${pointId}`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  deleteEntryPoint: (token: string, pointId: string) =>
+    request(`/api/v1/attack-paths/entry-points/${pointId}`, {
+      method: "DELETE",
+      token,
+    }),
+
+  // Simulations
+  listSimulations: (token: string, params?: {
+    graph_id?: string;
+    page?: number;
+    page_size?: number;
+  }) => {
+    const query = new URLSearchParams();
+    if (params?.graph_id) query.set("graph_id", params.graph_id);
+    if (params?.page) query.set("page", params.page.toString());
+    if (params?.page_size) query.set("page_size", params.page_size.toString());
+    return request(`/api/v1/attack-paths/simulations?${query}`, { token });
+  },
+
+  createSimulation: (token: string, data: {
+    name: string;
+    description?: string;
+    graph_id: string;
+    simulation_type: string;
+    parameters: Record<string, unknown>;
+  }) =>
+    request("/api/v1/attack-paths/simulations", {
+      method: "POST",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  getSimulation: (token: string, simulationId: string) =>
+    request(`/api/v1/attack-paths/simulations/${simulationId}`, { token }),
+
+  deleteSimulation: (token: string, simulationId: string) =>
+    request(`/api/v1/attack-paths/simulations/${simulationId}`, {
+      method: "DELETE",
+      token,
+    }),
+
+  // Export
+  exportGraphReport: async (token: string, graphId: string, params?: {
+    include_paths?: boolean;
+    include_assets?: boolean;
+    include_recommendations?: boolean;
+  }): Promise<Blob> => {
+    const query = new URLSearchParams();
+    if (params?.include_paths !== undefined) query.set("include_paths", params.include_paths.toString());
+    if (params?.include_assets !== undefined) query.set("include_assets", params.include_assets.toString());
+    if (params?.include_recommendations !== undefined) query.set("include_recommendations", params.include_recommendations.toString());
+
+    const response = await fetch(`${API_BASE_URL}/api/v1/attack-paths/graphs/${graphId}/export?${query}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Export failed: ${response.statusText}`);
+    }
+
+    return response.blob();
+  },
+};
+
 export { APIError };

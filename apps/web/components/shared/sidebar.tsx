@@ -29,6 +29,7 @@ import {
   ClipboardList,
   ShieldCheck,
   RefreshCw,
+  Route,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useUIStore } from "@/stores/ui-store";
@@ -42,6 +43,7 @@ const navItems = [
   { href: "/threats", icon: Radar, labelKey: "nav.threats" },
   { href: "/vulnerabilities", icon: Bug, labelKey: "nav.vulnerabilities" },
   { href: "/risks", icon: Scale, labelKey: "nav.risks" },
+  { href: "/attack-paths", icon: Route, labelKey: "nav.attackPaths" },
   { href: "/cmdb", icon: Server, labelKey: "nav.cmdb" },
   { href: "/tprm", icon: Building2, labelKey: "nav.tprm" },
   {
