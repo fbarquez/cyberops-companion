@@ -1,13 +1,13 @@
 # CyberOps Companion - Project Status
 
-**Last Updated:** 2026-02-01 (Current Session)
+**Last Updated:** 2026-02-05 (Current Session)
 **Project Start:** 2026-01 (Migrated from IR Companion)
 
 ---
 
 ## Quick Resume Point
 
-> **Where we left off:** Phase 3 (Enterprise Features) is 100% complete. All enterprise features implemented: Multi-tenancy, SSO/SAML, Audit Logging, and API Rate Limiting. Next: Technical debt (scanner integration, test coverage) or ML features when data is available.
+> **Where we left off:** ISO 27001:2022 Compliance Module fully implemented with 93 controls, 6-step assessment wizard, gap analysis, cross-framework mapping (BSI/NIS2/NIST), and PDF report generation. Phase 3 (Enterprise Features) complete. Next: Technical debt (scanner integration, test coverage) or ML features when data is available.
 
 ---
 
@@ -84,6 +84,7 @@ CyberOps Companion is a comprehensive cybersecurity operations platform that int
 | Multi-tenancy | ✅ Complete | Organization isolation, tenant context |
 | SSO/SAML | ✅ Complete | Google, Azure AD, Okta OAuth2 |
 | Rate Limiting | ✅ Complete | Redis sliding window, plan-based limits |
+| ISO 27001:2022 | ✅ Complete | 93 controls, 6-step wizard, gap analysis, PDF reports |
 
 ### Frontend (Next.js)
 
@@ -111,6 +112,7 @@ CyberOps Companion is a comprehensive cybersecurity operations platform that int
 | Organization Selector | ✅ Complete | Multi-tenant organization switching |
 | SSO Login | ✅ Complete | OAuth2 provider buttons |
 | Rate Limit Banner | ✅ Complete | 429 handling with countdown timer |
+| ISO 27001 Compliance | ✅ Complete | Dashboard, 6-step wizard, gap analysis, PDF export |
 
 ---
 
@@ -353,3 +355,4 @@ See [FUTURE_ROADMAP.md](./FUTURE_ROADMAP.md) for detailed specifications.
 | 2026-02-01 | Phase 3 Progress | SSO/SAML: OAuth2/OIDC with Google, Microsoft, Okta; JIT provisioning; frontend integration |
 | 2026-02-01 | Phase 3 Progress | Multi-tenancy: Organization model, TenantMixin, TenantMiddleware, TenantAwareService, data migration, frontend selector |
 | 2026-02-01 | Phase 3 Complete | API Rate Limiting: Redis sliding window, plan-based limits (FREE/STARTER/PROFESSIONAL/ENTERPRISE), endpoint limits, RateLimitBanner component |
+| 2026-02-05 | ISO 27001:2022 | Full compliance module: 93 controls in 4 themes, 6-step assessment wizard, SoA management, gap analysis, cross-framework mapping (BSI/NIS2/NIST), PDF reports |

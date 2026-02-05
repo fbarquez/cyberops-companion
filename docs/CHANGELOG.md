@@ -18,6 +18,102 @@ See [FUTURE_ROADMAP.md](./FUTURE_ROADMAP.md) for detailed specifications.
 
 ---
 
+## [0.14.0] - 2026-02-05
+
+### Added
+
+#### ISO 27001:2022 Compliance Module
+
+Complete implementation of ISO 27001:2022 Information Security Management System (ISMS) compliance support.
+
+**Control Catalog:**
+- 93 Annex A controls organized in 4 themes:
+  - A.5 Organizational (37 controls)
+  - A.6 People (8 controls)
+  - A.7 Physical (14 controls)
+  - A.8 Technological (34 controls)
+- Multi-language support (EN/DE/ES)
+- Cross-framework references to BSI IT-Grundschutz, NIS2, NIST CSF
+
+**Backend:**
+
+| Component | File | Description |
+|-----------|------|-------------|
+| Models | `models/iso27001.py` | ISO27001Control, ISO27001Assessment, ISO27001SoAEntry |
+| Schemas | `schemas/iso27001.py` | 25+ Pydantic schemas for API validation |
+| Service | `services/iso27001_service.py` | Full business logic with scoring, gap analysis, mapping |
+| API | `api/v1/iso27001.py` | 15 REST endpoints |
+| Migration | `alembic/versions/e5f6g7h8i9j0_add_iso27001_tables.py` | Database tables and enums |
+| Seed Data | `db/data/iso27001_2022.json` | 93 controls with full metadata |
+| Seed Script | `db/seed_iso27001.py` | Control seeding and verification |
+| PDF Generator | `services/pdf_reports/iso27001_report_generator.py` | ReportLab-based PDF reports |
+
+**API Endpoints:**
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/iso27001/themes` | GET | List 4 themes with control counts |
+| `/iso27001/controls` | GET | List controls with filtering |
+| `/iso27001/controls/{id}` | GET | Get control details |
+| `/iso27001/dashboard` | GET | Dashboard statistics |
+| `/iso27001/assessments` | POST | Create assessment |
+| `/iso27001/assessments` | GET | List assessments |
+| `/iso27001/assessments/{id}` | GET | Get assessment |
+| `/iso27001/assessments/{id}` | DELETE | Delete assessment |
+| `/iso27001/assessments/{id}/scope` | PUT | Update scope (Step 1) |
+| `/iso27001/assessments/{id}/wizard-state` | GET | Get wizard state |
+| `/iso27001/assessments/{id}/soa` | GET | Get SoA entries |
+| `/iso27001/assessments/{id}/soa/{control}` | PUT | Update SoA entry |
+| `/iso27001/assessments/{id}/soa` | PUT | Bulk update SoA |
+| `/iso27001/assessments/{id}/overview` | GET | Assessment overview |
+| `/iso27001/assessments/{id}/gaps` | GET | Gap analysis |
+| `/iso27001/assessments/{id}/mapping` | GET | Cross-framework mapping |
+| `/iso27001/assessments/{id}/report` | GET | Generate report (JSON/PDF) |
+| `/iso27001/assessments/{id}/complete` | POST | Mark complete |
+
+**Frontend:**
+
+| Component | File | Description |
+|-----------|------|-------------|
+| Main Page | `app/(dashboard)/compliance/iso27001/page.tsx` | Dashboard + assessment list |
+| Wizard Page | `app/(dashboard)/compliance/iso27001/[id]/page.tsx` | 6-step assessment wizard |
+| API Client | `lib/api-client.ts` | `iso27001API` methods |
+| Sidebar | `components/shared/sidebar.tsx` | Compliance navigation section |
+| Translations | `i18n/translations.ts` | EN/DE nav labels |
+
+**6-Step Assessment Wizard:**
+
+| Step | Name | Description |
+|------|------|-------------|
+| 1 | Scope | Define certification scope (systems, locations, processes) |
+| 2 | SoA | Statement of Applicability - mark controls applicable/excluded |
+| 3 | Assessment | Evaluate control compliance status and implementation level |
+| 4 | Gap Analysis | Review gaps with remediation plans and priorities |
+| 5 | Cross-Framework | View related BSI/NIS2/NIST CSF controls |
+| 6 | Report | Executive summary with PDF export |
+
+**Scoring Formula:**
+```
+score = (compliant + 0.5 * partial) / applicable * 100
+```
+
+**PDF Report Features:**
+- Executive summary with overall score
+- Theme-by-theme compliance breakdown
+- Statement of Applicability table
+- Gap analysis with priorities
+- Cross-framework mapping summary
+- Generated using ReportLab library
+
+**Dependencies Added:**
+- `reportlab>=4.0.0` - PDF generation
+
+**Documentation:**
+- Added `docs/features/ISO27001.md` with full implementation guide
+- Updated `README.md` with ISO 27001 documentation link
+
+---
+
 ## [0.13.0] - 2026-02-01
 
 ### Added
