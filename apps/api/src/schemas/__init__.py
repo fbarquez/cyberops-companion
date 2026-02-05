@@ -110,6 +110,17 @@ from src.schemas.notifications import (
     WebhookTest, WebhookTestResult, NotificationEvent,
     NotificationType, NotificationPriority, NotificationChannel
 )
+from src.schemas.attack_paths import (
+    GraphScopeType, GraphStatus, PathStatus, SimulationType, SimulationStatus,
+    JewelType, BusinessImpact, DataClassification, EntryType, ExposureLevel, TargetCriticality,
+    GraphNode, GraphEdge,
+    AttackGraphCreate, AttackGraphUpdate, AttackGraphResponse, AttackGraphListResponse, AttackGraphStatistics,
+    AttackPathResponse, AttackPathListResponse, AttackPathStatusUpdate, AttackPathRemediation,
+    AttackPathSimulationCreate, AttackPathSimulationResponse, AttackPathSimulationListResponse,
+    CrownJewelCreate, CrownJewelUpdate, CrownJewelResponse, CrownJewelListResponse,
+    EntryPointCreate, EntryPointUpdate, EntryPointResponse, EntryPointListResponse,
+    AttackPathDashboard, ChokepointInfo, ChokepointListResponse
+)
 
 __all__ = [
     # User
@@ -208,4 +219,14 @@ __all__ = [
     "WebhookSubscriptionCreate", "WebhookSubscriptionUpdate", "WebhookSubscriptionResponse",
     "WebhookTest", "WebhookTestResult", "NotificationEvent",
     "NotificationType", "NotificationPriority", "NotificationChannel",
+    # Attack Path Analysis
+    "GraphScopeType", "GraphStatus", "PathStatus", "SimulationType", "SimulationStatus",
+    "JewelType", "BusinessImpact", "DataClassification", "EntryType", "ExposureLevel", "TargetCriticality",
+    "GraphNode", "GraphEdge",
+    "AttackGraphCreate", "AttackGraphUpdate", "AttackGraphResponse", "AttackGraphListResponse", "AttackGraphStatistics",
+    "AttackPathResponse", "AttackPathListResponse", "AttackPathStatusUpdate", "AttackPathRemediation",
+    "AttackPathSimulationCreate", "AttackPathSimulationResponse", "AttackPathSimulationListResponse",
+    "CrownJewelCreate", "CrownJewelUpdate", "CrownJewelResponse", "CrownJewelListResponse",
+    "EntryPointCreate", "EntryPointUpdate", "EntryPointResponse", "EntryPointListResponse",
+    "AttackPathDashboard", "ChokepointInfo", "ChokepointListResponse",
 ]
