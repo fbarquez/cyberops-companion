@@ -34,6 +34,7 @@ docs/
 │
 ├── features/
 │   ├── AUDIT_LOGGING.md         # Audit trail system
+│   ├── BCM.md                   # Business Continuity Management
 │   ├── CELERY_TASKS.md          # Background task execution
 │   ├── EMAIL_SERVICE.md         # Email/SMTP service
 │   ├── FILE_UPLOADS.md          # File attachment system
@@ -119,6 +120,7 @@ docs/
 |---------|--------|---------------|
 | Enterprise Overview | ✅ Complete | [ENTERPRISE.md](./ENTERPRISE.md) |
 | ISO 27001:2022 | ✅ Complete | [ISO27001.md](./features/ISO27001.md) |
+| Business Continuity (BCM) | ✅ Complete | [BCM.md](./features/BCM.md) |
 | BSI IT-Grundschutz | ✅ Complete | [ENTERPRISE.md](./ENTERPRISE.md#bsi-it-grundschutz) |
 | NIS2 Directive | ✅ Complete | [ENTERPRISE.md](./ENTERPRISE.md#nis2-directive-assessment) |
 | AI Copilot | 🔜 Coming Soon | [ENTERPRISE.md](./ENTERPRISE.md#ai-copilot) |
@@ -154,4 +156,4 @@ When adding new features:
 
 ## Last Updated
 
-**2026-02-05** - Phase 3 complete with ISO 27001:2022 compliance module
+**2026-02-05** - Added Business Continuity Management (BCM) module with BIA wizard, emergency plans, and exercises
