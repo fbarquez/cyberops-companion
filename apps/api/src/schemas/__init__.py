@@ -121,6 +121,37 @@ from src.schemas.attack_paths import (
     EntryPointCreate, EntryPointUpdate, EntryPointResponse, EntryPointListResponse,
     AttackPathDashboard, ChokepointInfo, ChokepointListResponse
 )
+from src.schemas.documents import (
+    DocumentCategory, DocumentStatus, VersionType, ApprovalStatus, ApprovalType, AcknowledgmentStatus, ReviewOutcome,
+    DocumentCreate, DocumentUpdate, DocumentResponse, DocumentListResponse, DocumentDetailResponse,
+    DocumentVersionCreate, DocumentVersionResponse, DocumentVersionListResponse, VersionComparisonResponse,
+    ApproverAssignment, DocumentApprovalCreate, DocumentApprovalDecision, DocumentApprovalResponse, DocumentApprovalListResponse,
+    PendingApprovalItem, PendingApprovalsResponse,
+    AcknowledgmentAssignment, AcknowledgmentConfirm, AcknowledgmentDecline, DocumentAcknowledgmentResponse, AcknowledgmentListResponse,
+    PendingAcknowledgmentItem, PendingAcknowledgmentsResponse,
+    DocumentReviewCreate, DocumentReviewResponse, DocumentReviewListResponse,
+    DueForReviewItem, DueForReviewResponse,
+    SubmitForReviewRequest, RejectDocumentRequest, PublishDocumentRequest,
+    DocumentDashboardStats, AcknowledgmentComplianceReport, ComplianceReportResponse
+)
+from src.schemas.awareness import (
+    CourseCategory, CourseDifficulty, CourseStatus, ModuleType, QuestionType,
+    EnrollmentStatus, CampaignStatus, PhishingResult, BadgeCategory,
+    CourseCreate, CourseUpdate, CourseResponse, CourseListResponse, CourseCatalogItem, CourseCatalogResponse,
+    ModuleCreate, ModuleUpdate, ModuleResponse, ModuleListResponse, ModuleContentResponse,
+    QuizQuestionOption, QuizQuestionCreate, QuizQuestionUpdate, QuizQuestionResponse, QuizQuestionStudentView,
+    QuizCreate, QuizUpdate, QuizResponse, QuizDetailResponse, QuizStudentView, QuizStartResponse,
+    QuizAnswer, QuizSubmitRequest, QuizResultQuestion, QuizAttemptResponse,
+    EnrollmentCreate, BulkEnrollmentRequest, EnrollmentResponse, EnrollmentListResponse,
+    MyLearningItem, MyLearningResponse, ModuleProgressUpdate, ModuleProgressResponse,
+    PhishingTemplateCreate, PhishingTemplateUpdate, PhishingTemplateResponse, PhishingTemplateListResponse,
+    PhishingCampaignCreate, PhishingCampaignUpdate, PhishingCampaignResponse, PhishingCampaignListResponse,
+    PhishingTargetResponse, PhishingCampaignResultsResponse, PhishingTrackEvent,
+    BadgeCreate, BadgeUpdate, BadgeResponse, BadgeListResponse, UserBadgeResponse, UserBadgesResponse,
+    TrainingStatsResponse, LeaderboardEntry, LeaderboardResponse,
+    TrainingDashboardStats, CourseComplianceReport, DepartmentComplianceReport, ComplianceReportResponse as TrainingComplianceReportResponse,
+    PhishingAnalyticsResponse
+)
 
 __all__ = [
     # User
@@ -229,4 +260,33 @@ __all__ = [
     "CrownJewelCreate", "CrownJewelUpdate", "CrownJewelResponse", "CrownJewelListResponse",
     "EntryPointCreate", "EntryPointUpdate", "EntryPointResponse", "EntryPointListResponse",
     "AttackPathDashboard", "ChokepointInfo", "ChokepointListResponse",
+    # Document & Policy Management
+    "DocumentCategory", "DocumentStatus", "VersionType", "ApprovalStatus", "ApprovalType", "AcknowledgmentStatus", "ReviewOutcome",
+    "DocumentCreate", "DocumentUpdate", "DocumentResponse", "DocumentListResponse", "DocumentDetailResponse",
+    "DocumentVersionCreate", "DocumentVersionResponse", "DocumentVersionListResponse", "VersionComparisonResponse",
+    "ApproverAssignment", "DocumentApprovalCreate", "DocumentApprovalDecision", "DocumentApprovalResponse", "DocumentApprovalListResponse",
+    "PendingApprovalItem", "PendingApprovalsResponse",
+    "AcknowledgmentAssignment", "AcknowledgmentConfirm", "AcknowledgmentDecline", "DocumentAcknowledgmentResponse", "AcknowledgmentListResponse",
+    "PendingAcknowledgmentItem", "PendingAcknowledgmentsResponse",
+    "DocumentReviewCreate", "DocumentReviewResponse", "DocumentReviewListResponse",
+    "DueForReviewItem", "DueForReviewResponse",
+    "SubmitForReviewRequest", "RejectDocumentRequest", "PublishDocumentRequest",
+    "DocumentDashboardStats", "AcknowledgmentComplianceReport", "ComplianceReportResponse",
+    # Security Awareness & Training
+    "CourseCategory", "CourseDifficulty", "CourseStatus", "ModuleType", "QuestionType",
+    "EnrollmentStatus", "CampaignStatus", "PhishingResult", "BadgeCategory",
+    "CourseCreate", "CourseUpdate", "CourseResponse", "CourseListResponse", "CourseCatalogItem", "CourseCatalogResponse",
+    "ModuleCreate", "ModuleUpdate", "ModuleResponse", "ModuleListResponse", "ModuleContentResponse",
+    "QuizQuestionOption", "QuizQuestionCreate", "QuizQuestionUpdate", "QuizQuestionResponse", "QuizQuestionStudentView",
+    "QuizCreate", "QuizUpdate", "QuizResponse", "QuizDetailResponse", "QuizStudentView", "QuizStartResponse",
+    "QuizAnswer", "QuizSubmitRequest", "QuizResultQuestion", "QuizAttemptResponse",
+    "EnrollmentCreate", "BulkEnrollmentRequest", "EnrollmentResponse", "EnrollmentListResponse",
+    "MyLearningItem", "MyLearningResponse", "ModuleProgressUpdate", "ModuleProgressResponse",
+    "PhishingTemplateCreate", "PhishingTemplateUpdate", "PhishingTemplateResponse", "PhishingTemplateListResponse",
+    "PhishingCampaignCreate", "PhishingCampaignUpdate", "PhishingCampaignResponse", "PhishingCampaignListResponse",
+    "PhishingTargetResponse", "PhishingCampaignResultsResponse", "PhishingTrackEvent",
+    "BadgeCreate", "BadgeUpdate", "BadgeResponse", "BadgeListResponse", "UserBadgeResponse", "UserBadgesResponse",
+    "TrainingStatsResponse", "LeaderboardEntry", "LeaderboardResponse",
+    "TrainingDashboardStats", "CourseComplianceReport", "DepartmentComplianceReport", "TrainingComplianceReportResponse",
+    "PhishingAnalyticsResponse",
 ]

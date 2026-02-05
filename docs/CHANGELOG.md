@@ -18,6 +18,83 @@ See [FUTURE_ROADMAP.md](./FUTURE_ROADMAP.md) for detailed specifications.
 
 ---
 
+## [0.16.0] - 2026-02-05
+
+### Added
+
+#### Security Awareness & Training Module
+
+Complete security awareness and training platform for employee education, phishing simulation, gamification, and compliance tracking.
+
+**Backend:**
+
+| Component | File | Description |
+|-----------|------|-------------|
+| Models | `models/awareness.py` | TrainingCourse, TrainingModule, Quiz, Enrollment, Badge, PhishingCampaign |
+| Schemas | `schemas/awareness.py` | 40+ Pydantic schemas for all operations |
+| Service | `services/training_service.py` | ~900 lines of business logic |
+| API | `api/v1/training.py` | 35+ REST endpoints including phishing router |
+| Migration | `alembic/versions/i9j0k1l2m3n4_add_awareness_tables.py` | 14 tables with indexes |
+
+**Course Categories:**
+- Security Fundamentals (SEC-001)
+- Phishing Awareness (PHI-001)
+- Data Protection (DAT-001)
+- Password Security (PWD-001)
+- Social Engineering (SOC-001)
+- Compliance (COM-001)
+- Incident Response (INC-001)
+- Secure Coding (COD-001)
+
+**Module Types:**
+- Video content with embedded player
+- Text/markdown content
+- Interactive exercises
+- Quiz assessments
+- Document downloads
+- External resource links
+
+**API Endpoints (35+ total):**
+
+| Category | Endpoints |
+|----------|-----------|
+| Courses | CRUD `/training/courses`, `/training/catalog`, `/publish` |
+| Modules | CRUD `/training/courses/{id}/modules`, `/training/modules/{id}` |
+| Enrollment | POST `/training/enroll/{id}`, `/bulk-enroll`, GET `/my-learning` |
+| Progress | GET/POST `/training/modules/{id}/progress`, `/complete` |
+| Quizzes | GET `/quizzes/{id}`, POST `/start`, `/attempts/{id}/submit` |
+| Gamification | GET `/leaderboard`, `/my-stats`, `/my-badges`, CRUD `/badges` |
+| Phishing | CRUD `/phishing/campaigns`, `/templates`, POST `/launch`, GET `/results` |
+| Reports | GET `/training/dashboard`, `/compliance-report` |
+
+**Frontend:**
+
+| Component | File | Description |
+|-----------|------|-------------|
+| Catalog Page | `app/(dashboard)/training/page.tsx` | Course catalog with stats, filters, tabs |
+| Course Detail | `app/(dashboard)/training/[id]/page.tsx` | Course info, modules list, enrollment |
+| Module Viewer | `app/(dashboard)/training/[id]/module/[moduleId]/page.tsx` | Content viewer with progress tracking |
+| API Client | `lib/api-client.ts` | `trainingAPI` with 40+ methods |
+| Sidebar | `components/shared/sidebar.tsx` | Training navigation entry |
+| Translations | `i18n/translations.ts` | EN/DE translations (~100 keys) |
+
+**Key Features:**
+- Self-enrollment and admin assignment with deadlines
+- Progress tracking with auto-save every 30 seconds
+- Quiz system with multiple question types and attempt limits
+- Gamification: points, badges, leaderboard, streaks
+- Phishing simulation campaigns with tracking
+- Compliance mapping to ISO 27001, NIS2, BSI
+- Certificate generation for course completion
+
+**Compliance Coverage:**
+- ISO 27001:2022 A.6.3 (Information security awareness)
+- ISO 27001:2022 A.7.2.2 (Information security awareness, education and training)
+- NIS2 Art. 21.2.g (Cyber hygiene practices and training)
+- BSI IT-Grundschutz ORP.3 (Awareness and Training)
+
+---
+
 ## [0.15.0] - 2026-02-05
 
 ### Added

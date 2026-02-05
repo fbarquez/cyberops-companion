@@ -55,6 +55,7 @@ const navItems = [
     ],
   },
   { href: "/documents", icon: FileText, labelKey: "nav.documents" },
+  { href: "/training", icon: GraduationCap, labelKey: "nav.training" },
   { href: "/integrations", icon: Plug, labelKey: "nav.integrations" },
   { href: "/reporting", icon: BarChart3, labelKey: "nav.reporting" },
   { href: "/notifications", icon: Bell, labelKey: "nav.notifications" },

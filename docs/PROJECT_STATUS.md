@@ -7,7 +7,7 @@
 
 ## Quick Resume Point
 
-> **Where we left off:** All Enterprise features complete including AI Copilot (5 LLM providers), BSI IT-Grundschutz (61 Bausteine), NIS2 Assessment (5-step wizard), and PDF Reports (LaTeX). BCM module with OSCAL catalog for BSI 200-4. Project is ~97% complete. Next: Test coverage improvement or new feature development.
+> **Where we left off:** Security Awareness & Training module complete. All Enterprise features including Document Management, Attack Path Analysis, AI Copilot (5 LLM providers), BSI IT-Grundschutz (61 Bausteine), NIS2 Assessment (5-step wizard), and PDF Reports (LaTeX). BCM module with OSCAL catalog for BSI 200-4. Project is ~98% complete. Next: Test coverage improvement, phishing simulation testing, or new feature development.
 
 ---
 
@@ -86,6 +86,9 @@ CyberOps Companion is a comprehensive cybersecurity operations platform that int
 | Rate Limiting | ✅ Complete | Redis sliding window, plan-based limits |
 | ISO 27001:2022 | ✅ Complete | 93 controls, 6-step wizard, gap analysis, PDF reports |
 | BCM (BSI 200-4) | ✅ Complete | BIA wizard, emergency plans, exercises, OSCAL catalog |
+| Attack Paths | ✅ Complete | Crown jewels, entry points, path simulation |
+| Documents | ✅ Complete | Versioning, approvals, acknowledgments, reviews |
+| Training | ✅ Complete | Courses, quizzes, gamification, phishing campaigns |
 
 ### Frontend (Next.js)
 
@@ -115,6 +118,9 @@ CyberOps Companion is a comprehensive cybersecurity operations platform that int
 | Rate Limit Banner | ✅ Complete | 429 handling with countdown timer |
 | ISO 27001 Compliance | ✅ Complete | Dashboard, 6-step wizard, gap analysis, PDF export |
 | BCM | ✅ Complete | Dashboard, processes, BIA wizard, plans, exercises |
+| Attack Paths | ✅ Complete | Graph visualization, crown jewels, entry points |
+| Documents | ✅ Complete | Document list, editor, versions, approvals, acknowledgments |
+| Training | ✅ Complete | Course catalog, module viewer, progress, leaderboard |
 
 ---
 

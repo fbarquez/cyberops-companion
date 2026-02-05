@@ -90,7 +90,7 @@ class DocumentService(TenantAwareService[Document]):
             acknowledgment_due_days=data.acknowledgment_due_days or 14,
             approval_type=data.approval_type or ApprovalType.SEQUENTIAL,
             tags=data.tags or [],
-            metadata=data.metadata or {},
+            custom_metadata=data.custom_metadata or {},
             status=DocumentStatus.DRAFT,
             current_version="0.1",
             created_by=created_by,
