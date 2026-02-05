@@ -2,6 +2,8 @@
 
 Complete document management system for ISMS (Information Security Management System) compliance, supporting policies, procedures, standards, and other compliance documentation with versioning, approval workflows, and acknowledgment tracking.
 
+> **Standards & Compliance:** For detailed information about the standards, frameworks, and design rationale behind this module, see [DOCUMENT_MANAGEMENT_STANDARDS.md](./DOCUMENT_MANAGEMENT_STANDARDS.md).
+
 ## Overview
 
 The Document & Policy Management module provides:
