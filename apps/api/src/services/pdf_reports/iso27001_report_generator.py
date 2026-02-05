@@ -103,15 +103,11 @@ class ISO27001ReportGenerator:
             spaceAfter=8,
         ))
 
-        # Body text
-        self.styles.add(ParagraphStyle(
-            name='BodyText',
-            parent=self.styles['Normal'],
-            fontSize=10,
-            textColor=colors.HexColor("#374151"),
-            alignment=TA_JUSTIFY,
-            spaceAfter=8,
-        ))
+        # Body text (override existing BodyText style)
+        self.styles['BodyText'].fontSize = 10
+        self.styles['BodyText'].textColor = colors.HexColor("#374151")
+        self.styles['BodyText'].alignment = TA_JUSTIFY
+        self.styles['BodyText'].spaceAfter = 8
 
         # Score style (large number)
         self.styles.add(ParagraphStyle(
