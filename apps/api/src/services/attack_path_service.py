@@ -938,3 +938,257 @@ class AttackPathService:
         chokepoints.sort(key=lambda x: x["priority_score"], reverse=True)
 
         return chokepoints[:limit]
+
+    # ========== Simulation Methods ==========
+
+    async def create_simulation(
+        self,
+        tenant_id: str,
+        user_id: str,
+        data: AttackPathSimulationCreate
+    ) -> AttackPathSimulation:
+        """Create and run a what-if simulation."""
+        simulation = AttackPathSimulation(
+            tenant_id=tenant_id,
+            graph_id=data.graph_id,
+            name=data.name,
+            description=data.description,
+            simulation_type=data.simulation_type,
+            parameters=data.parameters,
+            status=SimulationStatus.PENDING,
+            created_by=user_id,
+        )
+        self.db.add(simulation)
+        await self.db.commit()
+        await self.db.refresh(simulation)
+
+        # Run simulation asynchronously
+        await self._run_simulation(simulation)
+
+        return simulation
+
+    async def _run_simulation(self, simulation: AttackPathSimulation):
+        """Execute the simulation logic."""
+        try:
+            # Get the graph
+            graph = await self.db.get(AttackGraph, simulation.graph_id)
+            if not graph:
+                simulation.status = SimulationStatus.ERROR
+                await self.db.commit()
+                return
+
+            # Get current paths for this graph
+            query = select(AttackPath).where(
+                and_(
+                    AttackPath.graph_id == simulation.graph_id,
+                    AttackPath.status == PathStatus.ACTIVE
+                )
+            )
+            result = await self.db.execute(query)
+            original_paths = list(result.scalars().all())
+            simulation.original_paths_count = len(original_paths)
+
+            # Apply simulation logic based on type
+            affected_paths = []
+            new_risk_scores = {}
+
+            if simulation.simulation_type == SimulationType.PATCH_VULNERABILITY:
+                affected_paths, new_risk_scores = await self._simulate_patch_vuln(
+                    original_paths, graph, simulation.parameters
+                )
+            elif simulation.simulation_type == SimulationType.SEGMENT_NETWORK:
+                affected_paths, new_risk_scores = await self._simulate_segment_network(
+                    original_paths, graph, simulation.parameters
+                )
+            elif simulation.simulation_type == SimulationType.ADD_CONTROL:
+                affected_paths, new_risk_scores = await self._simulate_add_control(
+                    original_paths, graph, simulation.parameters
+                )
+            elif simulation.simulation_type == SimulationType.COMPROMISE_ASSET:
+                affected_paths, new_risk_scores = await self._simulate_compromise(
+                    original_paths, graph, simulation.parameters
+                )
+
+            # Calculate results
+            paths_eliminated = len([p for p in affected_paths if new_risk_scores.get(str(p.id), p.risk_score) == 0])
+            simulation.resulting_paths_count = simulation.original_paths_count - paths_eliminated
+            simulation.paths_eliminated = paths_eliminated
+            simulation.affected_paths = [str(p.id) for p in affected_paths]
+            simulation.new_risk_scores = new_risk_scores
+
+            # Calculate risk reduction
+            original_risk = sum(p.risk_score for p in original_paths)
+            new_risk = sum(new_risk_scores.get(str(p.id), p.risk_score) for p in original_paths)
+            if original_risk > 0:
+                simulation.risk_reduction_percent = round(((original_risk - new_risk) / original_risk) * 100, 2)
+            else:
+                simulation.risk_reduction_percent = 0
+
+            simulation.recommendation = self._generate_recommendation(simulation)
+            simulation.status = SimulationStatus.COMPLETED
+            simulation.computed_at = datetime.utcnow()
+
+        except Exception as e:
+            simulation.status = SimulationStatus.ERROR
+            simulation.recommendation = f"Simulation failed: {str(e)}"
+
+        await self.db.commit()
+
+    async def _simulate_patch_vuln(
+        self,
+        paths: List[AttackPath],
+        graph: AttackGraph,
+        params: Dict
+    ) -> tuple:
+        """Simulate patching vulnerabilities."""
+        cve_ids = params.get("cve_ids", [])
+        affected = []
+        new_scores = {}
+
+        for path in paths:
+            path_affected = False
+            vulns_remaining = []
+
+            if path.vulns_in_path:
+                for vuln in path.vulns_in_path:
+                    if vuln.get("cve_id") not in cve_ids:
+                        vulns_remaining.append(vuln)
+                    else:
+                        path_affected = True
+
+            if path_affected:
+                affected.append(path)
+                # Recalculate risk with fewer vulns
+                vuln_reduction = 1 - (len(vulns_remaining) / max(len(path.vulns_in_path or []), 1))
+                new_score = max(0, path.risk_score * (1 - vuln_reduction * 0.5))
+                new_scores[str(path.id)] = round(new_score, 2)
+
+        return affected, new_scores
+
+    async def _simulate_segment_network(
+        self,
+        paths: List[AttackPath],
+        graph: AttackGraph,
+        params: Dict
+    ) -> tuple:
+        """Simulate network segmentation."""
+        asset_id = params.get("asset_id")
+        affected = []
+        new_scores = {}
+
+        for path in paths:
+            if asset_id in path.path_nodes:
+                affected.append(path)
+                # Path would be broken by segmentation
+                new_scores[str(path.id)] = 0
+
+        return affected, new_scores
+
+    async def _simulate_add_control(
+        self,
+        paths: List[AttackPath],
+        graph: AttackGraph,
+        params: Dict
+    ) -> tuple:
+        """Simulate adding a security control."""
+        asset_id = params.get("asset_id")
+        control_type = params.get("control_type", "generic")
+        affected = []
+        new_scores = {}
+
+        # Control effectiveness mapping
+        control_effectiveness = {
+            "mfa": 0.4,  # 40% risk reduction
+            "firewall": 0.3,
+            "edr": 0.35,
+            "dlp": 0.25,
+            "encryption": 0.2,
+            "generic": 0.15,
+        }
+        reduction = control_effectiveness.get(control_type, 0.15)
+
+        for path in paths:
+            if asset_id in path.path_nodes:
+                affected.append(path)
+                new_score = max(0, path.risk_score * (1 - reduction))
+                new_scores[str(path.id)] = round(new_score, 2)
+
+        return affected, new_scores
+
+    async def _simulate_compromise(
+        self,
+        paths: List[AttackPath],
+        graph: AttackGraph,
+        params: Dict
+    ) -> tuple:
+        """Simulate asset compromise - shows increased risk."""
+        asset_id = params.get("asset_id")
+        affected = []
+        new_scores = {}
+
+        for path in paths:
+            if asset_id in path.path_nodes:
+                affected.append(path)
+                # Increase risk for paths through compromised asset
+                new_score = min(10, path.risk_score * 1.5)
+                new_scores[str(path.id)] = round(new_score, 2)
+
+        return affected, new_scores
+
+    def _generate_recommendation(self, simulation: AttackPathSimulation) -> str:
+        """Generate recommendation based on simulation results."""
+        if simulation.paths_eliminated and simulation.paths_eliminated > 0:
+            return f"This action would eliminate {simulation.paths_eliminated} attack paths and reduce overall risk by {simulation.risk_reduction_percent}%."
+        elif simulation.risk_reduction_percent and simulation.risk_reduction_percent > 0:
+            return f"This action would reduce risk by {simulation.risk_reduction_percent}% across {len(simulation.affected_paths or [])} paths."
+        else:
+            return "This action would have minimal impact on the current attack paths."
+
+    async def list_simulations(
+        self,
+        tenant_id: str,
+        graph_id: Optional[str] = None,
+        page: int = 1,
+        page_size: int = 20
+    ) -> tuple:
+        """List simulations, optionally filtered by graph."""
+        query = select(AttackPathSimulation).where(
+            AttackPathSimulation.tenant_id == tenant_id
+        )
+
+        if graph_id:
+            query = query.where(AttackPathSimulation.graph_id == graph_id)
+
+        query = query.order_by(AttackPathSimulation.created_at.desc())
+
+        # Count total
+        count_query = select(func.count()).select_from(query.subquery())
+        total = (await self.db.execute(count_query)).scalar() or 0
+
+        # Paginate
+        query = query.offset((page - 1) * page_size).limit(page_size)
+        result = await self.db.execute(query)
+        simulations = list(result.scalars().all())
+
+        return simulations, total
+
+    async def get_simulation(self, tenant_id: str, simulation_id: str) -> Optional[AttackPathSimulation]:
+        """Get a specific simulation."""
+        query = select(AttackPathSimulation).where(
+            and_(
+                AttackPathSimulation.tenant_id == tenant_id,
+                AttackPathSimulation.id == simulation_id
+            )
+        )
+        result = await self.db.execute(query)
+        return result.scalar_one_or_none()
+
+    async def delete_simulation(self, tenant_id: str, simulation_id: str) -> bool:
+        """Delete a simulation."""
+        simulation = await self.get_simulation(tenant_id, simulation_id)
+        if not simulation:
+            return False
+
+        await self.db.delete(simulation)
+        await self.db.commit()
+        return True

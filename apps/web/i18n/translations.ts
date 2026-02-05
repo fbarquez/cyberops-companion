@@ -13,6 +13,7 @@ const translations = {
       threats: "Threat Intel",
       vulnerabilities: "Vulnerabilities",
       risks: "Risk Register",
+      attackPaths: "Attack Paths",
       cmdb: "CMDB",
       tprm: "Third-Party Risk",
       integrations: "Integrations",

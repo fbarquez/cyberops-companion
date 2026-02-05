@@ -1,6 +1,7 @@
 """Attack Path Analysis API endpoints."""
 from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException, Query, status
+from fastapi.responses import Response
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.db.database import get_db
@@ -9,6 +10,7 @@ from src.api.deps import (
     get_current_user_with_tenant
 )
 from src.services.attack_path_service import AttackPathService
+from src.services.pdf_reports import AttackPathReportGenerator
 from src.schemas.attack_paths import (
     GraphScopeType, GraphStatus, PathStatus, SimulationType,
     JewelType, EntryType, ExposureLevel,
@@ -18,6 +20,7 @@ from src.schemas.attack_paths import (
     CrownJewelCreate, CrownJewelUpdate, CrownJewelResponse, CrownJewelListResponse,
     EntryPointCreate, EntryPointUpdate, EntryPointResponse, EntryPointListResponse,
     AttackPathDashboard, ChokepointListResponse, ChokepointInfo,
+    AttackPathSimulationCreate, AttackPathSimulationResponse, AttackPathSimulationListResponse,
 )
 
 router = APIRouter(prefix="/attack-paths")
@@ -495,3 +498,240 @@ async def delete_entry_point(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Entry point not found"
         )
+
+
+# ========== Simulation Endpoints ==========
+
+@router.get("/simulations", response_model=AttackPathSimulationListResponse)
+async def list_simulations(
+    db: DBSession,
+    user_context: UserWithTenant,
+    graph_id: Optional[str] = Query(None, description="Filter by graph ID"),
+    page: int = Query(1, ge=1),
+    page_size: int = Query(20, ge=1, le=100),
+):
+    """List what-if simulations."""
+    user, context = user_context
+    service = get_service(db)
+    simulations, total = await service.list_simulations(
+        context.tenant_id, graph_id, page, page_size
+    )
+
+    return AttackPathSimulationListResponse(
+        simulations=[AttackPathSimulationResponse.model_validate(s) for s in simulations],
+        total=total,
+        page=page,
+        page_size=page_size
+    )
+
+
+@router.post("/simulations", response_model=AttackPathSimulationResponse, status_code=status.HTTP_201_CREATED)
+async def create_simulation(
+    data: AttackPathSimulationCreate,
+    db: DBSession,
+    user_context: UserWithTenant,
+):
+    """
+    Create and run a what-if simulation.
+
+    Simulation types:
+    - patch_vulnerability: Simulate patching specific CVEs
+    - segment_network: Simulate isolating an asset
+    - add_control: Simulate adding a security control (MFA, firewall, etc.)
+    - compromise_asset: Simulate what happens if an asset is compromised
+    """
+    user, context = user_context
+    service = get_service(db)
+    simulation = await service.create_simulation(context.tenant_id, str(user.id), data)
+    return AttackPathSimulationResponse.model_validate(simulation)
+
+
+@router.get("/simulations/{simulation_id}", response_model=AttackPathSimulationResponse)
+async def get_simulation(
+    simulation_id: str,
+    db: DBSession,
+    user_context: UserWithTenant,
+):
+    """Get a specific simulation and its results."""
+    user, context = user_context
+    service = get_service(db)
+    simulation = await service.get_simulation(context.tenant_id, simulation_id)
+
+    if not simulation:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Simulation not found"
+        )
+
+    return AttackPathSimulationResponse.model_validate(simulation)
+
+
+@router.delete("/simulations/{simulation_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_simulation(
+    simulation_id: str,
+    db: DBSession,
+    user_context: UserWithTenant,
+):
+    """Delete a simulation."""
+    user, context = user_context
+    service = get_service(db)
+    deleted = await service.delete_simulation(context.tenant_id, simulation_id)
+
+    if not deleted:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Simulation not found"
+        )
+
+
+# ========== Export Endpoints ==========
+
+@router.get("/graphs/{graph_id}/export")
+async def export_graph_report(
+    graph_id: str,
+    db: DBSession,
+    user_context: UserWithTenant,
+    include_paths: bool = Query(True, description="Include attack paths section"),
+    include_assets: bool = Query(True, description="Include crown jewels and entry points"),
+    include_recommendations: bool = Query(True, description="Include recommendations section"),
+):
+    """
+    Export attack path analysis as a PDF report.
+
+    Generates a comprehensive PDF report including:
+    - Executive summary with risk overview
+    - Attack graph statistics
+    - Critical attack paths listing
+    - Crown jewels and entry points inventory
+    - Chokepoint analysis
+    - Remediation recommendations
+    """
+    user, context = user_context
+    service = get_service(db)
+
+    # Get graph
+    graph = await service.get_graph(context.tenant_id, graph_id)
+    if not graph:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Attack graph not found"
+        )
+
+    # Get paths
+    paths, _ = await service.list_paths(
+        context.tenant_id, graph_id, page=1, page_size=100
+    )
+
+    # Get crown jewels
+    crown_jewels, _ = await service.list_crown_jewels(
+        context.tenant_id, page=1, page_size=50
+    )
+
+    # Get entry points
+    entry_points, _ = await service.list_entry_points(
+        context.tenant_id, page=1, page_size=50
+    )
+
+    # Get chokepoints
+    chokepoints = await service.get_chokepoints(context.tenant_id, limit=20)
+
+    # Get simulations for this graph
+    simulations, _ = await service.list_simulations(
+        context.tenant_id, graph_id, page=1, page_size=20
+    )
+
+    # Convert models to dicts
+    graph_dict = {
+        "id": str(graph.id),
+        "name": graph.name,
+        "description": graph.description,
+        "status": graph.status.value if hasattr(graph.status, 'value') else str(graph.status),
+        "total_nodes": graph.total_nodes,
+        "total_edges": graph.total_edges,
+        "computed_at": graph.computed_at,
+    }
+
+    paths_list = [
+        {
+            "id": str(p.id),
+            "name": p.name,
+            "entry_point_name": p.entry_point_name,
+            "target_name": p.target_name,
+            "hop_count": p.hop_count,
+            "risk_score": float(p.risk_score) if p.risk_score else 0,
+            "exploitable_vulns": p.exploitable_vulns,
+            "status": p.status.value if hasattr(p.status, 'value') else str(p.status),
+        }
+        for p in paths
+    ]
+
+    crown_jewels_list = [
+        {
+            "id": str(j.id),
+            "asset_id": j.asset_id,
+            "asset_name": getattr(j, 'asset_name', None),
+            "jewel_type": j.jewel_type.value if hasattr(j.jewel_type, 'value') else str(j.jewel_type),
+            "business_impact": j.business_impact.value if hasattr(j.business_impact, 'value') else str(j.business_impact),
+            "data_classification": j.data_classification.value if hasattr(j.data_classification, 'value') else None,
+            "business_owner": j.business_owner,
+        }
+        for j in crown_jewels
+    ]
+
+    entry_points_list = [
+        {
+            "id": str(e.id),
+            "asset_id": e.asset_id,
+            "asset_name": getattr(e, 'asset_name', None),
+            "entry_type": e.entry_type.value if hasattr(e.entry_type, 'value') else str(e.entry_type),
+            "exposure_level": e.exposure_level.value if hasattr(e.exposure_level, 'value') else str(e.exposure_level),
+            "authentication_required": e.authentication_required,
+            "mfa_enabled": e.mfa_enabled,
+            "known_vulnerabilities": e.known_vulnerabilities,
+        }
+        for e in entry_points
+    ]
+
+    simulations_list = [
+        {
+            "id": str(s.id),
+            "name": s.name,
+            "simulation_type": s.simulation_type.value if hasattr(s.simulation_type, 'value') else str(s.simulation_type),
+            "status": s.status.value if hasattr(s.status, 'value') else str(s.status),
+            "original_paths_count": s.original_paths_count,
+            "paths_eliminated": s.paths_eliminated,
+            "risk_reduction_percent": float(s.risk_reduction_percent) if s.risk_reduction_percent else 0,
+            "recommendation": s.recommendation,
+        }
+        for s in simulations
+    ]
+
+    # Generate PDF
+    try:
+        generator = AttackPathReportGenerator()
+        pdf_content = generator.generate_report(
+            graph=graph_dict,
+            paths=paths_list,
+            crown_jewels=crown_jewels_list,
+            entry_points=entry_points_list,
+            chokepoints=chokepoints,
+            simulations=simulations_list,
+            include_paths=include_paths,
+            include_assets=include_assets,
+            include_recommendations=include_recommendations,
+        )
+    except ImportError as e:
+        raise HTTPException(
+            status_code=status.HTTP_501_NOT_IMPLEMENTED,
+            detail="PDF generation is not available. Please install reportlab."
+        )
+
+    # Return PDF
+    filename = f"attack-path-report-{graph.name.replace(' ', '-').lower()}.pdf"
+    return Response(
+        content=pdf_content,
+        media_type="application/pdf",
+        headers={
+            "Content-Disposition": f'attachment; filename="{filename}"'
+        }
+    )
