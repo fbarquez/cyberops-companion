@@ -312,7 +312,7 @@ async def get_risk_trends(
 ):
     """Get risk trends over time."""
     from src.models.risk import Risk, RiskStatus
-    from sqlalchemy import select, func
+    from sqlalchemy import select, func, case
     from datetime import datetime, timedelta
 
     now = datetime.utcnow()
