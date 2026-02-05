@@ -10,6 +10,7 @@ Welcome to the CyberOps Companion documentation.
 |----------|-------------|
 | [Project Status](./PROJECT_STATUS.md) | Current state and progress |
 | [Changelog](./CHANGELOG.md) | Version history and changes |
+| [Enterprise Features](./ENTERPRISE.md) | Enterprise edition documentation |
 | [Analytics](./ANALYTICS.md) | Analytics system documentation |
 | [Future Roadmap](./FUTURE_ROADMAP.md) | Planned features and technical debt |
 | [UX Patterns](./UX_PATTERNS.md) | UI/UX component guidelines |
@@ -24,6 +25,7 @@ docs/
 ├── PROJECT_STATUS.md            # Current project state
 ├── CHANGELOG.md                 # Version history
 ├── ANALYTICS.md                 # Analytics system docs
+├── ENTERPRISE.md                # Enterprise edition features
 ├── FUTURE_ROADMAP.md            # Planned features
 ├── UX_PATTERNS.md               # UI/UX guidelines
 │
@@ -36,11 +38,13 @@ docs/
 │   ├── EMAIL_SERVICE.md         # Email/SMTP service
 │   ├── FILE_UPLOADS.md          # File attachment system
 │   ├── I18N_TRANSLATIONS.md     # Internationalization
+│   ├── ISO27001.md              # ISO 27001:2022 compliance
 │   ├── LANDING_PAGE.md          # Public landing page
 │   ├── MOBILE_RESPONSIVE.md     # Mobile responsive design
 │   ├── MULTI_TENANCY.md         # Multi-tenant organizations
 │   ├── NVD_API.md               # NVD/CVE integration
 │   ├── ONBOARDING.md            # User onboarding flow
+│   ├── RATE_LIMITING.md         # API rate limiting
 │   ├── ROLE_BASED_ACCESS.md     # RBAC system
 │   ├── SSO_SAML.md              # SSO/OAuth2 integration
 │   └── WEBSOCKET_NOTIFICATIONS.md # Real-time notifications
@@ -106,7 +110,18 @@ docs/
 | Audit Logging | ✅ Complete | [AUDIT_LOGGING.md](./features/AUDIT_LOGGING.md) |
 | Multi-tenancy | ✅ Complete | [MULTI_TENANCY.md](./features/MULTI_TENANCY.md) |
 | SSO/SAML Integration | ✅ Complete | [SSO_SAML.md](./features/SSO_SAML.md) |
-| API Rate Limiting | 🔲 Planned | - |
+| API Rate Limiting | ✅ Complete | [RATE_LIMITING.md](./features/RATE_LIMITING.md) |
+| ISO 27001:2022 Compliance | ✅ Complete | [ISO27001.md](./features/ISO27001.md) |
+
+### Enterprise Edition
+
+| Feature | Status | Documentation |
+|---------|--------|---------------|
+| Enterprise Overview | ✅ Complete | [ENTERPRISE.md](./ENTERPRISE.md) |
+| ISO 27001:2022 | ✅ Complete | [ISO27001.md](./features/ISO27001.md) |
+| BSI IT-Grundschutz | ✅ Complete | [ENTERPRISE.md](./ENTERPRISE.md#bsi-it-grundschutz) |
+| NIS2 Directive | ✅ Complete | [ENTERPRISE.md](./ENTERPRISE.md#nis2-directive-assessment) |
+| AI Copilot | 🔜 Coming Soon | [ENTERPRISE.md](./ENTERPRISE.md#ai-copilot) |
 
 ### Future Enhancements
 
@@ -139,4 +154,4 @@ When adding new features:
 
 ## Last Updated
 
-**2026-02-01** - Phase 3 nearly complete (Multi-Tenancy, SSO, Audit Logging)
+**2026-02-05** - Phase 3 complete with ISO 27001:2022 compliance module
