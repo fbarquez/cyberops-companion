@@ -3637,4 +3637,235 @@ export const attackPathsAPI = {
   },
 };
 
+// Document & Policy Management
+export const documentsAPI = {
+  // Dashboard
+  getDashboard: (token: string) =>
+    request("/api/v1/documents/dashboard", { token }),
+
+  getStats: (token: string) =>
+    request("/api/v1/documents/stats", { token }),
+
+  // Documents CRUD
+  list: (token: string, params?: {
+    page?: number;
+    size?: number;
+    category?: string;
+    status?: string;
+    framework?: string;
+    owner_id?: string;
+    search?: string;
+    tag?: string;
+  }) => {
+    const query = new URLSearchParams();
+    if (params?.page) query.set("page", params.page.toString());
+    if (params?.size) query.set("size", params.size.toString());
+    if (params?.category) query.set("category", params.category);
+    if (params?.status) query.set("status", params.status);
+    if (params?.framework) query.set("framework", params.framework);
+    if (params?.owner_id) query.set("owner_id", params.owner_id);
+    if (params?.search) query.set("search", params.search);
+    if (params?.tag) query.set("tag", params.tag);
+    return request(`/api/v1/documents?${query}`, { token });
+  },
+
+  get: (token: string, documentId: string) =>
+    request(`/api/v1/documents/${documentId}`, { token }),
+
+  create: (token: string, data: {
+    title: string;
+    description?: string;
+    category: string;
+    content?: string;
+    attachment_id?: string;
+    owner_id?: string;
+    department?: string;
+    review_frequency_days?: number;
+    frameworks?: string[];
+    control_references?: string[];
+    requires_acknowledgment?: boolean;
+    acknowledgment_due_days?: number;
+    approval_type?: string;
+    tags?: string[];
+    metadata?: Record<string, unknown>;
+  }) =>
+    request("/api/v1/documents", {
+      method: "POST",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  update: (token: string, documentId: string, data: {
+    title?: string;
+    description?: string;
+    category?: string;
+    content?: string;
+    attachment_id?: string;
+    owner_id?: string;
+    department?: string;
+    review_frequency_days?: number;
+    frameworks?: string[];
+    control_references?: string[];
+    requires_acknowledgment?: boolean;
+    acknowledgment_due_days?: number;
+    approval_type?: string;
+    tags?: string[];
+    metadata?: Record<string, unknown>;
+  }) =>
+    request(`/api/v1/documents/${documentId}`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  delete: (token: string, documentId: string) =>
+    request(`/api/v1/documents/${documentId}`, {
+      method: "DELETE",
+      token,
+    }),
+
+  // Workflow
+  submitForReview: (token: string, documentId: string, data: {
+    approvers: Array<{ user_id: string; approval_order?: number }>;
+    comments?: string;
+  }) =>
+    request(`/api/v1/documents/${documentId}/submit-review`, {
+      method: "POST",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  approve: (token: string, documentId: string, comments?: string) =>
+    request(`/api/v1/documents/${documentId}/approve`, {
+      method: "POST",
+      body: JSON.stringify({ comments }),
+      token,
+    }),
+
+  reject: (token: string, documentId: string, comments: string) =>
+    request(`/api/v1/documents/${documentId}/reject`, {
+      method: "POST",
+      body: JSON.stringify({ comments }),
+      token,
+    }),
+
+  requestChanges: (token: string, documentId: string, comments: string) =>
+    request(`/api/v1/documents/${documentId}/request-changes`, {
+      method: "POST",
+      body: JSON.stringify({ comments }),
+      token,
+    }),
+
+  publish: (token: string, documentId: string, data?: {
+    assign_acknowledgments_to?: string[];
+    notify_subscribers?: boolean;
+  }) =>
+    request(`/api/v1/documents/${documentId}/publish`, {
+      method: "POST",
+      body: JSON.stringify(data || {}),
+      token,
+    }),
+
+  archive: (token: string, documentId: string) =>
+    request(`/api/v1/documents/${documentId}/archive`, {
+      method: "POST",
+      token,
+    }),
+
+  // Versions
+  listVersions: (token: string, documentId: string) =>
+    request(`/api/v1/documents/${documentId}/versions`, { token }),
+
+  createVersion: (token: string, documentId: string, data: {
+    change_summary: string;
+    change_details?: string;
+    version_type?: string;
+    content?: string;
+    attachment_id?: string;
+  }) =>
+    request(`/api/v1/documents/${documentId}/versions`, {
+      method: "POST",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  getVersion: (token: string, documentId: string, versionId: string) =>
+    request(`/api/v1/documents/${documentId}/versions/${versionId}`, { token }),
+
+  compareVersions: (token: string, documentId: string, versionA: string, versionB: string) =>
+    request(`/api/v1/documents/${documentId}/versions/${versionA}/compare/${versionB}`, { token }),
+
+  // Approvals
+  getApprovalChain: (token: string, documentId: string) =>
+    request(`/api/v1/documents/${documentId}/approvals`, { token }),
+
+  getMyPendingApprovals: (token: string) =>
+    request("/api/v1/documents/approvals/pending", { token }),
+
+  // Acknowledgments
+  listAcknowledgments: (token: string, documentId: string) =>
+    request(`/api/v1/documents/${documentId}/acknowledgments`, { token }),
+
+  assignAcknowledgments: (token: string, documentId: string, data: {
+    user_ids: string[];
+    due_date?: string;
+  }) =>
+    request(`/api/v1/documents/${documentId}/acknowledgments`, {
+      method: "POST",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  acknowledge: (token: string, documentId: string) =>
+    request(`/api/v1/documents/${documentId}/acknowledge`, {
+      method: "POST",
+      token,
+    }),
+
+  declineAcknowledgment: (token: string, documentId: string, reason: string) =>
+    request(`/api/v1/documents/${documentId}/decline?reason=${encodeURIComponent(reason)}`, {
+      method: "POST",
+      token,
+    }),
+
+  getMyPendingAcknowledgments: (token: string) =>
+    request("/api/v1/documents/acknowledgments/pending", { token }),
+
+  sendAcknowledgmentReminder: (token: string, acknowledgmentId: string) =>
+    request(`/api/v1/documents/acknowledgments/${acknowledgmentId}/remind`, {
+      method: "POST",
+      token,
+    }),
+
+  // Reviews
+  listReviews: (token: string, documentId: string) =>
+    request(`/api/v1/documents/${documentId}/reviews`, { token }),
+
+  recordReview: (token: string, documentId: string, data: {
+    outcome: string;
+    review_notes?: string;
+    action_items?: Array<Record<string, unknown>>;
+    next_review_date?: string;
+  }) =>
+    request(`/api/v1/documents/${documentId}/reviews`, {
+      method: "POST",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  getDueForReview: (token: string, daysAhead: number = 30) =>
+    request(`/api/v1/documents/due-for-review?days_ahead=${daysAhead}`, { token }),
+
+  // Reports
+  getComplianceReport: (token: string, params?: {
+    start_date?: string;
+    end_date?: string;
+  }) => {
+    const query = new URLSearchParams();
+    if (params?.start_date) query.set("start_date", params.start_date);
+    if (params?.end_date) query.set("end_date", params.end_date);
+    return request(`/api/v1/documents/compliance-report?${query}`, { token });
+  },
+};
+
 export { APIError };
