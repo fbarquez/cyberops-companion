@@ -4,7 +4,7 @@ Threat Intelligence Service.
 Manages IOCs, Threat Actors, and Campaigns with enrichment capabilities.
 """
 from datetime import datetime
-from typing import Optional, List, Dict, Any, Tuple
+from typing import Optional, List, Dict, Any
 from uuid import UUID
 from sqlalchemy import select, func, and_, or_
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -122,7 +122,7 @@ class ThreatIntelService:
         threat_level: Optional[ThreatLevel] = None,
         search: Optional[str] = None,
         incident_id: Optional[str] = None,
-    ) -> Tuple[List[IOC], int]:
+    ) -> tuple[List[IOC], int]:
         """List IOCs with filtering and pagination."""
         query = select(IOC)
 
@@ -343,7 +343,7 @@ class ThreatIntelService:
         motivation: Optional[ActorMotivation] = None,
         sophistication: Optional[ActorSophistication] = None,
         search: Optional[str] = None,
-    ) -> Tuple[List[ThreatActor], int]:
+    ) -> tuple[List[ThreatActor], int]:
         """List threat actors with filtering."""
         query = select(ThreatActor)
 
@@ -455,7 +455,7 @@ class ThreatIntelService:
         is_active: Optional[bool] = None,
         campaign_type: Optional[str] = None,
         search: Optional[str] = None,
-    ) -> Tuple[List[Campaign], int]:
+    ) -> tuple[List[Campaign], int]:
         """List campaigns with filtering."""
         query = select(Campaign)
 

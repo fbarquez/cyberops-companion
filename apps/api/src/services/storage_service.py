@@ -9,7 +9,7 @@ import mimetypes
 from abc import ABC, abstractmethod
 from datetime import datetime
 from pathlib import Path
-from typing import Optional, BinaryIO, Tuple, List
+from typing import Optional, BinaryIO,  List
 
 from fastapi import UploadFile, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -337,7 +337,7 @@ class StorageService:
 
         return attachment
 
-    async def download(self, attachment_id: str, user_id: str) -> Tuple[bytes, Attachment]:
+    async def download(self, attachment_id: str, user_id: str) -> tuple[bytes, Attachment]:
         """
         Download a file.
 
@@ -487,7 +487,7 @@ class StorageService:
         )
         return result.scalar() or 0
 
-    async def verify_integrity(self, attachment_id: str) -> Tuple[bool, str]:
+    async def verify_integrity(self, attachment_id: str) -> tuple[bool, str]:
         """
         Verify file integrity by comparing stored hash with actual file hash.
 

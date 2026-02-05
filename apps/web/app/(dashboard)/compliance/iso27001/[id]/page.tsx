@@ -239,9 +239,9 @@ export default function ISO27001AssessmentPage() {
 
   const { data: soaData, isLoading: soaLoading } = useQuery<SoAListResponse>({
     queryKey: ["iso27001", "soa", assessmentId, selectedTheme],
-    queryFn: () => iso27001API.getSoA(token!, assessmentId, {
-      theme: selectedTheme !== "all" ? selectedTheme : undefined,
-    }) as Promise<SoAListResponse>,
+    queryFn: () => iso27001API.getSoAEntries(token!, assessmentId,
+      selectedTheme !== "all" ? selectedTheme : undefined
+    ) as Promise<SoAListResponse>,
     enabled: !!token && !!assessmentId && (currentStep === 2 || currentStep === 3),
   });
 
@@ -253,13 +253,13 @@ export default function ISO27001AssessmentPage() {
 
   const { data: gapAnalysis } = useQuery<GapAnalysisResponse>({
     queryKey: ["iso27001", "gaps", assessmentId],
-    queryFn: () => iso27001API.getGaps(token!, assessmentId) as Promise<GapAnalysisResponse>,
+    queryFn: () => iso27001API.getGapAnalysis(token!, assessmentId) as Promise<GapAnalysisResponse>,
     enabled: !!token && !!assessmentId && currentStep === 4,
   });
 
   const { data: crossFramework } = useQuery<CrossFrameworkMappingResponse>({
     queryKey: ["iso27001", "mapping", assessmentId],
-    queryFn: () => iso27001API.getMapping(token!, assessmentId) as Promise<CrossFrameworkMappingResponse>,
+    queryFn: () => iso27001API.getCrossFrameworkMapping(token!, assessmentId) as Promise<CrossFrameworkMappingResponse>,
     enabled: !!token && !!assessmentId && currentStep === 5,
   });
 
@@ -296,7 +296,7 @@ export default function ISO27001AssessmentPage() {
   });
 
   const completeMutation = useMutation({
-    mutationFn: () => iso27001API.completeAssessment(token!, assessmentId, { confirm: true }),
+    mutationFn: () => iso27001API.completeAssessment(token!, assessmentId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["iso27001"] });
       setIsCompleteDialogOpen(false);

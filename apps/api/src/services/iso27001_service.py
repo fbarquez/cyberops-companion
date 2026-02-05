@@ -4,7 +4,7 @@ ISO 27001:2022 Compliance Service.
 Business logic for ISO 27001 controls, assessments, scoring, and gap analysis.
 """
 from datetime import datetime
-from typing import Optional, List, Dict, Any, Tuple
+from typing import Optional, List, Dict, Any
 from uuid import uuid4
 
 from sqlalchemy import select, func, and_, or_
@@ -65,7 +65,7 @@ class ISO27001Service:
         search: Optional[str] = None,
         page: int = 1,
         page_size: int = 100
-    ) -> Tuple[List[ISO27001Control], int]:
+    ) -> tuple[List[ISO27001Control], int]:
         """Get controls with optional filtering."""
         query = select(ISO27001Control)
 
@@ -227,7 +227,7 @@ class ISO27001Service:
         status: Optional[str] = None,
         page: int = 1,
         page_size: int = 20
-    ) -> Tuple[List[ISO27001Assessment], int]:
+    ) -> tuple[List[ISO27001Assessment], int]:
         """List assessments for a tenant."""
         query = select(ISO27001Assessment).where(
             ISO27001Assessment.tenant_id == tenant_id

@@ -1,7 +1,7 @@
 """Third-Party Risk Management service."""
 import math
 from datetime import datetime, timedelta
-from typing import Optional, List, Tuple
+from typing import Optional, List
 from sqlalchemy import select, func, and_, or_
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload

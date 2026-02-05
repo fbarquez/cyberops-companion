@@ -1,5 +1,5 @@
 """Base service with tenant awareness for multi-tenancy support."""
-from typing import TypeVar, Generic, Type, Optional, List, Tuple, Any
+from typing import TypeVar, Generic, Type, Optional, List,  Any
 
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func, and_
@@ -135,7 +135,7 @@ class TenantAwareService(Generic[T]):
         size: int = 20,
         filters: Optional[dict] = None,
         order_by: Optional[Any] = None
-    ) -> Tuple[List[T], int]:
+    ) -> tuple[List[T], int]:
         """List entities with pagination and tenant isolation.
 
         Args:

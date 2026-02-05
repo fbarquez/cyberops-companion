@@ -143,7 +143,7 @@ export default function ISO27001Page() {
 
   const { data: assessmentsData, isLoading: assessmentsLoading } = useQuery<AssessmentListResponse>({
     queryKey: ["iso27001", "assessments", searchQuery],
-    queryFn: () => iso27001API.listAssessments(token!, { search: searchQuery || undefined }) as Promise<AssessmentListResponse>,
+    queryFn: () => iso27001API.listAssessments(token!) as Promise<AssessmentListResponse>,
     enabled: !!token,
   });
 
