@@ -391,6 +391,112 @@ BCM integrates with other modules:
 | NIS2 | Article 21 (Business Continuity) |
 | NIST CSF | PR.IP-9, PR.IP-10 |
 
+## OSCAL Catalog
+
+This module includes a machine-readable representation of **BSI Standard 200-4** in [OSCAL](https://pages.nist.gov/OSCAL/) (Open Security Controls Assessment Language) format.
+
+### What is OSCAL?
+
+OSCAL is a standardized format developed by NIST for representing security and compliance information in machine-readable formats (JSON, XML, YAML). It enables:
+
+- **Automation** - Tools can read and process controls automatically
+- **Interoperability** - Different systems can share compliance data
+- **Consistency** - Standardized format for any framework
+- **Mappings** - Facilitates relating controls between different standards
+
+### OSCAL Models
+
+| Model | Purpose |
+|-------|---------|
+| **Catalog** | Defines controls (used for BSI 200-4) |
+| **Profile** | Selection/customization of controls |
+| **Component Definition** | Security capabilities of a system |
+| **System Security Plan** | Organization's security plan |
+| **Assessment Plan/Results** | Audit plans and results |
+| **Plan of Action & Milestones** | Finding tracking |
+
+### BSI 200-4 OSCAL Catalog
+
+Location: `apps/api/src/db/data/bsi_200_4_catalog.json`
+
+The catalog follows OSCAL Catalog Model v1.1.2 and contains:
+
+| Group ID | Title (DE) | Title (EN) | Controls |
+|----------|------------|------------|----------|
+| BCM-1 | BCMS-Rahmenwerk | BCMS Framework | 5 |
+| BCM-2 | Business Impact Analysis | Business Impact Analysis | 6 |
+| BCM-3 | Risikoanalyse | Risk Assessment | 4 |
+| BCM-4 | Kontinuitätsstrategien | BC Strategies | 4 |
+| BCM-5 | Notfallpläne | Emergency Plans | 7 |
+| BCM-6 | Übungen und Tests | Exercises and Testing | 5 |
+| BCM-7 | Pflege und Verbesserung | Maintenance and Improvement | 5 |
+| BCM-8 | Krisenmanagement | Crisis Management | 4 |
+
+**Total: 8 groups, 40 controls**
+
+Each control includes:
+- German and English titles
+- Priority level: `must`, `should`, `informative`
+- ISO 22301:2019 clause mapping
+- Statement, guidance, and assessment objectives
+
+### Using the OSCAL Catalog
+
+```python
+import json
+
+with open('bsi_200_4_catalog.json', 'r') as f:
+    catalog = json.load(f)
+
+# Access groups
+for group in catalog['catalog']['groups']:
+    print(f"{group['id']}: {group['title']}")
+    for control in group.get('controls', []):
+        print(f"  {control['id']}: {control['title']}")
+```
+
+### Validating the Catalog
+
+```bash
+# Using oscal-cli (https://github.com/usnistgov/oscal-cli)
+oscal-cli catalog validate bsi_200_4_catalog.json
+```
+
+## References
+
+### Official Standards
+
+| Standard | Source | Description |
+|----------|--------|-------------|
+| **BSI Standard 200-4** | [BSI Official](https://www.bsi.bund.de/DE/Themen/Unternehmen-und-Organisationen/Standards-und-Zertifizierung/IT-Grundschutz/BSI-Standards/BSI-Standard-200-4-Business-Continuity-Management/bsi-standard-200-4_Business_Continuity_Management_node.html) | German BCM standard |
+| **ISO 22301:2019** | [ISO Official](https://www.iso.org/standard/75106.html) | International BCM standard |
+| **OSCAL** | [NIST OSCAL](https://pages.nist.gov/OSCAL/) | Security controls format |
+
+### BSI Resources
+
+- [BSI Standard 200-4 PDF (German)](https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/BSI_Standards/standard_200_4.html)
+- [BSI IT-Grundschutz Compendium](https://www.bsi.bund.de/DE/Themen/Unternehmen-und-Organisationen/Standards-und-Zertifizierung/IT-Grundschutz/IT-Grundschutz-Kompendium/it-grundschutz-kompendium_node.html)
+- [BSI GitHub - Stand-der-Technik-Bibliothek](https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek)
+
+### ISO 22301 Resources
+
+- [ISO 22301:2019 - Security and resilience](https://www.iso.org/standard/75106.html)
+- [ISO 22313:2020 - BCM Guidance](https://www.iso.org/standard/75107.html)
+- [ISO 22317:2021 - BIA Guidelines](https://www.iso.org/standard/79000.html)
+
+### OSCAL Resources
+
+- [NIST OSCAL Documentation](https://pages.nist.gov/OSCAL/)
+- [OSCAL GitHub Repository](https://github.com/usnistgov/OSCAL)
+- [OSCAL CLI Tool](https://github.com/usnistgov/oscal-cli)
+- [OSCAL Catalog Model](https://pages.nist.gov/OSCAL/concepts/layer/control/catalog/)
+
+### Related Standards
+
+- [NIST SP 800-34 Rev. 1](https://csrc.nist.gov/publications/detail/sp/800-34/rev-1/final) - Contingency Planning Guide
+- [NIST CSF 2.0](https://www.nist.gov/cyberframework) - Cybersecurity Framework
+- [NIS2 Directive](https://digital-strategy.ec.europa.eu/en/policies/nis2-directive) - EU Network and Information Security
+
 ---
 
 *Business Continuity Management - Ensuring organizational resilience*
