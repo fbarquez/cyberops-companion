@@ -27,7 +27,7 @@ from sqlalchemy import (
 from sqlalchemy.dialects.postgresql import JSON, UUID
 from sqlalchemy.orm import relationship
 
-from src.db.base import Base
+from src.db.database import Base
 from src.models.mixins import TenantMixin
 
 
