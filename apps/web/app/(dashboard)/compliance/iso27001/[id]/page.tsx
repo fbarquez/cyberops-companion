@@ -119,6 +119,21 @@ interface SoAListResponse {
   by_status: Record<string, number>;
 }
 
+// Update type for SoA entry (matches API client)
+interface SoAEntryUpdate {
+  applicability?: string;
+  justification?: string;
+  status?: string;
+  implementation_level?: number;
+  evidence?: string;
+  implementation_notes?: string;
+  gap_description?: string;
+  remediation_plan?: string;
+  remediation_owner?: string;
+  remediation_due_date?: string;
+  priority?: number;
+}
+
 interface GapItem {
   control_id: string;
   control_code: string;
@@ -286,7 +301,7 @@ export default function ISO27001AssessmentPage() {
   });
 
   const updateSoAMutation = useMutation({
-    mutationFn: ({ controlId, data }: { controlId: string; data: Partial<SoAEntry> }) =>
+    mutationFn: ({ controlId, data }: { controlId: string; data: SoAEntryUpdate }) =>
       iso27001API.updateSoAEntry(token!, assessmentId, controlId, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["iso27001", "soa", assessmentId] });
