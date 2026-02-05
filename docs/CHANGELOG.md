@@ -18,6 +18,85 @@ See [FUTURE_ROADMAP.md](./FUTURE_ROADMAP.md) for detailed specifications.
 
 ---
 
+## [0.15.0] - 2026-02-05
+
+### Added
+
+#### Document & Policy Management Module
+
+Complete document management system for ISMS compliance, supporting policies, procedures, standards, and other compliance documentation with versioning, approval workflows, and acknowledgment tracking.
+
+**Backend:**
+
+| Component | File | Description |
+|-----------|------|-------------|
+| Models | `models/documents.py` | Document, DocumentVersion, DocumentApproval, DocumentAcknowledgment, DocumentReview |
+| Schemas | `schemas/documents.py` | 25+ Pydantic schemas for all operations |
+| Service | `services/document_service.py` | ~700 lines of business logic |
+| API | `api/v1/documents.py` | 28 REST endpoints |
+| Migration | `alembic/versions/h8i9j0k1l2m3_add_document_tables.py` | 5 tables with indexes |
+
+**Document Categories:**
+- Policy (POL-001)
+- Procedure (PRO-001)
+- Standard (STD-001)
+- Guideline (GDL-001)
+- Form (FRM-001)
+- Record (REC-001)
+- Manual (MAN-001)
+- Work Instruction (INS-001)
+
+**Document Lifecycle:**
+```
+DRAFT → PENDING_REVIEW → APPROVED → PUBLISHED → ARCHIVED
+                ↓
+        (rejected: back to DRAFT)
+```
+
+**API Endpoints (28 total):**
+
+| Category | Endpoints |
+|----------|-----------|
+| Documents CRUD | GET/POST/PUT/DELETE `/documents`, `/documents/{id}` |
+| Workflow | POST `/documents/{id}/submit-review`, `/approve`, `/reject`, `/publish`, `/archive` |
+| Versions | GET/POST `/documents/{id}/versions`, compare endpoint |
+| Approvals | GET/POST `/documents/{id}/approvals`, `/approvals/pending` |
+| Acknowledgments | GET/POST `/documents/{id}/acknowledgments`, `/acknowledge`, `/remind` |
+| Reviews | GET/POST `/documents/{id}/reviews`, `/documents/due-for-review` |
+| Reports | GET `/documents/stats`, `/documents/compliance-report` |
+
+**Frontend:**
+
+| Component | File | Description |
+|-----------|------|-------------|
+| List Page | `app/(dashboard)/documents/page.tsx` | Dashboard, tabs, filters, create dialog |
+| Detail Page | `app/(dashboard)/documents/[id]/page.tsx` | Multi-tab view with editor |
+| API Client | `lib/api-client.ts` | `documentsAPI` with all methods |
+| Sidebar | `components/shared/sidebar.tsx` | Documents navigation entry |
+| Translations | `i18n/translations.ts` | EN/DE translations (~150 keys) |
+
+**Features:**
+- Version control with major/minor/patch numbering (1.0, 1.1, 2.0)
+- Sequential and parallel approval workflows
+- User acknowledgment tracking with due dates
+- Compliance mapping to ISO 27001, NIS2, BSI frameworks
+- Review cycles: Quarterly, Semi-Annual, Annual, Biennial
+- Markdown content editor with live preview
+- Auto-generated document IDs by category
+
+**Notification Types Added:**
+- `DOCUMENT_SUBMITTED`, `DOCUMENT_APPROVED`, `DOCUMENT_REJECTED`
+- `DOCUMENT_PUBLISHED`, `DOCUMENT_UPDATED`
+- `DOCUMENT_REVIEW_DUE`, `DOCUMENT_REVIEW_OVERDUE`
+- `ACKNOWLEDGMENT_REQUIRED`, `ACKNOWLEDGMENT_REMINDER`, `ACKNOWLEDGMENT_OVERDUE`
+- `APPROVAL_REQUIRED`, `APPROVAL_REMINDER`
+
+**Documentation:**
+- Feature docs: `docs/features/DOCUMENT_MANAGEMENT.md`
+- Updated architecture overview
+
+---
+
 ## [0.14.0] - 2026-02-05
 
 ### Added
