@@ -181,10 +181,12 @@ export default function ExerciseDetailPage() {
 
   // Mutations
   const saveExerciseMutation = useMutation({
-    mutationFn: (data: typeof exerciseForm) =>
-      isNewExercise
+    mutationFn: async (data: typeof exerciseForm) => {
+      const result = await (isNewExercise
         ? bcmAPI.createExercise(token!, data)
-        : bcmAPI.updateExercise(token!, exerciseId, data),
+        : bcmAPI.updateExercise(token!, exerciseId, data));
+      return result as { id?: string };
+    },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["bcm"] });
       if (isNewExercise && data?.id) {
@@ -197,9 +199,9 @@ export default function ExerciseDetailPage() {
     mutationFn: (data: {
       results_summary: string;
       objectives_met: Record<string, boolean>;
-      issues_identified: Array<{ issue: string; severity: string; resolution: string }>;
+      issues_identified: string[];
       lessons_learned: string;
-      action_items: Array<{ action: string; owner: string; due_date: string; status: string }>;
+      action_items: Array<Record<string, unknown>>;
       actual_date: string;
       actual_duration_hours: number;
       conducted_by: string;
@@ -298,7 +300,9 @@ export default function ExerciseDetailPage() {
     completeExerciseMutation.mutate({
       results_summary: exerciseForm.results_summary,
       objectives_met: objectivesMet,
-      issues_identified: exerciseForm.issues_identified,
+      issues_identified: exerciseForm.issues_identified.map(
+        (i) => `[${i.severity}] ${i.issue}${i.resolution ? ` - Resolution: ${i.resolution}` : ""}`
+      ),
       lessons_learned: exerciseForm.lessons_learned,
       action_items: exerciseForm.action_items,
       actual_date: exerciseForm.actual_date || new Date().toISOString().split("T")[0],

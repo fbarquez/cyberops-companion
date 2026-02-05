@@ -167,10 +167,12 @@ export default function PlanEditorPage() {
 
   // Mutations
   const savePlanMutation = useMutation({
-    mutationFn: (data: typeof planForm) =>
-      isNewPlan
+    mutationFn: async (data: typeof planForm) => {
+      const result = await (isNewPlan
         ? bcmAPI.createPlan(token!, data)
-        : bcmAPI.updatePlan(token!, planId, data),
+        : bcmAPI.updatePlan(token!, planId, data));
+      return result as { id?: string };
+    },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["bcm"] });
       if (isNewPlan && data?.id) {
@@ -188,7 +190,10 @@ export default function PlanEditorPage() {
   });
 
   const exportPdfMutation = useMutation({
-    mutationFn: () => bcmAPI.exportPlanPdf(token!, planId),
+    mutationFn: async () => {
+      const result = await bcmAPI.exportPlanPdf(token!, planId);
+      return result as BlobPart;
+    },
     onSuccess: (data) => {
       // Handle PDF download
       const blob = new Blob([data], { type: "application/pdf" });
