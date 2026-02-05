@@ -1,5 +1,5 @@
 """API dependencies."""
-from typing import Annotated, Optional, Tuple
+from typing import Annotated, Optional
 
 from fastapi import Depends, HTTPException, status, Header
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
@@ -44,7 +44,7 @@ async def get_current_user_with_tenant(
     credentials: Annotated[HTTPAuthorizationCredentials, Depends(security)],
     db: Annotated[AsyncSession, Depends(get_db)],
     x_tenant_id: Annotated[Optional[str], Header()] = None,
-) -> Tuple[User, TenantContext]:
+) -> tuple[User, TenantContext]:
     """Get current user with tenant context.
 
     This dependency:
@@ -137,8 +137,8 @@ def require_org_role(required_roles: list):
         required_roles: List of allowed org roles (e.g., ["owner", "admin"])
     """
     async def org_role_checker(
-        user_context: Annotated[Tuple[User, TenantContext], Depends(get_current_user_with_tenant)]
-    ) -> Tuple[User, TenantContext]:
+        user_context: Annotated[tuple[User, TenantContext], Depends(get_current_user_with_tenant)]
+    ) -> tuple[User, TenantContext]:
         user, context = user_context
 
         # Super admin bypasses org role check
@@ -161,5 +161,5 @@ AdminUser = Annotated[User, Depends(require_role(UserRole.ADMIN))]
 ManagerUser = Annotated[User, Depends(require_role(UserRole.MANAGER))]
 LeadUser = Annotated[User, Depends(require_role(UserRole.LEAD))]
 SuperAdminUser = Annotated[User, Depends(require_super_admin())]
-UserWithTenant = Annotated[Tuple[User, TenantContext], Depends(get_current_user_with_tenant)]
-OrgAdmin = Annotated[Tuple[User, TenantContext], Depends(require_org_role(["owner", "admin"]))]
+UserWithTenant = Annotated[tuple[User, TenantContext], Depends(get_current_user_with_tenant)]
+OrgAdmin = Annotated[tuple[User, TenantContext], Depends(require_org_role(["owner", "admin"]))]

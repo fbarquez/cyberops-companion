@@ -2,7 +2,7 @@
 import logging
 import time
 from dataclasses import dataclass
-from typing import Optional, Tuple
+from typing import Optional
 
 from redis.asyncio import Redis
 
@@ -216,7 +216,7 @@ class RateLimitService:
     async def get_tenant_usage(
         self,
         tenant_id: str,
-    ) -> Tuple[int, int]:
+    ) -> tuple[int, int]:
         """Get current usage for a tenant.
 
         Args:

@@ -18,7 +18,7 @@ import json
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum
-from typing import Dict, List, Optional, Any, Tuple
+from typing import Dict, List, Optional, Any
 
 
 class IOCType(str, Enum):
@@ -141,7 +141,7 @@ class IOCEnricher:
         self.api_keys = api_keys or {}
         self.offline_mode = offline_mode
         self.cache_ttl = timedelta(hours=cache_ttl_hours)
-        self._cache: Dict[str, Tuple[EnrichmentResult, datetime]] = {}
+        self._cache: Dict[str, tuple[EnrichmentResult, datetime]] = {}
 
         # Known malicious indicators for offline mode
         self._known_malicious = self._load_known_malicious()

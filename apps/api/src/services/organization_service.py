@@ -1,7 +1,7 @@
 """Organization management service."""
 import re
 from datetime import datetime
-from typing import Optional, List, Tuple
+from typing import Optional, List
 from uuid import uuid4
 
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -215,7 +215,7 @@ class OrganizationService:
         org_id: str,
         page: int = 1,
         size: int = 20
-    ) -> Tuple[List[dict], int]:
+    ) -> tuple[List[dict], int]:
         """List organization members with pagination."""
         query = (
             select(User, OrganizationMember)

@@ -1,6 +1,6 @@
 """Incident management service."""
 from datetime import datetime
-from typing import Optional, List, Tuple
+from typing import Optional, List
 from uuid import uuid4
 
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -57,7 +57,7 @@ class IncidentService:
         status: Optional[IncidentStatus] = None,
         page: int = 1,
         size: int = 20,
-    ) -> Tuple[List[Incident], int]:
+    ) -> tuple[List[Incident], int]:
         """List incidents with pagination."""
         query = select(Incident).where(Incident.is_deleted == False)
 

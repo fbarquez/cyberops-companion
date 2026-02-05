@@ -3,7 +3,7 @@ import csv
 import io
 import json
 from datetime import datetime, timedelta
-from typing import Optional, List, Dict, Any, Tuple
+from typing import Optional, List, Dict, Any
 from sqlalchemy import select, func, and_, or_, desc
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
@@ -223,7 +223,7 @@ class AuditService:
         search: Optional[str] = None,
         page: int = 1,
         size: int = 50,
-    ) -> Tuple[List[Dict[str, Any]], int]:
+    ) -> tuple[List[Dict[str, Any]], int]:
         """List audit logs with filtering and pagination.
 
         Args:
@@ -500,7 +500,7 @@ class AuditService:
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None,
         severity: Optional[str] = None,
-    ) -> Tuple[bytes, str, int]:
+    ) -> tuple[bytes, str, int]:
         """Export audit logs to a file format.
 
         Args:
