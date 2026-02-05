@@ -16,6 +16,7 @@ CyberOps Companion Enterprise extends the open-source Community edition with adv
 | Feature | Description | Status |
 |---------|-------------|--------|
 | [ISO 27001:2022 Compliance](#iso-270012022-compliance) | Full ISMS assessment with 93 controls | ✅ Available |
+| [Business Continuity Management](#business-continuity-management) | BCM based on BSI 200-4 and ISO 22301 | ✅ Available |
 | [BSI IT-Grundschutz](#bsi-it-grundschutz) | German federal security standards | ✅ Available |
 | [NIS2 Directive Assessment](#nis2-directive-assessment) | EU cybersecurity directive compliance | ✅ Available |
 | [AI Copilot](#ai-copilot) | Multi-LLM security assistant | 🔜 Coming Soon |
@@ -69,6 +70,61 @@ Full implementation of ISO/IEC 27001:2022 Information Security Management System
 ### Documentation
 
 See [ISO 27001:2022 Documentation](./features/ISO27001.md) for detailed API reference and usage.
+
+---
+
+## Business Continuity Management
+
+Comprehensive BCM implementation based on BSI Standard 200-4 and ISO 22301.
+
+### Features
+
+- **Business Process Inventory**:
+  - Critical process documentation
+  - Dependency mapping (internal, external, IT)
+  - Key personnel identification
+  - Criticality classification (Critical/High/Medium/Low)
+
+- **Business Impact Analysis (BIA)**:
+  - 6-step wizard for structured analysis
+  - Impact timeline (1h, 4h, 8h, 24h, 72h, 1w)
+  - Impact categories (Financial, Operational, Reputational, Legal, Safety)
+  - Recovery objectives (RTO, RPO, MTPD)
+  - Resource requirements
+
+- **Risk Scenarios**:
+  - Scenario categories (Natural disaster, Cyber attack, Pandemic, etc.)
+  - Likelihood and impact assessment (5x5 matrix)
+  - Risk score calculation
+  - Single Points of Failure identification
+
+- **Continuity Strategies**:
+  - Strategy types (Manual workaround, Alternate site, Redundancy, etc.)
+  - Achievable RTO/RPO per strategy
+  - Activation triggers and procedures
+
+- **Emergency Plans (Notfallkonzepte)**:
+  - Plan types (Crisis management, DR, Communication, etc.)
+  - Structured sections (Phases, Procedures, Roles, Contacts)
+  - Activation and recovery checklists
+  - Approval workflow
+  - PDF export
+
+- **BC Exercises**:
+  - Exercise types (Tabletop, Simulation, Full test)
+  - Objectives tracking
+  - Results documentation
+  - Issues and lessons learned
+  - Action item management
+
+- **BCM Maturity Assessment**:
+  - Overall program scoring
+  - Coverage metrics (BIA, strategies, plans, testing)
+  - Progress tracking
+
+### Documentation
+
+See [BCM Documentation](./features/BCM.md) for detailed API reference and usage.
 
 ---
 
@@ -195,6 +251,7 @@ Enterprise customers receive priority technical support with SLA guarantees.
 | Audit Logging | ✅ | ✅ |
 | API Rate Limiting | ✅ | ✅ |
 | **ISO 27001:2022** | ❌ | ✅ |
+| **Business Continuity (BCM)** | ❌ | ✅ |
 | **BSI IT-Grundschutz** | ❌ | ✅ |
 | **NIS2 Assessment** | ❌ | ✅ |
 | **AI Copilot** | ❌ | ✅ |
@@ -211,6 +268,7 @@ Enterprise features are available through the standard API with enterprise licen
 
 ```
 /api/v1/iso27001/...     # ISO 27001 endpoints
+/api/v1/bcm/...          # Business Continuity Management endpoints
 /api/v1/bsi/...          # BSI IT-Grundschutz endpoints
 /api/v1/nis2/...         # NIS2 Directive endpoints
 /api/v1/copilot/...      # AI Copilot endpoints (coming soon)
@@ -260,6 +318,7 @@ Enterprise features are included in the standard installation. Enable them by:
 ## Related Documentation
 
 - [ISO 27001:2022](./features/ISO27001.md) - Detailed ISO 27001 documentation
+- [Business Continuity Management](./features/BCM.md) - BCM module documentation
 - [Multi-Tenancy](./features/MULTI_TENANCY.md) - Organization management
 - [SSO/SAML](./features/SSO_SAML.md) - Single sign-on configuration
 - [Audit Logging](./features/AUDIT_LOGGING.md) - Compliance audit trails
@@ -271,6 +330,7 @@ Enterprise features are included in the standard installation. Enable them by:
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 2.1.0 | 2026-02-05 | BCM module with BIA wizard, emergency plans, and exercises |
 | 2.0.0 | 2026-02-05 | ISO 27001:2022 module with full wizard and PDF reports |
 | 1.9.0 | 2026-02-01 | BSI IT-Grundschutz catalog and assessment |
 | 1.8.0 | 2026-02-01 | NIS2 Directive assessment wizard |
