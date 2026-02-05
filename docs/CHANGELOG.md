@@ -110,6 +110,8 @@ score = (compliant + 0.5 * partial) / applicable * 100
 
 **Documentation:**
 - Added `docs/features/ISO27001.md` with full implementation guide
+- Added `docs/ENTERPRISE.md` with enterprise edition overview
+- Updated `docs/README.md` with ISO 27001, Rate Limiting, and Enterprise docs
 - Updated `README.md` with ISO 27001 documentation link
 
 ---
