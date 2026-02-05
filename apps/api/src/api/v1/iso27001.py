@@ -610,7 +610,24 @@ async def get_assessment_report(
         )
 
     # Get SoA entries
-    soa_entries = await service.get_soa_entries(assessment_id, context.tenant_id)
+    soa_entries_raw = await service.get_soa_entries(assessment_id, context.tenant_id)
+
+    # Helper to convert objects to dicts
+    def to_dict(obj):
+        if obj is None:
+            return None
+        if isinstance(obj, dict):
+            return obj
+        if hasattr(obj, 'model_dump'):
+            return obj.model_dump()
+        if hasattr(obj, 'dict'):
+            return obj.dict()
+        if hasattr(obj, '__dict__'):
+            return obj.__dict__
+        return obj
+
+    # Convert SoA entries to dicts
+    soa_entries = [to_dict(e) for e in soa_entries_raw] if soa_entries_raw else []
 
     # Get gap analysis if requested
     gaps = []
@@ -618,7 +635,8 @@ async def get_assessment_report(
     if include_gaps:
         gaps_data = await service.get_gap_analysis(assessment_id, context.tenant_id)
         if gaps_data:
-            gaps = gaps_data.get("gaps", [])
+            raw_gaps = gaps_data.get("gaps", [])
+            gaps = [to_dict(g) for g in raw_gaps] if raw_gaps else []
 
     # Get cross-framework mapping
     cross_framework = await service.get_cross_framework_mapping(assessment_id, context.tenant_id)
@@ -658,7 +676,28 @@ async def get_assessment_report(
                 "completed_at": assessment.completed_at.isoformat() if assessment.completed_at else None,
             }
 
-            # Prepare overview data
+            # Prepare overview data - convert theme objects to dicts
+            themes_list = []
+            for theme in overview.get("themes", []):
+                if hasattr(theme, 'model_dump'):
+                    themes_list.append(theme.model_dump())
+                elif hasattr(theme, 'dict'):
+                    themes_list.append(theme.dict())
+                elif isinstance(theme, dict):
+                    themes_list.append(theme)
+                else:
+                    themes_list.append({
+                        "theme_id": getattr(theme, 'theme_id', ''),
+                        "theme_name": getattr(theme, 'theme_name', ''),
+                        "total_controls": getattr(theme, 'total_controls', 0),
+                        "applicable_controls": getattr(theme, 'applicable_controls', 0),
+                        "compliant_controls": getattr(theme, 'compliant_controls', 0),
+                        "partial_controls": getattr(theme, 'partial_controls', 0),
+                        "gap_controls": getattr(theme, 'gap_controls', 0),
+                        "not_evaluated": getattr(theme, 'not_evaluated', 0),
+                        "score": getattr(theme, 'score', 0),
+                    })
+
             overview_dict = {
                 "overall_score": overview["overall_score"],
                 "total_applicable": overview["total_applicable"],
@@ -666,7 +705,7 @@ async def get_assessment_report(
                 "total_partial": overview["total_partial"],
                 "total_gap": overview["total_gap"],
                 "completion_percentage": overview["completion_percentage"],
-                "themes": overview["themes"],
+                "themes": themes_list,
             }
 
             # Generate PDF
