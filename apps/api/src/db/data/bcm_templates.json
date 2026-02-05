@@ -1,0 +1,414 @@
+{
+  "plan_templates": [
+    {
+      "name": "IT Disaster Recovery Plan Template",
+      "plan_type": "it_disaster_recovery",
+      "scope_description": "This plan covers the recovery of critical IT systems and infrastructure following a major disruption.",
+      "response_phases": [
+        {
+          "phase": "Detection",
+          "duration": "0-1h",
+          "description": "Identify and confirm the incident",
+          "activities": [
+            "Monitor alerts and system status",
+            "Confirm nature and scope of disruption",
+            "Initial assessment of impact",
+            "Notify IT incident response team"
+          ]
+        },
+        {
+          "phase": "Assessment",
+          "duration": "1-4h",
+          "description": "Detailed impact assessment and decision making",
+          "activities": [
+            "Assess affected systems and data",
+            "Determine recovery priority",
+            "Evaluate available recovery options",
+            "Decision: activate DR plan or resolve locally"
+          ]
+        },
+        {
+          "phase": "Activation",
+          "duration": "4-8h",
+          "description": "Formal plan activation and initial recovery steps",
+          "activities": [
+            "Formally declare disaster (if applicable)",
+            "Activate DR site/infrastructure",
+            "Notify stakeholders and management",
+            "Begin recovery procedures"
+          ]
+        },
+        {
+          "phase": "Recovery",
+          "duration": "8-48h",
+          "description": "System restoration and service recovery",
+          "activities": [
+            "Restore systems from backups",
+            "Verify data integrity",
+            "Test restored systems",
+            "Gradually restore services"
+          ]
+        },
+        {
+          "phase": "Restoration",
+          "duration": "48h+",
+          "description": "Return to normal operations",
+          "activities": [
+            "Full service restoration",
+            "Return to primary site (if applicable)",
+            "Post-incident review",
+            "Documentation and lessons learned"
+          ]
+        }
+      ],
+      "activation_checklist": [
+        {"item": "Confirm incident severity meets activation criteria", "required": true},
+        {"item": "Obtain management approval for DR activation", "required": true},
+        {"item": "Notify DR team members", "required": true},
+        {"item": "Activate backup/DR site", "required": true},
+        {"item": "Verify network connectivity to DR site", "required": true},
+        {"item": "Begin system restoration from backups", "required": true},
+        {"item": "Notify affected users and stakeholders", "required": true}
+      ],
+      "recovery_checklist": [
+        {"item": "All critical systems restored", "required": true},
+        {"item": "Data integrity verified", "required": true},
+        {"item": "User access restored", "required": true},
+        {"item": "Business applications functional", "required": true},
+        {"item": "External connectivity restored", "required": true},
+        {"item": "Performance baseline verified", "required": false},
+        {"item": "Stakeholders notified of restoration", "required": true}
+      ],
+      "roles_responsibilities": [
+        {"role": "DR Coordinator", "responsibilities": ["Overall DR coordination", "Decision authority", "Stakeholder communication"]},
+        {"role": "IT Lead", "responsibilities": ["Technical recovery leadership", "System restoration", "Technical decisions"]},
+        {"role": "Network Administrator", "responsibilities": ["Network recovery", "Connectivity verification", "Firewall configuration"]},
+        {"role": "Database Administrator", "responsibilities": ["Database recovery", "Data integrity verification", "Backup restoration"]},
+        {"role": "Application Owner", "responsibilities": ["Application testing", "User communication", "Business validation"]}
+      ]
+    },
+    {
+      "name": "Crisis Communication Plan Template",
+      "plan_type": "communication",
+      "scope_description": "This plan provides guidelines for internal and external communication during a crisis or major incident.",
+      "response_phases": [
+        {
+          "phase": "Initial Response",
+          "duration": "0-2h",
+          "description": "First communications upon incident awareness",
+          "activities": [
+            "Confirm facts before communicating",
+            "Notify crisis management team",
+            "Prepare initial holding statement",
+            "Establish communication command center"
+          ]
+        },
+        {
+          "phase": "Stakeholder Notification",
+          "duration": "2-8h",
+          "description": "Notify all relevant stakeholders",
+          "activities": [
+            "Notify executive leadership",
+            "Inform affected employees",
+            "Contact key customers/partners if required",
+            "Notify regulators if required"
+          ]
+        },
+        {
+          "phase": "Ongoing Communication",
+          "duration": "8h+",
+          "description": "Regular updates throughout the incident",
+          "activities": [
+            "Provide regular status updates",
+            "Respond to media inquiries",
+            "Monitor social media",
+            "Document all communications"
+          ]
+        },
+        {
+          "phase": "Resolution Communication",
+          "duration": "Post-incident",
+          "description": "Final communications after incident resolution",
+          "activities": [
+            "Announce incident resolution",
+            "Thank stakeholders for patience",
+            "Share lessons learned (if appropriate)",
+            "Archive all communications"
+          ]
+        }
+      ],
+      "activation_checklist": [
+        {"item": "Verify facts before any communication", "required": true},
+        {"item": "Identify spokesperson(s)", "required": true},
+        {"item": "Prepare holding statement", "required": true},
+        {"item": "Brief executive leadership", "required": true},
+        {"item": "Establish communication schedule", "required": true}
+      ],
+      "roles_responsibilities": [
+        {"role": "Crisis Communication Lead", "responsibilities": ["Overall communication strategy", "Message approval", "Media relations"]},
+        {"role": "Spokesperson", "responsibilities": ["Official statements", "Media interviews", "Public-facing communication"]},
+        {"role": "Internal Communications", "responsibilities": ["Employee updates", "Intranet updates", "Town halls"]},
+        {"role": "Social Media Manager", "responsibilities": ["Social media monitoring", "Social media responses", "Online reputation"]}
+      ]
+    },
+    {
+      "name": "Business Recovery Plan Template",
+      "plan_type": "business_recovery",
+      "scope_description": "This plan covers the recovery of critical business processes following a disruption.",
+      "response_phases": [
+        {
+          "phase": "Immediate Response",
+          "duration": "0-4h",
+          "description": "Initial response and assessment",
+          "activities": [
+            "Assess impact on business operations",
+            "Activate business continuity team",
+            "Implement immediate workarounds",
+            "Communicate with affected teams"
+          ]
+        },
+        {
+          "phase": "Interim Operations",
+          "duration": "4-24h",
+          "description": "Establish temporary operations",
+          "activities": [
+            "Activate alternate work arrangements",
+            "Implement manual processes if needed",
+            "Prioritize critical business functions",
+            "Regular status reporting"
+          ]
+        },
+        {
+          "phase": "Recovery",
+          "duration": "24h-1w",
+          "description": "Gradual return to normal operations",
+          "activities": [
+            "Restore business systems",
+            "Resume normal processes",
+            "Clear backlog of work",
+            "Verify all functions operational"
+          ]
+        },
+        {
+          "phase": "Return to Normal",
+          "duration": "1w+",
+          "description": "Full normalization of operations",
+          "activities": [
+            "Confirm all processes restored",
+            "Stand down interim arrangements",
+            "Conduct post-incident review",
+            "Update plans based on lessons learned"
+          ]
+        }
+      ],
+      "activation_checklist": [
+        {"item": "Assess business impact", "required": true},
+        {"item": "Notify business continuity team", "required": true},
+        {"item": "Determine if alternate site needed", "required": true},
+        {"item": "Activate critical staff callbacks", "required": true},
+        {"item": "Implement priority-based recovery", "required": true}
+      ],
+      "roles_responsibilities": [
+        {"role": "BC Coordinator", "responsibilities": ["Overall coordination", "Resource allocation", "Status reporting"]},
+        {"role": "Department Leads", "responsibilities": ["Department recovery", "Staff coordination", "Process workarounds"]},
+        {"role": "HR Representative", "responsibilities": ["Staff welfare", "Work arrangements", "Communication support"]}
+      ]
+    },
+    {
+      "name": "Crisis Management Plan Template",
+      "plan_type": "crisis_management",
+      "scope_description": "This plan provides the framework for managing organizational crises and major incidents.",
+      "response_phases": [
+        {
+          "phase": "Alert",
+          "duration": "0-1h",
+          "description": "Initial alert and team mobilization",
+          "activities": [
+            "Receive and verify incident alert",
+            "Initial severity assessment",
+            "Activate crisis management team",
+            "Establish command center"
+          ]
+        },
+        {
+          "phase": "Assessment",
+          "duration": "1-4h",
+          "description": "Comprehensive situation assessment",
+          "activities": [
+            "Gather all available information",
+            "Assess organizational impact",
+            "Identify immediate risks",
+            "Determine response strategy"
+          ]
+        },
+        {
+          "phase": "Response",
+          "duration": "4h+",
+          "description": "Active crisis management",
+          "activities": [
+            "Execute response strategy",
+            "Coordinate all response activities",
+            "Regular situation updates",
+            "Adjust strategy as needed"
+          ]
+        },
+        {
+          "phase": "Recovery",
+          "duration": "Variable",
+          "description": "Transition from crisis to recovery",
+          "activities": [
+            "Transition to recovery phase",
+            "Stand down crisis team gradually",
+            "Implement long-term recovery plans",
+            "Post-crisis review"
+          ]
+        }
+      ],
+      "activation_checklist": [
+        {"item": "Verify crisis criteria met", "required": true},
+        {"item": "Notify Crisis Management Team", "required": true},
+        {"item": "Establish command center", "required": true},
+        {"item": "Brief CEO/executive leadership", "required": true},
+        {"item": "Activate required support plans", "required": true}
+      ],
+      "roles_responsibilities": [
+        {"role": "Crisis Manager", "responsibilities": ["Overall crisis leadership", "Final decision authority", "Executive liaison"]},
+        {"role": "Operations Lead", "responsibilities": ["Operational response", "Resource coordination", "Tactical execution"]},
+        {"role": "Communications Lead", "responsibilities": ["All communications", "Stakeholder management", "Media handling"]},
+        {"role": "Legal Counsel", "responsibilities": ["Legal advice", "Regulatory compliance", "Liability assessment"]}
+      ]
+    }
+  ],
+  "scenario_templates": [
+    {
+      "name": "Ransomware Attack",
+      "category": "cyber_attack",
+      "description": "A ransomware attack encrypts critical business data and systems, demanding payment for decryption keys. This scenario assumes widespread encryption affecting multiple business-critical systems.",
+      "typical_likelihood": "possible",
+      "typical_impact": "major",
+      "suggested_controls": "Endpoint protection, regular backups, network segmentation, user awareness training, incident response procedures",
+      "response_priorities": ["Contain the spread", "Assess damage", "Preserve evidence", "Begin recovery from backups"]
+    },
+    {
+      "name": "Data Center Outage",
+      "category": "technical_failure",
+      "description": "Complete loss of primary data center due to power failure, hardware failure, or environmental incident. All hosted systems and services unavailable.",
+      "typical_likelihood": "unlikely",
+      "typical_impact": "catastrophic",
+      "suggested_controls": "Redundant power, UPS systems, disaster recovery site, regular failover testing",
+      "response_priorities": ["Activate DR site", "Restore critical services", "Communicate with users", "Assess root cause"]
+    },
+    {
+      "name": "Key Personnel Unavailability",
+      "category": "human_error",
+      "description": "Multiple key personnel unavailable simultaneously due to illness, accident, or other circumstances. Critical knowledge and decision-making capability impacted.",
+      "typical_likelihood": "possible",
+      "typical_impact": "moderate",
+      "suggested_controls": "Cross-training, documentation, succession planning, knowledge management",
+      "response_priorities": ["Identify replacement personnel", "Access documented procedures", "Prioritize critical decisions"]
+    },
+    {
+      "name": "Supply Chain Disruption",
+      "category": "supply_chain",
+      "description": "Major supplier unable to deliver critical goods or services for extended period. May be due to supplier failure, logistics disruption, or geopolitical factors.",
+      "typical_likelihood": "possible",
+      "typical_impact": "major",
+      "suggested_controls": "Alternative suppliers, inventory buffers, supply chain monitoring, contractual protections",
+      "response_priorities": ["Assess inventory levels", "Contact alternative suppliers", "Prioritize allocation", "Communicate with customers"]
+    },
+    {
+      "name": "Building/Facility Inaccessible",
+      "category": "infrastructure",
+      "description": "Primary office or facility inaccessible due to fire, flood, structural damage, or external incident. Staff unable to access normal workplace.",
+      "typical_likelihood": "unlikely",
+      "typical_impact": "major",
+      "suggested_controls": "Remote work capability, alternate site arrangements, hot desking facilities, cloud services",
+      "response_priorities": ["Ensure staff safety", "Activate remote work", "Access alternate facilities", "Recover essential equipment"]
+    },
+    {
+      "name": "Pandemic/Health Crisis",
+      "category": "pandemic",
+      "description": "Widespread illness affecting significant portion of workforce. Social distancing requirements may prevent normal operations.",
+      "typical_likelihood": "possible",
+      "typical_impact": "major",
+      "suggested_controls": "Remote work infrastructure, hygiene protocols, staff rotation plans, essential worker identification",
+      "response_priorities": ["Protect staff health", "Enable remote work", "Identify essential functions", "Maintain critical operations"]
+    },
+    {
+      "name": "Natural Disaster - Flood",
+      "category": "natural_disaster",
+      "description": "Flooding affects facilities, potentially damaging equipment, disrupting power, and preventing physical access.",
+      "typical_likelihood": "unlikely",
+      "typical_impact": "major",
+      "suggested_controls": "Flood insurance, elevated equipment, waterproofing, off-site backups, alternate facilities",
+      "response_priorities": ["Ensure safety", "Protect critical assets", "Activate alternate facilities", "Assess damage"]
+    },
+    {
+      "name": "Power Grid Failure",
+      "category": "infrastructure",
+      "description": "Extended regional power outage affecting facilities and potentially staff homes. May last hours to days.",
+      "typical_likelihood": "unlikely",
+      "typical_impact": "moderate",
+      "suggested_controls": "UPS systems, generators, fuel reserves, cloud services, mobile devices",
+      "response_priorities": ["Verify generator operation", "Conserve UPS power", "Activate cloud failover", "Enable remote work"]
+    }
+  ],
+  "exercise_templates": [
+    {
+      "name": "IT Disaster Recovery Tabletop",
+      "exercise_type": "tabletop",
+      "description": "Discussion-based exercise to walk through IT DR procedures",
+      "duration_hours": 2,
+      "objectives": [
+        "Validate DR plan currency and completeness",
+        "Identify gaps in procedures",
+        "Ensure team familiarity with roles",
+        "Practice decision-making under pressure"
+      ],
+      "suggested_scenario": "Data Center Outage",
+      "participants": ["IT Leadership", "DR Team", "Key Application Owners", "Infrastructure Team"]
+    },
+    {
+      "name": "Crisis Communication Drill",
+      "exercise_type": "walkthrough",
+      "description": "Step-by-step review of crisis communication procedures",
+      "duration_hours": 3,
+      "objectives": [
+        "Test notification procedures",
+        "Validate contact lists",
+        "Practice message drafting",
+        "Review approval workflows"
+      ],
+      "suggested_scenario": "Ransomware Attack",
+      "participants": ["Communications Team", "Executive Assistant", "Legal", "HR"]
+    },
+    {
+      "name": "Business Recovery Simulation",
+      "exercise_type": "simulation",
+      "description": "Simulated recovery exercise with role-playing",
+      "duration_hours": 4,
+      "objectives": [
+        "Test recovery procedures end-to-end",
+        "Validate recovery time objectives",
+        "Identify process bottlenecks",
+        "Practice team coordination"
+      ],
+      "suggested_scenario": "Building/Facility Inaccessible",
+      "participants": ["BC Team", "Department Representatives", "HR", "Facilities"]
+    },
+    {
+      "name": "Annual DR Failover Test",
+      "exercise_type": "parallel_test",
+      "description": "Technical test of DR site activation without disrupting production",
+      "duration_hours": 8,
+      "objectives": [
+        "Verify DR site readiness",
+        "Test backup restoration",
+        "Validate network failover",
+        "Measure actual recovery times"
+      ],
+      "suggested_scenario": "Data Center Outage",
+      "participants": ["Infrastructure Team", "Database Team", "Application Teams", "Network Team"]
+    }
+  ]
+}

@@ -3064,4 +3064,312 @@ export const iso27001API = {
     }),
 };
 
+// BCM (Business Continuity Management)
+export const bcmAPI = {
+  // Dashboard
+  getDashboard: (token: string) =>
+    request("/api/v1/bcm/dashboard", { token }),
+
+  // Processes
+  listProcesses: (token: string, params?: {
+    criticality?: string;
+    status?: string;
+    page?: number;
+    page_size?: number;
+  }) => {
+    const query = new URLSearchParams();
+    if (params?.criticality) query.set("criticality", params.criticality);
+    if (params?.status) query.set("status", params.status);
+    if (params?.page) query.set("page", params.page.toString());
+    if (params?.page_size) query.set("page_size", params.page_size.toString());
+    return request(`/api/v1/bcm/processes?${query}`, { token });
+  },
+
+  createProcess: (token: string, data: {
+    process_id: string;
+    name: string;
+    description?: string;
+    owner: string;
+    department?: string;
+    criticality?: string;
+    internal_dependencies?: string[];
+    external_dependencies?: string[];
+    it_systems?: string[];
+    key_personnel?: string[];
+  }) =>
+    request("/api/v1/bcm/processes", {
+      method: "POST",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  getProcess: (token: string, processId: string) =>
+    request(`/api/v1/bcm/processes/${processId}`, { token }),
+
+  updateProcess: (token: string, processId: string, data: Record<string, unknown>) =>
+    request(`/api/v1/bcm/processes/${processId}`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  deleteProcess: (token: string, processId: string) =>
+    request(`/api/v1/bcm/processes/${processId}`, {
+      method: "DELETE",
+      token,
+    }),
+
+  // BIA
+  getProcessBIA: (token: string, processId: string) =>
+    request(`/api/v1/bcm/processes/${processId}/bia`, { token }),
+
+  // Alias for getProcessBIA
+  getBIA: (token: string, processId: string) =>
+    request(`/api/v1/bcm/processes/${processId}/bia`, { token }),
+
+  createOrUpdateBIA: (token: string, processId: string, data: Record<string, unknown>) =>
+    request(`/api/v1/bcm/processes/${processId}/bia`, {
+      method: "POST",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  getBIASummary: (token: string) =>
+    request("/api/v1/bcm/bia/summary", { token }),
+
+  // Scenarios
+  listScenarios: (token: string, params?: {
+    category?: string;
+    page?: number;
+    page_size?: number;
+  }) => {
+    const query = new URLSearchParams();
+    if (params?.category) query.set("category", params.category);
+    if (params?.page) query.set("page", params.page.toString());
+    if (params?.page_size) query.set("page_size", params.page_size.toString());
+    return request(`/api/v1/bcm/scenarios?${query}`, { token });
+  },
+
+  createScenario: (token: string, data: Record<string, unknown>) =>
+    request("/api/v1/bcm/scenarios", {
+      method: "POST",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  getScenario: (token: string, scenarioId: string) =>
+    request(`/api/v1/bcm/scenarios/${scenarioId}`, { token }),
+
+  updateScenario: (token: string, scenarioId: string, data: Record<string, unknown>) =>
+    request(`/api/v1/bcm/scenarios/${scenarioId}`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  deleteScenario: (token: string, scenarioId: string) =>
+    request(`/api/v1/bcm/scenarios/${scenarioId}`, {
+      method: "DELETE",
+      token,
+    }),
+
+  getRiskMatrix: (token: string) =>
+    request("/api/v1/bcm/scenarios/risk-matrix", { token }),
+
+  // Strategies
+  listProcessStrategies: (token: string, processId: string) =>
+    request(`/api/v1/bcm/processes/${processId}/strategies`, { token }),
+
+  // Alias for listProcessStrategies
+  listStrategies: (token: string, processId: string) =>
+    request(`/api/v1/bcm/processes/${processId}/strategies`, { token }),
+
+  createStrategy: (token: string, processId: string, data: Record<string, unknown>) =>
+    request(`/api/v1/bcm/processes/${processId}/strategies`, {
+      method: "POST",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  updateStrategy: (token: string, strategyId: string, data: Record<string, unknown>) =>
+    request(`/api/v1/bcm/strategies/${strategyId}`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  deleteStrategy: (token: string, strategyId: string) =>
+    request(`/api/v1/bcm/strategies/${strategyId}`, {
+      method: "DELETE",
+      token,
+    }),
+
+  // Emergency Plans
+  listPlans: (token: string, params?: {
+    plan_type?: string;
+    status?: string;
+    page?: number;
+    page_size?: number;
+  }) => {
+    const query = new URLSearchParams();
+    if (params?.plan_type) query.set("plan_type", params.plan_type);
+    if (params?.status) query.set("status", params.status);
+    if (params?.page) query.set("page", params.page.toString());
+    if (params?.page_size) query.set("page_size", params.page_size.toString());
+    return request(`/api/v1/bcm/plans?${query}`, { token });
+  },
+
+  createPlan: (token: string, data: Record<string, unknown>) =>
+    request("/api/v1/bcm/plans", {
+      method: "POST",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  getPlan: (token: string, planId: string) =>
+    request(`/api/v1/bcm/plans/${planId}`, { token }),
+
+  updatePlan: (token: string, planId: string, data: Record<string, unknown>) =>
+    request(`/api/v1/bcm/plans/${planId}`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  deletePlan: (token: string, planId: string) =>
+    request(`/api/v1/bcm/plans/${planId}`, {
+      method: "DELETE",
+      token,
+    }),
+
+  approvePlan: (token: string, planId: string, approvedBy?: string) =>
+    request(`/api/v1/bcm/plans/${planId}/approve`, {
+      method: "POST",
+      body: JSON.stringify({ approved_by: approvedBy }),
+      token,
+    }),
+
+  exportPlan: (token: string, planId: string, format: string = "pdf") =>
+    request(`/api/v1/bcm/plans/${planId}/export?format=${format}`, { token }),
+
+  // Alias for PDF export
+  exportPlanPdf: (token: string, planId: string) =>
+    request(`/api/v1/bcm/plans/${planId}/export?format=pdf`, { token }),
+
+  // Contacts
+  listContacts: (token: string) =>
+    request("/api/v1/bcm/contacts", { token }),
+
+  createContact: (token: string, data: Record<string, unknown>) =>
+    request("/api/v1/bcm/contacts", {
+      method: "POST",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  updateContact: (token: string, contactId: string, data: Record<string, unknown>) =>
+    request(`/api/v1/bcm/contacts/${contactId}`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  deleteContact: (token: string, contactId: string) =>
+    request(`/api/v1/bcm/contacts/${contactId}`, {
+      method: "DELETE",
+      token,
+    }),
+
+  // Exercises
+  listExercises: (token: string, params?: {
+    status?: string;
+    page?: number;
+    page_size?: number;
+  }) => {
+    const query = new URLSearchParams();
+    if (params?.status) query.set("status", params.status);
+    if (params?.page) query.set("page", params.page.toString());
+    if (params?.page_size) query.set("page_size", params.page_size.toString());
+    return request(`/api/v1/bcm/exercises?${query}`, { token });
+  },
+
+  createExercise: (token: string, data: Record<string, unknown>) =>
+    request("/api/v1/bcm/exercises", {
+      method: "POST",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  getExercise: (token: string, exerciseId: string) =>
+    request(`/api/v1/bcm/exercises/${exerciseId}`, { token }),
+
+  updateExercise: (token: string, exerciseId: string, data: Record<string, unknown>) =>
+    request(`/api/v1/bcm/exercises/${exerciseId}`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  deleteExercise: (token: string, exerciseId: string) =>
+    request(`/api/v1/bcm/exercises/${exerciseId}`, {
+      method: "DELETE",
+      token,
+    }),
+
+  completeExercise: (token: string, exerciseId: string, data: {
+    actual_date: string;
+    actual_duration_hours: number;
+    results_summary: string;
+    objectives_met?: Record<string, boolean>;
+    issues_identified?: string[];
+    lessons_learned?: string;
+    action_items?: Array<Record<string, unknown>>;
+  }) =>
+    request(`/api/v1/bcm/exercises/${exerciseId}/complete`, {
+      method: "POST",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  // Assessments
+  listAssessments: (token: string, params?: {
+    page?: number;
+    page_size?: number;
+  }) => {
+    const query = new URLSearchParams();
+    if (params?.page) query.set("page", params.page.toString());
+    if (params?.page_size) query.set("page_size", params.page_size.toString());
+    return request(`/api/v1/bcm/assessments?${query}`, { token });
+  },
+
+  createAssessment: (token: string, data: { name: string; description?: string }) =>
+    request("/api/v1/bcm/assessments", {
+      method: "POST",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  getAssessment: (token: string, assessmentId: string) =>
+    request(`/api/v1/bcm/assessments/${assessmentId}`, { token }),
+
+  deleteAssessment: (token: string, assessmentId: string) =>
+    request(`/api/v1/bcm/assessments/${assessmentId}`, {
+      method: "DELETE",
+      token,
+    }),
+
+  getWizardState: (token: string, assessmentId: string) =>
+    request(`/api/v1/bcm/assessments/${assessmentId}/wizard-state`, { token }),
+
+  completeAssessment: (token: string, assessmentId: string) =>
+    request(`/api/v1/bcm/assessments/${assessmentId}/complete`, {
+      method: "POST",
+      body: JSON.stringify({ confirm: true }),
+      token,
+    }),
+
+  getAssessmentReport: (token: string, assessmentId: string, format: string = "json") =>
+    request(`/api/v1/bcm/assessments/${assessmentId}/report?format=${format}`, { token }),
+};
+
 export { APIError };
