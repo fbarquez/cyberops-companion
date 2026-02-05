@@ -16,7 +16,7 @@ from uuid import uuid4
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.db.database import async_session
+from src.db.database import async_session_maker
 from src.models.bcm import (
     BCMProcess, BCMBIA, BCMRiskScenario, BCMStrategy,
     BCMEmergencyPlan, BCMContact, BCMExercise, BCMAssessment,
@@ -65,9 +65,10 @@ IMPACT_VALUES = {
 
 async def get_first_tenant(db: AsyncSession) -> str | None:
     """Get the first available tenant ID for demo data."""
-    result = await db.execute(select(Organization).limit(1))
-    org = result.scalar_one_or_none()
-    return org.id if org else None
+    from sqlalchemy import text
+    result = await db.execute(text("SELECT id FROM organizations LIMIT 1"))
+    row = result.fetchone()
+    return row[0] if row else None
 
 
 async def seed_demo_processes(db: AsyncSession, tenant_id: str) -> list[BCMProcess]:
@@ -506,7 +507,7 @@ async def seed_bcm(db: AsyncSession, tenant_id: str = None):
 
 async def main():
     """Run the seeder."""
-    async with async_session() as db:
+    async with async_session_maker() as db:
         await seed_bcm(db)
 
 
