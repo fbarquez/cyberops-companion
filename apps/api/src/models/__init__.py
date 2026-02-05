@@ -70,6 +70,11 @@ from src.models.user_management import (
 from src.models.attachment import (
     Attachment, AttachmentEntityType, AttachmentCategory
 )
+from src.models.iso27001 import (
+    ISO27001Control, ISO27001Assessment, ISO27001SoAEntry,
+    ISO27001Theme, ISO27001ControlType, ISO27001SecurityProperty,
+    ISO27001AssessmentStatus, ISO27001Applicability, ISO27001ComplianceStatus
+)
 
 __all__ = [
     "User",
@@ -239,4 +244,14 @@ __all__ = [
     "Attachment",
     "AttachmentEntityType",
     "AttachmentCategory",
+    # ISO 27001:2022
+    "ISO27001Control",
+    "ISO27001Assessment",
+    "ISO27001SoAEntry",
+    "ISO27001Theme",
+    "ISO27001ControlType",
+    "ISO27001SecurityProperty",
+    "ISO27001AssessmentStatus",
+    "ISO27001Applicability",
+    "ISO27001ComplianceStatus",
 ]
