@@ -33,26 +33,7 @@ depends_on: Union[str, Sequence[str], None] = None
 
 def upgrade() -> None:
     """Upgrade schema - add BCM tables."""
-
-    # Create enum types
-    op.execute("CREATE TYPE bcmprocesscriticality AS ENUM ('critical', 'high', 'medium', 'low')")
-    op.execute("CREATE TYPE bcmprocessstatus AS ENUM ('active', 'inactive', 'under_review')")
-    op.execute("CREATE TYPE bcmimpactlevel AS ENUM ('none', 'low', 'medium', 'high', 'critical')")
-    op.execute("CREATE TYPE bcmbiastatus AS ENUM ('draft', 'completed', 'approved', 'outdated')")
-    op.execute("CREATE TYPE bcmscenariocategory AS ENUM ('natural_disaster', 'technical_failure', 'human_error', 'cyber_attack', 'pandemic', 'supply_chain', 'infrastructure', 'other')")
-    op.execute("CREATE TYPE bcmlikelihood AS ENUM ('rare', 'unlikely', 'possible', 'likely', 'almost_certain')")
-    op.execute("CREATE TYPE bcmimpact AS ENUM ('negligible', 'minor', 'moderate', 'major', 'catastrophic')")
-    op.execute("CREATE TYPE bcmcontroleffectiveness AS ENUM ('none', 'low', 'medium', 'high')")
-    op.execute("CREATE TYPE bcmscenariostatus AS ENUM ('identified', 'assessed', 'mitigated', 'accepted')")
-    op.execute("CREATE TYPE bcmstrategytype AS ENUM ('do_nothing', 'manual_workaround', 'alternate_site', 'alternate_supplier', 'redundancy', 'outsource', 'insurance')")
-    op.execute("CREATE TYPE bcmstrategystatus AS ENUM ('planned', 'implemented', 'tested', 'approved')")
-    op.execute("CREATE TYPE bcmplantype AS ENUM ('crisis_management', 'emergency_response', 'business_recovery', 'it_disaster_recovery', 'communication', 'evacuation')")
-    op.execute("CREATE TYPE bcmplanstatus AS ENUM ('draft', 'review', 'approved', 'active', 'archived')")
-    op.execute("CREATE TYPE bcmcontacttype AS ENUM ('internal', 'external', 'vendor', 'authority')")
-    op.execute("CREATE TYPE bcmcontactavailability AS ENUM ('24x7', 'business_hours', 'on_call')")
-    op.execute("CREATE TYPE bcmexercisetype AS ENUM ('tabletop', 'walkthrough', 'simulation', 'parallel_test', 'full_interruption')")
-    op.execute("CREATE TYPE bcmexercisestatus AS ENUM ('planned', 'in_progress', 'completed', 'cancelled')")
-    op.execute("CREATE TYPE bcmassessmentstatus AS ENUM ('draft', 'process_inventory', 'bia_analysis', 'risk_assessment', 'strategy_planning', 'plan_development', 'testing', 'completed')")
+    # Note: SQLAlchemy automatically creates enum types when used in sa.Enum()
 
     # Create bcm_processes table
     op.create_table('bcm_processes',
