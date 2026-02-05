@@ -123,7 +123,8 @@ docs/
 | Business Continuity (BCM) | ✅ Complete | [BCM.md](./features/BCM.md) |
 | BSI IT-Grundschutz | ✅ Complete | [ENTERPRISE.md](./ENTERPRISE.md#bsi-it-grundschutz) |
 | NIS2 Directive | ✅ Complete | [ENTERPRISE.md](./ENTERPRISE.md#nis2-directive-assessment) |
-| AI Copilot | 🔜 Coming Soon | [ENTERPRISE.md](./ENTERPRISE.md#ai-copilot) |
+| AI Copilot | ✅ Complete | [ENTERPRISE.md](./ENTERPRISE.md#ai-copilot) |
+| PDF Reports (LaTeX) | ✅ Complete | [ENTERPRISE.md](./ENTERPRISE.md#pdf-reports) |
 
 ### Future Enhancements
 
@@ -156,4 +157,4 @@ When adding new features:
 
 ## Last Updated
 
-**2026-02-05** - Added Business Continuity Management (BCM) module with BIA wizard, emergency plans, and exercises
+**2026-02-05** - Synchronized documentation with Enterprise repository. All enterprise features now complete: AI Copilot (5 LLM providers), BSI IT-Grundschutz (61 Bausteine), NIS2 Assessment (5-step wizard), PDF Reports (LaTeX/DIN 5008)
