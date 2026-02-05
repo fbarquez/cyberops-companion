@@ -3687,7 +3687,7 @@ export const documentsAPI = {
     acknowledgment_due_days?: number;
     approval_type?: string;
     tags?: string[];
-    metadata?: Record<string, unknown>;
+    custom_metadata?: Record<string, unknown>;
   }) =>
     request("/api/v1/documents", {
       method: "POST",
@@ -3710,7 +3710,7 @@ export const documentsAPI = {
     acknowledgment_due_days?: number;
     approval_type?: string;
     tags?: string[];
-    metadata?: Record<string, unknown>;
+    custom_metadata?: Record<string, unknown>;
   }) =>
     request(`/api/v1/documents/${documentId}`, {
       method: "PUT",
@@ -3865,6 +3865,386 @@ export const documentsAPI = {
     if (params?.start_date) query.set("start_date", params.start_date);
     if (params?.end_date) query.set("end_date", params.end_date);
     return request(`/api/v1/documents/compliance-report?${query}`, { token });
+  },
+};
+
+// Security Awareness & Training
+export const trainingAPI = {
+  // Dashboard
+  getDashboard: (token: string) =>
+    request("/api/v1/training/dashboard", { token }),
+
+  // Course Catalog
+  getCatalog: (token: string, params?: {
+    page?: number;
+    size?: number;
+    category?: string;
+    difficulty?: string;
+    search?: string;
+    framework?: string;
+  }) => {
+    const query = new URLSearchParams();
+    if (params?.page) query.set("page", params.page.toString());
+    if (params?.size) query.set("size", params.size.toString());
+    if (params?.category) query.set("category", params.category);
+    if (params?.difficulty) query.set("difficulty", params.difficulty);
+    if (params?.search) query.set("search", params.search);
+    if (params?.framework) query.set("framework", params.framework);
+    return request(`/api/v1/training/catalog?${query}`, { token });
+  },
+
+  // Courses CRUD
+  listCourses: (token: string, params?: {
+    page?: number;
+    size?: number;
+    status?: string;
+    category?: string;
+  }) => {
+    const query = new URLSearchParams();
+    if (params?.page) query.set("page", params.page.toString());
+    if (params?.size) query.set("size", params.size.toString());
+    if (params?.status) query.set("status", params.status);
+    if (params?.category) query.set("category", params.category);
+    return request(`/api/v1/training/courses?${query}`, { token });
+  },
+
+  getCourse: (token: string, courseId: string) =>
+    request(`/api/v1/training/courses/${courseId}`, { token }),
+
+  createCourse: (token: string, data: {
+    title: string;
+    description?: string;
+    category: string;
+    difficulty?: string;
+    estimated_duration_minutes?: number;
+    passing_score?: number;
+    certificate_enabled?: boolean;
+    is_mandatory?: boolean;
+    objectives?: string[];
+    target_roles?: string[];
+    target_departments?: string[];
+    compliance_frameworks?: string[];
+    control_references?: string[];
+    tags?: string[];
+  }) =>
+    request("/api/v1/training/courses", {
+      method: "POST",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  updateCourse: (token: string, courseId: string, data: {
+    title?: string;
+    description?: string;
+    category?: string;
+    difficulty?: string;
+    status?: string;
+    estimated_duration_minutes?: number;
+    passing_score?: number;
+    certificate_enabled?: boolean;
+    is_mandatory?: boolean;
+    objectives?: string[];
+    target_roles?: string[];
+    target_departments?: string[];
+    compliance_frameworks?: string[];
+    control_references?: string[];
+    tags?: string[];
+  }) =>
+    request(`/api/v1/training/courses/${courseId}`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  deleteCourse: (token: string, courseId: string) =>
+    request(`/api/v1/training/courses/${courseId}`, {
+      method: "DELETE",
+      token,
+    }),
+
+  publishCourse: (token: string, courseId: string) =>
+    request(`/api/v1/training/courses/${courseId}/publish`, {
+      method: "POST",
+      token,
+    }),
+
+  // Course Modules
+  getCourseModules: (token: string, courseId: string) =>
+    request(`/api/v1/training/courses/${courseId}/modules`, { token }),
+
+  createModule: (token: string, courseId: string, data: {
+    title: string;
+    description?: string;
+    module_type: string;
+    content?: string;
+    video_url?: string;
+    external_url?: string;
+    attachment_id?: string;
+    estimated_duration_minutes?: number;
+  }) =>
+    request(`/api/v1/training/courses/${courseId}/modules`, {
+      method: "POST",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  getModule: (token: string, moduleId: string) =>
+    request(`/api/v1/training/modules/${moduleId}`, { token }),
+
+  updateModule: (token: string, moduleId: string, data: {
+    title?: string;
+    description?: string;
+    module_type?: string;
+    content?: string;
+    video_url?: string;
+    external_url?: string;
+    attachment_id?: string;
+    estimated_duration_minutes?: number;
+    order_index?: number;
+  }) =>
+    request(`/api/v1/training/modules/${moduleId}`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  deleteModule: (token: string, moduleId: string) =>
+    request(`/api/v1/training/modules/${moduleId}`, {
+      method: "DELETE",
+      token,
+    }),
+
+  reorderModules: (token: string, courseId: string, moduleIds: string[]) =>
+    request(`/api/v1/training/courses/${courseId}/modules/reorder`, {
+      method: "POST",
+      body: JSON.stringify({ module_ids: moduleIds }),
+      token,
+    }),
+
+  // Enrollment
+  enrollInCourse: (token: string, courseId: string) =>
+    request(`/api/v1/training/enroll/${courseId}`, {
+      method: "POST",
+      token,
+    }),
+
+  bulkEnroll: (token: string, courseId: string, data: {
+    user_ids?: string[];
+    role?: string;
+    department?: string;
+    deadline?: string;
+  }) =>
+    request(`/api/v1/training/courses/${courseId}/bulk-enroll`, {
+      method: "POST",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  getMyLearning: (token: string) =>
+    request("/api/v1/training/my-learning", { token }),
+
+  // Progress Tracking
+  getModuleProgress: (token: string, moduleId: string) =>
+    request(`/api/v1/training/modules/${moduleId}/progress`, { token }),
+
+  updateModuleProgress: (token: string, moduleId: string, data: {
+    progress_percent: number;
+    time_spent_seconds?: number;
+    bookmark?: Record<string, unknown>;
+  }) =>
+    request(`/api/v1/training/modules/${moduleId}/progress`, {
+      method: "POST",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  completeModule: (token: string, moduleId: string) =>
+    request(`/api/v1/training/modules/${moduleId}/complete`, {
+      method: "POST",
+      token,
+    }),
+
+  // Quizzes
+  getQuiz: (token: string, quizId: string) =>
+    request(`/api/v1/training/quizzes/${quizId}`, { token }),
+
+  getQuizQuestions: (token: string, quizId: string) =>
+    request(`/api/v1/training/quizzes/${quizId}/questions`, { token }),
+
+  startQuiz: (token: string, quizId: string) =>
+    request(`/api/v1/training/quizzes/${quizId}/start`, {
+      method: "POST",
+      token,
+    }),
+
+  submitQuiz: (token: string, attemptId: string, data: {
+    answers: Array<{ question_id: string; selected_options?: number[]; text_answer?: string }>;
+  }) =>
+    request(`/api/v1/training/quizzes/attempts/${attemptId}/submit`, {
+      method: "POST",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  getQuizAttempt: (token: string, attemptId: string) =>
+    request(`/api/v1/training/quizzes/attempts/${attemptId}`, { token }),
+
+  getMyQuizAttempts: (token: string, quizId: string) =>
+    request(`/api/v1/training/quizzes/${quizId}/my-attempts`, { token }),
+
+  // Gamification
+  getLeaderboard: (token: string, params?: {
+    period?: string;
+    limit?: number;
+    department?: string;
+  }) => {
+    const query = new URLSearchParams();
+    if (params?.period) query.set("period", params.period);
+    if (params?.limit) query.set("limit", params.limit.toString());
+    if (params?.department) query.set("department", params.department);
+    return request(`/api/v1/training/leaderboard?${query}`, { token });
+  },
+
+  getMyStats: (token: string) =>
+    request("/api/v1/training/my-stats", { token }),
+
+  getMyBadges: (token: string) =>
+    request("/api/v1/training/my-badges", { token }),
+
+  // Badges (Admin)
+  listBadges: (token: string, params?: {
+    page?: number;
+    size?: number;
+    category?: string;
+    is_active?: boolean;
+  }) => {
+    const query = new URLSearchParams();
+    if (params?.page) query.set("page", params.page.toString());
+    if (params?.size) query.set("size", params.size.toString());
+    if (params?.category) query.set("category", params.category);
+    if (params?.is_active !== undefined) query.set("is_active", params.is_active.toString());
+    return request(`/api/v1/training/badges?${query}`, { token });
+  },
+
+  createBadge: (token: string, data: {
+    name: string;
+    description?: string;
+    category: string;
+    icon?: string;
+    color?: string;
+    points_value?: number;
+    criteria: Record<string, unknown>;
+  }) =>
+    request("/api/v1/training/badges", {
+      method: "POST",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  awardBadge: (token: string, userId: string, badgeId: string) =>
+    request(`/api/v1/training/users/${userId}/badges/${badgeId}`, {
+      method: "POST",
+      token,
+    }),
+
+  // Phishing Campaigns
+  listPhishingCampaigns: (token: string, params?: {
+    page?: number;
+    size?: number;
+    status?: string;
+  }) => {
+    const query = new URLSearchParams();
+    if (params?.page) query.set("page", params.page.toString());
+    if (params?.size) query.set("size", params.size.toString());
+    if (params?.status) query.set("status", params.status);
+    return request(`/api/v1/phishing/campaigns?${query}`, { token });
+  },
+
+  createPhishingCampaign: (token: string, data: {
+    name: string;
+    description?: string;
+    template_id: string;
+    scheduled_start?: string;
+    scheduled_end?: string;
+    target_users?: string[];
+    target_groups?: string[];
+    target_roles?: string[];
+    target_departments?: string[];
+    sending_profile?: Record<string, unknown>;
+  }) =>
+    request("/api/v1/phishing/campaigns", {
+      method: "POST",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  getPhishingCampaign: (token: string, campaignId: string) =>
+    request(`/api/v1/phishing/campaigns/${campaignId}`, { token }),
+
+  launchPhishingCampaign: (token: string, campaignId: string) =>
+    request(`/api/v1/phishing/campaigns/${campaignId}/launch`, {
+      method: "POST",
+      token,
+    }),
+
+  getPhishingCampaignResults: (token: string, campaignId: string) =>
+    request(`/api/v1/phishing/campaigns/${campaignId}/results`, { token }),
+
+  // Phishing Templates
+  listPhishingTemplates: (token: string, params?: {
+    page?: number;
+    size?: number;
+    difficulty?: string;
+    category?: string;
+    is_active?: boolean;
+  }) => {
+    const query = new URLSearchParams();
+    if (params?.page) query.set("page", params.page.toString());
+    if (params?.size) query.set("size", params.size.toString());
+    if (params?.difficulty) query.set("difficulty", params.difficulty);
+    if (params?.category) query.set("category", params.category);
+    if (params?.is_active !== undefined) query.set("is_active", params.is_active.toString());
+    return request(`/api/v1/phishing/templates?${query}`, { token });
+  },
+
+  createPhishingTemplate: (token: string, data: {
+    name: string;
+    description?: string;
+    category: string;
+    difficulty: string;
+    subject: string;
+    sender_name: string;
+    sender_email: string;
+    html_content: string;
+    text_content?: string;
+    landing_page_html?: string;
+    indicators?: string[];
+    training_content?: string;
+  }) =>
+    request("/api/v1/phishing/templates", {
+      method: "POST",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  getPhishingTemplate: (token: string, templateId: string) =>
+    request(`/api/v1/phishing/templates/${templateId}`, { token }),
+
+  // Compliance Report
+  getComplianceReport: (token: string, params?: {
+    course_id?: string;
+    department?: string;
+    role?: string;
+    start_date?: string;
+    end_date?: string;
+  }) => {
+    const query = new URLSearchParams();
+    if (params?.course_id) query.set("course_id", params.course_id);
+    if (params?.department) query.set("department", params.department);
+    if (params?.role) query.set("role", params.role);
+    if (params?.start_date) query.set("start_date", params.start_date);
+    if (params?.end_date) query.set("end_date", params.end_date);
+    return request(`/api/v1/training/compliance-report?${query}`, { token });
   },
 };
 

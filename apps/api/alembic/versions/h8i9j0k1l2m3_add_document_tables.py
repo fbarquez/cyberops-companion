@@ -57,7 +57,7 @@ def upgrade() -> None:
         sa.Column('published_at', sa.DateTime(), nullable=True),
         sa.Column('published_by', sa.String(length=36), nullable=True),
         sa.Column('tags', sa.JSON(), nullable=True, server_default='[]'),
-        sa.Column('metadata', sa.JSON(), nullable=True, server_default='{}'),
+        sa.Column('custom_metadata', sa.JSON(), nullable=True, server_default='{}'),
         sa.Column('is_deleted', sa.Boolean(), nullable=False, server_default='false'),
         sa.Column('deleted_at', sa.DateTime(), nullable=True),
         sa.Column('created_at', sa.DateTime(), nullable=False),

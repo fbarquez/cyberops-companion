@@ -81,6 +81,19 @@ from src.models.attack_paths import (
     JewelType, BusinessImpact, DataClassification,
     EntryType, ExposureLevel, TrustLevel, TargetCriticality
 )
+from src.models.documents import (
+    Document, DocumentVersion, DocumentApproval, DocumentAcknowledgment, DocumentReview,
+    DocumentCategory, DocumentStatus, VersionType,
+    ApprovalStatus, ApprovalType, AcknowledgmentStatus, ReviewOutcome
+)
+from src.models.awareness import (
+    TrainingCourse, TrainingModule, Quiz, QuizQuestion,
+    TrainingEnrollment, ModuleProgress, QuizAttempt,
+    PhishingTemplate, PhishingCampaign, PhishingTarget,
+    Badge, UserBadge, TrainingStats,
+    CourseCategory, CourseDifficulty, CourseStatus, ModuleType, QuestionType,
+    EnrollmentStatus, CampaignStatus, PhishingResult, BadgeCategory
+)
 
 __all__ = [
     "User",
@@ -279,4 +292,40 @@ __all__ = [
     "ExposureLevel",
     "TrustLevel",
     "TargetCriticality",
+    # Document & Policy Management
+    "Document",
+    "DocumentVersion",
+    "DocumentApproval",
+    "DocumentAcknowledgment",
+    "DocumentReview",
+    "DocumentCategory",
+    "DocumentStatus",
+    "VersionType",
+    "ApprovalStatus",
+    "ApprovalType",
+    "AcknowledgmentStatus",
+    "ReviewOutcome",
+    # Security Awareness & Training
+    "TrainingCourse",
+    "TrainingModule",
+    "Quiz",
+    "QuizQuestion",
+    "TrainingEnrollment",
+    "ModuleProgress",
+    "QuizAttempt",
+    "PhishingTemplate",
+    "PhishingCampaign",
+    "PhishingTarget",
+    "Badge",
+    "UserBadge",
+    "TrainingStats",
+    "CourseCategory",
+    "CourseDifficulty",
+    "CourseStatus",
+    "ModuleType",
+    "QuestionType",
+    "EnrollmentStatus",
+    "CampaignStatus",
+    "PhishingResult",
+    "BadgeCategory",
 ]

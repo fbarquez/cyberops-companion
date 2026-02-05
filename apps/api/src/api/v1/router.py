@@ -1,7 +1,7 @@
 """API v1 router aggregating all endpoints."""
 from fastapi import APIRouter
 
-from src.api.v1 import auth, sso, incidents, evidence, checklists, decisions, compliance, tools, threats, vulnerabilities, risks, cmdb, soc, tprm, integrations, reporting, notifications, user_management, attachments, analytics, audit, organizations, iso27001, bcm, attack_paths, documents
+from src.api.v1 import auth, sso, incidents, evidence, checklists, decisions, compliance, tools, threats, vulnerabilities, risks, cmdb, soc, tprm, integrations, reporting, notifications, user_management, attachments, analytics, audit, organizations, iso27001, bcm, attack_paths, documents, training
 
 api_router = APIRouter()
 
@@ -32,3 +32,4 @@ api_router.include_router(iso27001.router, tags=["ISO 27001:2022 Compliance"])
 api_router.include_router(bcm.router, tags=["Business Continuity Management"])
 api_router.include_router(attack_paths.router, tags=["Attack Path Analysis"])
 api_router.include_router(documents.router, tags=["Document & Policy Management"])
+api_router.include_router(training.router, tags=["Security Awareness & Training"])

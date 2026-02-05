@@ -25,7 +25,7 @@ class DocumentBase(BaseModel):
     acknowledgment_due_days: Optional[int] = Field(14, ge=1, le=90)
     approval_type: Optional[ApprovalType] = ApprovalType.SEQUENTIAL
     tags: Optional[List[str]] = []
-    metadata: Optional[dict] = {}
+    custom_metadata: Optional[dict] = {}
 
 
 class DocumentCreate(DocumentBase):
@@ -50,7 +50,7 @@ class DocumentUpdate(BaseModel):
     acknowledgment_due_days: Optional[int] = Field(None, ge=1, le=90)
     approval_type: Optional[ApprovalType] = None
     tags: Optional[List[str]] = None
-    metadata: Optional[dict] = None
+    custom_metadata: Optional[dict] = None
 
 
 class DocumentResponse(DocumentBase):

@@ -125,7 +125,7 @@ class Document(TenantMixin, Base):
 
     # Metadata
     tags = mapped_column(JSON, default=[])
-    metadata = mapped_column(JSON, default={})
+    custom_metadata = mapped_column(JSON, default={})
 
     # Soft delete
     is_deleted: Mapped[bool] = mapped_column(Boolean, default=False)
