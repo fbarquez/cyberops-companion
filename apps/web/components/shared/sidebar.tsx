@@ -28,6 +28,7 @@ import {
   BarChart3,
   ClipboardList,
   ShieldCheck,
+  RefreshCw,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useUIStore } from "@/stores/ui-store";
@@ -48,6 +49,7 @@ const navItems = [
     labelKey: "nav.compliance",
     children: [
       { href: "/compliance/iso27001", icon: ShieldCheck, labelKey: "nav.iso27001" },
+      { href: "/bcm", icon: RefreshCw, labelKey: "nav.bcm" },
     ],
   },
   { href: "/integrations", icon: Plug, labelKey: "nav.integrations" },
