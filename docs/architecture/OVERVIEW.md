@@ -1,6 +1,6 @@
 # Architecture Overview
 
-**Last Updated:** 2026-01-31
+**Last Updated:** 2026-02-05
 
 ---
 
@@ -178,6 +178,17 @@ notifications
 ├── title
 ├── message
 └── read_at
+
+documents
+├── id (UUID)
+├── document_id (auto: POL-001)
+├── title
+├── category (policy, procedure, etc.)
+├── status (draft → published)
+├── content (markdown)
+├── owner_id → users.id
+├── frameworks (JSON)
+└── requires_acknowledgment
 ```
 
 ---
@@ -198,8 +209,10 @@ notifications
 | SOC | `/soc` | Alerts, cases |
 | Vulnerabilities | `/vulnerabilities` | CVE tracking |
 | Risks | `/risks` | Risk register |
+| Attack Paths | `/attack-paths` | Attack path analysis |
 | TPRM | `/tprm` | Vendor management |
 | Compliance | `/compliance` | Frameworks |
+| Documents | `/documents` | Policies & document management |
 | CMDB | `/cmdb` | Asset inventory |
 | Threats | `/threats` | Threat catalog |
 | Integrations | `/integrations` | External platforms |
