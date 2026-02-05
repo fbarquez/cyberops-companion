@@ -62,7 +62,9 @@ select = ["E", "F", "W", "N", "D", "S", "B"]
 ignore = [
     "D100",  # Missing docstring in public module
     "D104",  # Missing docstring in public package
+    "D212",  # Multi-line docstring summary on second line - style preference
     "D413",  # Missing blank line after last section
+    "E501",  # Line too long - many lines slightly over limit
     "B904",  # Within except clause, raise exceptions with `from`
     "B008",  # Function call in default argument - FastAPI pattern
     "F401",  # Unused imports - need cleanup separately
