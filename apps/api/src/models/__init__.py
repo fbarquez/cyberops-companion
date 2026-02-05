@@ -19,7 +19,7 @@ from src.models.vulnerability import (
     Asset, CVEEntry, Vulnerability, VulnerabilityComment,
     VulnerabilityScan, ScanSchedule,
     VulnerabilitySeverity, VulnerabilityStatus, ScanStatus, ScanType,
-    AssetType, AssetCriticality
+    AssetType, AssetCriticality, AssetTrustLevel
 )
 from src.models.risk import (
     Risk, RiskControl, RiskAssessment, TreatmentAction, RiskAppetite,
@@ -75,6 +75,12 @@ from src.models.iso27001 import (
     ISO27001Theme, ISO27001ControlType, ISO27001SecurityProperty,
     ISO27001AssessmentStatus, ISO27001Applicability, ISO27001ComplianceStatus
 )
+from src.models.attack_paths import (
+    AttackGraph, AttackPath, AttackPathSimulation, CrownJewel, EntryPoint,
+    GraphScopeType, GraphStatus, PathStatus, SimulationType, SimulationStatus,
+    JewelType, BusinessImpact, DataClassification,
+    EntryType, ExposureLevel, TrustLevel, TargetCriticality
+)
 
 __all__ = [
     "User",
@@ -125,6 +131,7 @@ __all__ = [
     "ScanType",
     "AssetType",
     "AssetCriticality",
+    "AssetTrustLevel",
     # Risk Management
     "Risk",
     "RiskControl",
@@ -254,4 +261,22 @@ __all__ = [
     "ISO27001AssessmentStatus",
     "ISO27001Applicability",
     "ISO27001ComplianceStatus",
+    # Attack Path Analysis
+    "AttackGraph",
+    "AttackPath",
+    "AttackPathSimulation",
+    "CrownJewel",
+    "EntryPoint",
+    "GraphScopeType",
+    "GraphStatus",
+    "PathStatus",
+    "SimulationType",
+    "SimulationStatus",
+    "JewelType",
+    "BusinessImpact",
+    "DataClassification",
+    "EntryType",
+    "ExposureLevel",
+    "TrustLevel",
+    "TargetCriticality",
 ]
