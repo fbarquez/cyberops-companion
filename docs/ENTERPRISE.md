@@ -17,9 +17,10 @@ CyberOps Companion Enterprise extends the open-source Community edition with adv
 |---------|-------------|--------|
 | [ISO 27001:2022 Compliance](#iso-270012022-compliance) | Full ISMS assessment with 93 controls | ✅ Available |
 | [Business Continuity Management](#business-continuity-management) | BCM based on BSI 200-4 and ISO 22301 | ✅ Available |
-| [BSI IT-Grundschutz](#bsi-it-grundschutz) | German federal security standards | ✅ Available |
-| [NIS2 Directive Assessment](#nis2-directive-assessment) | EU cybersecurity directive compliance | ✅ Available |
-| [AI Copilot](#ai-copilot) | Multi-LLM security assistant | 🔜 Coming Soon |
+| [BSI IT-Grundschutz](#bsi-it-grundschutz) | German federal security standards (61 Bausteine, 276 Anforderungen) | ✅ Available |
+| [NIS2 Directive Assessment](#nis2-directive-assessment) | EU cybersecurity directive compliance (5-step wizard, 18 sectors) | ✅ Available |
+| [AI Copilot](#ai-copilot) | Multi-LLM security assistant (5 providers, streaming) | ✅ Available |
+| [PDF Reports](#pdf-reports) | Professional LaTeX reports (DIN 5008 standard) | ✅ Available |
 | [Priority Support](#priority-support) | SLA-backed technical support | ✅ Available |
 
 ---
@@ -130,15 +131,39 @@ See [BCM Documentation](./features/BCM.md) for detailed API reference and usage.
 
 ## BSI IT-Grundschutz
 
-Implementation of the German Federal Office for Information Security (BSI) IT-Grundschutz methodology.
+Complete implementation of the German Federal Office for Information Security (BSI) IT-Grundschutz methodology.
 
 ### Features
 
-- **IT-Grundschutz Kompendium** catalog
-- **Baustein** (building block) browser
-- **Requirement** assessment wizard
-- **Gap analysis** with remediation planning
-- **Cross-mapping** to ISO 27001 and NIS2
+- **Full IT-Grundschutz Kompendium**:
+  - 61 Bausteine (building blocks/modules)
+  - 276 Anforderungen (requirements)
+  - Complete catalog with descriptions
+
+- **Compliance Dashboard**:
+  - Visual overview with category breakdown
+  - Progress tracking per Baustein
+  - Aggregate compliance statistics
+
+- **Three Protection Levels**:
+  - Basis (Basic protection)
+  - Standard (Standard protection)
+  - Hoch (High protection)
+
+- **Compliance Tracking**:
+  - Status per requirement: Compliant, Partial, Gap, N/A
+  - Evidence documentation
+  - Remediation planning
+
+- **Export Functionality**:
+  - CSV export for spreadsheets
+  - JSON export for integration
+  - PDF reports (DIN 5008 standard)
+
+- **18 API Endpoints**:
+  - Full CRUD for Bausteine and Anforderungen
+  - Compliance status management
+  - Dashboard aggregations
 
 ### Use Cases
 
@@ -147,66 +172,174 @@ Implementation of the German Federal Office for Information Security (BSI) IT-Gr
 - Organizations seeking BSI certification
 - Defense sector contractors
 
+### Documentation
+
+See the Enterprise repository for detailed BSI IT-Grundschutz documentation.
+
 ---
 
 ## NIS2 Directive Assessment
 
-Compliance assessment for the EU Network and Information Security Directive 2 (NIS2).
+Complete compliance assessment for the EU Network and Information Security Directive 2 (NIS2).
 
 ### Features
 
-- **NIS2 Measure Catalog**:
+- **5-Step Assessment Wizard**:
+  1. Organization Scope - Define organization details
+  2. Sector Classification - Determine Essential/Important/Out of Scope
+  3. Security Measures - Assess Article 21 requirements
+  4. Gap Analysis - Identify and prioritize gaps
+  5. Report Generation - Create compliance documentation
+
+- **18 NIS2 Sectors**:
+  - 11 Essential sectors (Annex I): Energy, Transport, Banking, Financial markets, Health, Water supply, Digital infrastructure, ICT service management, Public administration, Space
+  - 7 Important sectors (Annex II): Postal services, Waste management, Manufacturing, Food, Chemicals, Research, Digital providers
+
+- **10 Security Measures** (Article 21):
   - Risk management policies
   - Incident handling procedures
   - Business continuity measures
   - Supply chain security
   - Cybersecurity hygiene practices
+  - Cryptography and encryption
+  - Human resources security
+  - Access control policies
+  - Asset management
+  - Multi-factor authentication
 
-- **Assessment Workflow**:
-  - Sector classification (Essential/Important)
-  - Measure applicability determination
-  - Implementation status tracking
-  - Evidence documentation
+- **Automatic Classification**:
+  - Determines Essential, Important, or Out of Scope status
+  - Based on sector, size, and criticality criteria
+  - Calculates applicable requirements
 
-- **Reporting**:
-  - Compliance status dashboard
-  - Gap analysis report
-  - Remediation roadmap
-  - Audit-ready documentation
+- **Gap Analysis**:
+  - Prioritized gaps with severity levels
+  - Remediation recommendations
+  - Action item tracking
+  - Owner assignment
 
-### Applicability
+- **Dashboard**:
+  - Aggregate statistics across assessments
+  - Compliance trends over time
+  - Sector breakdown visualization
 
-Required for organizations in these sectors:
-- Energy, Transport, Banking, Financial markets
-- Health, Water supply, Digital infrastructure
-- ICT service management, Public administration
-- Space, Postal services, Waste management
-- Manufacturing, Food, Chemicals, Research
+- **Export Functionality**:
+  - CSV export for spreadsheets
+  - JSON export for integration
+  - PDF reports (professional format)
+
+- **14 API Endpoints**:
+  - Full assessment lifecycle management
+  - Dashboard aggregations
+  - Export functionality
+
+### Documentation
+
+See the Enterprise repository for detailed NIS2 documentation.
 
 ---
 
 ## AI Copilot
 
-AI-powered security assistant using multiple LLM providers.
+Full-featured AI-powered security assistant with multiple LLM providers.
 
-### Planned Features
+### Features
 
-- **Incident Analysis**: Automated incident triage and classification
-- **Threat Intelligence**: IOC analysis and threat correlation
-- **Compliance Guidance**: Context-aware control recommendations
-- **Report Generation**: Automated executive summaries
-- **Query Interface**: Natural language security queries
+- **5 LLM Providers**:
+  - **Ollama** (Local) - Privacy-focused, no data leaves your infrastructure
+  - **OpenAI** (GPT-4/GPT-4o) - Industry-leading language model
+  - **Anthropic** (Claude) - Advanced reasoning and analysis
+  - **Google Gemini** - Multi-modal capabilities
+  - **Groq** - Ultra-fast inference
 
-### Supported Providers (Planned)
+- **Auto-Detection**:
+  - Automatically detects local Ollama installation
+  - Falls back to configured cloud providers
+  - Seamless provider switching
 
-- OpenAI (GPT-4)
-- Anthropic (Claude)
-- Azure OpenAI
-- Local LLMs (Ollama)
+- **Security Capabilities**:
+  - **Incident Analysis**: Automated triage and classification
+  - **Threat Intelligence**: IOC analysis and threat correlation
+  - **Compliance Guidance**: Context-aware control recommendations
+  - **Vulnerability Prioritization**: Risk-based vulnerability ranking
+  - **Report Generation**: Automated executive summaries
+  - **Query Interface**: Natural language security queries
 
-### Status
+- **Streaming Support**:
+  - Real-time SSE (Server-Sent Events) streaming
+  - Progressive response display
+  - Reduced perceived latency
 
-🔜 **Coming Soon** - Currently in development
+- **Settings Page**:
+  - UI for provider configuration
+  - API key management
+  - Model selection per provider
+  - Test connection functionality
+
+- **9 API Endpoints**:
+  - Chat completion (streaming and non-streaming)
+  - Incident analysis
+  - Compliance guidance
+  - Vulnerability prioritization
+  - Threat intelligence queries
+
+### Documentation
+
+See the Enterprise repository for detailed AI Copilot documentation.
+
+---
+
+## PDF Reports
+
+Professional compliance report generation using LaTeX.
+
+### Features
+
+- **DIN 5008 Standard**:
+  - German business document formatting
+  - Professional typography and layout
+  - Consistent branding
+
+- **BSI Standard 200-2**:
+  - IT-Grundschutz reporting methodology
+  - Structured findings and recommendations
+  - Action plan formatting
+
+- **Report Types**:
+  - BSI IT-Grundschutz Compliance Report (German)
+  - NIS2 Assessment Report (English)
+  - ISO 27001 Compliance Report
+  - BCM Assessment Report
+
+- **Document Classification**:
+  - Public
+  - Internal
+  - Confidential
+  - Strictly Confidential
+
+- **Professional Structure**:
+  - Cover page with organization branding
+  - Table of contents
+  - Executive summary
+  - Detailed findings by category
+  - Gap analysis with severity levels
+  - Remediation roadmap
+  - Action plans with owners and deadlines
+
+- **Frontend Integration**:
+  - One-click PDF export from dashboards
+  - Progress indicator during generation
+  - Automatic download
+
+- **3 API Endpoints**:
+  - BSI compliance report generation
+  - NIS2 assessment report generation
+  - LaTeX health check
+
+### Technical Requirements
+
+- LaTeX distribution (TeX Live or MiKTeX)
+- Included in Enterprise Docker image
 
 ---
 
@@ -255,6 +388,7 @@ Enterprise customers receive priority technical support with SLA guarantees.
 | **BSI IT-Grundschutz** | ❌ | ✅ |
 | **NIS2 Assessment** | ❌ | ✅ |
 | **AI Copilot** | ❌ | ✅ |
+| **PDF Reports (LaTeX)** | ❌ | ✅ |
 | **Priority Support** | ❌ | ✅ |
 | **SLA Guarantee** | ❌ | ✅ |
 
@@ -267,11 +401,12 @@ Enterprise features are available through the standard API with enterprise licen
 ### Base URL
 
 ```
-/api/v1/iso27001/...     # ISO 27001 endpoints
-/api/v1/bcm/...          # Business Continuity Management endpoints
-/api/v1/bsi/...          # BSI IT-Grundschutz endpoints
-/api/v1/nis2/...         # NIS2 Directive endpoints
-/api/v1/copilot/...      # AI Copilot endpoints (coming soon)
+/api/v1/iso27001/...     # ISO 27001 endpoints (18 endpoints)
+/api/v1/bcm/...          # Business Continuity Management endpoints (43 endpoints)
+/api/v1/bsi/...          # BSI IT-Grundschutz endpoints (18 endpoints)
+/api/v1/nis2/...         # NIS2 Directive endpoints (14 endpoints)
+/api/v1/copilot/...      # AI Copilot endpoints (9 endpoints)
+/api/v1/reports/...      # PDF Report generation endpoints (3 endpoints)
 ```
 
 ### Authentication
@@ -330,10 +465,12 @@ Enterprise features are included in the standard installation. Enable them by:
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 2.2.0 | 2026-02-05 | AI Copilot with 5 LLM providers (Ollama, OpenAI, Anthropic, Gemini, Groq), streaming support |
 | 2.1.0 | 2026-02-05 | BCM module with BIA wizard, emergency plans, and exercises |
 | 2.0.0 | 2026-02-05 | ISO 27001:2022 module with full wizard and PDF reports |
-| 1.9.0 | 2026-02-01 | BSI IT-Grundschutz catalog and assessment |
-| 1.8.0 | 2026-02-01 | NIS2 Directive assessment wizard |
+| 1.9.0 | 2026-02-01 | BSI IT-Grundschutz: 61 Bausteine, 276 Anforderungen, dashboard, PDF reports |
+| 1.8.0 | 2026-02-01 | NIS2 Directive: 5-step wizard, 18 sectors, automatic classification |
+| 1.7.0 | 2026-02-01 | PDF Reports with LaTeX (DIN 5008 standard) |
 
 ---
 
