@@ -54,6 +54,7 @@ const navItems = [
       { href: "/bcm", icon: RefreshCw, labelKey: "nav.bcm" },
     ],
   },
+  { href: "/documents", icon: FileText, labelKey: "nav.documents" },
   { href: "/integrations", icon: Plug, labelKey: "nav.integrations" },
   { href: "/reporting", icon: BarChart3, labelKey: "nav.reporting" },
   { href: "/notifications", icon: Bell, labelKey: "nav.notifications" },

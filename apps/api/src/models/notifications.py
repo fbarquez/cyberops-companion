@@ -65,6 +65,26 @@ class NotificationType(str, enum.Enum):
     TASK_ASSIGNED = "task_assigned"
     TASK_DUE = "task_due"
 
+    # Documents
+    DOCUMENT_SUBMITTED = "document_submitted"
+    DOCUMENT_APPROVED = "document_approved"
+    DOCUMENT_REJECTED = "document_rejected"
+    DOCUMENT_PUBLISHED = "document_published"
+    DOCUMENT_UPDATED = "document_updated"
+
+    # Document Reviews
+    DOCUMENT_REVIEW_DUE = "document_review_due"
+    DOCUMENT_REVIEW_OVERDUE = "document_review_overdue"
+
+    # Document Acknowledgments
+    ACKNOWLEDGMENT_REQUIRED = "acknowledgment_required"
+    ACKNOWLEDGMENT_REMINDER = "acknowledgment_reminder"
+    ACKNOWLEDGMENT_OVERDUE = "acknowledgment_overdue"
+
+    # Document Approvals
+    APPROVAL_REQUIRED = "approval_required"
+    APPROVAL_REMINDER = "approval_reminder"
+
 
 class NotificationPriority(str, enum.Enum):
     """Notification priority levels."""
