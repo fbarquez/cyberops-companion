@@ -1,0 +1,1684 @@
+{
+  "catalog": {
+    "uuid": "a7c5e8f2-1b3d-4e6a-9c0f-2d4b6e8a0c2e",
+    "metadata": {
+      "title": "BSI Standard 200-4: Business Continuity Management",
+      "title-de": "BSI-Standard 200-4: Business Continuity Management",
+      "last-modified": "2026-02-05T12:00:00.000Z",
+      "version": "1.0.0",
+      "oscal-version": "1.1.2",
+      "remarks": "Machine-readable representation of BSI Standard 200-4 for Business Continuity Management. Based on the official BSI publication. This is a community contribution, not an official BSI product.",
+      "props": [
+        {
+          "name": "keywords",
+          "value": "BCM, Business Continuity, BSI, 200-4, Notfallmanagement, BCMS"
+        },
+        {
+          "name": "source-standard",
+          "value": "BSI-Standard 200-4"
+        },
+        {
+          "name": "language",
+          "value": "de-DE"
+        },
+        {
+          "name": "mapping",
+          "value": "ISO 22301:2019"
+        }
+      ],
+      "links": [
+        {
+          "href": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/BSI_Standards/standard_200_4.html",
+          "rel": "canonical",
+          "text": "BSI Official Download"
+        },
+        {
+          "href": "https://www.iso.org/standard/75106.html",
+          "rel": "related",
+          "text": "ISO 22301:2019"
+        }
+      ],
+      "roles": [
+        {
+          "id": "creator",
+          "title": "Document Creator"
+        },
+        {
+          "id": "bcm-officer",
+          "title": "BCM-Beauftragter",
+          "description": "Business Continuity Management Officer responsible for BCMS"
+        },
+        {
+          "id": "crisis-manager",
+          "title": "Krisenmanager",
+          "description": "Crisis Manager responsible for crisis response"
+        },
+        {
+          "id": "process-owner",
+          "title": "Prozessverantwortlicher",
+          "description": "Business Process Owner"
+        }
+      ],
+      "parties": [
+        {
+          "uuid": "b8d6e4a2-3c5f-4a7b-8e9d-1f2a3b4c5d6e",
+          "type": "organization",
+          "name": "Bundesamt für Sicherheit in der Informationstechnik (BSI)",
+          "short-name": "BSI",
+          "links": [
+            {
+              "href": "https://www.bsi.bund.de",
+              "rel": "homepage"
+            }
+          ]
+        },
+        {
+          "uuid": "c9e7f5b3-4d6a-5b8c-9f0e-2a3b4c5d6e7f",
+          "type": "organization",
+          "name": "CyberOps Companion Community",
+          "remarks": "Community contribution - OSCAL conversion"
+        }
+      ],
+      "responsible-parties": [
+        {
+          "role-id": "creator",
+          "party-uuids": ["c9e7f5b3-4d6a-5b8c-9f0e-2a3b4c5d6e7f"]
+        }
+      ]
+    },
+    "groups": [
+      {
+        "id": "bcm-1",
+        "class": "family",
+        "title": "BCMS-Rahmenwerk",
+        "title-en": "BCMS Framework",
+        "props": [
+          {
+            "name": "label",
+            "value": "BCM-1"
+          },
+          {
+            "name": "iso22301-mapping",
+            "value": "Clause 4, 5"
+          }
+        ],
+        "parts": [
+          {
+            "id": "bcm-1_overview",
+            "name": "overview",
+            "prose": "Etablierung eines Business Continuity Management Systems (BCMS) als Teil der Unternehmensführung. Das BCMS definiert Strukturen, Rollen und Prozesse für die Aufrechterhaltung kritischer Geschäftsprozesse."
+          }
+        ],
+        "controls": [
+          {
+            "id": "bcm-1.1",
+            "class": "requirement",
+            "title": "BCM-Politik",
+            "title-en": "BCM Policy",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-1.1"
+              },
+              {
+                "name": "priority",
+                "value": "must"
+              },
+              {
+                "name": "iso22301-mapping",
+                "value": "5.2"
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-1.1_stmt",
+                "name": "statement",
+                "prose": "Die Institutionsleitung MUSS eine BCM-Politik festlegen, die den Stellenwert des BCM für die Institution definiert und die grundlegenden Ziele und Rahmenbedingungen vorgibt."
+              },
+              {
+                "id": "bcm-1.1_guidance",
+                "name": "guidance",
+                "prose": "Die BCM-Politik sollte mindestens enthalten: Geltungsbereich, BCM-Ziele, Verantwortlichkeiten, Ressourcenzusagen, Verpflichtung zur kontinuierlichen Verbesserung."
+              },
+              {
+                "id": "bcm-1.1_objectives",
+                "name": "assessment-objective",
+                "parts": [
+                  {
+                    "id": "bcm-1.1_obj.a",
+                    "name": "objective",
+                    "prose": "Eine dokumentierte BCM-Politik existiert."
+                  },
+                  {
+                    "id": "bcm-1.1_obj.b",
+                    "name": "objective",
+                    "prose": "Die BCM-Politik ist von der Leitung genehmigt."
+                  },
+                  {
+                    "id": "bcm-1.1_obj.c",
+                    "name": "objective",
+                    "prose": "Die BCM-Politik ist allen relevanten Mitarbeitern kommuniziert."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "bcm-1.2",
+            "class": "requirement",
+            "title": "BCM-Organisation",
+            "title-en": "BCM Organization",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-1.2"
+              },
+              {
+                "name": "priority",
+                "value": "must"
+              },
+              {
+                "name": "iso22301-mapping",
+                "value": "5.3"
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-1.2_stmt",
+                "name": "statement",
+                "prose": "Die Institution MUSS eine BCM-Organisation mit definierten Rollen, Verantwortlichkeiten und Befugnissen etablieren."
+              },
+              {
+                "id": "bcm-1.2_guidance",
+                "name": "guidance",
+                "prose": "Typische Rollen: BCM-Beauftragter, BCM-Koordinatoren, Krisenteam, Notfallteams. Die Aufbauorganisation sollte dokumentiert und regelmäßig aktualisiert werden."
+              }
+            ],
+            "controls": [
+              {
+                "id": "bcm-1.2.1",
+                "class": "requirement",
+                "title": "BCM-Beauftragter",
+                "title-en": "BCM Officer",
+                "props": [
+                  {
+                    "name": "label",
+                    "value": "BCM-1.2.1"
+                  },
+                  {
+                    "name": "priority",
+                    "value": "must"
+                  }
+                ],
+                "parts": [
+                  {
+                    "id": "bcm-1.2.1_stmt",
+                    "name": "statement",
+                    "prose": "Ein BCM-Beauftragter MUSS benannt werden, der für die Koordination und Steuerung des BCMS verantwortlich ist."
+                  }
+                ]
+              },
+              {
+                "id": "bcm-1.2.2",
+                "class": "requirement",
+                "title": "Krisenorganisation",
+                "title-en": "Crisis Organization",
+                "props": [
+                  {
+                    "name": "label",
+                    "value": "BCM-1.2.2"
+                  },
+                  {
+                    "name": "priority",
+                    "value": "must"
+                  }
+                ],
+                "parts": [
+                  {
+                    "id": "bcm-1.2.2_stmt",
+                    "name": "statement",
+                    "prose": "Eine Krisenorganisation MUSS definiert werden, die im Notfall aktiviert wird und die Bewältigung koordiniert."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "bcm-1.3",
+            "class": "requirement",
+            "title": "Geltungsbereich",
+            "title-en": "Scope Definition",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-1.3"
+              },
+              {
+                "name": "priority",
+                "value": "must"
+              },
+              {
+                "name": "iso22301-mapping",
+                "value": "4.3"
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-1.3_stmt",
+                "name": "statement",
+                "prose": "Der Geltungsbereich des BCMS MUSS festgelegt werden, einschließlich der zu schützenden Geschäftsprozesse, Standorte und Ressourcen."
+              },
+              {
+                "id": "bcm-1.3_guidance",
+                "name": "guidance",
+                "prose": "Der Geltungsbereich sollte alle kritischen und wichtigen Geschäftsprozesse umfassen. Ausschlüsse sind zu begründen."
+              }
+            ]
+          },
+          {
+            "id": "bcm-1.4",
+            "class": "requirement",
+            "title": "Ressourcenbereitstellung",
+            "title-en": "Resource Provision",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-1.4"
+              },
+              {
+                "name": "priority",
+                "value": "must"
+              },
+              {
+                "name": "iso22301-mapping",
+                "value": "7.1"
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-1.4_stmt",
+                "name": "statement",
+                "prose": "Die Institution MUSS ausreichende Ressourcen für das BCMS bereitstellen, einschließlich Personal, Budget, Zeit und Infrastruktur."
+              }
+            ]
+          },
+          {
+            "id": "bcm-1.5",
+            "class": "requirement",
+            "title": "Dokumentation",
+            "title-en": "Documentation",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-1.5"
+              },
+              {
+                "name": "priority",
+                "value": "must"
+              },
+              {
+                "name": "iso22301-mapping",
+                "value": "7.5"
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-1.5_stmt",
+                "name": "statement",
+                "prose": "Alle BCM-relevanten Dokumente MÜSSEN erstellt, gepflegt, geschützt und kontrolliert werden."
+              },
+              {
+                "id": "bcm-1.5_guidance",
+                "name": "guidance",
+                "prose": "Die Dokumentation umfasst: BCM-Politik, BIA-Ergebnisse, Risikoanalysen, BC-Strategien, Notfallpläne, Übungsberichte, Audit-Ergebnisse."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "bcm-2",
+        "class": "family",
+        "title": "Business Impact Analysis (BIA)",
+        "title-de": "Geschäftsauswirkungsanalyse",
+        "props": [
+          {
+            "name": "label",
+            "value": "BCM-2"
+          },
+          {
+            "name": "iso22301-mapping",
+            "value": "8.2.2"
+          }
+        ],
+        "parts": [
+          {
+            "id": "bcm-2_overview",
+            "name": "overview",
+            "prose": "Die Business Impact Analysis (BIA) identifiziert kritische Geschäftsprozesse und analysiert die Auswirkungen von Unterbrechungen über verschiedene Zeiträume."
+          }
+        ],
+        "controls": [
+          {
+            "id": "bcm-2.1",
+            "class": "requirement",
+            "title": "Prozessidentifikation",
+            "title-en": "Process Identification",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-2.1"
+              },
+              {
+                "name": "priority",
+                "value": "must"
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-2.1_stmt",
+                "name": "statement",
+                "prose": "Alle Geschäftsprozesse der Institution MÜSSEN identifiziert und dokumentiert werden."
+              },
+              {
+                "id": "bcm-2.1_guidance",
+                "name": "guidance",
+                "prose": "Die Prozessidentifikation sollte Prozessname, Prozessverantwortlicher, Beschreibung, Input/Output, beteiligte Ressourcen und Abhängigkeiten umfassen."
+              }
+            ]
+          },
+          {
+            "id": "bcm-2.2",
+            "class": "requirement",
+            "title": "Kritikalitätsbewertung",
+            "title-en": "Criticality Assessment",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-2.2"
+              },
+              {
+                "name": "priority",
+                "value": "must"
+              }
+            ],
+            "params": [
+              {
+                "id": "bcm-2.2_prm_1",
+                "label": "criticality-levels",
+                "guidelines": [
+                  {
+                    "prose": "Typische Stufen: Kritisch, Hoch, Mittel, Niedrig"
+                  }
+                ],
+                "values": ["kritisch", "hoch", "mittel", "niedrig"]
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-2.2_stmt",
+                "name": "statement",
+                "prose": "Jeder Geschäftsprozess MUSS hinsichtlich seiner Kritikalität für die Institution bewertet werden."
+              },
+              {
+                "id": "bcm-2.2_guidance",
+                "name": "guidance",
+                "prose": "Die Kritikalität ergibt sich aus den Auswirkungen eines Ausfalls auf: Finanzen, Betrieb, Reputation, Compliance, Sicherheit."
+              }
+            ]
+          },
+          {
+            "id": "bcm-2.3",
+            "class": "requirement",
+            "title": "Auswirkungsanalyse",
+            "title-en": "Impact Analysis",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-2.3"
+              },
+              {
+                "name": "priority",
+                "value": "must"
+              }
+            ],
+            "params": [
+              {
+                "id": "bcm-2.3_prm_1",
+                "label": "impact-categories",
+                "values": ["finanziell", "operativ", "reputativ", "rechtlich", "sicherheit"]
+              },
+              {
+                "id": "bcm-2.3_prm_2",
+                "label": "time-periods",
+                "guidelines": [
+                  {
+                    "prose": "Bewertungszeiträume für Auswirkungsanalyse"
+                  }
+                ],
+                "values": ["1h", "4h", "8h", "24h", "72h", "1w"]
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-2.3_stmt",
+                "name": "statement",
+                "prose": "Für jeden kritischen Prozess MÜSSEN die Auswirkungen einer Unterbrechung über verschiedene Zeiträume analysiert werden."
+              },
+              {
+                "id": "bcm-2.3_guidance",
+                "name": "guidance",
+                "prose": "Die Analyse sollte verschiedene Schadenskategorien berücksichtigen und die Auswirkungen über zunehmende Zeiträume (z.B. 1h, 4h, 8h, 24h, 72h, 1 Woche) bewerten."
+              }
+            ]
+          },
+          {
+            "id": "bcm-2.4",
+            "class": "requirement",
+            "title": "Wiederherstellungsziele",
+            "title-en": "Recovery Objectives",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-2.4"
+              },
+              {
+                "name": "priority",
+                "value": "must"
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-2.4_stmt",
+                "name": "statement",
+                "prose": "Für jeden kritischen Prozess MÜSSEN Wiederherstellungsziele definiert werden: RTO, RPO und MTPD."
+              },
+              {
+                "id": "bcm-2.4_guidance",
+                "name": "guidance",
+                "parts": [
+                  {
+                    "id": "bcm-2.4_guidance.rto",
+                    "name": "term",
+                    "title": "RTO (Recovery Time Objective)",
+                    "prose": "Maximal tolerierbare Zeitspanne für die Wiederherstellung eines Prozesses nach einem Ausfall."
+                  },
+                  {
+                    "id": "bcm-2.4_guidance.rpo",
+                    "name": "term",
+                    "title": "RPO (Recovery Point Objective)",
+                    "prose": "Maximal tolerierbare Datenverlustperiode - der Zeitraum, für den Datenverlust akzeptabel ist."
+                  },
+                  {
+                    "id": "bcm-2.4_guidance.mtpd",
+                    "name": "term",
+                    "title": "MTPD (Maximum Tolerable Period of Disruption)",
+                    "prose": "Maximal tolerierbare Ausfallzeit, nach der die Existenz der Institution gefährdet ist."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "bcm-2.5",
+            "class": "requirement",
+            "title": "Abhängigkeitsanalyse",
+            "title-en": "Dependency Analysis",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-2.5"
+              },
+              {
+                "name": "priority",
+                "value": "must"
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-2.5_stmt",
+                "name": "statement",
+                "prose": "Für jeden kritischen Prozess MÜSSEN interne und externe Abhängigkeiten identifiziert werden."
+              },
+              {
+                "id": "bcm-2.5_guidance",
+                "name": "guidance",
+                "prose": "Abhängigkeiten umfassen: andere Geschäftsprozesse, IT-Systeme, Personal, Lieferanten, Infrastruktur, externe Dienstleister."
+              }
+            ]
+          },
+          {
+            "id": "bcm-2.6",
+            "class": "requirement",
+            "title": "Ressourcenanforderungen",
+            "title-en": "Resource Requirements",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-2.6"
+              },
+              {
+                "name": "priority",
+                "value": "should"
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-2.6_stmt",
+                "name": "statement",
+                "prose": "Für jeden kritischen Prozess SOLLTEN die minimalen Ressourcenanforderungen für den Notbetrieb ermittelt werden."
+              },
+              {
+                "id": "bcm-2.6_guidance",
+                "name": "guidance",
+                "prose": "Dies umfasst: Mindestpersonal, kritische Ausrüstung, erforderliche Arbeitsplätze, kritische Daten und Systeme."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "bcm-3",
+        "class": "family",
+        "title": "Risikoanalyse",
+        "title-en": "Risk Assessment",
+        "props": [
+          {
+            "name": "label",
+            "value": "BCM-3"
+          },
+          {
+            "name": "iso22301-mapping",
+            "value": "8.2.3"
+          }
+        ],
+        "parts": [
+          {
+            "id": "bcm-3_overview",
+            "name": "overview",
+            "prose": "Die BCM-Risikoanalyse identifiziert Bedrohungen und Schwachstellen, die zu Geschäftsunterbrechungen führen können."
+          }
+        ],
+        "controls": [
+          {
+            "id": "bcm-3.1",
+            "class": "requirement",
+            "title": "Bedrohungsidentifikation",
+            "title-en": "Threat Identification",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-3.1"
+              },
+              {
+                "name": "priority",
+                "value": "must"
+              }
+            ],
+            "params": [
+              {
+                "id": "bcm-3.1_prm_1",
+                "label": "threat-categories",
+                "values": [
+                  "naturkatastrophen",
+                  "technische-ausfaelle",
+                  "menschliches-versagen",
+                  "cyberangriffe",
+                  "pandemie",
+                  "lieferkettenausfall",
+                  "infrastrukturausfall"
+                ]
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-3.1_stmt",
+                "name": "statement",
+                "prose": "Potenzielle Bedrohungen, die zu Geschäftsunterbrechungen führen können, MÜSSEN systematisch identifiziert werden."
+              },
+              {
+                "id": "bcm-3.1_guidance",
+                "name": "guidance",
+                "prose": "Typische Bedrohungskategorien: Naturkatastrophen (Überschwemmung, Erdbeben, Sturm), Technische Ausfälle (Stromausfall, IT-Ausfall), Menschliches Versagen, Cyberangriffe, Pandemie, Lieferkettenausfall, Infrastrukturausfall."
+              }
+            ]
+          },
+          {
+            "id": "bcm-3.2",
+            "class": "requirement",
+            "title": "Risikobewertung",
+            "title-en": "Risk Assessment",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-3.2"
+              },
+              {
+                "name": "priority",
+                "value": "must"
+              }
+            ],
+            "params": [
+              {
+                "id": "bcm-3.2_prm_1",
+                "label": "likelihood-levels",
+                "values": ["selten", "unwahrscheinlich", "möglich", "wahrscheinlich", "fast sicher"]
+              },
+              {
+                "id": "bcm-3.2_prm_2",
+                "label": "impact-levels",
+                "values": ["vernachlässigbar", "gering", "moderat", "erheblich", "katastrophal"]
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-3.2_stmt",
+                "name": "statement",
+                "prose": "Jede identifizierte Bedrohung MUSS hinsichtlich Eintrittswahrscheinlichkeit und Auswirkung bewertet werden."
+              },
+              {
+                "id": "bcm-3.2_guidance",
+                "name": "guidance",
+                "prose": "Die Risikobewertung erfolgt typischerweise mit einer 5x5-Matrix. Risiko = Eintrittswahrscheinlichkeit × Auswirkung."
+              }
+            ]
+          },
+          {
+            "id": "bcm-3.3",
+            "class": "requirement",
+            "title": "Single Points of Failure",
+            "title-en": "Single Points of Failure",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-3.3"
+              },
+              {
+                "name": "priority",
+                "value": "must"
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-3.3_stmt",
+                "name": "statement",
+                "prose": "Single Points of Failure (SPoF), deren Ausfall kritische Prozesse vollständig stoppt, MÜSSEN identifiziert werden."
+              },
+              {
+                "id": "bcm-3.3_guidance",
+                "name": "guidance",
+                "prose": "Typische SPoF: Einzelne Schlüsselpersonen, nicht redundante IT-Systeme, einzelne Lieferanten, kritische Infrastrukturkomponenten."
+              }
+            ]
+          },
+          {
+            "id": "bcm-3.4",
+            "class": "requirement",
+            "title": "Bestehende Kontrollen",
+            "title-en": "Existing Controls",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-3.4"
+              },
+              {
+                "name": "priority",
+                "value": "should"
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-3.4_stmt",
+                "name": "statement",
+                "prose": "Bestehende Kontrollen und deren Wirksamkeit SOLLTEN für jedes Risikoszenario dokumentiert werden."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "bcm-4",
+        "class": "family",
+        "title": "Kontinuitätsstrategien",
+        "title-en": "Business Continuity Strategies",
+        "props": [
+          {
+            "name": "label",
+            "value": "BCM-4"
+          },
+          {
+            "name": "iso22301-mapping",
+            "value": "8.3"
+          }
+        ],
+        "parts": [
+          {
+            "id": "bcm-4_overview",
+            "name": "overview",
+            "prose": "Kontinuitätsstrategien definieren, wie kritische Geschäftsprozesse bei Unterbrechungen aufrechterhalten oder wiederhergestellt werden."
+          }
+        ],
+        "controls": [
+          {
+            "id": "bcm-4.1",
+            "class": "requirement",
+            "title": "Strategieentwicklung",
+            "title-en": "Strategy Development",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-4.1"
+              },
+              {
+                "name": "priority",
+                "value": "must"
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-4.1_stmt",
+                "name": "statement",
+                "prose": "Für jeden kritischen Geschäftsprozess MUSS mindestens eine Kontinuitätsstrategie entwickelt werden."
+              },
+              {
+                "id": "bcm-4.1_guidance",
+                "name": "guidance",
+                "prose": "Strategien sollten die definierten RTO und RPO einhalten können."
+              }
+            ]
+          },
+          {
+            "id": "bcm-4.2",
+            "class": "requirement",
+            "title": "Strategietypen",
+            "title-en": "Strategy Types",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-4.2"
+              },
+              {
+                "name": "priority",
+                "value": "informative"
+              }
+            ],
+            "params": [
+              {
+                "id": "bcm-4.2_prm_1",
+                "label": "strategy-types",
+                "values": [
+                  "keine-massnahme",
+                  "manuelle-umgehung",
+                  "ausweichstandort",
+                  "ausweichlieferant",
+                  "redundanz",
+                  "outsourcing",
+                  "versicherung"
+                ]
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-4.2_stmt",
+                "name": "statement",
+                "prose": "Folgende Strategietypen stehen typischerweise zur Verfügung."
+              },
+              {
+                "id": "bcm-4.2_guidance",
+                "name": "guidance",
+                "parts": [
+                  {
+                    "id": "bcm-4.2_guidance.a",
+                    "name": "item",
+                    "prose": "Keine Maßnahme (Risiko akzeptieren): Für Prozesse mit geringer Kritikalität"
+                  },
+                  {
+                    "id": "bcm-4.2_guidance.b",
+                    "name": "item",
+                    "prose": "Manuelle Umgehung: Alternative manuelle Verfahren bei IT-Ausfall"
+                  },
+                  {
+                    "id": "bcm-4.2_guidance.c",
+                    "name": "item",
+                    "prose": "Ausweichstandort: Verlagerung zu Backup-Standort"
+                  },
+                  {
+                    "id": "bcm-4.2_guidance.d",
+                    "name": "item",
+                    "prose": "Ausweichlieferant: Nutzung alternativer Lieferanten"
+                  },
+                  {
+                    "id": "bcm-4.2_guidance.e",
+                    "name": "item",
+                    "prose": "Redundanz: Redundante Systeme und Infrastruktur"
+                  },
+                  {
+                    "id": "bcm-4.2_guidance.f",
+                    "name": "item",
+                    "prose": "Outsourcing: Auslagerung an Dritte während Krise"
+                  },
+                  {
+                    "id": "bcm-4.2_guidance.g",
+                    "name": "item",
+                    "prose": "Versicherung: Finanzielle Absicherung"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "bcm-4.3",
+            "class": "requirement",
+            "title": "Aktivierungskriterien",
+            "title-en": "Activation Criteria",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-4.3"
+              },
+              {
+                "name": "priority",
+                "value": "must"
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-4.3_stmt",
+                "name": "statement",
+                "prose": "Für jede Strategie MÜSSEN klare Aktivierungskriterien definiert werden."
+              },
+              {
+                "id": "bcm-4.3_guidance",
+                "name": "guidance",
+                "prose": "Aktivierungskriterien sollten objektiv messbar sein und festlegen, wann eine Strategie aktiviert wird."
+              }
+            ]
+          },
+          {
+            "id": "bcm-4.4",
+            "class": "requirement",
+            "title": "Ressourcen und Kosten",
+            "title-en": "Resources and Costs",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-4.4"
+              },
+              {
+                "name": "priority",
+                "value": "should"
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-4.4_stmt",
+                "name": "statement",
+                "prose": "Für jede Strategie SOLLTEN erforderliche Ressourcen und geschätzte Kosten dokumentiert werden."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "bcm-5",
+        "class": "family",
+        "title": "Notfallpläne",
+        "title-en": "Emergency Plans",
+        "props": [
+          {
+            "name": "label",
+            "value": "BCM-5"
+          },
+          {
+            "name": "iso22301-mapping",
+            "value": "8.4"
+          }
+        ],
+        "parts": [
+          {
+            "id": "bcm-5_overview",
+            "name": "overview",
+            "prose": "Notfallpläne (Notfallkonzepte) dokumentieren Verfahren für die Reaktion auf und Wiederherstellung nach Geschäftsunterbrechungen."
+          }
+        ],
+        "controls": [
+          {
+            "id": "bcm-5.1",
+            "class": "requirement",
+            "title": "Plantypen",
+            "title-en": "Plan Types",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-5.1"
+              },
+              {
+                "name": "priority",
+                "value": "must"
+              }
+            ],
+            "params": [
+              {
+                "id": "bcm-5.1_prm_1",
+                "label": "plan-types",
+                "values": [
+                  "krisenmanagementplan",
+                  "notfallreaktionsplan",
+                  "geschaeftswiederherstellungsplan",
+                  "it-wiederherstellungsplan",
+                  "kommunikationsplan",
+                  "evakuierungsplan"
+                ]
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-5.1_stmt",
+                "name": "statement",
+                "prose": "Verschiedene Plantypen MÜSSEN je nach Bedarf erstellt werden."
+              },
+              {
+                "id": "bcm-5.1_guidance",
+                "name": "guidance",
+                "parts": [
+                  {
+                    "id": "bcm-5.1_guidance.a",
+                    "name": "item",
+                    "prose": "Krisenmanagementplan: Übergeordnete Krisenkoordination"
+                  },
+                  {
+                    "id": "bcm-5.1_guidance.b",
+                    "name": "item",
+                    "prose": "Notfallreaktionsplan: Sofortmaßnahmen bei Eintritt"
+                  },
+                  {
+                    "id": "bcm-5.1_guidance.c",
+                    "name": "item",
+                    "prose": "Geschäftswiederherstellungsplan: Wiederaufnahme von Prozessen"
+                  },
+                  {
+                    "id": "bcm-5.1_guidance.d",
+                    "name": "item",
+                    "prose": "IT-Wiederherstellungsplan (DRP): IT-Systeme wiederherstellen"
+                  },
+                  {
+                    "id": "bcm-5.1_guidance.e",
+                    "name": "item",
+                    "prose": "Kommunikationsplan: Interne und externe Kommunikation"
+                  },
+                  {
+                    "id": "bcm-5.1_guidance.f",
+                    "name": "item",
+                    "prose": "Evakuierungsplan: Physische Evakuierung von Gebäuden"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "bcm-5.2",
+            "class": "requirement",
+            "title": "Planinhalte",
+            "title-en": "Plan Contents",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-5.2"
+              },
+              {
+                "name": "priority",
+                "value": "must"
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-5.2_stmt",
+                "name": "statement",
+                "prose": "Jeder Notfallplan MUSS mindestens folgende Elemente enthalten: Aktivierungskriterien, Reaktionsphasen, Verfahren, Rollen und Verantwortlichkeiten, Kontaktlisten, erforderliche Ressourcen."
+              },
+              {
+                "id": "bcm-5.2_guidance",
+                "name": "guidance",
+                "prose": "Pläne sollten klar, präzise und auch unter Stressbedingungen verständlich sein."
+              }
+            ]
+          },
+          {
+            "id": "bcm-5.3",
+            "class": "requirement",
+            "title": "Checklisten",
+            "title-en": "Checklists",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-5.3"
+              },
+              {
+                "name": "priority",
+                "value": "should"
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-5.3_stmt",
+                "name": "statement",
+                "prose": "Notfallpläne SOLLTEN Checklisten für Aktivierung und Wiederherstellung enthalten."
+              }
+            ]
+          },
+          {
+            "id": "bcm-5.4",
+            "class": "requirement",
+            "title": "Kommunikationsbaum",
+            "title-en": "Communication Tree",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-5.4"
+              },
+              {
+                "name": "priority",
+                "value": "must"
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-5.4_stmt",
+                "name": "statement",
+                "prose": "Ein Kommunikationsbaum mit Eskalationspfaden MUSS definiert werden."
+              }
+            ]
+          },
+          {
+            "id": "bcm-5.5",
+            "class": "requirement",
+            "title": "Notfallkontakte",
+            "title-en": "Emergency Contacts",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-5.5"
+              },
+              {
+                "name": "priority",
+                "value": "must"
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-5.5_stmt",
+                "name": "statement",
+                "prose": "Eine aktuelle Kontaktliste mit allen Notfallkontakten MUSS gepflegt werden."
+              },
+              {
+                "id": "bcm-5.5_guidance",
+                "name": "guidance",
+                "prose": "Die Liste sollte interne Kontakte, externe Dienstleister, Behörden und Lieferanten umfassen. Erreichbarkeit (24/7, Geschäftszeiten) dokumentieren."
+              }
+            ]
+          },
+          {
+            "id": "bcm-5.6",
+            "class": "requirement",
+            "title": "Plangenehmigung",
+            "title-en": "Plan Approval",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-5.6"
+              },
+              {
+                "name": "priority",
+                "value": "must"
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-5.6_stmt",
+                "name": "statement",
+                "prose": "Notfallpläne MÜSSEN vor Inkrafttreten von autorisierten Personen genehmigt werden."
+              }
+            ]
+          },
+          {
+            "id": "bcm-5.7",
+            "class": "requirement",
+            "title": "Planversionierung",
+            "title-en": "Plan Versioning",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-5.7"
+              },
+              {
+                "name": "priority",
+                "value": "must"
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-5.7_stmt",
+                "name": "statement",
+                "prose": "Notfallpläne MÜSSEN versioniert werden mit Datum, Version und Änderungshistorie."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "bcm-6",
+        "class": "family",
+        "title": "Übungen und Tests",
+        "title-en": "Exercises and Testing",
+        "props": [
+          {
+            "name": "label",
+            "value": "BCM-6"
+          },
+          {
+            "name": "iso22301-mapping",
+            "value": "8.5"
+          }
+        ],
+        "parts": [
+          {
+            "id": "bcm-6_overview",
+            "name": "overview",
+            "prose": "Regelmäßige Übungen und Tests validieren die Wirksamkeit des BCMS und der Notfallpläne."
+          }
+        ],
+        "controls": [
+          {
+            "id": "bcm-6.1",
+            "class": "requirement",
+            "title": "Übungsprogramm",
+            "title-en": "Exercise Program",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-6.1"
+              },
+              {
+                "name": "priority",
+                "value": "must"
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-6.1_stmt",
+                "name": "statement",
+                "prose": "Ein regelmäßiges Übungsprogramm MUSS etabliert werden, um die Wirksamkeit von Notfallplänen zu validieren."
+              },
+              {
+                "id": "bcm-6.1_guidance",
+                "name": "guidance",
+                "prose": "Übungen sollten mindestens jährlich durchgeführt werden. Kritische Pläne sollten häufiger getestet werden."
+              }
+            ]
+          },
+          {
+            "id": "bcm-6.2",
+            "class": "requirement",
+            "title": "Übungstypen",
+            "title-en": "Exercise Types",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-6.2"
+              },
+              {
+                "name": "priority",
+                "value": "informative"
+              }
+            ],
+            "params": [
+              {
+                "id": "bcm-6.2_prm_1",
+                "label": "exercise-types",
+                "values": [
+                  "planbesprechung",
+                  "durchsprache",
+                  "simulation",
+                  "paralleltest",
+                  "vollunterbrechung"
+                ]
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-6.2_stmt",
+                "name": "statement",
+                "prose": "Verschiedene Übungstypen mit steigendem Komplexitätsgrad stehen zur Verfügung."
+              },
+              {
+                "id": "bcm-6.2_guidance",
+                "name": "guidance",
+                "parts": [
+                  {
+                    "id": "bcm-6.2_guidance.a",
+                    "name": "item",
+                    "prose": "Planbesprechung (Tabletop): Diskussionsbasierte Übung ohne praktische Ausführung"
+                  },
+                  {
+                    "id": "bcm-6.2_guidance.b",
+                    "name": "item",
+                    "prose": "Durchsprache (Walkthrough): Schrittweise Durchgang durch Verfahren"
+                  },
+                  {
+                    "id": "bcm-6.2_guidance.c",
+                    "name": "item",
+                    "prose": "Simulation: Simuliertes Szenario ohne tatsächliche Auswirkung"
+                  },
+                  {
+                    "id": "bcm-6.2_guidance.d",
+                    "name": "item",
+                    "prose": "Paralleltest: Teilweise Aktivierung parallel zum Normalbetrieb"
+                  },
+                  {
+                    "id": "bcm-6.2_guidance.e",
+                    "name": "item",
+                    "prose": "Vollunterbrechung: Vollständiger Test mit tatsächlicher Umschaltung"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "bcm-6.3",
+            "class": "requirement",
+            "title": "Übungsziele",
+            "title-en": "Exercise Objectives",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-6.3"
+              },
+              {
+                "name": "priority",
+                "value": "must"
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-6.3_stmt",
+                "name": "statement",
+                "prose": "Für jede Übung MÜSSEN klare, messbare Ziele definiert werden."
+              }
+            ]
+          },
+          {
+            "id": "bcm-6.4",
+            "class": "requirement",
+            "title": "Übungsdokumentation",
+            "title-en": "Exercise Documentation",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-6.4"
+              },
+              {
+                "name": "priority",
+                "value": "must"
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-6.4_stmt",
+                "name": "statement",
+                "prose": "Übungsergebnisse MÜSSEN dokumentiert werden, einschließlich: erreichte Ziele, identifizierte Probleme, Lessons Learned, Verbesserungsmaßnahmen."
+              }
+            ]
+          },
+          {
+            "id": "bcm-6.5",
+            "class": "requirement",
+            "title": "Maßnahmenverfolgung",
+            "title-en": "Action Tracking",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-6.5"
+              },
+              {
+                "name": "priority",
+                "value": "must"
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-6.5_stmt",
+                "name": "statement",
+                "prose": "Aus Übungen resultierende Verbesserungsmaßnahmen MÜSSEN verfolgt und umgesetzt werden."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "bcm-7",
+        "class": "family",
+        "title": "Pflege und Verbesserung",
+        "title-en": "Maintenance and Improvement",
+        "props": [
+          {
+            "name": "label",
+            "value": "BCM-7"
+          },
+          {
+            "name": "iso22301-mapping",
+            "value": "9, 10"
+          }
+        ],
+        "parts": [
+          {
+            "id": "bcm-7_overview",
+            "name": "overview",
+            "prose": "Das BCMS muss regelmäßig überprüft, aktualisiert und verbessert werden."
+          }
+        ],
+        "controls": [
+          {
+            "id": "bcm-7.1",
+            "class": "requirement",
+            "title": "Regelmäßige Überprüfung",
+            "title-en": "Regular Review",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-7.1"
+              },
+              {
+                "name": "priority",
+                "value": "must"
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-7.1_stmt",
+                "name": "statement",
+                "prose": "Das gesamte BCMS MUSS mindestens jährlich überprüft werden."
+              },
+              {
+                "id": "bcm-7.1_guidance",
+                "name": "guidance",
+                "prose": "Die Überprüfung umfasst: BIA-Aktualität, Risikoanalyse, Strategien, Notfallpläne, Übungsergebnisse."
+              }
+            ]
+          },
+          {
+            "id": "bcm-7.2",
+            "class": "requirement",
+            "title": "Anlassbezogene Aktualisierung",
+            "title-en": "Event-Driven Updates",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-7.2"
+              },
+              {
+                "name": "priority",
+                "value": "must"
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-7.2_stmt",
+                "name": "statement",
+                "prose": "BCM-Dokumente MÜSSEN bei wesentlichen Änderungen aktualisiert werden."
+              },
+              {
+                "id": "bcm-7.2_guidance",
+                "name": "guidance",
+                "prose": "Anlässe: Organisationsänderungen, neue Prozesse, IT-Änderungen, nach Vorfällen, nach Übungen, Lieferantenwechsel."
+              }
+            ]
+          },
+          {
+            "id": "bcm-7.3",
+            "class": "requirement",
+            "title": "Management-Review",
+            "title-en": "Management Review",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-7.3"
+              },
+              {
+                "name": "priority",
+                "value": "must"
+              },
+              {
+                "name": "iso22301-mapping",
+                "value": "9.3"
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-7.3_stmt",
+                "name": "statement",
+                "prose": "Die Institutionsleitung MUSS das BCMS regelmäßig bewerten (Management-Review)."
+              },
+              {
+                "id": "bcm-7.3_guidance",
+                "name": "guidance",
+                "prose": "Das Management-Review bewertet: BCMS-Leistung, Ressourcenadäquanz, Verbesserungsmöglichkeiten, strategische Ausrichtung."
+              }
+            ]
+          },
+          {
+            "id": "bcm-7.4",
+            "class": "requirement",
+            "title": "Kontinuierliche Verbesserung",
+            "title-en": "Continuous Improvement",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-7.4"
+              },
+              {
+                "name": "priority",
+                "value": "must"
+              },
+              {
+                "name": "iso22301-mapping",
+                "value": "10.2"
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-7.4_stmt",
+                "name": "statement",
+                "prose": "Das BCMS MUSS kontinuierlich verbessert werden basierend auf Übungen, Vorfällen und Audits."
+              }
+            ]
+          },
+          {
+            "id": "bcm-7.5",
+            "class": "requirement",
+            "title": "Interne Audits",
+            "title-en": "Internal Audits",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-7.5"
+              },
+              {
+                "name": "priority",
+                "value": "should"
+              },
+              {
+                "name": "iso22301-mapping",
+                "value": "9.2"
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-7.5_stmt",
+                "name": "statement",
+                "prose": "Interne Audits des BCMS SOLLTEN regelmäßig durchgeführt werden."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "bcm-8",
+        "class": "family",
+        "title": "Krisenmanagement",
+        "title-en": "Crisis Management",
+        "props": [
+          {
+            "name": "label",
+            "value": "BCM-8"
+          }
+        ],
+        "parts": [
+          {
+            "id": "bcm-8_overview",
+            "name": "overview",
+            "prose": "Das Krisenmanagement koordiniert die Reaktion auf Ereignisse, die über normale Störungen hinausgehen."
+          }
+        ],
+        "controls": [
+          {
+            "id": "bcm-8.1",
+            "class": "requirement",
+            "title": "Krisenstab",
+            "title-en": "Crisis Team",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-8.1"
+              },
+              {
+                "name": "priority",
+                "value": "must"
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-8.1_stmt",
+                "name": "statement",
+                "prose": "Ein Krisenstab mit definierten Mitgliedern, Rollen und Befugnissen MUSS eingerichtet werden."
+              }
+            ]
+          },
+          {
+            "id": "bcm-8.2",
+            "class": "requirement",
+            "title": "Krisenraum",
+            "title-en": "Crisis Room",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-8.2"
+              },
+              {
+                "name": "priority",
+                "value": "should"
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-8.2_stmt",
+                "name": "statement",
+                "prose": "Ein Krisenraum (physisch und/oder virtuell) SOLLTE für die Krisenkoordination bereitgestellt werden."
+              }
+            ]
+          },
+          {
+            "id": "bcm-8.3",
+            "class": "requirement",
+            "title": "Krisenkommunikation",
+            "title-en": "Crisis Communication",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-8.3"
+              },
+              {
+                "name": "priority",
+                "value": "must"
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-8.3_stmt",
+                "name": "statement",
+                "prose": "Verfahren für die Krisenkommunikation MÜSSEN definiert werden."
+              },
+              {
+                "id": "bcm-8.3_guidance",
+                "name": "guidance",
+                "prose": "Dies umfasst: interne Kommunikation (Mitarbeiter), externe Kommunikation (Kunden, Medien, Behörden), Sprachregelungen, Kommunikationskanäle."
+              }
+            ]
+          },
+          {
+            "id": "bcm-8.4",
+            "class": "requirement",
+            "title": "Ereignisbewertung",
+            "title-en": "Event Assessment",
+            "props": [
+              {
+                "name": "label",
+                "value": "BCM-8.4"
+              },
+              {
+                "name": "priority",
+                "value": "must"
+              }
+            ],
+            "parts": [
+              {
+                "id": "bcm-8.4_stmt",
+                "name": "statement",
+                "prose": "Kriterien für die Eskalation von Ereignissen zu Krisen MÜSSEN definiert werden."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "back-matter": {
+      "resources": [
+        {
+          "uuid": "d1e2f3a4-5b6c-7d8e-9f0a-1b2c3d4e5f6a",
+          "title": "BSI Standard 200-4",
+          "citation": {
+            "text": "Bundesamt für Sicherheit in der Informationstechnik (2023): BSI-Standard 200-4: Business Continuity Management"
+          },
+          "rlinks": [
+            {
+              "href": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/BSI_Standards/standard_200_4.html"
+            }
+          ]
+        },
+        {
+          "uuid": "e2f3a4b5-6c7d-8e9f-0a1b-2c3d4e5f6a7b",
+          "title": "ISO 22301:2019",
+          "citation": {
+            "text": "ISO 22301:2019 Security and resilience — Business continuity management systems — Requirements"
+          },
+          "rlinks": [
+            {
+              "href": "https://www.iso.org/standard/75106.html"
+            }
+          ]
+        },
+        {
+          "uuid": "f3a4b5c6-7d8e-9f0a-1b2c-3d4e5f6a7b8c",
+          "title": "ISO 22313:2020",
+          "citation": {
+            "text": "ISO 22313:2020 Security and resilience — Business continuity management systems — Guidance on the use of ISO 22301"
+          },
+          "rlinks": [
+            {
+              "href": "https://www.iso.org/standard/75107.html"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
