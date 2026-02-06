@@ -116,6 +116,15 @@ class Settings(BaseSettings):
     RATE_LIMIT_ENTERPRISE_HOUR: int = 100000
     RATE_LIMIT_ENTERPRISE_MINUTE: int = 2000
 
+    # AI Copilot Configuration
+    COPILOT_PROVIDER: str = ""  # ollama, gemini, groq, openai, anthropic
+    COPILOT_MODEL: str = ""  # Provider-specific model name
+    OLLAMA_URL: str = "http://localhost:11434"  # Ollama server URL
+    GOOGLE_API_KEY: str = ""  # For Gemini
+    GROQ_API_KEY: str = ""  # For Groq
+    OPENAI_API_KEY: str = ""  # For OpenAI
+    ANTHROPIC_API_KEY: str = ""  # For Anthropic/Claude
+
     class Config:
         env_file = ".env"
         case_sensitive = True
