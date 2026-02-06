@@ -30,6 +30,8 @@ import {
   ShieldCheck,
   RefreshCw,
   Route,
+  Building,
+  Globe,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useUIStore } from "@/stores/ui-store";
@@ -51,6 +53,8 @@ const navItems = [
     labelKey: "nav.compliance",
     children: [
       { href: "/compliance/iso27001", icon: ShieldCheck, labelKey: "nav.iso27001" },
+      { href: "/compliance/bsi", icon: Building, labelKey: "nav.bsi" },
+      { href: "/compliance/nis2", icon: Globe, labelKey: "nav.nis2" },
       { href: "/bcm", icon: RefreshCw, labelKey: "nav.bcm" },
     ],
   },

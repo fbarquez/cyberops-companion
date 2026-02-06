@@ -39,12 +39,32 @@ services:
     networks:
       - cyberops-network
 
+  # Ollama - Local AI
+  ollama:
+    image: ollama/ollama:latest
+    container_name: cyberops-companion-ollama
+    volumes:
+      - ollama_data:/root/.ollama
+    ports:
+      - "11435:11434"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    restart: unless-stopped
+    networks:
+      - cyberops-network
+
   # FastAPI Backend
   api:
     build:
       context: ./apps/api
       dockerfile: Dockerfile
     container_name: cyberops-companion-api
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     environment:
       - DATABASE_URL=postgresql+asyncpg://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-cyberops_companion}
       - REDIS_URL=redis://redis:6379
@@ -55,6 +75,10 @@ services:
       - CORS_ORIGINS=${CORS_ORIGINS:-["http://localhost:3000"]}
       - DEBUG=${DEBUG:-true}
       - LOG_LEVEL=${LOG_LEVEL:-DEBUG}
+      # AI Copilot Configuration
+      - COPILOT_PROVIDER=${COPILOT_PROVIDER:-ollama}
+      - COPILOT_MODEL=${COPILOT_MODEL:-qwen2.5:7b}
+      - OLLAMA_URL=${OLLAMA_URL:-http://host.docker.internal:11434}
     depends_on:
       db:
         condition: service_healthy
@@ -143,6 +167,8 @@ volumes:
   redis_data:
     driver: local
   api_logs:
+    driver: local
+  ollama_data:
     driver: local
 
 networks:

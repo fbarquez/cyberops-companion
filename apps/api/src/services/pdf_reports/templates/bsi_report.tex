@@ -1,0 +1,363 @@
+% BSI IT-Grundschutz Compliance Report Template
+% Following DIN 5008 and BSI Standard 200-2 guidelines
+% Author: CyberOps Companion Enterprise
+\documentclass[a4paper,11pt,ngerman]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{lastpage}
+\usepackage{tocloft}
+\usepackage{titlesec}
+\usepackage{helvet}
+
+% DIN 5008 Page Setup
+\geometry{
+    a4paper,
+    left=25mm,
+    right=20mm,
+    top=20mm,
+    bottom=20mm,
+    headheight=15mm,
+    headsep=10mm,
+    footskip=15mm
+}
+
+% Font settings (Helvetica/Arial as per German business standards)
+\renewcommand{\familydefault}{\sfdefault}
+
+% Colors following BSI corporate design
+\definecolor{bsiblue}{RGB}{0,51,102}
+\definecolor{bsigray}{RGB}{102,102,102}
+\definecolor{bsigreen}{RGB}{0,128,0}
+\definecolor{bsiyellow}{RGB}{255,193,7}
+\definecolor{bsired}{RGB}{220,53,69}
+\definecolor{bsilightgray}{RGB}{245,245,245}
+\definecolor{tableheader}{RGB}{0,51,102}
+\definecolor{tablerow1}{RGB}{255,255,255}
+\definecolor{tablerow2}{RGB}{240,244,248}
+
+% Header and Footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{bsigray}{BSI IT-Grundschutz Compliance Report}}
+\fancyhead[R]{\small\textcolor{bsigray}{<<CLASSIFICATION>>}}
+\fancyfoot[L]{\small\textcolor{bsigray}{<<ORGANIZATION>> | Version <<VERSION>>}}
+\fancyfoot[C]{\small\textcolor{bsigray}{Seite \thepage\ von \pageref{LastPage}}}
+\fancyfoot[R]{\small\textcolor{bsigray}{<<DATE>>}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Section formatting
+\titleformat{\section}
+    {\Large\bfseries\color{bsiblue}}
+    {\thesection}{1em}{}
+\titleformat{\subsection}
+    {\large\bfseries\color{bsiblue}}
+    {\thesubsection}{1em}{}
+\titleformat{\subsubsection}
+    {\normalsize\bfseries\color{bsiblue}}
+    {\thesubsubsection}{1em}{}
+
+% Custom commands
+\newcommand{\compliant}{\textcolor{bsigreen}{\textbf{Konform}}}
+\newcommand{\partial}{\textcolor{bsiyellow}{\textbf{Teilweise}}}
+\newcommand{\gap}{\textcolor{bsired}{\textbf{Luecke}}}
+\newcommand{\notapplicable}{\textcolor{bsigray}{\textbf{N/A}}}
+
+% Compliance score bar
+\newcommand{\scorebar}[1]{%
+    \begin{tikzpicture}
+        \fill[bsilightgray] (0,0) rectangle (10,0.4);
+        \fill[bsiblue] (0,0) rectangle (#1/10,0.4);
+        \node[anchor=east] at (10.5,0.2) {\textbf{#1\%}};
+    \end{tikzpicture}%
+}
+
+\begin{document}
+
+% Title Page
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+
+    % Logo placeholder
+    \begin{tikzpicture}
+        \fill[bsiblue] (0,0) rectangle (3,1);
+        \node[white,font=\bfseries\Large] at (1.5,0.5) {BSI};
+    \end{tikzpicture}
+
+    \vspace{1cm}
+
+    {\Huge\bfseries\color{bsiblue} BSI IT-Grundschutz\\[0.3cm]
+    Compliance Report}
+
+    \vspace{1cm}
+
+    {\Large nach BSI-Standard 200-2}
+
+    \vspace{2cm}
+
+    \begin{tabular}{ll}
+        \textbf{Organisation:} & <<ORGANIZATION>> \\[0.3cm]
+        \textbf{Berichtszeitraum:} & <<PERIOD>> \\[0.3cm]
+        \textbf{Schutzbedarf:} & <<SCHUTZBEDARF>> \\[0.3cm]
+        \textbf{Erstellungsdatum:} & <<DATE>> \\[0.3cm]
+        \textbf{Version:} & <<VERSION>> \\[0.3cm]
+        \textbf{Klassifizierung:} & <<CLASSIFICATION>> \\
+    \end{tabular}
+
+    \vfill
+
+    \begin{tikzpicture}
+        \fill[bsiblue] (0,0) rectangle (16,0.1);
+    \end{tikzpicture}
+
+    \vspace{0.5cm}
+
+    {\small Erstellt mit CyberOps Companion Enterprise\\
+    Dieses Dokument ist vertraulich zu behandeln.}
+
+\end{titlepage}
+
+% Table of Contents
+\tableofcontents
+\newpage
+
+% Document History
+\section*{Dokumentenhistorie}
+\addcontentsline{toc}{section}{Dokumentenhistorie}
+
+\begin{tabularx}{\textwidth}{|c|c|c|X|}
+\hline
+\rowcolor{tableheader}
+\textcolor{white}{\textbf{Version}} & \textcolor{white}{\textbf{Datum}} & \textcolor{white}{\textbf{Autor}} & \textcolor{white}{\textbf{Aenderungen}} \\
+\hline
+<<VERSION>> & <<DATE>> & System & Automatisch generiert \\
+\hline
+\end{tabularx}
+
+\vspace{1cm}
+
+% Distribution List
+\section*{Verteiler}
+\addcontentsline{toc}{section}{Verteiler}
+
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline
+\rowcolor{tableheader}
+\textcolor{white}{\textbf{Name}} & \textcolor{white}{\textbf{Rolle}} & \textcolor{white}{\textbf{Zugriffsrecht}} \\
+\hline
+<<DISTRIBUTION_LIST>>
+\hline
+\end{tabularx}
+
+\newpage
+
+% Executive Summary
+\section{Management Summary}
+
+\subsection{Ueberblick}
+
+Dieser Bericht dokumentiert den Compliance-Status der Organisation \textbf{<<ORGANIZATION>>}
+gegenueber dem BSI IT-Grundschutz Kompendium Edition 2023. Die Bewertung erfolgte
+auf Basis des Schutzbedarfs \textbf{<<SCHUTZBEDARF>>}.
+
+\subsection{Gesamtergebnis}
+
+\begin{center}
+\begin{tikzpicture}
+    % Score circle
+    \fill[bsilightgray] (0,0) circle (2.5);
+    \fill[bsiblue] (0,0) -- (0,2.5) arc (90:90-<<SCORE>>*3.6:2.5) -- cycle;
+    \fill[white] (0,0) circle (1.8);
+    \node[font=\Huge\bfseries,color=bsiblue] at (0,0) {<<SCORE>>\%};
+    \node[font=\small,color=bsigray] at (0,-0.7) {Compliance Score};
+\end{tikzpicture}
+\end{center}
+
+\vspace{0.5cm}
+
+\begin{center}
+\begin{tabularx}{0.8\textwidth}{|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textcolor{white}{\textbf{Status}} & \textcolor{white}{\textbf{Anzahl}} & \textcolor{white}{\textbf{Prozent}} \\
+\hline
+\rowcolor{tablerow1}
+\textcolor{bsigreen}{Konform} & <<COMPLIANT_COUNT>> & <<COMPLIANT_PERCENT>>\% \\
+\hline
+\rowcolor{tablerow2}
+\textcolor{bsiyellow}{Teilweise konform} & <<PARTIAL_COUNT>> & <<PARTIAL_PERCENT>>\% \\
+\hline
+\rowcolor{tablerow1}
+\textcolor{bsired}{Luecken} & <<GAP_COUNT>> & <<GAP_PERCENT>>\% \\
+\hline
+\rowcolor{tablerow2}
+\textcolor{bsigray}{Nicht bewertet} & <<NOT_EVALUATED_COUNT>> & <<NOT_EVALUATED_PERCENT>>\% \\
+\hline
+\rowcolor{tablerow1}
+\textcolor{bsigray}{Nicht anwendbar} & <<NOT_APPLICABLE_COUNT>> & <<NOT_APPLICABLE_PERCENT>>\% \\
+\hline
+\end{tabularx}
+\end{center}
+
+\subsection{Bewertung}
+
+<<EXECUTIVE_SUMMARY>>
+
+\newpage
+
+% Scope
+\section{Geltungsbereich}
+
+\subsection{Organisation}
+
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\rowcolor{tableheader}
+\multicolumn{2}{|l|}{\textcolor{white}{\textbf{Organisationsdaten}}} \\
+\hline
+\textbf{Name} & <<ORGANIZATION>> \\
+\hline
+\textbf{Berichtszeitraum} & <<PERIOD>> \\
+\hline
+\textbf{Schutzbedarf} & <<SCHUTZBEDARF>> \\
+\hline
+\textbf{Bewertete Bausteine} & <<TOTAL_BAUSTEINE>> \\
+\hline
+\textbf{Bewertete Anforderungen} & <<TOTAL_ANFORDERUNGEN>> \\
+\hline
+\end{tabularx}
+
+\subsection{Angewandte Standards}
+
+\begin{itemize}[leftmargin=*]
+    \item BSI IT-Grundschutz Kompendium Edition 2023
+    \item BSI-Standard 200-1: Managementsysteme fuer Informationssicherheit
+    \item BSI-Standard 200-2: IT-Grundschutz-Methodik
+    \item BSI-Standard 200-3: Risikoanalyse auf der Basis von IT-Grundschutz
+\end{itemize}
+
+\subsection{Schutzbedarf-Definition}
+
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\rowcolor{tableheader}
+\textcolor{white}{\textbf{Niveau}} & \textcolor{white}{\textbf{Beschreibung}} \\
+\hline
+\textbf{Basis} & Grundlegende Sicherheitsanforderungen (MUSS-Anforderungen) \\
+\hline
+\textbf{Standard} & Erweiterte Anforderungen (MUSS + SOLLTE) \\
+\hline
+\textbf{Hoch} & Maximale Sicherheit (MUSS + SOLLTE + KANN) \\
+\hline
+\end{tabularx}
+
+\newpage
+
+% Category Results
+\section{Ergebnisse nach Kategorie}
+
+<<CATEGORY_RESULTS>>
+
+\newpage
+
+% Detailed Findings
+\section{Detaillierte Ergebnisse}
+
+<<DETAILED_FINDINGS>>
+
+\newpage
+
+% Gap Analysis
+\section{Lueckenanalyse}
+
+\subsection{Identifizierte Luecken}
+
+<<GAP_ANALYSIS>>
+
+\subsection{Empfehlungen}
+
+<<RECOMMENDATIONS>>
+
+\newpage
+
+% Action Plan
+\section{Massnahmenplan}
+
+\begin{longtable}{|p{2cm}|p{5cm}|p{2cm}|p{3cm}|p{2cm}|}
+\hline
+\rowcolor{tableheader}
+\textcolor{white}{\textbf{Prioritaet}} & \textcolor{white}{\textbf{Massnahme}} & \textcolor{white}{\textbf{Status}} & \textcolor{white}{\textbf{Verantwortlich}} & \textcolor{white}{\textbf{Zieldatum}} \\
+\hline
+\endhead
+<<ACTION_ITEMS>>
+\hline
+\end{longtable}
+
+\newpage
+
+% Appendix
+\section{Anhang}
+
+\subsection{Abkuerzungsverzeichnis}
+
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\rowcolor{tableheader}
+\textcolor{white}{\textbf{Abkuerzung}} & \textcolor{white}{\textbf{Bedeutung}} \\
+\hline
+BSI & Bundesamt fuer Sicherheit in der Informationstechnik \\
+\hline
+ISMS & Information Security Management System \\
+\hline
+IT-GS & IT-Grundschutz \\
+\hline
+MUSS & Zwingende Anforderung (Basis-Absicherung) \\
+\hline
+SOLLTE & Empfohlene Anforderung (Standard-Absicherung) \\
+\hline
+KANN & Optionale Anforderung (Erhoehter Schutzbedarf) \\
+\hline
+\end{tabularx}
+
+\subsection{Referenzen}
+
+\begin{itemize}[leftmargin=*]
+    \item BSI IT-Grundschutz Kompendium: \url{https://www.bsi.bund.de/IT-Grundschutz}
+    \item BSI Standards 200-x: \url{https://www.bsi.bund.de/grundschutz-standards}
+\end{itemize}
+
+\vfill
+
+\begin{center}
+\begin{tikzpicture}
+    \fill[bsiblue] (0,0) rectangle (16,0.1);
+\end{tikzpicture}
+
+\vspace{0.3cm}
+
+{\small\textcolor{bsigray}{
+Dieses Dokument wurde automatisch generiert von CyberOps Companion Enterprise.\\
+Bei Fragen wenden Sie sich an Ihren Sicherheitsbeauftragten.\\
+\textbf{Klassifizierung: <<CLASSIFICATION>>}
+}}
+\end{center}
+
+\end{document}

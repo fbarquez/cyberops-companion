@@ -4248,4 +4248,84 @@ export const trainingAPI = {
   },
 };
 
+// BSI IT-Grundschutz API
+export interface BSIAnforderung {
+  id: string;
+  anforderung_id: string;
+  baustein_id: string;
+  titel: string;
+  typ: "MUSS" | "SOLLTE" | "KANN";
+  beschreibung?: string;
+  umsetzungshinweise?: string;
+  cross_references?: Record<string, string[]>;
+  compliance_status?: string;
+  notes?: string;
+}
+
+export interface BSIBaustein {
+  id: string;
+  baustein_id: string;
+  kategorie: string;
+  titel: string;
+  title_en?: string;
+  beschreibung?: string;
+  version?: string;
+  ir_phases?: string[];
+}
+
+export const bsiGrundschutzAPI = {
+  getBaustein: (token: string, bausteinId: string, schutzbedarf?: string) => {
+    const query = schutzbedarf ? `?schutzbedarf=${schutzbedarf}` : "";
+    return request<{
+      baustein: BSIBaustein;
+      anforderungen: BSIAnforderung[];
+      anforderungen_count: { total: number; muss: number; sollte: number; kann: number };
+    }>(`/api/v1/bsi/grundschutz/bausteine/${encodeURIComponent(bausteinId)}${query}`, { token });
+  },
+
+  getBausteinScore: (token: string, bausteinId: string, params?: { schutzbedarf?: string }) => {
+    const query = params?.schutzbedarf ? `?schutzbedarf=${params.schutzbedarf}` : "";
+    return request<{
+      score_percent: number;
+      compliant: number;
+      partial: number;
+      gap: number;
+      not_evaluated: number;
+      not_applicable: number;
+    }>(`/api/v1/bsi/grundschutz/compliance/score/${encodeURIComponent(bausteinId)}${query}`, { token });
+  },
+
+  updateComplianceStatus: (token: string, data: { anforderung_id: string; status: string; notes?: string }) =>
+    request("/api/v1/bsi/grundschutz/compliance/status", {
+      method: "POST",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  getKategorien: (token: string) =>
+    request<{ kategorien: Array<{ kategorie: string; name_de: string; name_en: string; baustein_count: number }> }>(
+      "/api/v1/bsi/grundschutz/kategorien",
+      { token }
+    ),
+
+  getBausteine: (token: string, params?: { kategorie?: string; search?: string; size?: number }) => {
+    const query = new URLSearchParams();
+    if (params?.kategorie) query.set("kategorie", params.kategorie);
+    if (params?.search) query.set("search", params.search);
+    if (params?.size) query.set("size", params.size.toString());
+    return request<{ bausteine: BSIBaustein[] }>(`/api/v1/bsi/grundschutz/bausteine?${query}`, { token });
+  },
+
+  getComplianceOverview: (token: string, schutzbedarf?: string) => {
+    const query = schutzbedarf ? `?schutzbedarf=${schutzbedarf}` : "";
+    return request<{
+      overall_score_percent: number;
+      compliant: number;
+      partial: number;
+      gap: number;
+      not_evaluated: number;
+    }>(`/api/v1/bsi/grundschutz/compliance/overview${query}`, { token });
+  },
+};
+
 export { APIError };

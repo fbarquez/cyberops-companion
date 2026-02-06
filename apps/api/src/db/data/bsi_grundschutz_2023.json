@@ -1,0 +1,955 @@
+{
+  "version": "2023",
+  "edition": "Edition 2023",
+  "source": "BSI IT-Grundschutz Kompendium",
+  "bausteine": [
+    {
+      "baustein_id": "ISMS.1",
+      "kategorie": "ISMS",
+      "titel": "Sicherheitsmanagement",
+      "title_en": "Security Management",
+      "beschreibung": "Dieser Baustein beschreibt, wie ein funktionierendes Sicherheitsmanagement in einer Institution aufgebaut und betrieben werden kann.",
+      "zielsetzung": "Ziel des Bausteins ist es, die grundlegenden Anforderungen an ein Sicherheitsmanagement zu definieren.",
+      "ir_phases": ["preparation", "lessons_learned"],
+      "cross_references": {"iso27001": ["4", "5", "6", "7"]},
+      "anforderungen": [
+        {"anforderung_id": "ISMS.1.A1", "titel": "Übernahme der Gesamtverantwortung für Informationssicherheit", "typ": "MUSS", "beschreibung": "Die Leitungsebene MUSS die Gesamtverantwortung für Informationssicherheit übernehmen."},
+        {"anforderung_id": "ISMS.1.A2", "titel": "Festlegung der Sicherheitsziele und -strategie", "typ": "MUSS", "beschreibung": "Die Leitungsebene MUSS Sicherheitsziele und eine Sicherheitsstrategie festlegen."},
+        {"anforderung_id": "ISMS.1.A3", "titel": "Erstellung einer Leitlinie zur Informationssicherheit", "typ": "MUSS", "beschreibung": "Die Leitungsebene MUSS eine Leitlinie zur Informationssicherheit erstellen."},
+        {"anforderung_id": "ISMS.1.A4", "titel": "Benennung eines Informationssicherheitsbeauftragten", "typ": "MUSS", "beschreibung": "Die Leitungsebene MUSS einen Informationssicherheitsbeauftragten benennen."},
+        {"anforderung_id": "ISMS.1.A5", "titel": "Vertragsgestaltung bei Bestellung eines externen Informationssicherheitsbeauftragten", "typ": "SOLLTE", "beschreibung": "Bei externer Bestellung SOLLTE der Vertrag klare Regelungen enthalten."},
+        {"anforderung_id": "ISMS.1.A6", "titel": "Aufbau einer geeigneten Organisationsstruktur für Informationssicherheit", "typ": "SOLLTE", "beschreibung": "Es SOLLTE eine geeignete Organisationsstruktur aufgebaut werden."},
+        {"anforderung_id": "ISMS.1.A7", "titel": "Festlegung von Sicherheitsmaßnahmen", "typ": "MUSS", "beschreibung": "Sicherheitsmaßnahmen MÜSSEN dokumentiert und umgesetzt werden."},
+        {"anforderung_id": "ISMS.1.A8", "titel": "Integration der Mitarbeiter in den Sicherheitsprozess", "typ": "MUSS", "beschreibung": "Alle Mitarbeiter MÜSSEN in den Sicherheitsprozess integriert werden."},
+        {"anforderung_id": "ISMS.1.A9", "titel": "Integration der Informationssicherheit in organisationsweite Abläufe", "typ": "MUSS", "beschreibung": "Informationssicherheit MUSS in organisationsweite Abläufe integriert werden."},
+        {"anforderung_id": "ISMS.1.A10", "titel": "Erstellung eines Sicherheitskonzepts", "typ": "SOLLTE", "beschreibung": "Ein Sicherheitskonzept SOLLTE erstellt werden."},
+        {"anforderung_id": "ISMS.1.A11", "titel": "Aufrechterhaltung der Informationssicherheit", "typ": "SOLLTE", "beschreibung": "Die Informationssicherheit SOLLTE kontinuierlich aufrechterhalten werden."},
+        {"anforderung_id": "ISMS.1.A12", "titel": "Management-Berichte zur Informationssicherheit", "typ": "SOLLTE", "beschreibung": "Management-Berichte SOLLTEN regelmäßig erstellt werden."},
+        {"anforderung_id": "ISMS.1.A13", "titel": "Dokumentation des Sicherheitsprozesses", "typ": "SOLLTE", "beschreibung": "Der Sicherheitsprozess SOLLTE dokumentiert werden."},
+        {"anforderung_id": "ISMS.1.A14", "titel": "Wirtschaftlicher Einsatz von Ressourcen für Informationssicherheit", "typ": "KANN", "beschreibung": "Ressourcen KÖNNEN wirtschaftlich eingesetzt werden."}
+      ]
+    },
+    {
+      "baustein_id": "ORP.1",
+      "kategorie": "ORP",
+      "titel": "Organisation",
+      "title_en": "Organization",
+      "beschreibung": "Dieser Baustein behandelt die organisatorischen Aspekte der Informationssicherheit.",
+      "ir_phases": ["preparation"],
+      "cross_references": {"iso27001": ["A.5", "A.6"]},
+      "anforderungen": [
+        {"anforderung_id": "ORP.1.A1", "titel": "Festlegung von Verantwortlichkeiten und Regelungen", "typ": "MUSS", "beschreibung": "Verantwortlichkeiten MÜSSEN klar festgelegt werden."},
+        {"anforderung_id": "ORP.1.A2", "titel": "Zuweisung der Zuständigkeiten", "typ": "MUSS", "beschreibung": "Zuständigkeiten MÜSSEN eindeutig zugewiesen werden."},
+        {"anforderung_id": "ORP.1.A3", "titel": "Beaufsichtigung oder Begleitung von Fremdpersonen", "typ": "MUSS", "beschreibung": "Fremdpersonen MÜSSEN beaufsichtigt werden."},
+        {"anforderung_id": "ORP.1.A4", "titel": "Funktionstrennung zwischen operativen und kontrollierenden Aufgaben", "typ": "SOLLTE", "beschreibung": "Operative und kontrollierende Aufgaben SOLLTEN getrennt werden."},
+        {"anforderung_id": "ORP.1.A5", "titel": "Vergabe von Berechtigungen", "typ": "MUSS", "beschreibung": "Berechtigungen MÜSSEN nach dem Minimalprinzip vergeben werden."}
+      ]
+    },
+    {
+      "baustein_id": "ORP.2",
+      "kategorie": "ORP",
+      "titel": "Personal",
+      "title_en": "Personnel",
+      "beschreibung": "Dieser Baustein beschreibt die personellen Sicherheitsmaßnahmen.",
+      "ir_phases": ["preparation"],
+      "cross_references": {"iso27001": ["A.7"]},
+      "anforderungen": [
+        {"anforderung_id": "ORP.2.A1", "titel": "Geregelte Einarbeitung neuer Mitarbeiter", "typ": "MUSS", "beschreibung": "Neue Mitarbeiter MÜSSEN geregelt eingearbeitet werden."},
+        {"anforderung_id": "ORP.2.A2", "titel": "Geregelte Verfahrensweise beim Weggang von Mitarbeitern", "typ": "MUSS", "beschreibung": "Beim Weggang MÜSSEN geregelte Verfahren angewendet werden."},
+        {"anforderung_id": "ORP.2.A3", "titel": "Vertretungsregelungen", "typ": "MUSS", "beschreibung": "Vertretungsregelungen MÜSSEN dokumentiert sein."},
+        {"anforderung_id": "ORP.2.A4", "titel": "Regelungen für den Einsatz von Fremdpersonal", "typ": "SOLLTE", "beschreibung": "Für Fremdpersonal SOLLTEN Regelungen existieren."},
+        {"anforderung_id": "ORP.2.A5", "titel": "Vertraulichkeitsvereinbarungen", "typ": "SOLLTE", "beschreibung": "Vertraulichkeitsvereinbarungen SOLLTEN abgeschlossen werden."}
+      ]
+    },
+    {
+      "baustein_id": "ORP.3",
+      "kategorie": "ORP",
+      "titel": "Sensibilisierung und Schulung",
+      "title_en": "Awareness and Training",
+      "beschreibung": "Dieser Baustein beschreibt Maßnahmen zur Sensibilisierung und Schulung.",
+      "ir_phases": ["preparation", "lessons_learned"],
+      "cross_references": {"iso27001": ["A.7.2.2"]},
+      "anforderungen": [
+        {"anforderung_id": "ORP.3.A1", "titel": "Sensibilisierung der Mitarbeiter", "typ": "MUSS", "beschreibung": "Alle Mitarbeiter MÜSSEN für Informationssicherheit sensibilisiert werden."},
+        {"anforderung_id": "ORP.3.A2", "titel": "Ansprechpartner für Sicherheitsfragen", "typ": "MUSS", "beschreibung": "Es MUSS Ansprechpartner für Sicherheitsfragen geben."},
+        {"anforderung_id": "ORP.3.A3", "titel": "Einweisung des Personals in den sicheren Umgang mit IT", "typ": "MUSS", "beschreibung": "Personal MUSS in sicheren IT-Umgang eingewiesen werden."},
+        {"anforderung_id": "ORP.3.A4", "titel": "Konzeption eines Sensibilisierungs- und Schulungsprogramms", "typ": "SOLLTE", "beschreibung": "Ein Schulungsprogramm SOLLTE konzipiert werden."},
+        {"anforderung_id": "ORP.3.A5", "titel": "Analyse der Zielgruppen für Sensibilisierung und Schulung", "typ": "SOLLTE", "beschreibung": "Zielgruppen SOLLTEN analysiert werden."}
+      ]
+    },
+    {
+      "baustein_id": "ORP.4",
+      "kategorie": "ORP",
+      "titel": "Identitäts- und Berechtigungsmanagement",
+      "title_en": "Identity and Access Management",
+      "beschreibung": "Dieser Baustein beschreibt das Identitäts- und Berechtigungsmanagement.",
+      "ir_phases": ["containment", "eradication"],
+      "cross_references": {"iso27001": ["A.9"]},
+      "anforderungen": [
+        {"anforderung_id": "ORP.4.A1", "titel": "Regelung für die Einrichtung von Benutzern und Benutzergruppen", "typ": "MUSS", "beschreibung": "Die Einrichtung von Benutzern MUSS geregelt sein."},
+        {"anforderung_id": "ORP.4.A2", "titel": "Regelung für Einrichtung, Änderung und Entzug von Berechtigungen", "typ": "MUSS", "beschreibung": "Berechtigungsänderungen MÜSSEN geregelt sein."},
+        {"anforderung_id": "ORP.4.A3", "titel": "Dokumentation der zugelassenen Benutzer und Rechteprofile", "typ": "MUSS", "beschreibung": "Benutzer und Rechteprofile MÜSSEN dokumentiert sein."},
+        {"anforderung_id": "ORP.4.A4", "titel": "Aufgabenverteilung und Funktionstrennung", "typ": "SOLLTE", "beschreibung": "Aufgaben SOLLTEN klar verteilt und getrennt sein."},
+        {"anforderung_id": "ORP.4.A5", "titel": "Vergabe von Zugriffsrechten", "typ": "MUSS", "beschreibung": "Zugriffsrechte MÜSSEN nach dem Need-to-know-Prinzip vergeben werden."}
+      ]
+    },
+    {
+      "baustein_id": "ORP.5",
+      "kategorie": "ORP",
+      "titel": "Compliance Management",
+      "title_en": "Compliance Management",
+      "beschreibung": "Dieser Baustein beschreibt das Compliance Management.",
+      "ir_phases": ["lessons_learned"],
+      "cross_references": {"iso27001": ["A.18"]},
+      "anforderungen": [
+        {"anforderung_id": "ORP.5.A1", "titel": "Identifikation der rechtlichen Rahmenbedingungen", "typ": "MUSS", "beschreibung": "Rechtliche Rahmenbedingungen MÜSSEN identifiziert werden."},
+        {"anforderung_id": "ORP.5.A2", "titel": "Beachtung der rechtlichen Rahmenbedingungen", "typ": "MUSS", "beschreibung": "Rechtliche Rahmenbedingungen MÜSSEN beachtet werden."},
+        {"anforderung_id": "ORP.5.A3", "titel": "Verpflichtung der Mitarbeiter auf Einhaltung der Regelungen", "typ": "SOLLTE", "beschreibung": "Mitarbeiter SOLLTEN auf Einhaltung verpflichtet werden."}
+      ]
+    },
+    {
+      "baustein_id": "CON.1",
+      "kategorie": "CON",
+      "titel": "Kryptokonzept",
+      "title_en": "Cryptographic Concept",
+      "beschreibung": "Dieser Baustein beschreibt die Konzeption kryptographischer Maßnahmen.",
+      "ir_phases": ["analysis", "containment"],
+      "cross_references": {"iso27001": ["A.10"]},
+      "anforderungen": [
+        {"anforderung_id": "CON.1.A1", "titel": "Auswahl geeigneter kryptographischer Verfahren", "typ": "MUSS", "beschreibung": "Geeignete kryptographische Verfahren MÜSSEN ausgewählt werden."},
+        {"anforderung_id": "CON.1.A2", "titel": "Datensicherung bei Einsatz kryptographischer Verfahren", "typ": "MUSS", "beschreibung": "Datensicherung MUSS gewährleistet sein."},
+        {"anforderung_id": "CON.1.A3", "titel": "Verschlüsselung der Kommunikation", "typ": "SOLLTE", "beschreibung": "Kommunikation SOLLTE verschlüsselt werden."},
+        {"anforderung_id": "CON.1.A4", "titel": "Geeignetes Schlüsselmanagement", "typ": "SOLLTE", "beschreibung": "Ein geeignetes Schlüsselmanagement SOLLTE implementiert werden."}
+      ]
+    },
+    {
+      "baustein_id": "CON.2",
+      "kategorie": "CON",
+      "titel": "Datenschutz",
+      "title_en": "Data Protection",
+      "beschreibung": "Dieser Baustein beschreibt Datenschutzanforderungen.",
+      "ir_phases": ["detection", "analysis", "containment"],
+      "cross_references": {"iso27001": ["A.18.1.4"]},
+      "anforderungen": [
+        {"anforderung_id": "CON.2.A1", "titel": "Umsetzung von Datenschutzanforderungen", "typ": "MUSS", "beschreibung": "Datenschutzanforderungen MÜSSEN umgesetzt werden."},
+        {"anforderung_id": "CON.2.A2", "titel": "Einbindung des Datenschutzbeauftragten", "typ": "SOLLTE", "beschreibung": "Der Datenschutzbeauftragte SOLLTE eingebunden werden."}
+      ]
+    },
+    {
+      "baustein_id": "CON.3",
+      "kategorie": "CON",
+      "titel": "Datensicherungskonzept",
+      "title_en": "Backup Concept",
+      "beschreibung": "Dieser Baustein beschreibt das Datensicherungskonzept.",
+      "ir_phases": ["recovery", "preparation"],
+      "cross_references": {"iso27001": ["A.12.3"]},
+      "anforderungen": [
+        {"anforderung_id": "CON.3.A1", "titel": "Erhebung der Einflussfaktoren für Datensicherungen", "typ": "MUSS", "beschreibung": "Einflussfaktoren MÜSSEN erhoben werden."},
+        {"anforderung_id": "CON.3.A2", "titel": "Festlegung der Verfahrensweise für die Datensicherung", "typ": "MUSS", "beschreibung": "Verfahrensweisen MÜSSEN festgelegt werden."},
+        {"anforderung_id": "CON.3.A3", "titel": "Ermittlung von rechtlichen Einflussfaktoren", "typ": "SOLLTE", "beschreibung": "Rechtliche Einflussfaktoren SOLLTEN ermittelt werden."},
+        {"anforderung_id": "CON.3.A4", "titel": "Erstellung eines Datensicherungskonzepts", "typ": "SOLLTE", "beschreibung": "Ein Konzept SOLLTE erstellt werden."},
+        {"anforderung_id": "CON.3.A5", "titel": "Regelmäßige Datensicherung", "typ": "MUSS", "beschreibung": "Datensicherungen MÜSSEN regelmäßig erfolgen."}
+      ]
+    },
+    {
+      "baustein_id": "CON.6",
+      "kategorie": "CON",
+      "titel": "Löschen und Vernichten",
+      "title_en": "Deletion and Destruction",
+      "beschreibung": "Dieser Baustein beschreibt das sichere Löschen und Vernichten von Daten.",
+      "ir_phases": ["eradication", "recovery"],
+      "cross_references": {"iso27001": ["A.8.3.2", "A.11.2.7"]},
+      "anforderungen": [
+        {"anforderung_id": "CON.6.A1", "titel": "Regelung für die Löschung und Vernichtung von Informationen", "typ": "MUSS", "beschreibung": "Regelungen MÜSSEN existieren."},
+        {"anforderung_id": "CON.6.A2", "titel": "Ordnungsgemäße Entsorgung von schützenswerten Betriebsmitteln", "typ": "MUSS", "beschreibung": "Betriebsmittel MÜSSEN ordnungsgemäß entsorgt werden."},
+        {"anforderung_id": "CON.6.A3", "titel": "Löschen von Datenträgern vor und nach Austausch", "typ": "MUSS", "beschreibung": "Datenträger MÜSSEN vor Austausch gelöscht werden."}
+      ]
+    },
+    {
+      "baustein_id": "CON.7",
+      "kategorie": "CON",
+      "titel": "Informationssicherheit auf Auslandsreisen",
+      "title_en": "Information Security for Foreign Travel",
+      "beschreibung": "Dieser Baustein beschreibt Sicherheitsmaßnahmen für Auslandsreisen.",
+      "ir_phases": [],
+      "cross_references": {"iso27001": ["A.6.2"]},
+      "anforderungen": [
+        {"anforderung_id": "CON.7.A1", "titel": "Sicherheitsrichtlinie für Auslandsreisen", "typ": "MUSS", "beschreibung": "Eine Sicherheitsrichtlinie MUSS existieren."},
+        {"anforderung_id": "CON.7.A2", "titel": "Sensibilisierung der Mitarbeiter zur Informationssicherheit auf Auslandsreisen", "typ": "MUSS", "beschreibung": "Mitarbeiter MÜSSEN sensibilisiert werden."}
+      ]
+    },
+    {
+      "baustein_id": "OPS.1.1.1",
+      "kategorie": "OPS",
+      "titel": "Allgemeiner IT-Betrieb",
+      "title_en": "General IT Operations",
+      "beschreibung": "Dieser Baustein beschreibt den allgemeinen IT-Betrieb.",
+      "ir_phases": ["detection", "analysis", "containment", "eradication", "recovery"],
+      "cross_references": {"iso27001": ["A.12"]},
+      "anforderungen": [
+        {"anforderung_id": "OPS.1.1.1.A1", "titel": "Festlegung der Sicherheitsanforderungen für den IT-Betrieb", "typ": "MUSS", "beschreibung": "Sicherheitsanforderungen MÜSSEN festgelegt werden."},
+        {"anforderung_id": "OPS.1.1.1.A2", "titel": "Beschaffung, Entwicklung und Installation", "typ": "MUSS", "beschreibung": "IT-Komponenten MÜSSEN sicher beschafft und installiert werden."},
+        {"anforderung_id": "OPS.1.1.1.A3", "titel": "Schutz vor Schadprogrammen", "typ": "MUSS", "beschreibung": "Schutz vor Schadprogrammen MUSS gewährleistet sein."},
+        {"anforderung_id": "OPS.1.1.1.A4", "titel": "Datensicherung", "typ": "MUSS", "beschreibung": "Datensicherungen MÜSSEN regelmäßig durchgeführt werden."},
+        {"anforderung_id": "OPS.1.1.1.A5", "titel": "Protokollierung", "typ": "MUSS", "beschreibung": "Sicherheitsrelevante Ereignisse MÜSSEN protokolliert werden."},
+        {"anforderung_id": "OPS.1.1.1.A6", "titel": "Regelmäßige Überprüfungen", "typ": "SOLLTE", "beschreibung": "Regelmäßige Überprüfungen SOLLTEN durchgeführt werden."}
+      ]
+    },
+    {
+      "baustein_id": "OPS.1.1.2",
+      "kategorie": "OPS",
+      "titel": "Ordnungsgemäße IT-Administration",
+      "title_en": "Proper IT Administration",
+      "beschreibung": "Dieser Baustein beschreibt die ordnungsgemäße IT-Administration.",
+      "ir_phases": ["containment", "eradication"],
+      "cross_references": {"iso27001": ["A.9.2", "A.12.1"]},
+      "anforderungen": [
+        {"anforderung_id": "OPS.1.1.2.A1", "titel": "Personalauswahl für administrative Tätigkeiten", "typ": "MUSS", "beschreibung": "Personal MUSS sorgfältig ausgewählt werden."},
+        {"anforderung_id": "OPS.1.1.2.A2", "titel": "Vertretungsregelungen und Notfallvorsorge", "typ": "MUSS", "beschreibung": "Vertretungsregelungen MÜSSEN existieren."},
+        {"anforderung_id": "OPS.1.1.2.A3", "titel": "Geregelte Einstellung von IT-Administratoren", "typ": "SOLLTE", "beschreibung": "Die Einstellung SOLLTE geregelt sein."},
+        {"anforderung_id": "OPS.1.1.2.A4", "titel": "Beendigung der Tätigkeit als IT-Administrator", "typ": "MUSS", "beschreibung": "Das Beenden MUSS geregelt ablaufen."},
+        {"anforderung_id": "OPS.1.1.2.A5", "titel": "Administrationskennungen", "typ": "MUSS", "beschreibung": "Administrationskennungen MÜSSEN persönlich sein."}
+      ]
+    },
+    {
+      "baustein_id": "OPS.1.1.3",
+      "kategorie": "OPS",
+      "titel": "Patch- und Änderungsmanagement",
+      "title_en": "Patch and Change Management",
+      "beschreibung": "Dieser Baustein beschreibt das Patch- und Änderungsmanagement.",
+      "ir_phases": ["eradication", "recovery"],
+      "cross_references": {"iso27001": ["A.12.1.2", "A.12.5", "A.12.6"]},
+      "anforderungen": [
+        {"anforderung_id": "OPS.1.1.3.A1", "titel": "Konzept für das Patch- und Änderungsmanagement", "typ": "MUSS", "beschreibung": "Ein Konzept MUSS erstellt werden."},
+        {"anforderung_id": "OPS.1.1.3.A2", "titel": "Festlegung der Verantwortlichkeiten", "typ": "MUSS", "beschreibung": "Verantwortlichkeiten MÜSSEN festgelegt werden."},
+        {"anforderung_id": "OPS.1.1.3.A3", "titel": "Konfiguration von Autoupdate-Mechanismen", "typ": "MUSS", "beschreibung": "Autoupdate-Mechanismen MÜSSEN konfiguriert werden."},
+        {"anforderung_id": "OPS.1.1.3.A4", "titel": "Regelmäßige Aktualisierung", "typ": "MUSS", "beschreibung": "Software MUSS regelmäßig aktualisiert werden."}
+      ]
+    },
+    {
+      "baustein_id": "OPS.1.1.4",
+      "kategorie": "OPS",
+      "titel": "Schutz vor Schadprogrammen",
+      "title_en": "Protection Against Malware",
+      "beschreibung": "Dieser Baustein beschreibt den Schutz vor Schadprogrammen.",
+      "ir_phases": ["detection", "analysis", "containment", "eradication"],
+      "cross_references": {"iso27001": ["A.12.2"]},
+      "anforderungen": [
+        {"anforderung_id": "OPS.1.1.4.A1", "titel": "Erstellung eines Konzepts zum Schutz vor Schadprogrammen", "typ": "MUSS", "beschreibung": "Ein Konzept MUSS erstellt werden."},
+        {"anforderung_id": "OPS.1.1.4.A2", "titel": "Nutzung systemspezifischer Schutzmechanismen", "typ": "MUSS", "beschreibung": "Systemspezifische Schutzmechanismen MÜSSEN genutzt werden."},
+        {"anforderung_id": "OPS.1.1.4.A3", "titel": "Auswahl eines Virenschutzprogramms", "typ": "MUSS", "beschreibung": "Ein Virenschutzprogramm MUSS ausgewählt werden."},
+        {"anforderung_id": "OPS.1.1.4.A4", "titel": "Regelmäßige Aktualisierung", "typ": "MUSS", "beschreibung": "Signaturen MÜSSEN regelmäßig aktualisiert werden."},
+        {"anforderung_id": "OPS.1.1.4.A5", "titel": "Einsatz bei der Kommunikation mit dem Internet", "typ": "MUSS", "beschreibung": "Schutz MUSS bei Internetkommunikation aktiv sein."}
+      ]
+    },
+    {
+      "baustein_id": "OPS.1.1.5",
+      "kategorie": "OPS",
+      "titel": "Protokollierung",
+      "title_en": "Logging",
+      "beschreibung": "Dieser Baustein beschreibt die Protokollierung.",
+      "ir_phases": ["detection", "analysis"],
+      "cross_references": {"iso27001": ["A.12.4"]},
+      "anforderungen": [
+        {"anforderung_id": "OPS.1.1.5.A1", "titel": "Erstellung einer Protokollierungsrichtlinie", "typ": "MUSS", "beschreibung": "Eine Richtlinie MUSS erstellt werden."},
+        {"anforderung_id": "OPS.1.1.5.A2", "titel": "Konfiguration der Protokollierung", "typ": "MUSS", "beschreibung": "Die Protokollierung MUSS konfiguriert werden."},
+        {"anforderung_id": "OPS.1.1.5.A3", "titel": "Zeitsynchronisation", "typ": "MUSS", "beschreibung": "Eine Zeitsynchronisation MUSS erfolgen."},
+        {"anforderung_id": "OPS.1.1.5.A4", "titel": "Schutz der Protokolldaten", "typ": "MUSS", "beschreibung": "Protokolldaten MÜSSEN geschützt werden."},
+        {"anforderung_id": "OPS.1.1.5.A5", "titel": "Datenschutz bei der Protokollierung", "typ": "MUSS", "beschreibung": "Der Datenschutz MUSS beachtet werden."}
+      ]
+    },
+    {
+      "baustein_id": "OPS.1.2.2",
+      "kategorie": "OPS",
+      "titel": "Archivierung",
+      "title_en": "Archiving",
+      "beschreibung": "Dieser Baustein beschreibt die Archivierung.",
+      "ir_phases": ["lessons_learned"],
+      "cross_references": {"iso27001": ["A.18.1.3"]},
+      "anforderungen": [
+        {"anforderung_id": "OPS.1.2.2.A1", "titel": "Ermittlung von Einflussfaktoren für die Archivierung", "typ": "MUSS", "beschreibung": "Einflussfaktoren MÜSSEN ermittelt werden."},
+        {"anforderung_id": "OPS.1.2.2.A2", "titel": "Entwicklung eines Archivierungskonzepts", "typ": "SOLLTE", "beschreibung": "Ein Konzept SOLLTE entwickelt werden."},
+        {"anforderung_id": "OPS.1.2.2.A3", "titel": "Geeignete Aufstellung von Archivsystemen und Lagerung von Archivmedien", "typ": "MUSS", "beschreibung": "Archivsysteme MÜSSEN geeignet aufgestellt werden."}
+      ]
+    },
+    {
+      "baustein_id": "OPS.1.2.4",
+      "kategorie": "OPS",
+      "titel": "Telearbeit",
+      "title_en": "Telework",
+      "beschreibung": "Dieser Baustein beschreibt Sicherheitsmaßnahmen für Telearbeit.",
+      "ir_phases": [],
+      "cross_references": {"iso27001": ["A.6.2.2"]},
+      "anforderungen": [
+        {"anforderung_id": "OPS.1.2.4.A1", "titel": "Regelungen für Telearbeit", "typ": "MUSS", "beschreibung": "Regelungen MÜSSEN festgelegt werden."},
+        {"anforderung_id": "OPS.1.2.4.A2", "titel": "Sicherheitstechnische Anforderungen an den Telearbeitsrechner", "typ": "MUSS", "beschreibung": "Anforderungen MÜSSEN definiert werden."},
+        {"anforderung_id": "OPS.1.2.4.A3", "titel": "Sicherheitstechnische Anforderungen an die Kommunikationsverbindung", "typ": "MUSS", "beschreibung": "Kommunikationsverbindungen MÜSSEN abgesichert sein."}
+      ]
+    },
+    {
+      "baustein_id": "OPS.2.1",
+      "kategorie": "OPS",
+      "titel": "Outsourcing für Kunden",
+      "title_en": "Outsourcing for Customers",
+      "beschreibung": "Dieser Baustein beschreibt Outsourcing-Anforderungen.",
+      "ir_phases": [],
+      "cross_references": {"iso27001": ["A.15"]},
+      "anforderungen": [
+        {"anforderung_id": "OPS.2.1.A1", "titel": "Festlegung der Sicherheitsanforderungen für Outsourcing-Vorhaben", "typ": "MUSS", "beschreibung": "Sicherheitsanforderungen MÜSSEN festgelegt werden."},
+        {"anforderung_id": "OPS.2.1.A2", "titel": "Rechtzeitige Beteiligung der Personalvertretung", "typ": "SOLLTE", "beschreibung": "Die Personalvertretung SOLLTE beteiligt werden."}
+      ]
+    },
+    {
+      "baustein_id": "OPS.2.2",
+      "kategorie": "OPS",
+      "titel": "Cloud-Nutzung",
+      "title_en": "Cloud Usage",
+      "beschreibung": "Dieser Baustein beschreibt die sichere Nutzung von Cloud-Diensten.",
+      "ir_phases": ["containment"],
+      "cross_references": {"iso27001": ["A.15"]},
+      "anforderungen": [
+        {"anforderung_id": "OPS.2.2.A1", "titel": "Erstellung einer Strategie für die Cloud-Nutzung", "typ": "MUSS", "beschreibung": "Eine Strategie MUSS erstellt werden."},
+        {"anforderung_id": "OPS.2.2.A2", "titel": "Erstellung einer Sicherheitsrichtlinie für die Cloud-Nutzung", "typ": "MUSS", "beschreibung": "Eine Sicherheitsrichtlinie MUSS erstellt werden."},
+        {"anforderung_id": "OPS.2.2.A3", "titel": "Service-Definition für Cloud-Dienste", "typ": "MUSS", "beschreibung": "Services MÜSSEN definiert werden."},
+        {"anforderung_id": "OPS.2.2.A4", "titel": "Festlegung von Verantwortungsbereichen und Schnittstellen", "typ": "MUSS", "beschreibung": "Verantwortlichkeiten MÜSSEN festgelegt werden."}
+      ]
+    },
+    {
+      "baustein_id": "DER.1",
+      "kategorie": "DER",
+      "titel": "Detektion von sicherheitsrelevanten Ereignissen",
+      "title_en": "Detection of Security-Relevant Events",
+      "beschreibung": "Dieser Baustein beschreibt die Detektion von sicherheitsrelevanten Ereignissen.",
+      "ir_phases": ["detection"],
+      "cross_references": {"iso27001": ["A.12.4", "A.16.1.2"]},
+      "anforderungen": [
+        {"anforderung_id": "DER.1.A1", "titel": "Erstellung einer Sicherheitsrichtlinie für die Detektion von sicherheitsrelevanten Ereignissen", "typ": "MUSS", "beschreibung": "Eine Sicherheitsrichtlinie MUSS erstellt werden."},
+        {"anforderung_id": "DER.1.A2", "titel": "Einhaltung rechtlicher Bedingungen bei der Auswertung von Protokolldaten", "typ": "MUSS", "beschreibung": "Rechtliche Bedingungen MÜSSEN eingehalten werden."},
+        {"anforderung_id": "DER.1.A3", "titel": "Festlegung von Meldewegen für sicherheitsrelevante Ereignisse", "typ": "MUSS", "beschreibung": "Meldewege MÜSSEN festgelegt werden."},
+        {"anforderung_id": "DER.1.A4", "titel": "Sensibilisierung der Mitarbeiter", "typ": "MUSS", "beschreibung": "Mitarbeiter MÜSSEN sensibilisiert werden."},
+        {"anforderung_id": "DER.1.A5", "titel": "Einsatz von mitgelieferten Systemfunktionen zur Detektion", "typ": "MUSS", "beschreibung": "Systemfunktionen MÜSSEN genutzt werden."},
+        {"anforderung_id": "DER.1.A6", "titel": "Kontinuierliche Überwachung und Auswertung von Protokolldaten", "typ": "SOLLTE", "beschreibung": "Protokolldaten SOLLTEN kontinuierlich überwacht werden."},
+        {"anforderung_id": "DER.1.A7", "titel": "Schulung von Verantwortlichen", "typ": "SOLLTE", "beschreibung": "Verantwortliche SOLLTEN geschult werden."},
+        {"anforderung_id": "DER.1.A8", "titel": "Festlegung von zu schützenden Segmenten", "typ": "SOLLTE", "beschreibung": "Zu schützende Segmente SOLLTEN festgelegt werden."},
+        {"anforderung_id": "DER.1.A9", "titel": "Einsatz zusätzlicher Detektionssysteme", "typ": "SOLLTE", "beschreibung": "Zusätzliche Systeme SOLLTEN eingesetzt werden."},
+        {"anforderung_id": "DER.1.A10", "titel": "Einsatz von TLS/SSL-Proxies", "typ": "SOLLTE", "beschreibung": "TLS/SSL-Proxies SOLLTEN eingesetzt werden."},
+        {"anforderung_id": "DER.1.A11", "titel": "Nutzung einer zentralen Protokollierungsinfrastruktur für die Auswertung sicherheitsrelevanter Ereignisse", "typ": "SOLLTE", "beschreibung": "Eine zentrale Infrastruktur SOLLTE genutzt werden."},
+        {"anforderung_id": "DER.1.A12", "titel": "Auswertung von Informationen aus externen Quellen", "typ": "SOLLTE", "beschreibung": "Externe Quellen SOLLTEN ausgewertet werden."},
+        {"anforderung_id": "DER.1.A13", "titel": "Regelmäßige Audits der Detektionssysteme", "typ": "SOLLTE", "beschreibung": "Audits SOLLTEN regelmäßig durchgeführt werden."},
+        {"anforderung_id": "DER.1.A14", "titel": "Einsatz von Intrusion-Detection-Systemen", "typ": "KANN", "beschreibung": "IDS KANN eingesetzt werden."},
+        {"anforderung_id": "DER.1.A15", "titel": "Zentrale Detektion und Echtzeitüberprüfung von Ereignismeldungen", "typ": "KANN", "beschreibung": "Zentrale Detektion KANN implementiert werden."}
+      ]
+    },
+    {
+      "baustein_id": "DER.2.1",
+      "kategorie": "DER",
+      "titel": "Behandlung von Sicherheitsvorfällen",
+      "title_en": "Handling of Security Incidents",
+      "beschreibung": "Dieser Baustein beschreibt die Behandlung von Sicherheitsvorfällen.",
+      "ir_phases": ["detection", "analysis", "containment", "eradication", "recovery", "lessons_learned"],
+      "cross_references": {"iso27001": ["A.16"], "nist_csf": ["RS", "RC"]},
+      "anforderungen": [
+        {"anforderung_id": "DER.2.1.A1", "titel": "Definition eines Sicherheitsvorfalls", "typ": "MUSS", "beschreibung": "Es MUSS definiert sein, was ein Sicherheitsvorfall ist und wie er klassifiziert wird."},
+        {"anforderung_id": "DER.2.1.A2", "titel": "Erstellung einer Richtlinie zur Behandlung von Sicherheitsvorfällen", "typ": "MUSS", "beschreibung": "Es MUSS eine Richtlinie erstellt werden, die Verhaltensregeln und Meldewege definiert."},
+        {"anforderung_id": "DER.2.1.A3", "titel": "Festlegung von Verantwortlichkeiten bei Sicherheitsvorfällen", "typ": "MUSS", "beschreibung": "Es MUSS festgelegt sein, wer für die Behandlung zuständig ist."},
+        {"anforderung_id": "DER.2.1.A4", "titel": "Benachrichtigung betroffener Stellen bei Sicherheitsvorfällen", "typ": "MUSS", "beschreibung": "Betroffene Stellen MÜSSEN benachrichtigt werden."},
+        {"anforderung_id": "DER.2.1.A5", "titel": "Behebung von Sicherheitsvorfällen", "typ": "MUSS", "beschreibung": "Sicherheitsvorfälle MÜSSEN behoben werden."},
+        {"anforderung_id": "DER.2.1.A6", "titel": "Wiederherstellung der Betriebsumgebung nach Sicherheitsvorfällen", "typ": "MUSS", "beschreibung": "Die Betriebsumgebung MUSS wiederhergestellt werden."},
+        {"anforderung_id": "DER.2.1.A7", "titel": "Qualifizierung des Personals", "typ": "SOLLTE", "beschreibung": "Das Personal SOLLTE qualifiziert sein."},
+        {"anforderung_id": "DER.2.1.A8", "titel": "Erstellung eines Notfallplans", "typ": "SOLLTE", "beschreibung": "Ein Notfallplan SOLLTE erstellt werden."},
+        {"anforderung_id": "DER.2.1.A9", "titel": "Festlegung von Schnittstellen der Vorfallbehandlung mit der Störungs- und Fehlerbehebung", "typ": "SOLLTE", "beschreibung": "Schnittstellen SOLLTEN festgelegt werden."},
+        {"anforderung_id": "DER.2.1.A10", "titel": "Eindämmen der Auswirkung von Sicherheitsvorfällen", "typ": "SOLLTE", "beschreibung": "Auswirkungen SOLLTEN eingedämmt werden."},
+        {"anforderung_id": "DER.2.1.A11", "titel": "Klassifizierung von Sicherheitsvorfällen", "typ": "SOLLTE", "beschreibung": "Vorfälle SOLLTEN klassifiziert werden."},
+        {"anforderung_id": "DER.2.1.A12", "titel": "Festlegung der Schnittstellen der Sicherheitsvorfallbehandlung", "typ": "SOLLTE", "beschreibung": "Schnittstellen SOLLTEN festgelegt werden."},
+        {"anforderung_id": "DER.2.1.A13", "titel": "Einbindung in das Sicherheitskonzept", "typ": "SOLLTE", "beschreibung": "Die Vorfallbehandlung SOLLTE eingebunden sein."},
+        {"anforderung_id": "DER.2.1.A14", "titel": "Eskalationsstrategie", "typ": "SOLLTE", "beschreibung": "Eine Eskalationsstrategie SOLLTE definiert werden."},
+        {"anforderung_id": "DER.2.1.A15", "titel": "Schulung der Mitarbeiter der zentralen Anlaufstelle", "typ": "SOLLTE", "beschreibung": "Mitarbeiter SOLLTEN geschult werden."},
+        {"anforderung_id": "DER.2.1.A16", "titel": "Dokumentation der Behandlung von Sicherheitsvorfällen", "typ": "SOLLTE", "beschreibung": "Die Behandlung SOLLTE dokumentiert werden."},
+        {"anforderung_id": "DER.2.1.A17", "titel": "Nachbereitung von Sicherheitsvorfällen", "typ": "SOLLTE", "beschreibung": "Eine Nachbereitung SOLLTE durchgeführt werden."},
+        {"anforderung_id": "DER.2.1.A18", "titel": "Weiterentwicklung der Prozesse durch Erkenntnisse aus Sicherheitsvorfällen", "typ": "SOLLTE", "beschreibung": "Prozesse SOLLTEN weiterentwickelt werden."},
+        {"anforderung_id": "DER.2.1.A19", "titel": "Festlegung von Prioritäten", "typ": "KANN", "beschreibung": "Prioritäten KÖNNEN festgelegt werden."},
+        {"anforderung_id": "DER.2.1.A20", "titel": "Einrichtung einer internen Anlaufstelle für die Behandlung von Sicherheitsvorfällen", "typ": "KANN", "beschreibung": "Eine interne Anlaufstelle KANN eingerichtet werden."},
+        {"anforderung_id": "DER.2.1.A21", "titel": "Einrichtung eines Experten- und Expertinnenteams für die Behandlung von Sicherheitsvorfällen", "typ": "KANN", "beschreibung": "Ein Expertenteam KANN eingerichtet werden."},
+        {"anforderung_id": "DER.2.1.A22", "titel": "Überprüfung der Effizienz des Managementsystems zur Behandlung von Sicherheitsvorfällen", "typ": "KANN", "beschreibung": "Die Effizienz KANN überprüft werden."}
+      ]
+    },
+    {
+      "baustein_id": "DER.2.2",
+      "kategorie": "DER",
+      "titel": "Vorsorge für die IT-Forensik",
+      "title_en": "IT Forensics Preparedness",
+      "beschreibung": "Dieser Baustein beschreibt Vorsorgemaßnahmen für die IT-Forensik.",
+      "ir_phases": ["preparation", "analysis"],
+      "cross_references": {"iso27001": ["A.16.1.7"]},
+      "anforderungen": [
+        {"anforderung_id": "DER.2.2.A1", "titel": "Prüfung rechtlicher und regulatorischer Rahmenbedingungen", "typ": "MUSS", "beschreibung": "Rahmenbedingungen MÜSSEN geprüft werden."},
+        {"anforderung_id": "DER.2.2.A2", "titel": "Erstellung eines Leitfadens für Erstmaßnahmen bei einem IT-Sicherheitsvorfall", "typ": "MUSS", "beschreibung": "Ein Leitfaden MUSS erstellt werden."},
+        {"anforderung_id": "DER.2.2.A3", "titel": "Vorauswahl von Forensik-Dienstleistern", "typ": "SOLLTE", "beschreibung": "Dienstleister SOLLTEN vorausgewählt werden."},
+        {"anforderung_id": "DER.2.2.A4", "titel": "Festlegung von Schnittstellen zum Krisenmanagement", "typ": "SOLLTE", "beschreibung": "Schnittstellen SOLLTEN festgelegt werden."},
+        {"anforderung_id": "DER.2.2.A5", "titel": "Erstellung eines Leitfadens für Beweissicherungsmaßnahmen", "typ": "SOLLTE", "beschreibung": "Ein Leitfaden SOLLTE erstellt werden."},
+        {"anforderung_id": "DER.2.2.A6", "titel": "Schulung des Personals für die Umsetzung der forensischen Sicherung", "typ": "SOLLTE", "beschreibung": "Personal SOLLTE geschult werden."},
+        {"anforderung_id": "DER.2.2.A7", "titel": "Auswahl von Werkzeugen zur Forensik", "typ": "SOLLTE", "beschreibung": "Werkzeuge SOLLTEN ausgewählt werden."},
+        {"anforderung_id": "DER.2.2.A8", "titel": "Bereitstellung von Infrastruktur für die IT-Forensik", "typ": "KANN", "beschreibung": "Infrastruktur KANN bereitgestellt werden."}
+      ]
+    },
+    {
+      "baustein_id": "DER.2.3",
+      "kategorie": "DER",
+      "titel": "Bereinigung weitreichender Sicherheitsvorfälle",
+      "title_en": "Remediation of Extensive Security Incidents",
+      "beschreibung": "Dieser Baustein beschreibt die Bereinigung weitreichender Sicherheitsvorfälle.",
+      "ir_phases": ["containment", "eradication", "recovery"],
+      "cross_references": {"iso27001": ["A.16.1.5", "A.16.1.6"]},
+      "anforderungen": [
+        {"anforderung_id": "DER.2.3.A1", "titel": "Einrichtung eines Leitungsgremiums", "typ": "MUSS", "beschreibung": "Ein Leitungsgremium MUSS eingerichtet werden."},
+        {"anforderung_id": "DER.2.3.A2", "titel": "Entscheidung für eine Bereinigungsstrategie", "typ": "MUSS", "beschreibung": "Eine Strategie MUSS entschieden werden."},
+        {"anforderung_id": "DER.2.3.A3", "titel": "Isolierung der betroffenen Netzabschnitte", "typ": "MUSS", "beschreibung": "Netzabschnitte MÜSSEN isoliert werden."},
+        {"anforderung_id": "DER.2.3.A4", "titel": "Sperrung und Änderung von Zugangsdaten und kryptografischen Schlüsseln", "typ": "MUSS", "beschreibung": "Zugangsdaten MÜSSEN gesperrt und geändert werden."},
+        {"anforderung_id": "DER.2.3.A5", "titel": "Schließen des initialen Einbruchswegs", "typ": "MUSS", "beschreibung": "Der Einbruchsweg MUSS geschlossen werden."},
+        {"anforderung_id": "DER.2.3.A6", "titel": "Rückführung in den Produktivbetrieb", "typ": "MUSS", "beschreibung": "Die Rückführung MUSS geregelt erfolgen."}
+      ]
+    },
+    {
+      "baustein_id": "DER.3.1",
+      "kategorie": "DER",
+      "titel": "Audits und Revisionen",
+      "title_en": "Audits and Reviews",
+      "beschreibung": "Dieser Baustein beschreibt Audits und Revisionen.",
+      "ir_phases": ["lessons_learned"],
+      "cross_references": {"iso27001": ["A.18.2"]},
+      "anforderungen": [
+        {"anforderung_id": "DER.3.1.A1", "titel": "Definition von Verantwortlichkeiten", "typ": "MUSS", "beschreibung": "Verantwortlichkeiten MÜSSEN definiert werden."},
+        {"anforderung_id": "DER.3.1.A2", "titel": "Erstellung eines Auditprogramms", "typ": "SOLLTE", "beschreibung": "Ein Auditprogramm SOLLTE erstellt werden."},
+        {"anforderung_id": "DER.3.1.A3", "titel": "Festlegung des Prüfungsumfangs und der Prüfungsinhalte", "typ": "MUSS", "beschreibung": "Prüfungsumfang MUSS festgelegt werden."},
+        {"anforderung_id": "DER.3.1.A4", "titel": "Erstellung eines Auditplans", "typ": "SOLLTE", "beschreibung": "Ein Auditplan SOLLTE erstellt werden."},
+        {"anforderung_id": "DER.3.1.A5", "titel": "Durchführung eines Audits", "typ": "MUSS", "beschreibung": "Audits MÜSSEN durchgeführt werden."},
+        {"anforderung_id": "DER.3.1.A6", "titel": "Dokumentation der Auditergebnisse", "typ": "MUSS", "beschreibung": "Ergebnisse MÜSSEN dokumentiert werden."}
+      ]
+    },
+    {
+      "baustein_id": "DER.3.2",
+      "kategorie": "DER",
+      "titel": "Revisionen auf Basis des Leitfadens IS-Revision",
+      "title_en": "Reviews Based on IS-Revision Guidelines",
+      "beschreibung": "Dieser Baustein beschreibt IS-Revisionen.",
+      "ir_phases": ["lessons_learned"],
+      "cross_references": {"iso27001": ["A.18.2.1"]},
+      "anforderungen": [
+        {"anforderung_id": "DER.3.2.A1", "titel": "Benennung von Verantwortlichen für die IS-Revision", "typ": "MUSS", "beschreibung": "Verantwortliche MÜSSEN benannt werden."},
+        {"anforderung_id": "DER.3.2.A2", "titel": "Erstellung eines IS-Revisionshandbuches", "typ": "SOLLTE", "beschreibung": "Ein Handbuch SOLLTE erstellt werden."},
+        {"anforderung_id": "DER.3.2.A3", "titel": "Definition des Prüfungsumfangs", "typ": "MUSS", "beschreibung": "Der Prüfungsumfang MUSS definiert werden."}
+      ]
+    },
+    {
+      "baustein_id": "DER.4",
+      "kategorie": "DER",
+      "titel": "Notfallmanagement",
+      "title_en": "Emergency Management",
+      "beschreibung": "Dieser Baustein beschreibt das Notfallmanagement.",
+      "ir_phases": ["preparation", "containment", "recovery"],
+      "cross_references": {"iso27001": ["A.17"]},
+      "anforderungen": [
+        {"anforderung_id": "DER.4.A1", "titel": "Erstellung eines Notfallhandbuchs", "typ": "MUSS", "beschreibung": "Ein Notfallhandbuch MUSS erstellt werden."},
+        {"anforderung_id": "DER.4.A2", "titel": "Integration des Notfallmanagements in andere Managementbereiche", "typ": "SOLLTE", "beschreibung": "Die Integration SOLLTE erfolgen."},
+        {"anforderung_id": "DER.4.A3", "titel": "Festlegung des Geltungsbereichs und der Notfallmanagementstrategie", "typ": "MUSS", "beschreibung": "Der Geltungsbereich MUSS festgelegt werden."},
+        {"anforderung_id": "DER.4.A4", "titel": "Dokumentation der Leitlinie zum Notfallmanagement", "typ": "MUSS", "beschreibung": "Die Leitlinie MUSS dokumentiert werden."},
+        {"anforderung_id": "DER.4.A5", "titel": "Durchführung regelmäßiger Notfallübungen", "typ": "SOLLTE", "beschreibung": "Übungen SOLLTEN durchgeführt werden."}
+      ]
+    },
+    {
+      "baustein_id": "APP.1.1",
+      "kategorie": "APP",
+      "titel": "Office-Produkte",
+      "title_en": "Office Products",
+      "beschreibung": "Dieser Baustein beschreibt die Sicherheit von Office-Produkten.",
+      "ir_phases": ["analysis", "containment"],
+      "cross_references": {"iso27001": ["A.12.5", "A.12.6"]},
+      "anforderungen": [
+        {"anforderung_id": "APP.1.1.A1", "titel": "Sicherstellen einer minimalen Konfiguration von Office-Produkten", "typ": "MUSS", "beschreibung": "Eine minimale Konfiguration MUSS sichergestellt werden."},
+        {"anforderung_id": "APP.1.1.A2", "titel": "Einschränken von Aktiven Inhalten", "typ": "MUSS", "beschreibung": "Aktive Inhalte MÜSSEN eingeschränkt werden."},
+        {"anforderung_id": "APP.1.1.A3", "titel": "Sicheres Öffnen von Dokumenten aus externen Quellen", "typ": "SOLLTE", "beschreibung": "Dokumente SOLLTEN sicher geöffnet werden."}
+      ]
+    },
+    {
+      "baustein_id": "APP.1.2",
+      "kategorie": "APP",
+      "titel": "Webbrowser",
+      "title_en": "Web Browser",
+      "beschreibung": "Dieser Baustein beschreibt die Sicherheit von Webbrowsern.",
+      "ir_phases": ["analysis", "containment"],
+      "cross_references": {"iso27001": ["A.13.1"]},
+      "anforderungen": [
+        {"anforderung_id": "APP.1.2.A1", "titel": "Verwendung von Sandboxing", "typ": "MUSS", "beschreibung": "Sandboxing MUSS verwendet werden."},
+        {"anforderung_id": "APP.1.2.A2", "titel": "Verschlüsselte Kommunikation", "typ": "MUSS", "beschreibung": "Die Kommunikation MUSS verschlüsselt sein."},
+        {"anforderung_id": "APP.1.2.A3", "titel": "Verwendung von vertrauenswürdigen Zertifikaten", "typ": "MUSS", "beschreibung": "Nur vertrauenswürdige Zertifikate MÜSSEN verwendet werden."}
+      ]
+    },
+    {
+      "baustein_id": "APP.1.4",
+      "kategorie": "APP",
+      "titel": "Mobile Anwendungen (Apps)",
+      "title_en": "Mobile Applications (Apps)",
+      "beschreibung": "Dieser Baustein beschreibt die Sicherheit mobiler Anwendungen.",
+      "ir_phases": ["analysis"],
+      "cross_references": {"iso27001": ["A.6.2"]},
+      "anforderungen": [
+        {"anforderung_id": "APP.1.4.A1", "titel": "Anforderungsanalyse für die Nutzung von Apps", "typ": "MUSS", "beschreibung": "Eine Anforderungsanalyse MUSS durchgeführt werden."},
+        {"anforderung_id": "APP.1.4.A2", "titel": "Bezug von Apps aus vertrauenswürdigen Quellen", "typ": "MUSS", "beschreibung": "Apps MÜSSEN aus vertrauenswürdigen Quellen bezogen werden."},
+        {"anforderung_id": "APP.1.4.A3", "titel": "Sichere Speicherung lokaler App-Daten", "typ": "SOLLTE", "beschreibung": "App-Daten SOLLTEN sicher gespeichert werden."}
+      ]
+    },
+    {
+      "baustein_id": "APP.2.1",
+      "kategorie": "APP",
+      "titel": "Allgemeiner Verzeichnisdienst",
+      "title_en": "General Directory Service",
+      "beschreibung": "Dieser Baustein beschreibt allgemeine Verzeichnisdienste.",
+      "ir_phases": ["containment", "eradication"],
+      "cross_references": {"iso27001": ["A.9"]},
+      "anforderungen": [
+        {"anforderung_id": "APP.2.1.A1", "titel": "Erstellung einer Sicherheitsrichtlinie für Verzeichnisdienste", "typ": "MUSS", "beschreibung": "Eine Sicherheitsrichtlinie MUSS erstellt werden."},
+        {"anforderung_id": "APP.2.1.A2", "titel": "Planung des Einsatzes von Verzeichnisdiensten", "typ": "MUSS", "beschreibung": "Der Einsatz MUSS geplant werden."},
+        {"anforderung_id": "APP.2.1.A3", "titel": "Einrichtung von Zugriffsberechtigungen auf Verzeichnisdienste", "typ": "MUSS", "beschreibung": "Zugriffsberechtigungen MÜSSEN eingerichtet werden."}
+      ]
+    },
+    {
+      "baustein_id": "APP.2.2",
+      "kategorie": "APP",
+      "titel": "Active Directory Domain Services",
+      "title_en": "Active Directory Domain Services",
+      "beschreibung": "Dieser Baustein beschreibt die Sicherheit von Active Directory.",
+      "ir_phases": ["containment", "eradication"],
+      "cross_references": {"iso27001": ["A.9"]},
+      "anforderungen": [
+        {"anforderung_id": "APP.2.2.A1", "titel": "Planung des Active Directory", "typ": "MUSS", "beschreibung": "Active Directory MUSS geplant werden."},
+        {"anforderung_id": "APP.2.2.A2", "titel": "Planung der Active Directory-Administration", "typ": "MUSS", "beschreibung": "Die Administration MUSS geplant werden."},
+        {"anforderung_id": "APP.2.2.A3", "titel": "Planung der Gruppenrichtlinien unter Windows", "typ": "MUSS", "beschreibung": "Gruppenrichtlinien MÜSSEN geplant werden."},
+        {"anforderung_id": "APP.2.2.A4", "titel": "Schulung zur Active Directory-Administration", "typ": "SOLLTE", "beschreibung": "Administratoren SOLLTEN geschult werden."},
+        {"anforderung_id": "APP.2.2.A5", "titel": "Härtung des Active Directory", "typ": "SOLLTE", "beschreibung": "Active Directory SOLLTE gehärtet werden."}
+      ]
+    },
+    {
+      "baustein_id": "APP.3.1",
+      "kategorie": "APP",
+      "titel": "Webanwendungen",
+      "title_en": "Web Applications",
+      "beschreibung": "Dieser Baustein beschreibt die Sicherheit von Webanwendungen.",
+      "ir_phases": ["analysis", "containment"],
+      "cross_references": {"iso27001": ["A.14.2"]},
+      "anforderungen": [
+        {"anforderung_id": "APP.3.1.A1", "titel": "Authentisierung", "typ": "MUSS", "beschreibung": "Benutzer MÜSSEN sich authentisieren."},
+        {"anforderung_id": "APP.3.1.A2", "titel": "Kontrolliertes Einbinden von Inhalten", "typ": "MUSS", "beschreibung": "Inhalte MÜSSEN kontrolliert eingebunden werden."},
+        {"anforderung_id": "APP.3.1.A3", "titel": "Sicherer Umgang mit Fehlern und Ausnahmen", "typ": "MUSS", "beschreibung": "Fehler MÜSSEN sicher behandelt werden."},
+        {"anforderung_id": "APP.3.1.A4", "titel": "Sichere HTTP-Konfiguration", "typ": "SOLLTE", "beschreibung": "HTTP SOLLTE sicher konfiguriert werden."}
+      ]
+    },
+    {
+      "baustein_id": "APP.3.2",
+      "kategorie": "APP",
+      "titel": "Webserver",
+      "title_en": "Web Server",
+      "beschreibung": "Dieser Baustein beschreibt die Sicherheit von Webservern.",
+      "ir_phases": ["analysis", "containment"],
+      "cross_references": {"iso27001": ["A.14.1"]},
+      "anforderungen": [
+        {"anforderung_id": "APP.3.2.A1", "titel": "Sichere Konfiguration eines Webservers", "typ": "MUSS", "beschreibung": "Der Webserver MUSS sicher konfiguriert werden."},
+        {"anforderung_id": "APP.3.2.A2", "titel": "Schutz der Webserver-Dateien", "typ": "MUSS", "beschreibung": "Dateien MÜSSEN geschützt werden."},
+        {"anforderung_id": "APP.3.2.A3", "titel": "Absicherung von Datei-Uploads und Downloads", "typ": "MUSS", "beschreibung": "Uploads und Downloads MÜSSEN abgesichert werden."},
+        {"anforderung_id": "APP.3.2.A4", "titel": "Protokollierung von sicherheitsrelevanten Ereignissen des Webservers", "typ": "MUSS", "beschreibung": "Ereignisse MÜSSEN protokolliert werden."}
+      ]
+    },
+    {
+      "baustein_id": "APP.4.3",
+      "kategorie": "APP",
+      "titel": "Relationale Datenbanken",
+      "title_en": "Relational Databases",
+      "beschreibung": "Dieser Baustein beschreibt die Sicherheit relationaler Datenbanken.",
+      "ir_phases": ["analysis", "containment"],
+      "cross_references": {"iso27001": ["A.14.1.2"]},
+      "anforderungen": [
+        {"anforderung_id": "APP.4.3.A1", "titel": "Erstellung einer Sicherheitsrichtlinie für Datenbanken", "typ": "MUSS", "beschreibung": "Eine Sicherheitsrichtlinie MUSS erstellt werden."},
+        {"anforderung_id": "APP.4.3.A2", "titel": "Installation des Datenbankmanagementsystems", "typ": "MUSS", "beschreibung": "Die Installation MUSS sicher erfolgen."},
+        {"anforderung_id": "APP.4.3.A3", "titel": "Basishärtung des Datenbankmanagementsystems", "typ": "MUSS", "beschreibung": "Eine Basishärtung MUSS durchgeführt werden."},
+        {"anforderung_id": "APP.4.3.A4", "titel": "Geregeltes Anlegen neuer Datenbanken", "typ": "MUSS", "beschreibung": "Neue Datenbanken MÜSSEN geregelt angelegt werden."}
+      ]
+    },
+    {
+      "baustein_id": "APP.5.2",
+      "kategorie": "APP",
+      "titel": "Microsoft Exchange und Outlook",
+      "title_en": "Microsoft Exchange and Outlook",
+      "beschreibung": "Dieser Baustein beschreibt die Sicherheit von Exchange und Outlook.",
+      "ir_phases": ["analysis", "containment"],
+      "cross_references": {"iso27001": ["A.13.2"]},
+      "anforderungen": [
+        {"anforderung_id": "APP.5.2.A1", "titel": "Planung des Einsatzes von Exchange und Outlook", "typ": "MUSS", "beschreibung": "Der Einsatz MUSS geplant werden."},
+        {"anforderung_id": "APP.5.2.A2", "titel": "Auswahl einer geeigneten Exchange-Infrastruktur", "typ": "MUSS", "beschreibung": "Die Infrastruktur MUSS geeignet sein."},
+        {"anforderung_id": "APP.5.2.A3", "titel": "Berechtigungsmanagement und Zugriffsrechte", "typ": "MUSS", "beschreibung": "Berechtigungen MÜSSEN verwaltet werden."}
+      ]
+    },
+    {
+      "baustein_id": "APP.5.3",
+      "kategorie": "APP",
+      "titel": "Allgemeiner E-Mail-Client und -Server",
+      "title_en": "General E-Mail Client and Server",
+      "beschreibung": "Dieser Baustein beschreibt die allgemeine E-Mail-Sicherheit.",
+      "ir_phases": ["analysis", "containment"],
+      "cross_references": {"iso27001": ["A.13.2"]},
+      "anforderungen": [
+        {"anforderung_id": "APP.5.3.A1", "titel": "Sichere Konfiguration von E-Mail-Clients", "typ": "MUSS", "beschreibung": "E-Mail-Clients MÜSSEN sicher konfiguriert werden."},
+        {"anforderung_id": "APP.5.3.A2", "titel": "Sichere Konfiguration von E-Mail-Servern", "typ": "MUSS", "beschreibung": "E-Mail-Server MÜSSEN sicher konfiguriert werden."},
+        {"anforderung_id": "APP.5.3.A3", "titel": "Datensicherung und Archivierung von E-Mails", "typ": "SOLLTE", "beschreibung": "E-Mails SOLLTEN gesichert und archiviert werden."}
+      ]
+    },
+    {
+      "baustein_id": "SYS.1.1",
+      "kategorie": "SYS",
+      "titel": "Allgemeiner Server",
+      "title_en": "General Server",
+      "beschreibung": "Dieser Baustein beschreibt die Sicherheit allgemeiner Server.",
+      "ir_phases": ["analysis", "containment", "eradication"],
+      "cross_references": {"iso27001": ["A.12.5", "A.12.6"]},
+      "anforderungen": [
+        {"anforderung_id": "SYS.1.1.A1", "titel": "Geeignete Aufstellung", "typ": "MUSS", "beschreibung": "Server MÜSSEN geeignet aufgestellt werden."},
+        {"anforderung_id": "SYS.1.1.A2", "titel": "Benutzerauthentisierung an Servern", "typ": "MUSS", "beschreibung": "Eine Authentisierung MUSS erfolgen."},
+        {"anforderung_id": "SYS.1.1.A3", "titel": "Restriktive Rechtevergabe", "typ": "MUSS", "beschreibung": "Rechte MÜSSEN restriktiv vergeben werden."},
+        {"anforderung_id": "SYS.1.1.A4", "titel": "Rollentrennung", "typ": "SOLLTE", "beschreibung": "Rollen SOLLTEN getrennt werden."},
+        {"anforderung_id": "SYS.1.1.A5", "titel": "Schutz der Administrationsschnittstellen", "typ": "MUSS", "beschreibung": "Administrationsschnittstellen MÜSSEN geschützt werden."}
+      ]
+    },
+    {
+      "baustein_id": "SYS.1.2.2",
+      "kategorie": "SYS",
+      "titel": "Windows Server 2012",
+      "title_en": "Windows Server 2012",
+      "beschreibung": "Dieser Baustein beschreibt die Sicherheit von Windows Server 2012.",
+      "ir_phases": ["containment", "eradication"],
+      "cross_references": {"iso27001": ["A.12.5", "A.12.6"]},
+      "anforderungen": [
+        {"anforderung_id": "SYS.1.2.2.A1", "titel": "Planung von Windows Server 2012", "typ": "MUSS", "beschreibung": "Der Einsatz MUSS geplant werden."},
+        {"anforderung_id": "SYS.1.2.2.A2", "titel": "Sichere Installation von Windows Server 2012", "typ": "MUSS", "beschreibung": "Die Installation MUSS sicher erfolgen."},
+        {"anforderung_id": "SYS.1.2.2.A3", "titel": "Sichere Administration von Windows Server 2012", "typ": "MUSS", "beschreibung": "Die Administration MUSS sicher erfolgen."}
+      ]
+    },
+    {
+      "baustein_id": "SYS.1.3",
+      "kategorie": "SYS",
+      "titel": "Server unter Linux und Unix",
+      "title_en": "Linux and Unix Servers",
+      "beschreibung": "Dieser Baustein beschreibt die Sicherheit von Linux/Unix-Servern.",
+      "ir_phases": ["containment", "eradication"],
+      "cross_references": {"iso27001": ["A.12.5", "A.12.6"]},
+      "anforderungen": [
+        {"anforderung_id": "SYS.1.3.A1", "titel": "Authentisierung von Administratoren und Benutzern", "typ": "MUSS", "beschreibung": "Eine Authentisierung MUSS erfolgen."},
+        {"anforderung_id": "SYS.1.3.A2", "titel": "Sorgfältige Vergabe von IDs", "typ": "MUSS", "beschreibung": "IDs MÜSSEN sorgfältig vergeben werden."},
+        {"anforderung_id": "SYS.1.3.A3", "titel": "Kein automatisches Einbinden von Wechsellaufwerken", "typ": "MUSS", "beschreibung": "Wechsellaufwerke MÜSSEN nicht automatisch eingebunden werden."},
+        {"anforderung_id": "SYS.1.3.A4", "titel": "Schutz vor Auslesen von Speicherinhalten", "typ": "SOLLTE", "beschreibung": "Speicherinhalte SOLLTEN geschützt werden."}
+      ]
+    },
+    {
+      "baustein_id": "SYS.2.1",
+      "kategorie": "SYS",
+      "titel": "Allgemeiner Client",
+      "title_en": "General Client",
+      "beschreibung": "Dieser Baustein beschreibt die Sicherheit allgemeiner Clients.",
+      "ir_phases": ["analysis", "containment"],
+      "cross_references": {"iso27001": ["A.8.1", "A.12.5"]},
+      "anforderungen": [
+        {"anforderung_id": "SYS.2.1.A1", "titel": "Benutzerauthentisierung", "typ": "MUSS", "beschreibung": "Benutzer MÜSSEN sich authentisieren."},
+        {"anforderung_id": "SYS.2.1.A2", "titel": "Rollentrennung", "typ": "SOLLTE", "beschreibung": "Rollen SOLLTEN getrennt werden."},
+        {"anforderung_id": "SYS.2.1.A3", "titel": "Aktivieren von Autoupdate-Mechanismen", "typ": "MUSS", "beschreibung": "Autoupdate MUSS aktiviert sein."},
+        {"anforderung_id": "SYS.2.1.A4", "titel": "Regelmäßige Datensicherung", "typ": "MUSS", "beschreibung": "Datensicherung MUSS regelmäßig erfolgen."},
+        {"anforderung_id": "SYS.2.1.A5", "titel": "Einsatz von Schutzprogrammen gegen Schadsoftware", "typ": "MUSS", "beschreibung": "Schutzprogramme MÜSSEN eingesetzt werden."}
+      ]
+    },
+    {
+      "baustein_id": "SYS.2.2.3",
+      "kategorie": "SYS",
+      "titel": "Clients unter Windows",
+      "title_en": "Windows Clients",
+      "beschreibung": "Dieser Baustein beschreibt die Sicherheit von Windows-Clients.",
+      "ir_phases": ["containment", "eradication"],
+      "cross_references": {"iso27001": ["A.12.5", "A.12.6"]},
+      "anforderungen": [
+        {"anforderung_id": "SYS.2.2.3.A1", "titel": "Planung des Einsatzes von Windows", "typ": "MUSS", "beschreibung": "Der Einsatz MUSS geplant werden."},
+        {"anforderung_id": "SYS.2.2.3.A2", "titel": "Auswahl der Windows-Version", "typ": "MUSS", "beschreibung": "Eine geeignete Version MUSS ausgewählt werden."},
+        {"anforderung_id": "SYS.2.2.3.A3", "titel": "Sichere Installation von Windows", "typ": "MUSS", "beschreibung": "Die Installation MUSS sicher erfolgen."}
+      ]
+    },
+    {
+      "baustein_id": "SYS.2.3",
+      "kategorie": "SYS",
+      "titel": "Clients unter Linux und Unix",
+      "title_en": "Linux and Unix Clients",
+      "beschreibung": "Dieser Baustein beschreibt die Sicherheit von Linux/Unix-Clients.",
+      "ir_phases": ["containment", "eradication"],
+      "cross_references": {"iso27001": ["A.12.5", "A.12.6"]},
+      "anforderungen": [
+        {"anforderung_id": "SYS.2.3.A1", "titel": "Authentisierung von Benutzern", "typ": "MUSS", "beschreibung": "Benutzer MÜSSEN sich authentisieren."},
+        {"anforderung_id": "SYS.2.3.A2", "titel": "Auswahl einer geeigneten Distribution", "typ": "MUSS", "beschreibung": "Eine geeignete Distribution MUSS ausgewählt werden."},
+        {"anforderung_id": "SYS.2.3.A3", "titel": "Cloud- und Online-Inhalte deaktivieren", "typ": "SOLLTE", "beschreibung": "Cloud-Inhalte SOLLTEN deaktiviert werden."}
+      ]
+    },
+    {
+      "baustein_id": "SYS.3.1",
+      "kategorie": "SYS",
+      "titel": "Laptops",
+      "title_en": "Laptops",
+      "beschreibung": "Dieser Baustein beschreibt die Sicherheit von Laptops.",
+      "ir_phases": ["containment"],
+      "cross_references": {"iso27001": ["A.6.2", "A.8.1"]},
+      "anforderungen": [
+        {"anforderung_id": "SYS.3.1.A1", "titel": "Regelungen zur mobilen Nutzung von Laptops", "typ": "MUSS", "beschreibung": "Regelungen MÜSSEN existieren."},
+        {"anforderung_id": "SYS.3.1.A2", "titel": "Zugriffsschutz am Laptop", "typ": "MUSS", "beschreibung": "Zugriffsschutz MUSS implementiert sein."},
+        {"anforderung_id": "SYS.3.1.A3", "titel": "Einsatz von Personal Firewalls", "typ": "MUSS", "beschreibung": "Personal Firewalls MÜSSEN eingesetzt werden."},
+        {"anforderung_id": "SYS.3.1.A4", "titel": "Einsatz von Diebstahlsicherungen", "typ": "SOLLTE", "beschreibung": "Diebstahlsicherungen SOLLTEN eingesetzt werden."}
+      ]
+    },
+    {
+      "baustein_id": "SYS.3.2.1",
+      "kategorie": "SYS",
+      "titel": "Allgemeine Smartphones und Tablets",
+      "title_en": "General Smartphones and Tablets",
+      "beschreibung": "Dieser Baustein beschreibt die Sicherheit von Smartphones und Tablets.",
+      "ir_phases": ["containment"],
+      "cross_references": {"iso27001": ["A.6.2"]},
+      "anforderungen": [
+        {"anforderung_id": "SYS.3.2.1.A1", "titel": "Festlegung einer Richtlinie für den Einsatz von Smartphones und Tablets", "typ": "MUSS", "beschreibung": "Eine Richtlinie MUSS festgelegt werden."},
+        {"anforderung_id": "SYS.3.2.1.A2", "titel": "Festlegung einer Strategie für die Cloud-Nutzung", "typ": "MUSS", "beschreibung": "Eine Strategie MUSS festgelegt werden."},
+        {"anforderung_id": "SYS.3.2.1.A3", "titel": "Sichere Grundkonfiguration für mobile Geräte", "typ": "MUSS", "beschreibung": "Eine sichere Konfiguration MUSS vorhanden sein."},
+        {"anforderung_id": "SYS.3.2.1.A4", "titel": "Verwendung eines Zugriffsschutzes", "typ": "MUSS", "beschreibung": "Ein Zugriffsschutz MUSS verwendet werden."}
+      ]
+    },
+    {
+      "baustein_id": "SYS.4.1",
+      "kategorie": "SYS",
+      "titel": "Drucker, Kopierer und Multifunktionsgeräte",
+      "title_en": "Printers, Copiers and Multifunction Devices",
+      "beschreibung": "Dieser Baustein beschreibt die Sicherheit von Druckern und Multifunktionsgeräten.",
+      "ir_phases": [],
+      "cross_references": {"iso27001": ["A.8.3"]},
+      "anforderungen": [
+        {"anforderung_id": "SYS.4.1.A1", "titel": "Planung des Einsatzes von Druckern, Kopierern und Multifunktionsgeräten", "typ": "MUSS", "beschreibung": "Der Einsatz MUSS geplant werden."},
+        {"anforderung_id": "SYS.4.1.A2", "titel": "Geeignete Aufstellung und Zugang zu Druckern und Kopierern", "typ": "MUSS", "beschreibung": "Geräte MÜSSEN geeignet aufgestellt werden."},
+        {"anforderung_id": "SYS.4.1.A3", "titel": "Schutz vor unbefugtem Zugriff auf Drucker, Kopierer und Multifunktionsgeräte", "typ": "MUSS", "beschreibung": "Schutz MUSS vorhanden sein."}
+      ]
+    },
+    {
+      "baustein_id": "NET.1.1",
+      "kategorie": "NET",
+      "titel": "Netzarchitektur und -design",
+      "title_en": "Network Architecture and Design",
+      "beschreibung": "Dieser Baustein beschreibt Netzarchitektur und -design.",
+      "ir_phases": ["analysis", "containment"],
+      "cross_references": {"iso27001": ["A.13.1"]},
+      "anforderungen": [
+        {"anforderung_id": "NET.1.1.A1", "titel": "Sicherheitsrichtlinie für das Netz", "typ": "MUSS", "beschreibung": "Eine Sicherheitsrichtlinie MUSS erstellt werden."},
+        {"anforderung_id": "NET.1.1.A2", "titel": "Dokumentation des Netzes", "typ": "MUSS", "beschreibung": "Das Netz MUSS dokumentiert werden."},
+        {"anforderung_id": "NET.1.1.A3", "titel": "Anforderungsspezifikation für das Netz", "typ": "MUSS", "beschreibung": "Anforderungen MÜSSEN spezifiziert werden."},
+        {"anforderung_id": "NET.1.1.A4", "titel": "Netztrennung in Zonen", "typ": "SOLLTE", "beschreibung": "Das Netz SOLLTE in Zonen getrennt werden."}
+      ]
+    },
+    {
+      "baustein_id": "NET.1.2",
+      "kategorie": "NET",
+      "titel": "Netzmanagement",
+      "title_en": "Network Management",
+      "beschreibung": "Dieser Baustein beschreibt das Netzmanagement.",
+      "ir_phases": ["detection", "analysis"],
+      "cross_references": {"iso27001": ["A.13.1"]},
+      "anforderungen": [
+        {"anforderung_id": "NET.1.2.A1", "titel": "Planung des Netzmanagements", "typ": "MUSS", "beschreibung": "Das Netzmanagement MUSS geplant werden."},
+        {"anforderung_id": "NET.1.2.A2", "titel": "Anforderungsspezifikation für das Netzmanagement", "typ": "MUSS", "beschreibung": "Anforderungen MÜSSEN spezifiziert werden."},
+        {"anforderung_id": "NET.1.2.A3", "titel": "Beschränkung der SNMP-Kommunikation", "typ": "MUSS", "beschreibung": "SNMP-Kommunikation MUSS beschränkt werden."}
+      ]
+    },
+    {
+      "baustein_id": "NET.2.1",
+      "kategorie": "NET",
+      "titel": "WLAN-Betrieb",
+      "title_en": "WLAN Operations",
+      "beschreibung": "Dieser Baustein beschreibt den sicheren WLAN-Betrieb.",
+      "ir_phases": ["containment"],
+      "cross_references": {"iso27001": ["A.13.1"]},
+      "anforderungen": [
+        {"anforderung_id": "NET.2.1.A1", "titel": "Festlegung einer WLAN-Strategie", "typ": "MUSS", "beschreibung": "Eine WLAN-Strategie MUSS festgelegt werden."},
+        {"anforderung_id": "NET.2.1.A2", "titel": "Auswahl eines geeigneten WLAN-Standards", "typ": "MUSS", "beschreibung": "Ein geeigneter Standard MUSS ausgewählt werden."},
+        {"anforderung_id": "NET.2.1.A3", "titel": "Auswahl geeigneter Kryptoverfahren für WLAN", "typ": "MUSS", "beschreibung": "Geeignete Kryptoverfahren MÜSSEN ausgewählt werden."}
+      ]
+    },
+    {
+      "baustein_id": "NET.3.1",
+      "kategorie": "NET",
+      "titel": "Router und Switches",
+      "title_en": "Routers and Switches",
+      "beschreibung": "Dieser Baustein beschreibt die Sicherheit von Routern und Switches.",
+      "ir_phases": ["containment", "eradication"],
+      "cross_references": {"iso27001": ["A.13.1"]},
+      "anforderungen": [
+        {"anforderung_id": "NET.3.1.A1", "titel": "Sichere Grundkonfiguration eines Routers oder Switches", "typ": "MUSS", "beschreibung": "Eine sichere Grundkonfiguration MUSS vorhanden sein."},
+        {"anforderung_id": "NET.3.1.A2", "titel": "Einspielen von Updates und Patches", "typ": "MUSS", "beschreibung": "Updates MÜSSEN eingespielt werden."},
+        {"anforderung_id": "NET.3.1.A3", "titel": "Restriktive Rechtevergabe", "typ": "MUSS", "beschreibung": "Rechte MÜSSEN restriktiv vergeben werden."}
+      ]
+    },
+    {
+      "baustein_id": "NET.3.2",
+      "kategorie": "NET",
+      "titel": "Firewall",
+      "title_en": "Firewall",
+      "beschreibung": "Dieser Baustein beschreibt die Sicherheit von Firewalls.",
+      "ir_phases": ["detection", "containment"],
+      "cross_references": {"iso27001": ["A.13.1"]},
+      "anforderungen": [
+        {"anforderung_id": "NET.3.2.A1", "titel": "Erstellung einer Sicherheitsrichtlinie", "typ": "MUSS", "beschreibung": "Eine Sicherheitsrichtlinie MUSS erstellt werden."},
+        {"anforderung_id": "NET.3.2.A2", "titel": "Festlegung der Firewall-Regeln", "typ": "MUSS", "beschreibung": "Firewall-Regeln MÜSSEN festgelegt werden."},
+        {"anforderung_id": "NET.3.2.A3", "titel": "Einrichten geeigneter Filterregeln", "typ": "MUSS", "beschreibung": "Geeignete Filterregeln MÜSSEN eingerichtet werden."},
+        {"anforderung_id": "NET.3.2.A4", "titel": "Identifikation und Authentisierung gegenüber der Firewall", "typ": "MUSS", "beschreibung": "Eine Identifikation und Authentisierung MUSS erfolgen."},
+        {"anforderung_id": "NET.3.2.A5", "titel": "Regelmäßige Audits der Firewall-Regeln", "typ": "SOLLTE", "beschreibung": "Audits SOLLTEN regelmäßig durchgeführt werden."}
+      ]
+    },
+    {
+      "baustein_id": "NET.3.3",
+      "kategorie": "NET",
+      "titel": "VPN",
+      "title_en": "VPN",
+      "beschreibung": "Dieser Baustein beschreibt die Sicherheit von VPNs.",
+      "ir_phases": ["containment"],
+      "cross_references": {"iso27001": ["A.13.1", "A.13.2"]},
+      "anforderungen": [
+        {"anforderung_id": "NET.3.3.A1", "titel": "Planung des VPN-Einsatzes", "typ": "MUSS", "beschreibung": "Der VPN-Einsatz MUSS geplant werden."},
+        {"anforderung_id": "NET.3.3.A2", "titel": "Auswahl eines VPN-Dienstleisters", "typ": "SOLLTE", "beschreibung": "Ein Dienstleister SOLLTE sorgfältig ausgewählt werden."},
+        {"anforderung_id": "NET.3.3.A3", "titel": "Sichere Installation von VPN-Endgeräten", "typ": "MUSS", "beschreibung": "Die Installation MUSS sicher erfolgen."}
+      ]
+    },
+    {
+      "baustein_id": "INF.1",
+      "kategorie": "INF",
+      "titel": "Allgemeines Gebäude",
+      "title_en": "General Building",
+      "beschreibung": "Dieser Baustein beschreibt die Gebäudesicherheit.",
+      "ir_phases": [],
+      "cross_references": {"iso27001": ["A.11"]},
+      "anforderungen": [
+        {"anforderung_id": "INF.1.A1", "titel": "Planung der Gebäudeabsicherung", "typ": "MUSS", "beschreibung": "Die Gebäudeabsicherung MUSS geplant werden."},
+        {"anforderung_id": "INF.1.A2", "titel": "Angepasste Aufteilung der Stromkreise", "typ": "MUSS", "beschreibung": "Stromkreise MÜSSEN angepasst aufgeteilt werden."},
+        {"anforderung_id": "INF.1.A3", "titel": "Einhaltung von Brandschutzvorschriften", "typ": "MUSS", "beschreibung": "Brandschutzvorschriften MÜSSEN eingehalten werden."},
+        {"anforderung_id": "INF.1.A4", "titel": "Brandmeldeanlage", "typ": "SOLLTE", "beschreibung": "Eine Brandmeldeanlage SOLLTE vorhanden sein."}
+      ]
+    },
+    {
+      "baustein_id": "INF.2",
+      "kategorie": "INF",
+      "titel": "Rechenzentrum sowie Serverraum",
+      "title_en": "Data Center and Server Room",
+      "beschreibung": "Dieser Baustein beschreibt die Sicherheit von Rechenzentren und Serverräumen.",
+      "ir_phases": ["containment"],
+      "cross_references": {"iso27001": ["A.11.1"]},
+      "anforderungen": [
+        {"anforderung_id": "INF.2.A1", "titel": "Festlegung von Anforderungen", "typ": "MUSS", "beschreibung": "Anforderungen MÜSSEN festgelegt werden."},
+        {"anforderung_id": "INF.2.A2", "titel": "Bildung von Brandabschnitten", "typ": "MUSS", "beschreibung": "Brandabschnitte MÜSSEN gebildet werden."},
+        {"anforderung_id": "INF.2.A3", "titel": "Einsatz einer unterbrechungsfreien Stromversorgung", "typ": "MUSS", "beschreibung": "Eine USV MUSS eingesetzt werden."},
+        {"anforderung_id": "INF.2.A4", "titel": "Notabschaltung der Stromversorgung", "typ": "MUSS", "beschreibung": "Eine Notabschaltung MUSS möglich sein."},
+        {"anforderung_id": "INF.2.A5", "titel": "Einhaltung der Lufttemperatur und -feuchtigkeit", "typ": "MUSS", "beschreibung": "Temperatur und Feuchtigkeit MÜSSEN eingehalten werden."}
+      ]
+    },
+    {
+      "baustein_id": "INF.5",
+      "kategorie": "INF",
+      "titel": "Raum sowie Schrank für technische Infrastruktur",
+      "title_en": "Room and Cabinet for Technical Infrastructure",
+      "beschreibung": "Dieser Baustein beschreibt die Sicherheit von Technikräumen.",
+      "ir_phases": [],
+      "cross_references": {"iso27001": ["A.11.1"]},
+      "anforderungen": [
+        {"anforderung_id": "INF.5.A1", "titel": "Planung der Raumabsicherung", "typ": "MUSS", "beschreibung": "Die Raumabsicherung MUSS geplant werden."},
+        {"anforderung_id": "INF.5.A2", "titel": "Lage und Größe des Raumes für technische Infrastruktur", "typ": "MUSS", "beschreibung": "Lage und Größe MÜSSEN geeignet sein."},
+        {"anforderung_id": "INF.5.A3", "titel": "Zutrittsregelung und -kontrolle", "typ": "MUSS", "beschreibung": "Eine Zutrittsregelung MUSS existieren."}
+      ]
+    },
+    {
+      "baustein_id": "INF.7",
+      "kategorie": "INF",
+      "titel": "Büroarbeitsplatz",
+      "title_en": "Office Workplace",
+      "beschreibung": "Dieser Baustein beschreibt die Sicherheit des Büroarbeitsplatzes.",
+      "ir_phases": [],
+      "cross_references": {"iso27001": ["A.11.2"]},
+      "anforderungen": [
+        {"anforderung_id": "INF.7.A1", "titel": "Geeignete Auswahl und Nutzung eines Büroraums", "typ": "MUSS", "beschreibung": "Der Büroraum MUSS geeignet sein."},
+        {"anforderung_id": "INF.7.A2", "titel": "Geschlossene Fenster und abgeschlossene Türen", "typ": "MUSS", "beschreibung": "Fenster und Türen MÜSSEN gesichert sein."},
+        {"anforderung_id": "INF.7.A3", "titel": "Fliegende Verkabelung", "typ": "SOLLTE", "beschreibung": "Fliegende Verkabelung SOLLTE vermieden werden."}
+      ]
+    },
+    {
+      "baustein_id": "INF.9",
+      "kategorie": "INF",
+      "titel": "Mobiler Arbeitsplatz",
+      "title_en": "Mobile Workplace",
+      "beschreibung": "Dieser Baustein beschreibt die Sicherheit des mobilen Arbeitsplatzes.",
+      "ir_phases": [],
+      "cross_references": {"iso27001": ["A.6.2"]},
+      "anforderungen": [
+        {"anforderung_id": "INF.9.A1", "titel": "Geeignete Auswahl und Nutzung eines mobilen Arbeitsplatzes", "typ": "MUSS", "beschreibung": "Der Arbeitsplatz MUSS geeignet sein."},
+        {"anforderung_id": "INF.9.A2", "titel": "Regelungen für mobile Arbeitsplätze", "typ": "MUSS", "beschreibung": "Regelungen MÜSSEN existieren."},
+        {"anforderung_id": "INF.9.A3", "titel": "Zutritts- und Zugriffsschutz", "typ": "MUSS", "beschreibung": "Schutz MUSS vorhanden sein."}
+      ]
+    },
+    {
+      "baustein_id": "IND.1",
+      "kategorie": "IND",
+      "titel": "Prozessleit- und Automatisierungstechnik",
+      "title_en": "Process Control and Automation Technology",
+      "beschreibung": "Dieser Baustein beschreibt die Sicherheit industrieller Steuerungssysteme.",
+      "ir_phases": ["detection", "containment"],
+      "cross_references": {"iso27001": ["A.12", "A.13"]},
+      "anforderungen": [
+        {"anforderung_id": "IND.1.A1", "titel": "Einbindung in die Sicherheitsorganisation", "typ": "MUSS", "beschreibung": "Die Einbindung MUSS erfolgen."},
+        {"anforderung_id": "IND.1.A2", "titel": "Sensibilisierung und Schulung des Personals", "typ": "MUSS", "beschreibung": "Personal MUSS sensibilisiert und geschult werden."},
+        {"anforderung_id": "IND.1.A3", "titel": "Schutz vor Schadprogrammen", "typ": "MUSS", "beschreibung": "Schutz MUSS vorhanden sein."},
+        {"anforderung_id": "IND.1.A4", "titel": "Sichere Konfiguration von OT-Komponenten", "typ": "SOLLTE", "beschreibung": "OT-Komponenten SOLLTEN sicher konfiguriert werden."}
+      ]
+    },
+    {
+      "baustein_id": "IND.2.1",
+      "kategorie": "IND",
+      "titel": "Allgemeine ICS-Komponente",
+      "title_en": "General ICS Component",
+      "beschreibung": "Dieser Baustein beschreibt die Sicherheit allgemeiner ICS-Komponenten.",
+      "ir_phases": ["containment"],
+      "cross_references": {"iso27001": ["A.12.5"]},
+      "anforderungen": [
+        {"anforderung_id": "IND.2.1.A1", "titel": "Einschränkung des Zugriffs für Konfiguration und Wartung", "typ": "MUSS", "beschreibung": "Der Zugriff MUSS eingeschränkt werden."},
+        {"anforderung_id": "IND.2.1.A2", "titel": "Nutzung sicherer Übertragungsprotokolle für die Konfiguration und Wartung", "typ": "MUSS", "beschreibung": "Sichere Protokolle MÜSSEN genutzt werden."},
+        {"anforderung_id": "IND.2.1.A3", "titel": "Deaktivierung nicht benötigter Dienste, Funktionen und Schnittstellen", "typ": "MUSS", "beschreibung": "Nicht benötigte Dienste MÜSSEN deaktiviert werden."}
+      ]
+    },
+    {
+      "baustein_id": "IND.2.7",
+      "kategorie": "IND",
+      "titel": "Safety Instrumented Systems",
+      "title_en": "Safety Instrumented Systems",
+      "beschreibung": "Dieser Baustein beschreibt die Sicherheit von Safety Instrumented Systems.",
+      "ir_phases": [],
+      "cross_references": {"iso27001": ["A.12.5"]},
+      "anforderungen": [
+        {"anforderung_id": "IND.2.7.A1", "titel": "Erfassung und Dokumentation", "typ": "MUSS", "beschreibung": "SIS MÜSSEN erfasst und dokumentiert werden."},
+        {"anforderung_id": "IND.2.7.A2", "titel": "Erstellung einer Sicherheitsrichtlinie", "typ": "MUSS", "beschreibung": "Eine Sicherheitsrichtlinie MUSS erstellt werden."},
+        {"anforderung_id": "IND.2.7.A3", "titel": "Trennung von produktiver und sicherheitsgerichteter Leit- oder Steuerungstechnik", "typ": "MUSS", "beschreibung": "Eine Trennung MUSS erfolgen."}
+      ]
+    },
+    {
+      "baustein_id": "IND.3.2",
+      "kategorie": "IND",
+      "titel": "Fernwartung im industriellen Umfeld",
+      "title_en": "Remote Maintenance in Industrial Environments",
+      "beschreibung": "Dieser Baustein beschreibt die Fernwartung im industriellen Umfeld.",
+      "ir_phases": ["containment"],
+      "cross_references": {"iso27001": ["A.15"]},
+      "anforderungen": [
+        {"anforderung_id": "IND.3.2.A1", "titel": "Planung des Einsatzes von Fernwartung", "typ": "MUSS", "beschreibung": "Der Einsatz MUSS geplant werden."},
+        {"anforderung_id": "IND.3.2.A2", "titel": "Dokumentation der Fernwartung", "typ": "MUSS", "beschreibung": "Die Fernwartung MUSS dokumentiert werden."},
+        {"anforderung_id": "IND.3.2.A3", "titel": "Sichere Kommunikation bei der Fernwartung", "typ": "MUSS", "beschreibung": "Die Kommunikation MUSS sicher sein."}
+      ]
+    }
+  ]
+}
