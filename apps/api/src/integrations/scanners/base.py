@@ -213,6 +213,6 @@ class BaseScannerAdapter(ABC):
         """
         pass
 
-    async def close(self):
+    async def close(self):  # noqa: B027
         """Clean up resources. Override if needed."""
         pass

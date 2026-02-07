@@ -34,6 +34,7 @@ aiohttp>=3.9.1
 pyTenable>=1.4.0  # Nessus/Tenable.io integration
 python-gvm>=24.1.0  # OpenVAS/GVM integration
 lxml>=5.0.0  # XML parsing for scanner responses
+defusedxml>=0.7.0  # Secure XML parsing
 
 # Email
 aiosmtplib>=3.0.0
