@@ -928,20 +928,25 @@ function ReportStep({
   isCompleting: boolean;
 }) {
   const [isExportingPdf, setIsExportingPdf] = React.useState(false);
+  const [isExportingJson, setIsExportingJson] = React.useState(false);
 
   const exportPdfReport = async () => {
-    if (!token) return;
+    if (!token) {
+      toast.error("Authentication required");
+      return;
+    }
     setIsExportingPdf(true);
     try {
+      const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
       const response = await fetch(
-        `/api/v1/reports/nis2/assessment/${assessmentId}?classification=Confidential`,
+        `${API_BASE_URL}/api/v1/nis2/assessments/${assessmentId}/report?format=pdf`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
 
       if (!response.ok) {
-        const error = await response.json();
+        const error = await response.json().catch(() => ({ detail: "Export failed" }));
         throw new Error(error.detail || "Failed to generate PDF");
       }
 
@@ -950,13 +955,41 @@ function ReportStep({
       const a = document.createElement("a");
       a.href = url;
       a.download = `NIS2_Assessment_${assessment?.name?.replace(/\s+/g, "_") || assessmentId}_${new Date().toISOString().split("T")[0]}.pdf`;
+      document.body.appendChild(a);
       a.click();
+      document.body.removeChild(a);
       URL.revokeObjectURL(url);
+      toast.success("PDF report exported successfully");
     } catch (error) {
       console.error("PDF export failed:", error);
-      alert("PDF export failed. Please ensure LaTeX is installed on the server.");
+      toast.error(error instanceof Error ? error.message : "Failed to export PDF report");
     } finally {
       setIsExportingPdf(false);
+    }
+  };
+
+  const exportJsonReport = async () => {
+    if (!token) {
+      toast.error("Authentication required");
+      return;
+    }
+    setIsExportingJson(true);
+    try {
+      const blob = new Blob([JSON.stringify(reportData, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `NIS2_Assessment_${assessment?.name?.replace(/\s+/g, "_") || assessmentId}_${new Date().toISOString().split("T")[0]}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      toast.success("JSON report exported successfully");
+    } catch (error) {
+      console.error("JSON export failed:", error);
+      toast.error("Failed to export JSON report");
+    } finally {
+      setIsExportingJson(false);
     }
   };
 
@@ -1025,24 +1058,43 @@ function ReportStep({
         </CardContent>
       </Card>
 
-      {/* Export Button */}
+      {/* Export Buttons */}
       <Card>
         <CardHeader>
           <CardTitle>Export Report</CardTitle>
+          <CardDescription>
+            Download the compliance report in your preferred format.
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          <Button
-            onClick={exportPdfReport}
-            disabled={isExportingPdf}
-            className="w-full"
-          >
-            {isExportingPdf ? (
-              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-            ) : (
-              <Download className="h-4 w-4 mr-2" />
-            )}
-            Download PDF Report (DIN 5008 / EU Standard)
-          </Button>
+          <div className="flex gap-4">
+            <Button
+              variant="outline"
+              onClick={exportPdfReport}
+              disabled={isExportingPdf}
+              className="flex-1"
+            >
+              {isExportingPdf ? (
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+              ) : (
+                <Download className="h-4 w-4 mr-2" />
+              )}
+              {isExportingPdf ? "Exporting..." : "Export PDF"}
+            </Button>
+            <Button
+              variant="outline"
+              onClick={exportJsonReport}
+              disabled={isExportingJson}
+              className="flex-1"
+            >
+              {isExportingJson ? (
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+              ) : (
+                <FileText className="h-4 w-4 mr-2" />
+              )}
+              {isExportingJson ? "Exporting..." : "Export JSON"}
+            </Button>
+          </div>
         </CardContent>
       </Card>
 

@@ -21,6 +21,7 @@ import {
   ChevronRight,
   X,
   Link2,
+  Loader2,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -63,6 +64,7 @@ import { useAuthStore } from "@/stores/auth-store";
 import { iso27001API } from "@/lib/api-client";
 import { Header } from "@/components/shared/header";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 
 // Types
 interface Assessment {
@@ -235,6 +237,8 @@ export default function ISO27001AssessmentPage() {
   const [selectedTheme, setSelectedTheme] = useState<string>("all");
   const [editingEntry, setEditingEntry] = useState<SoAEntry | null>(null);
   const [isCompleteDialogOpen, setIsCompleteDialogOpen] = useState(false);
+  const [isExportingPDF, setIsExportingPDF] = useState(false);
+  const [isExportingJSON, setIsExportingJSON] = useState(false);
 
   // Scope form state
   const [scopeForm, setScopeForm] = useState({
@@ -369,6 +373,81 @@ export default function ISO27001AssessmentPage() {
       ...scopeForm,
       [field]: scopeForm[field].filter((_, i) => i !== index),
     });
+  };
+
+  const handleExportPDF = async () => {
+    if (!token) {
+      toast.error("Authentication required");
+      return;
+    }
+
+    setIsExportingPDF(true);
+    try {
+      const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+      const response = await fetch(
+        `${API_BASE_URL}/api/v1/iso27001/assessments/${assessmentId}/report?format=pdf&include_gaps=true`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        const error = await response.json().catch(() => ({ detail: "Export failed" }));
+        throw new Error(error.detail || "Failed to export PDF");
+      }
+
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `iso27001-assessment-${assessmentId}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      toast.success("PDF report exported successfully");
+    } catch (error) {
+      console.error("PDF export error:", error);
+      toast.error(error instanceof Error ? error.message : "Failed to export PDF report");
+    } finally {
+      setIsExportingPDF(false);
+    }
+  };
+
+  const handleExportJSON = async () => {
+    if (!token) {
+      toast.error("Authentication required");
+      return;
+    }
+
+    setIsExportingJSON(true);
+    try {
+      const report = await iso27001API.getReport(token, assessmentId, {
+        format: "json",
+        include_gaps: true,
+        include_evidence: true,
+      });
+
+      const blob = new Blob([JSON.stringify(report, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `iso27001-assessment-${assessmentId}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      toast.success("JSON report exported successfully");
+    } catch (error) {
+      console.error("JSON export error:", error);
+      toast.error(error instanceof Error ? error.message : "Failed to export JSON report");
+    } finally {
+      setIsExportingJSON(false);
+    }
   };
 
   if (assessmentLoading) {
@@ -1040,13 +1119,29 @@ export default function ISO27001AssessmentPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="flex gap-4">
-                    <Button variant="outline">
-                      <Download className="h-4 w-4 mr-2" />
-                      Export PDF
+                    <Button
+                      variant="outline"
+                      onClick={handleExportPDF}
+                      disabled={isExportingPDF}
+                    >
+                      {isExportingPDF ? (
+                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      ) : (
+                        <Download className="h-4 w-4 mr-2" />
+                      )}
+                      {isExportingPDF ? "Exporting..." : "Export PDF"}
                     </Button>
-                    <Button variant="outline">
-                      <FileText className="h-4 w-4 mr-2" />
-                      Export JSON
+                    <Button
+                      variant="outline"
+                      onClick={handleExportJSON}
+                      disabled={isExportingJSON}
+                    >
+                      {isExportingJSON ? (
+                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      ) : (
+                        <FileText className="h-4 w-4 mr-2" />
+                      )}
+                      {isExportingJSON ? "Exporting..." : "Export JSON"}
                     </Button>
                   </div>
                 </CardContent>

@@ -1,7 +1,10 @@
 """NIS2 Assessment Wizard API endpoints."""
-from typing import Optional
+from datetime import datetime
+from typing import Optional, Union
 
 from fastapi import APIRouter, HTTPException, status, Query
+from fastapi.responses import StreamingResponse
+import io
 
 from src.api.deps import DBSession, UserWithTenant
 from src.models.nis2 import NIS2AssessmentStatus
@@ -391,13 +394,21 @@ async def get_gap_analysis(
 
 # ============== Report ==============
 
-@router.get("/assessments/{assessment_id}/report", response_model=AssessmentReportResponse)
+@router.get("/assessments/{assessment_id}/report")
 async def get_assessment_report(
     assessment_id: str,
     db: DBSession,
     user_context: UserWithTenant,
-):
-    """Generate assessment report."""
+    format: str = Query("json", regex="^(pdf|json)$"),
+) -> Union[AssessmentReportResponse, StreamingResponse]:
+    """
+    Generate assessment report.
+
+    - **format**: Output format (pdf, json)
+
+    For PDF format, streams the PDF file directly.
+    For JSON format, returns the report data directly.
+    """
     current_user, context = user_context
 
     if not context.tenant_id:
@@ -414,6 +425,82 @@ async def get_assessment_report(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Assessment not found",
         )
+
+    if format == "pdf":
+        try:
+            from src.services.pdf_reports import NIS2ReportGenerator
+
+            # Prepare data for PDF generator
+            assessment_data = {
+                "name": data.get("assessment_id", "NIS2 Assessment"),
+                "organization_name": data.get("organization_name", "Unknown Organization"),
+                "status": "completed",
+                "overall_score": data.get("overall_score", 0),
+                "compliance_level": data.get("compliance_level", "Unknown"),
+                "executive_summary": data.get("executive_summary", ""),
+                "gaps_count": len(data.get("gaps", [])),
+                "measures_compliant": sum(1 for s in data.get("sections", []) if s.get("status") == "compliant"),
+                "measures_total": len(data.get("sections", [])),
+            }
+
+            classification_data = data.get("entity_classification", {})
+            if isinstance(classification_data, dict):
+                classification = {
+                    "entity_type": classification_data.get("entity_type", "unknown"),
+                    "sector": classification_data.get("sector", "unknown"),
+                    "subsector": classification_data.get("subsector", ""),
+                    "employee_count": classification_data.get("employee_count", 0),
+                    "annual_revenue": classification_data.get("annual_revenue", 0),
+                }
+            else:
+                classification = {
+                    "entity_type": "unknown",
+                    "sector": "unknown",
+                    "subsector": "",
+                    "employee_count": 0,
+                    "annual_revenue": 0,
+                }
+
+            # Convert sections to measures format
+            measures = []
+            for section in data.get("sections", []):
+                measures.append({
+                    "name": section.get("title", "Unknown"),
+                    "status": section.get("status", "not_evaluated"),
+                    "implementation_level": section.get("score", 0),
+                })
+
+            gaps = data.get("gaps", [])
+            recommendations = data.get("recommendations", [])
+
+            # Generate PDF
+            generator = NIS2ReportGenerator()
+            pdf_bytes = generator.generate_report(
+                assessment=assessment_data,
+                classification=classification,
+                measures=measures,
+                gaps=gaps,
+                recommendations=recommendations,
+            )
+
+            return StreamingResponse(
+                io.BytesIO(pdf_bytes),
+                media_type="application/pdf",
+                headers={
+                    "Content-Disposition": f"attachment; filename=NIS2_Assessment_Report_{datetime.now().strftime('%Y%m%d')}.pdf"
+                }
+            )
+
+        except ImportError as e:
+            raise HTTPException(
+                status_code=status.HTTP_501_NOT_IMPLEMENTED,
+                detail="PDF generation not available. Please install reportlab: pip install reportlab"
+            )
+        except Exception as e:
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail=f"Error generating PDF: {str(e)}"
+            )
 
     return AssessmentReportResponse(**data)
 
