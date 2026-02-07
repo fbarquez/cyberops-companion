@@ -109,10 +109,7 @@ export function SidebarNav() {
             )}
           </div>
           {!sidebarCollapsed && (
-            <>
-              <span className="flex-1 text-left">AI Copilot</span>
-              <span className="text-xs opacity-60">⌘K</span>
-            </>
+            <span className="flex-1 text-left">AI Copilot</span>
           )}
         </button>
       </div>

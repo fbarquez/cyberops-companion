@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Moon, Sun, Globe, ArrowLeft, Menu } from "lucide-react";
+import { Moon, Sun, Globe, ArrowLeft, Menu, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -23,7 +23,7 @@ interface HeaderProps {
 
 export function Header({ title, children, actions, backHref }: HeaderProps) {
   const router = useRouter();
-  const { theme, setTheme, language, setLanguage, setSidebarOpen } = useUIStore();
+  const { theme, setTheme, language, setLanguage, setSidebarOpen, setCommandPaletteOpen } = useUIStore();
 
   return (
     <header className="flex items-center justify-between h-14 md:h-16 px-4 md:px-6 border-b bg-card">
@@ -62,6 +62,19 @@ export function Header({ title, children, actions, backHref }: HeaderProps) {
         <div className="hidden sm:flex items-center gap-2">
           {actions || children}
         </div>
+
+        {/* Command Palette Button */}
+        <Button
+          variant="outline"
+          size="sm"
+          className="hidden sm:flex items-center gap-2 text-muted-foreground hover:text-foreground"
+          onClick={() => setCommandPaletteOpen(true)}
+        >
+          <Search className="h-4 w-4" />
+          <kbd className="pointer-events-none hidden md:inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium">
+            <span className="text-xs">⌘</span>K
+          </kbd>
+        </Button>
 
         {/* Notification Bell */}
         <NotificationBell />
