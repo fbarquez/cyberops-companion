@@ -97,10 +97,6 @@ export function AskAnythingBar() {
           </DropdownMenuContent>
         </DropdownMenu>
 
-        {/* Keyboard Hint */}
-        <kbd className="hidden md:inline-flex h-7 items-center gap-1 rounded-md border bg-muted px-2 font-mono text-xs font-medium text-muted-foreground">
-          <span className="text-base">⌘</span>K
-        </kbd>
       </div>
     </div>
   );

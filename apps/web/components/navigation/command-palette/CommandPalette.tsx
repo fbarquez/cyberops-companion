@@ -25,7 +25,6 @@ import {
   ClipboardList,
   Plug,
   PlayCircle,
-  Sparkles,
   Plus,
   Search as SearchIcon,
   Clock,
@@ -35,7 +34,6 @@ import {
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { useUIStore } from "@/stores/ui-store";
 import { useTranslations } from "@/hooks/use-translations";
-import { useCopilot } from "@/components/copilot/CopilotProvider";
 import { CommandSearch } from "./CommandSearch";
 import { CommandGroup } from "./CommandGroup";
 import { CommandItem } from "./CommandItem";
@@ -90,7 +88,6 @@ export function CommandPalette() {
   const router = useRouter();
   const { t } = useTranslations();
   const { commandPaletteOpen, setCommandPaletteOpen, quickAccess } = useUIStore();
-  const { openChat, sendMessage } = useCopilot();
   const [search, setSearch] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -119,19 +116,8 @@ export function CommandPalette() {
         },
         keywords: ["create", "report", "analytics"],
       },
-      {
-        id: "ask-copilot",
-        label: "Ask AI Copilot",
-        description: "Get AI-powered assistance",
-        icon: Sparkles,
-        action: () => {
-          openChat();
-          setCommandPaletteOpen(false);
-        },
-        keywords: ["ai", "help", "assistant", "chat"],
-      },
     ],
-    [router, setCommandPaletteOpen, openChat]
+    [router, setCommandPaletteOpen]
   );
 
   // Filter results based on search
@@ -209,16 +195,6 @@ export function CommandPalette() {
     [allItems, selectedIndex, router, setCommandPaletteOpen]
   );
 
-  // Handle copilot query
-  const handleCopilotQuery = useCallback(() => {
-    if (search.trim()) {
-      openChat();
-      sendMessage(search);
-      setCommandPaletteOpen(false);
-      setSearch("");
-    }
-  }, [search, openChat, sendMessage, setCommandPaletteOpen]);
-
   // Reset on close
   useEffect(() => {
     if (!commandPaletteOpen) {
@@ -241,23 +217,10 @@ export function CommandPalette() {
         <CommandSearch
           value={search}
           onChange={setSearch}
-          placeholder="Search commands, pages, or ask Copilot..."
+          placeholder="Search commands and pages..."
         />
 
         <div className="max-h-[400px] overflow-y-auto">
-          {/* Ask Copilot with current query */}
-          {search && (
-            <div className="border-b p-2">
-              <CommandItem
-                icon={Sparkles}
-                label={`Ask Copilot: "${search}"`}
-                description="Get AI-powered assistance"
-                isActive={selectedIndex === 0}
-                onClick={handleCopilotQuery}
-              />
-            </div>
-          )}
-
           {/* Recent Pages */}
           {quickAccess.length > 0 && !search && (
             <CommandGroup label="Recent">
@@ -271,7 +234,7 @@ export function CommandPalette() {
                     key={`recent-${qa.href}`}
                     icon={navItem.icon}
                     label={navItem.label}
-                    isActive={selectedIndex === index + (search ? 1 : 0)}
+                    isActive={selectedIndex === index}
                     onClick={() => {
                       router.push(qa.href);
                       setCommandPaletteOpen(false);
@@ -294,7 +257,7 @@ export function CommandPalette() {
                     icon={item.icon}
                     label={item.label}
                     description={item.description}
-                    isActive={selectedIndex === index + (search ? 1 : 0)}
+                    isActive={selectedIndex === index}
                     onClick={item.action}
                   />
                 );
@@ -313,7 +276,7 @@ export function CommandPalette() {
                     key={item.id}
                     icon={item.icon}
                     label={item.label}
-                    isActive={selectedIndex === index + (search ? 1 : 0)}
+                    isActive={selectedIndex === index}
                     onClick={() => {
                       router.push(item.href);
                       setCommandPaletteOpen(false);
@@ -327,13 +290,13 @@ export function CommandPalette() {
           {/* No results */}
           {search && filteredNavigation.length === 0 && filteredActions.length === 0 && (
             <div className="py-8 text-center text-sm text-muted-foreground">
-              No results found. Press Enter to ask Copilot.
+              No results found.
             </div>
           )}
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between border-t px-4 py-2 text-xs text-muted-foreground">
+        <div className="flex items-center justify-center border-t px-4 py-2 text-xs text-muted-foreground">
           <div className="flex gap-4">
             <span>
               <kbd className="rounded border bg-muted px-1.5 py-0.5 font-mono">↑↓</kbd> Navigate
@@ -344,10 +307,6 @@ export function CommandPalette() {
             <span>
               <kbd className="rounded border bg-muted px-1.5 py-0.5 font-mono">esc</kbd> Close
             </span>
-          </div>
-          <div className="flex items-center gap-1">
-            <Sparkles className="h-3 w-3" />
-            <span>AI-powered</span>
           </div>
         </div>
       </DialogContent>
