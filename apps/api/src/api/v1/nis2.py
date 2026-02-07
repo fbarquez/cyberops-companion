@@ -394,13 +394,13 @@ async def get_gap_analysis(
 
 # ============== Report ==============
 
-@router.get("/assessments/{assessment_id}/report")
+@router.get("/assessments/{assessment_id}/report", response_model=None)
 async def get_assessment_report(
     assessment_id: str,
     db: DBSession,
     user_context: UserWithTenant,
     format: str = Query("json", regex="^(pdf|json)$"),
-) -> Union[AssessmentReportResponse, StreamingResponse]:
+):
     """
     Generate assessment report.
 
