@@ -2,7 +2,8 @@
 import logging
 import re
 from typing import Any, Dict, List, Optional
-from xml.etree import ElementTree as ET
+
+import defusedxml.ElementTree as ET  # noqa: N817
 
 from .base import (
     BaseScannerAdapter,
