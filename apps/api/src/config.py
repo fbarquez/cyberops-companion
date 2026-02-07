@@ -125,6 +125,11 @@ class Settings(BaseSettings):
     OPENAI_API_KEY: str = ""  # For OpenAI
     ANTHROPIC_API_KEY: str = ""  # For Anthropic/Claude
 
+    # Vulnerability Scanner Configuration
+    SCANNER_POLL_INTERVAL: int = 30  # Seconds between status polls
+    SCANNER_MAX_RUNTIME: int = 14400  # Maximum scan runtime (4 hours)
+    SCANNER_CONNECTION_TIMEOUT: int = 60  # Connection timeout in seconds
+
     class Config:
         env_file = ".env"
         case_sensitive = True

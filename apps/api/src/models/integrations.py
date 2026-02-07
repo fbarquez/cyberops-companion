@@ -44,6 +44,7 @@ class IntegrationType(str, enum.Enum):
 
     # Vulnerability Scanners
     NESSUS = "nessus"
+    OPENVAS = "openvas"
     QUALYS = "qualys"
     RAPID7 = "rapid7"
 
