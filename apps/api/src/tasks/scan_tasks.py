@@ -4,13 +4,22 @@ Vulnerability scan background tasks.
 import asyncio
 import logging
 from datetime import datetime
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, TYPE_CHECKING
 from celery import shared_task
 from celery.exceptions import MaxRetriesExceededError
 
 from src.celery_app import celery_app, TaskState
+from src.config import settings
+
+if TYPE_CHECKING:
+    from src.integrations.scanners import BaseScannerAdapter
+    from src.models.vulnerability import VulnerabilityScan
 
 logger = logging.getLogger(__name__)
+
+# Scanner polling settings
+SCANNER_POLL_INTERVAL = getattr(settings, "SCANNER_POLL_INTERVAL", 30)
+SCANNER_MAX_RUNTIME = getattr(settings, "SCANNER_MAX_RUNTIME", 14400)  # 4 hours
 
 
 def run_async(coro):
@@ -29,16 +38,144 @@ async def _get_db_session():
         yield session
 
 
-async def _execute_scan_async(scan_id: str, task_id: str) -> Dict[str, Any]:
+async def _get_scanner_integration(db, scanner: str, tenant_id: str = None):
+    """
+    Get integration configuration for a scanner type.
+
+    Returns the Integration model if configured, None otherwise.
+    """
+    from src.models.integrations import Integration, IntegrationType, IntegrationStatus
+    from sqlalchemy import select
+
+    # Map scanner names to IntegrationType
+    scanner_type_map = {
+        "nessus": IntegrationType.NESSUS,
+        "openvas": IntegrationType.OPENVAS,
+        "qualys": IntegrationType.QUALYS,
+        "rapid7": IntegrationType.RAPID7,
+    }
+
+    integration_type = scanner_type_map.get(scanner.lower())
+    if not integration_type:
+        return None
+
+    # Query for active integration
+    query = select(Integration).where(
+        Integration.integration_type == integration_type,
+        Integration.status == IntegrationStatus.ACTIVE,
+        Integration.is_enabled == True,
+    )
+
+    if tenant_id:
+        query = query.where(Integration.tenant_id == tenant_id)
+
+    result = await db.execute(query)
+    return result.scalar_one_or_none()
+
+
+async def _execute_real_scan(
+    adapter: "BaseScannerAdapter",
+    scan: "VulnerabilityScan",
+    db,
+    task_instance=None,
+) -> List[Dict[str, Any]]:
+    """
+    Execute a real scan using a scanner adapter.
+
+    Args:
+        adapter: The scanner adapter to use.
+        scan: The VulnerabilityScan model instance.
+        db: Database session.
+        task_instance: Celery task instance for progress updates.
+
+    Returns:
+        List of finding dictionaries.
+    """
+    from src.integrations.scanners import ScanState, summarize_results
+
+    # Parse targets from scan configuration
+    targets = []
+    if scan.targets:
+        if isinstance(scan.targets, list):
+            targets = scan.targets
+        elif isinstance(scan.targets, str):
+            targets = [t.strip() for t in scan.targets.split(",")]
+
+    if not targets:
+        raise ValueError("No targets specified for scan")
+
+    # Launch the scan
+    logger.info(f"Launching {adapter.scanner_type.value} scan for targets: {targets}")
+    external_scan_id = await adapter.launch_scan(
+        targets=targets,
+        scan_name=scan.name,
+        policy_id=scan.policy_id if hasattr(scan, "policy_id") else None,
+    )
+
+    logger.info(f"External scan ID: {external_scan_id}")
+
+    # Poll for completion
+    start_time = datetime.utcnow()
+    poll_count = 0
+    max_polls = SCANNER_MAX_RUNTIME // SCANNER_POLL_INTERVAL
+
+    while poll_count < max_polls:
+        poll_count += 1
+        await asyncio.sleep(SCANNER_POLL_INTERVAL)
+
+        # Get scan status
+        progress = await adapter.get_scan_status(external_scan_id)
+        logger.info(
+            f"Scan {external_scan_id} progress: {progress.progress_percent}% "
+            f"({progress.state.value})"
+        )
+
+        # Update Celery task state
+        if task_instance:
+            task_instance.update_state(
+                state=TaskState.PROGRESS,
+                meta={
+                    "scan_id": scan.id,
+                    "external_scan_id": external_scan_id,
+                    "progress_percent": progress.progress_percent,
+                    "hosts_total": progress.hosts_total,
+                    "hosts_completed": progress.hosts_completed,
+                    "status": progress.state.value,
+                },
+            )
+
+        # Check if complete
+        if progress.state == ScanState.COMPLETED:
+            break
+        elif progress.state == ScanState.FAILED:
+            raise Exception(f"Scan failed: {progress.message}")
+        elif progress.state == ScanState.CANCELLED:
+            raise Exception("Scan was cancelled")
+
+        # Check timeout
+        elapsed = (datetime.utcnow() - start_time).total_seconds()
+        if elapsed >= SCANNER_MAX_RUNTIME:
+            logger.warning(f"Scan {external_scan_id} timed out after {elapsed}s")
+            await adapter.stop_scan(external_scan_id)
+            raise TimeoutError(f"Scan timed out after {SCANNER_MAX_RUNTIME} seconds")
+
+    # Get results
+    result = await adapter.get_scan_results(external_scan_id)
+    logger.info(f"Scan results: {summarize_results(result)}")
+
+    # Convert NormalizedFinding to dicts
+    findings = [f.to_dict() for f in result.findings]
+    return findings
+
+
+async def _execute_scan_async(scan_id: str, task_id: str, task_instance=None) -> Dict[str, Any]:
     """
     Execute vulnerability scan asynchronously.
 
-    This function contains the actual scan logic.
-    In a real implementation, this would:
-    1. Connect to the scanner (Nessus, OpenVAS, etc.)
-    2. Initiate the scan
-    3. Poll for results
-    4. Parse and store findings
+    This function:
+    1. Checks for configured scanner integration
+    2. If integration exists, uses real scanner adapter
+    3. Otherwise falls back to simulation
     """
     from src.db.database import async_session_maker
     from src.models.vulnerability import VulnerabilityScan, ScanStatus, Vulnerability, VulnerabilitySeverity
@@ -63,10 +200,30 @@ async def _execute_scan_async(scan_id: str, task_id: str) -> Dict[str, Any]:
         scan.celery_task_id = task_id
         await db.commit()
 
+        adapter = None
         try:
-            # Simulate scan execution based on scan type
-            # In production, this would connect to actual scanners
-            findings = await _simulate_scan_execution(scan)
+            # Check for scanner integration
+            integration = await _get_scanner_integration(
+                db, scan.scanner, getattr(scan, "tenant_id", None)
+            )
+
+            if integration:
+                # Use real scanner
+                logger.info(f"Using real scanner integration: {integration.name}")
+                from src.integrations.scanners import get_scanner_adapter, ScannerConfig
+
+                config = ScannerConfig.from_integration(integration)
+                adapter = get_scanner_adapter(config)
+
+                # Test connection first
+                await adapter.test_connection()
+
+                # Execute real scan
+                findings = await _execute_real_scan(adapter, scan, db, task_instance)
+            else:
+                # Fallback to simulation
+                logger.info("No scanner integration configured, using simulation")
+                findings = await _simulate_scan_execution(scan)
 
             # Process findings
             findings_count = {
@@ -93,7 +250,9 @@ async def _execute_scan_async(scan_id: str, task_id: str) -> Dict[str, Any]:
                 db.add(vuln)
 
                 # Count by severity
-                findings_count[finding["severity"]] += 1
+                severity = finding["severity"]
+                if severity in findings_count:
+                    findings_count[severity] += 1
 
             # Update scan with results
             scan.status = ScanStatus.COMPLETED
@@ -114,6 +273,7 @@ async def _execute_scan_async(scan_id: str, task_id: str) -> Dict[str, Any]:
                 "status": "completed",
                 "findings_count": findings_count,
                 "total_findings": scan.total_findings,
+                "used_real_scanner": integration is not None,
             }
 
         except Exception as e:
@@ -126,6 +286,11 @@ async def _execute_scan_async(scan_id: str, task_id: str) -> Dict[str, Any]:
             await db.commit()
 
             raise
+
+        finally:
+            # Clean up adapter
+            if adapter:
+                await adapter.close()
 
 
 async def _simulate_scan_execution(scan) -> List[Dict[str, Any]]:
@@ -220,8 +385,8 @@ def execute_vulnerability_scan(self, scan_id: str) -> Dict[str, Any]:
             meta={"scan_id": scan_id, "status": "initializing"}
         )
 
-        # Run the async scan execution
-        result = run_async(_execute_scan_async(scan_id, self.request.id))
+        # Run the async scan execution (pass self for progress updates)
+        result = run_async(_execute_scan_async(scan_id, self.request.id, self))
 
         return result
 
