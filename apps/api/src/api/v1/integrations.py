@@ -201,6 +201,21 @@ async def test_connection(
     )
 
 
+@router.post("/{integration_id}/test-connection", response_model=TestConnectionResponse)
+async def test_integration_connection(
+    integration_id: str,
+    db: DBSession,
+    current_user: AdminUser,
+):
+    """Test connection for an existing integration (admin only)."""
+    service = IntegrationsService(db)
+    integration = await service.get_integration(integration_id)
+    if not integration:
+        raise HTTPException(status_code=404, detail="Integration not found")
+
+    return await service.test_integration_connection(integration)
+
+
 # ============== Sync Operations ==============
 
 @router.post("/{integration_id}/sync", response_model=ManualSyncResponse)
