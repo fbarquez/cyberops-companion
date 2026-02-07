@@ -1045,14 +1045,22 @@ export default function AttackPathsPage() {
                           <TableCell>
                             <div className="flex gap-1">
                               {point.authentication_required ? (
-                                <CheckCircle className="h-4 w-4 text-green-500" title="Auth Required" />
+                                <span title="Auth Required">
+                                  <CheckCircle className="h-4 w-4 text-green-500" />
+                                </span>
                               ) : (
-                                <XCircle className="h-4 w-4 text-red-500" title="No Auth" />
+                                <span title="No Auth">
+                                  <XCircle className="h-4 w-4 text-red-500" />
+                                </span>
                               )}
                               {point.mfa_enabled ? (
-                                <Shield className="h-4 w-4 text-green-500" title="MFA Enabled" />
+                                <span title="MFA Enabled">
+                                  <Shield className="h-4 w-4 text-green-500" />
+                                </span>
                               ) : (
-                                <AlertCircle className="h-4 w-4 text-yellow-500" title="No MFA" />
+                                <span title="No MFA">
+                                  <AlertCircle className="h-4 w-4 text-yellow-500" />
+                                </span>
                               )}
                             </div>
                           </TableCell>

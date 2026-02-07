@@ -33,6 +33,50 @@ import { trainingAPI } from "@/lib/api-client";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
+// Type definitions
+interface TrainingModule {
+  id: string;
+  title: string;
+  description?: string;
+  module_type: string;
+  estimated_duration_minutes?: number;
+  order_index: number;
+  user_completed?: boolean;
+  is_locked?: boolean;
+}
+
+interface TrainingCourse {
+  id: string;
+  title: string;
+  description?: string;
+  course_code?: string;
+  difficulty?: string;
+  category?: string;
+  estimated_duration_minutes?: number;
+  passing_score?: number;
+  certificate_enabled?: boolean;
+  objectives?: string[];
+  compliance_frameworks?: string[];
+  control_references?: string[];
+}
+
+interface ModulesData {
+  items: TrainingModule[];
+}
+
+interface Enrollment {
+  course_id: string;
+  progress_percent: number;
+  deadline?: string;
+  is_overdue?: boolean;
+}
+
+interface MyLearning {
+  in_progress: Enrollment[];
+  assigned: Enrollment[];
+  completed: Enrollment[];
+}
+
 const moduleTypeIcons: Record<string, React.ElementType> = {
   video: Video,
   text: FileText,
@@ -58,21 +102,21 @@ export default function CourseDetailPage() {
   // Fetch course details
   const { data: course, isLoading: courseLoading } = useQuery({
     queryKey: ["training-course", id],
-    queryFn: () => trainingAPI.getCourse(token!, id as string),
+    queryFn: () => trainingAPI.getCourse(token!, id as string) as Promise<TrainingCourse>,
     enabled: !!token && !!id,
   });
 
   // Fetch modules
   const { data: modulesData, isLoading: modulesLoading } = useQuery({
     queryKey: ["course-modules", id],
-    queryFn: () => trainingAPI.getCourseModules(token!, id as string),
+    queryFn: () => trainingAPI.getCourseModules(token!, id as string) as Promise<ModulesData>,
     enabled: !!token && !!id,
   });
 
   // Get user enrollment status
   const { data: myLearning } = useQuery({
     queryKey: ["my-learning"],
-    queryFn: () => trainingAPI.getMyLearning(token!),
+    queryFn: () => trainingAPI.getMyLearning(token!) as Promise<MyLearning>,
     enabled: !!token,
   });
 
@@ -126,11 +170,8 @@ export default function CourseDetailPage() {
   return (
     <div className="flex flex-col h-full">
       <Header
-        title={course.title}
-        breadcrumbs={[
-          { label: t("training.title") || "Training", href: "/training" },
-          { label: course.course_code },
-        ]}
+        title={course?.title || "Course"}
+        backHref="/training"
       />
 
       <div className="p-6 space-y-6 overflow-y-auto">
@@ -139,11 +180,11 @@ export default function CourseDetailPage() {
           <Card className="md:col-span-2">
             <CardHeader>
               <div className="flex items-start justify-between">
-                <Badge variant="outline" className={difficultyColors[course.difficulty]}>
-                  {t(`training.difficulty.${course.difficulty}`) || course.difficulty}
+                <Badge variant="outline" className={difficultyColors[course.difficulty || "beginner"]}>
+                  {t(`training.difficulty.${course.difficulty}`) || course.difficulty || "beginner"}
                 </Badge>
                 <Badge variant="outline">
-                  {t(`training.categories.${course.category}`) || course.category.replace(/_/g, " ")}
+                  {t(`training.categories.${course.category}`) || (course.category || "general").replace(/_/g, " ")}
                 </Badge>
               </div>
               <CardTitle className="text-2xl mt-2">{course.title}</CardTitle>
@@ -354,7 +395,7 @@ export default function CourseDetailPage() {
         </Card>
 
         {/* Compliance Mapping */}
-        {(course.compliance_frameworks?.length > 0 || course.control_references?.length > 0) && (
+        {((course.compliance_frameworks?.length ?? 0) > 0 || (course.control_references?.length ?? 0) > 0) && (
           <Card>
             <CardHeader>
               <CardTitle>{t("training.complianceMapping") || "Compliance Mapping"}</CardTitle>

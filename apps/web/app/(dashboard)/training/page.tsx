@@ -45,6 +45,57 @@ import { useTranslations } from "@/hooks/use-translations";
 import { trainingAPI } from "@/lib/api-client";
 import { cn } from "@/lib/utils";
 
+// Type definitions
+interface Course {
+  id: string;
+  title: string;
+  short_description?: string;
+  description?: string;
+  difficulty?: string;
+  category?: string;
+  estimated_duration_minutes?: number;
+  modules_count?: number;
+}
+
+interface Catalog {
+  items: Course[];
+  categories: string[];
+}
+
+interface Enrollment {
+  course_id: string;
+  course_title?: string;
+  progress_percent?: number;
+  due_date?: string;
+}
+
+interface MyLearning {
+  in_progress: Enrollment[];
+  assigned: Enrollment[];
+  completed: Enrollment[];
+  overdue?: Enrollment[];
+}
+
+interface MyStats {
+  courses_completed: number;
+  quizzes_passed: number;
+  total_points: number;
+  badges_earned: number;
+}
+
+interface LeaderboardEntry {
+  user_id: string;
+  user_name: string;
+  points: number;
+  rank: number;
+}
+
+interface Leaderboard {
+  entries: LeaderboardEntry[];
+  current_user_rank?: number;
+  current_user_points?: number;
+}
+
 const categoryIcons: Record<string, React.ElementType> = {
   security_fundamentals: Shield,
   phishing_awareness: Mail,
@@ -77,33 +128,32 @@ export default function TrainingPage() {
   const { data: catalog, isLoading: catalogLoading } = useQuery({
     queryKey: ["training-catalog", categoryFilter],
     queryFn: () =>
-      trainingAPI.getCatalog(
-        token!,
-        1,
-        50,
-        categoryFilter !== "all" ? categoryFilter : undefined
-      ),
+      trainingAPI.getCatalog(token!, {
+        page: 1,
+        size: 50,
+        category: categoryFilter !== "all" ? categoryFilter : undefined,
+      }) as Promise<Catalog>,
     enabled: !!token,
   });
 
   // Fetch my learning
   const { data: myLearning, isLoading: learningLoading } = useQuery({
     queryKey: ["my-learning"],
-    queryFn: () => trainingAPI.getMyLearning(token!),
+    queryFn: () => trainingAPI.getMyLearning(token!) as Promise<MyLearning>,
     enabled: !!token,
   });
 
   // Fetch leaderboard
   const { data: leaderboard, isLoading: leaderboardLoading } = useQuery({
     queryKey: ["training-leaderboard"],
-    queryFn: () => trainingAPI.getLeaderboard(token!, "all_time", 10),
+    queryFn: () => trainingAPI.getLeaderboard(token!, { period: "all_time", limit: 10 }) as Promise<Leaderboard>,
     enabled: !!token,
   });
 
   // Fetch my stats
   const { data: myStats } = useQuery({
     queryKey: ["my-training-stats"],
-    queryFn: () => trainingAPI.getMyStats(token!),
+    queryFn: () => trainingAPI.getMyStats(token!) as Promise<MyStats>,
     enabled: !!token,
   });
 
@@ -188,9 +238,9 @@ export default function TrainingPage() {
             <TabsTrigger value="my-learning" className="flex items-center gap-2">
               <BookOpen className="h-4 w-4" />
               {t("training.myLearning") || "My Learning"}
-              {myLearning?.in_progress?.length > 0 && (
+              {(myLearning?.in_progress?.length ?? 0) > 0 && (
                 <Badge variant="secondary" className="ml-1">
-                  {myLearning.in_progress.length}
+                  {myLearning?.in_progress?.length}
                 </Badge>
               )}
             </TabsTrigger>
@@ -320,14 +370,14 @@ export default function TrainingPage() {
           {/* My Learning Tab */}
           <TabsContent value="my-learning" className="space-y-6">
             {/* In Progress */}
-            {myLearning?.in_progress?.length > 0 && (
+            {(myLearning?.in_progress?.length ?? 0) > 0 && (
               <div>
                 <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
                   <Play className="h-5 w-5 text-primary" />
                   {t("training.inProgress") || "In Progress"}
                 </h3>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {myLearning.in_progress.map((item: any) => (
+                  {myLearning?.in_progress?.map((item: any) => (
                     <LearningCard key={item.enrollment_id} item={item} />
                   ))}
                 </div>
@@ -335,17 +385,17 @@ export default function TrainingPage() {
             )}
 
             {/* Assigned */}
-            {myLearning?.assigned?.length > 0 && (
+            {(myLearning?.assigned?.length ?? 0) > 0 && (
               <div>
                 <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
                   <Target className="h-5 w-5 text-yellow-500" />
                   {t("training.assigned") || "Assigned to You"}
-                  {myLearning.overdue > 0 && (
-                    <Badge variant="destructive">{myLearning.overdue} {t("training.overdue") || "overdue"}</Badge>
+                  {(myLearning?.overdue?.length ?? 0) > 0 && (
+                    <Badge variant="destructive">{myLearning?.overdue?.length} {t("training.overdue") || "overdue"}</Badge>
                   )}
                 </h3>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {myLearning.assigned.map((item: any) => (
+                  {myLearning?.assigned?.map((item: any) => (
                     <LearningCard key={item.enrollment_id} item={item} />
                   ))}
                 </div>
@@ -353,14 +403,14 @@ export default function TrainingPage() {
             )}
 
             {/* Completed */}
-            {myLearning?.completed?.length > 0 && (
+            {(myLearning?.completed?.length ?? 0) > 0 && (
               <div>
                 <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
                   <CheckCircle className="h-5 w-5 text-green-500" />
                   {t("training.completed") || "Completed"}
                 </h3>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {myLearning.completed.map((item: any) => (
+                  {myLearning?.completed?.map((item: any) => (
                     <LearningCard key={item.enrollment_id} item={item} />
                   ))}
                 </div>

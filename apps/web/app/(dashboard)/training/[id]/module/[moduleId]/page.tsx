@@ -33,6 +33,39 @@ import { trainingAPI } from "@/lib/api-client";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
+// Type definitions
+interface TrainingModule {
+  id: string;
+  title: string;
+  description?: string;
+  module_type: "video" | "text" | "interactive" | "quiz" | "document" | "external_link";
+  content?: string;
+  video_url?: string;
+  external_url?: string;
+  attachment_id?: string;
+  quiz_id?: string;
+  estimated_duration_minutes?: number;
+  order_index: number;
+  user_completed?: boolean;
+  progress_percent?: number;
+}
+
+interface TrainingCourse {
+  id: string;
+  title: string;
+  description?: string;
+}
+
+interface ModulesData {
+  items: TrainingModule[];
+}
+
+interface ModuleProgress {
+  progress_percent: number;
+  time_spent_seconds: number;
+  completed: boolean;
+}
+
 const moduleTypeIcons: Record<string, React.ElementType> = {
   video: Video,
   text: FileText,
@@ -55,28 +88,28 @@ export default function ModuleViewerPage() {
   // Fetch module details
   const { data: module, isLoading: moduleLoading } = useQuery({
     queryKey: ["training-module", moduleId],
-    queryFn: () => trainingAPI.getModule(token!, moduleId as string),
+    queryFn: () => trainingAPI.getModule(token!, moduleId as string) as Promise<TrainingModule>,
     enabled: !!token && !!moduleId,
   });
 
   // Fetch course details
   const { data: course } = useQuery({
     queryKey: ["training-course", courseId],
-    queryFn: () => trainingAPI.getCourse(token!, courseId as string),
+    queryFn: () => trainingAPI.getCourse(token!, courseId as string) as Promise<TrainingCourse>,
     enabled: !!token && !!courseId,
   });
 
   // Fetch all modules for navigation
   const { data: modulesData } = useQuery({
     queryKey: ["course-modules", courseId],
-    queryFn: () => trainingAPI.getCourseModules(token!, courseId as string),
+    queryFn: () => trainingAPI.getCourseModules(token!, courseId as string) as Promise<ModulesData>,
     enabled: !!token && !!courseId,
   });
 
   // Fetch module progress
   const { data: progress } = useQuery({
     queryKey: ["module-progress", moduleId],
-    queryFn: () => trainingAPI.getModuleProgress(token!, moduleId as string),
+    queryFn: () => trainingAPI.getModuleProgress(token!, moduleId as string) as Promise<ModuleProgress>,
     enabled: !!token && !!moduleId,
   });
 
@@ -310,12 +343,8 @@ export default function ModuleViewerPage() {
   return (
     <div className="flex flex-col h-full">
       <Header
-        title={module.title}
-        breadcrumbs={[
-          { label: t("training.title") || "Training", href: "/training" },
-          { label: course?.title || "Course", href: `/training/${courseId}` },
-          { label: `Module ${currentIndex + 1}` },
-        ]}
+        title={module?.title || "Module"}
+        backHref={`/training/${courseId}`}
       />
 
       <div className="flex-1 overflow-y-auto">

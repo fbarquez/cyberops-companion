@@ -27,6 +27,8 @@ export interface CopilotContextType {
   isLoading: boolean;
   health: CopilotHealth | null;
   context: string | null;
+  selectedModel: string;
+  availableProviders: string[];
 
   // Actions
   openChat: () => void;
@@ -35,6 +37,7 @@ export interface CopilotContextType {
   sendMessage: (message: string) => Promise<void>;
   clearMessages: () => void;
   setContext: (context: string | null) => void;
+  setSelectedModel: (model: string) => void;
   checkHealth: () => Promise<void>;
 
   // Specialized actions
@@ -64,6 +67,9 @@ interface CopilotProviderProps {
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
+const DEFAULT_MODEL = "groq:llama-3.3-70b-versatile";
+const DEFAULT_PROVIDERS = ["groq", "gemini", "openai"];
+
 export function CopilotProvider({ children }: CopilotProviderProps) {
   const { token } = useAuthStore();
   const [isOpen, setIsOpen] = useState(false);
@@ -71,6 +77,8 @@ export function CopilotProvider({ children }: CopilotProviderProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [health, setHealth] = useState<CopilotHealth | null>(null);
   const [context, setContext] = useState<string | null>(null);
+  const [selectedModel, setSelectedModel] = useState<string>(DEFAULT_MODEL);
+  const [availableProviders, setAvailableProviders] = useState<string[]>(DEFAULT_PROVIDERS);
 
   // Generate unique ID
   const generateId = () => `msg-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
@@ -403,12 +411,15 @@ export function CopilotProvider({ children }: CopilotProviderProps) {
     isLoading,
     health,
     context,
+    selectedModel,
+    availableProviders,
     openChat,
     closeChat,
     toggleChat,
     sendMessage,
     clearMessages,
     setContext,
+    setSelectedModel,
     checkHealth,
     analyzeIncident,
     explainControl,
