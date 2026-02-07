@@ -249,6 +249,130 @@ class IntegrationsService:
                 response_time_ms=int(elapsed),
             )
 
+    async def test_integration_connection(
+        self, integration: Integration
+    ) -> TestConnectionResponse:
+        """Test connection for an existing integration using saved credentials."""
+        start_time = datetime.utcnow()
+
+        try:
+            # Check if this is a scanner integration
+            scanner_types = {
+                IntegrationType.NESSUS: "nessus",
+                IntegrationType.OPENVAS: "openvas",
+                IntegrationType.QUALYS: "qualys",
+            }
+
+            if integration.integration_type in scanner_types:
+                # Use real scanner adapter for connection test
+                from src.integrations.scanners import (
+                    get_scanner_adapter,
+                    ScannerConfig,
+                )
+                from src.integrations.scanners.exceptions import (
+                    ScannerError,
+                    ScannerConnectionError,
+                    ScannerAuthenticationError,
+                )
+
+                adapter = None
+                try:
+                    config = ScannerConfig.from_integration(integration)
+                    adapter = get_scanner_adapter(config)
+
+                    # Test the connection
+                    await adapter.test_connection()
+
+                    elapsed = (datetime.utcnow() - start_time).total_seconds() * 1000
+
+                    # Update integration health status
+                    integration.last_health_check = datetime.utcnow()
+                    integration.health_status = "ok"
+                    integration.error_message = None
+                    integration.consecutive_failures = 0
+                    await self.db.commit()
+
+                    return TestConnectionResponse(
+                        success=True,
+                        message=f"Successfully connected to {integration.integration_type.value}",
+                        details={
+                            "platform": integration.integration_type.value,
+                            "scanner_type": scanner_types[integration.integration_type],
+                            "base_url": integration.base_url,
+                        },
+                        response_time_ms=int(elapsed),
+                    )
+
+                except ScannerAuthenticationError as e:
+                    elapsed = (datetime.utcnow() - start_time).total_seconds() * 1000
+                    integration.last_health_check = datetime.utcnow()
+                    integration.health_status = "down"
+                    integration.error_message = str(e)
+                    integration.consecutive_failures += 1
+                    await self.db.commit()
+
+                    return TestConnectionResponse(
+                        success=False,
+                        message=f"Authentication failed: {str(e)}",
+                        details={"error_type": "authentication"},
+                        response_time_ms=int(elapsed),
+                    )
+
+                except ScannerConnectionError as e:
+                    elapsed = (datetime.utcnow() - start_time).total_seconds() * 1000
+                    integration.last_health_check = datetime.utcnow()
+                    integration.health_status = "down"
+                    integration.error_message = str(e)
+                    integration.consecutive_failures += 1
+                    await self.db.commit()
+
+                    return TestConnectionResponse(
+                        success=False,
+                        message=f"Connection failed: {str(e)}",
+                        details={"error_type": "connection"},
+                        response_time_ms=int(elapsed),
+                    )
+
+                except ScannerError as e:
+                    elapsed = (datetime.utcnow() - start_time).total_seconds() * 1000
+                    integration.last_health_check = datetime.utcnow()
+                    integration.health_status = "degraded"
+                    integration.error_message = str(e)
+                    integration.consecutive_failures += 1
+                    await self.db.commit()
+
+                    return TestConnectionResponse(
+                        success=False,
+                        message=f"Scanner error: {str(e)}",
+                        details={"error_type": "scanner_error"},
+                        response_time_ms=int(elapsed),
+                    )
+
+                finally:
+                    if adapter:
+                        await adapter.close()
+
+            else:
+                # For non-scanner integrations, use basic HTTP test
+                return await self.test_connection(
+                    integration_type=integration.integration_type,
+                    base_url=integration.base_url,
+                    api_key=integration.api_key,
+                    api_secret=integration.api_secret,
+                    username=integration.username,
+                    password=integration.password,
+                    config=integration.config,
+                )
+
+        except Exception as e:
+            elapsed = (datetime.utcnow() - start_time).total_seconds() * 1000
+            return TestConnectionResponse(
+                success=False,
+                message=f"Connection test failed: {str(e)}",
+                details=None,
+                response_time_ms=int(elapsed),
+            )
+
     # ============== Sync Operations ==============
 
     async def trigger_sync(
