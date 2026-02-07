@@ -16,6 +16,7 @@ import {
   Trash2,
   MoreHorizontal,
   Upload,
+  Link2,
 } from "lucide-react";
 import { Header } from "@/components/shared/header";
 import { Button } from "@/components/ui/button";
@@ -59,6 +60,9 @@ import { useTranslations } from "@/hooks/use-translations";
 import { threatsAPI } from "@/lib/api-client";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import { ActorsList } from "@/components/threats/ActorsList";
+import { CampaignsList } from "@/components/threats/CampaignsList";
+import { LinkingDialog } from "@/components/threats/LinkingDialog";
 
 interface IOC {
   id: string;
@@ -133,6 +137,8 @@ export default function ThreatsPage() {
   const [newIOC, setNewIOC] = useState({ value: "", description: "", source: "" });
   const [bulkIOCs, setBulkIOCs] = useState("");
   const [enrichValue, setEnrichValue] = useState("");
+  const [linkingDialogOpen, setLinkingDialogOpen] = useState(false);
+  const [selectedIOCForLinking, setSelectedIOCForLinking] = useState<{ id: string; value: string } | null>(null);
 
   // Fetch stats
   const { data: stats, isLoading: statsLoading } = useQuery({
@@ -445,7 +451,16 @@ export default function ThreatsPage() {
                 {stats?.recent_iocs && stats.recent_iocs.length > 0 ? (
                   <div className="space-y-3">
                     {stats.recent_iocs.map((ioc) => (
-                      <IOCRow key={ioc.id} ioc={ioc} onDelete={deleteMutation.mutate} t={t} />
+                      <IOCRow
+                        key={ioc.id}
+                        ioc={ioc}
+                        onDelete={deleteMutation.mutate}
+                        onLink={(ioc) => {
+                          setSelectedIOCForLinking(ioc);
+                          setLinkingDialogOpen(true);
+                        }}
+                        t={t}
+                      />
                     ))}
                   </div>
                 ) : (
@@ -508,7 +523,16 @@ export default function ThreatsPage() {
                 ) : iocs.length > 0 ? (
                   <div className="divide-y">
                     {iocs.map((ioc) => (
-                      <IOCRow key={ioc.id} ioc={ioc} onDelete={deleteMutation.mutate} t={t} />
+                      <IOCRow
+                        key={ioc.id}
+                        ioc={ioc}
+                        onDelete={deleteMutation.mutate}
+                        onLink={(ioc) => {
+                          setSelectedIOCForLinking(ioc);
+                          setLinkingDialogOpen(true);
+                        }}
+                        t={t}
+                      />
                     ))}
                   </div>
                 ) : (
@@ -522,38 +546,43 @@ export default function ThreatsPage() {
 
           {/* Actors Tab */}
           <TabsContent value="actors" className="mt-4">
-            <Card>
-              <CardContent className="py-8 text-center text-muted-foreground">
-                <Users className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                <p>{t("threats.noActors")}</p>
-                <Button className="mt-4" variant="outline">
-                  <Plus className="h-4 w-4 mr-2" />
-                  {t("threats.addThreatActor")}
-                </Button>
-              </CardContent>
-            </Card>
+            <ActorsList />
           </TabsContent>
 
           {/* Campaigns Tab */}
           <TabsContent value="campaigns" className="mt-4">
-            <Card>
-              <CardContent className="py-8 text-center text-muted-foreground">
-                <Target className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                <p>{t("threats.noCampaigns")}</p>
-                <Button className="mt-4" variant="outline">
-                  <Plus className="h-4 w-4 mr-2" />
-                  {t("threats.addCampaign")}
-                </Button>
-              </CardContent>
-            </Card>
+            <CampaignsList />
           </TabsContent>
         </Tabs>
+
+        {/* Linking Dialog */}
+        {selectedIOCForLinking && (
+          <LinkingDialog
+            open={linkingDialogOpen}
+            onOpenChange={(open) => {
+              setLinkingDialogOpen(open);
+              if (!open) setSelectedIOCForLinking(null);
+            }}
+            iocId={selectedIOCForLinking.id}
+            iocValue={selectedIOCForLinking.value}
+          />
+        )}
       </div>
     </div>
   );
 }
 
-function IOCRow({ ioc, onDelete, t }: { ioc: IOC; onDelete: (id: string) => void; t: (key: string) => string }) {
+function IOCRow({
+  ioc,
+  onDelete,
+  onLink,
+  t
+}: {
+  ioc: IOC;
+  onDelete: (id: string) => void;
+  onLink: (ioc: { id: string; value: string }) => void;
+  t: (key: string) => string;
+}) {
   return (
     <div className="flex items-center justify-between p-4 hover:bg-muted/50">
       <div className="flex items-center gap-4">
@@ -592,6 +621,10 @@ function IOCRow({ ioc, onDelete, t }: { ioc: IOC; onDelete: (id: string) => void
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
+            <DropdownMenuItem onClick={() => onLink({ id: ioc.id, value: ioc.value })}>
+              <Link2 className="h-4 w-4 mr-2" />
+              Link to Actor/Campaign
+            </DropdownMenuItem>
             <DropdownMenuItem>
               <RefreshCw className="h-4 w-4 mr-2" />
               {t("threats.reEnrich")}

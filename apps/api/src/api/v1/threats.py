@@ -495,8 +495,8 @@ def _actor_to_response(actor) -> ThreatActorResponse:
         first_seen=actor.first_seen,
         last_seen=actor.last_seen,
         is_active=actor.is_active,
-        ioc_count=len(actor.iocs) if hasattr(actor, 'iocs') and actor.iocs else 0,
-        campaign_count=len(actor.campaigns) if hasattr(actor, 'campaigns') and actor.campaigns else 0,
+        ioc_count=getattr(actor, 'ioc_count', 0) or 0,
+        campaign_count=getattr(actor, 'campaign_count', 0) or 0,
         created_at=actor.created_at,
     )
 
@@ -518,7 +518,7 @@ def _campaign_to_response(campaign) -> CampaignResponse:
         start_date=campaign.start_date,
         end_date=campaign.end_date,
         is_active=campaign.is_active,
-        ioc_count=len(campaign.iocs) if hasattr(campaign, 'iocs') and campaign.iocs else 0,
-        actor_count=len(campaign.threat_actors) if hasattr(campaign, 'threat_actors') and campaign.threat_actors else 0,
+        ioc_count=getattr(campaign, 'ioc_count', 0) or 0,
+        actor_count=getattr(campaign, 'actor_count', 0) or 0,
         created_at=campaign.created_at,
     )

@@ -15,7 +15,7 @@ from datetime import datetime
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.db.database import async_session_factory, init_db
+from src.db.database import async_session_maker, init_db
 from src.models.user import User, UserRole
 from src.models.organization import Organization, OrganizationMember, OrgRole
 from src.services.auth_service import AuthService
@@ -34,7 +34,7 @@ async def create_enterprise_admin(
     """
     await init_db()
 
-    async with async_session_factory() as session:
+    async with async_session_maker() as session:
         async with session.begin():
             # Check if user already exists
             result = await session.execute(
