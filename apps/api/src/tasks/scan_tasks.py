@@ -10,6 +10,7 @@ from celery.exceptions import MaxRetriesExceededError
 
 from src.celery_app import celery_app, TaskState
 from src.config import settings
+from src.core.scan_progress import publish_scan_progress
 
 if TYPE_CHECKING:
     from src.integrations.scanners import BaseScannerAdapter
@@ -104,6 +105,17 @@ async def _execute_real_scan(
     if not targets:
         raise ValueError("No targets specified for scan")
 
+    # Publish scan started event
+    publish_scan_progress(
+        scan_id=scan.id,
+        event="started",
+        progress_percent=0,
+        state="running",
+        hosts_total=len(targets),
+        hosts_completed=0,
+        message=f"Launching {adapter.scanner_type.value} scan",
+    )
+
     # Launch the scan
     logger.info(f"Launching {adapter.scanner_type.value} scan for targets: {targets}")
     external_scan_id = await adapter.launch_scan(
@@ -143,6 +155,18 @@ async def _execute_real_scan(
                     "status": progress.state.value,
                 },
             )
+
+        # Publish progress to WebSocket via Redis
+        publish_scan_progress(
+            scan_id=scan.id,
+            event="progress",
+            progress_percent=progress.progress_percent,
+            state=progress.state.value,
+            hosts_total=progress.hosts_total,
+            hosts_completed=progress.hosts_completed,
+            current_host=progress.current_host,
+            message=progress.message or f"Scanning... {progress.progress_percent}%",
+        )
 
         # Check if complete
         if progress.state == ScanState.COMPLETED:
@@ -268,6 +292,17 @@ async def _execute_scan_async(scan_id: str, task_id: str, task_instance=None) ->
 
             logger.info(f"Scan {scan_id} completed: {scan.total_findings} findings")
 
+            # Publish scan completed event
+            publish_scan_progress(
+                scan_id=scan_id,
+                event="completed",
+                progress_percent=100,
+                state="completed",
+                message="Scan completed successfully",
+                total_findings=scan.total_findings,
+                severity_counts=findings_count,
+            )
+
             return {
                 "scan_id": scan_id,
                 "status": "completed",
@@ -284,6 +319,16 @@ async def _execute_scan_async(scan_id: str, task_id: str, task_instance=None) ->
             scan.completed_at = datetime.utcnow()
             scan.error_message = str(e)
             await db.commit()
+
+            # Publish scan failed event
+            publish_scan_progress(
+                scan_id=scan_id,
+                event="failed",
+                progress_percent=0,
+                state="failed",
+                error=str(e),
+                message="Scan failed",
+            )
 
             raise
 
@@ -306,8 +351,45 @@ async def _simulate_scan_execution(scan) -> List[Dict[str, Any]]:
     import random
     import asyncio
 
-    # Simulate scan duration (5-15 seconds for demo)
-    await asyncio.sleep(random.uniform(5, 15))
+    # Parse targets for progress simulation
+    targets = []
+    if scan.targets:
+        if isinstance(scan.targets, list):
+            targets = scan.targets
+        elif isinstance(scan.targets, str):
+            targets = [t.strip() for t in scan.targets.split(",")]
+    hosts_total = max(len(targets), 3)
+
+    # Publish scan started
+    publish_scan_progress(
+        scan_id=scan.id,
+        event="started",
+        progress_percent=0,
+        state="running",
+        hosts_total=hosts_total,
+        hosts_completed=0,
+        message="Starting simulated scan",
+    )
+
+    # Simulate scan duration with progress updates
+    total_duration = random.uniform(5, 15)
+    steps = 5
+    step_duration = total_duration / steps
+
+    for i in range(steps):
+        await asyncio.sleep(step_duration)
+        progress = int((i + 1) / steps * 100)
+        hosts_completed = int(hosts_total * progress / 100)
+
+        publish_scan_progress(
+            scan_id=scan.id,
+            event="progress",
+            progress_percent=progress,
+            state="running",
+            hosts_total=hosts_total,
+            hosts_completed=hosts_completed,
+            message=f"Simulated scan progress: {progress}%",
+        )
 
     # Generate sample findings based on scan type
     sample_vulns = {
@@ -507,6 +589,15 @@ def cancel_scan(scan_id: str) -> Dict[str, Any]:
             scan.completed_at = datetime.utcnow()
             scan.error_message = "Scan cancelled by user"
             await db.commit()
+
+            # Publish scan cancelled event
+            publish_scan_progress(
+                scan_id=scan_id,
+                event="cancelled",
+                progress_percent=0,
+                state="cancelled",
+                message="Scan cancelled by user",
+            )
 
             return {"scan_id": scan_id, "status": "cancelled"}
 
