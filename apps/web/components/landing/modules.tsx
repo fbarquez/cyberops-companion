@@ -7,69 +7,69 @@ import {
   Server,
   Target,
   Link2,
-  Bell,
+  Scale,
   BarChart3
 } from "lucide-react";
 
 const modules = [
   {
     icon: AlertTriangle,
-    name: "Incident Response",
-    description: "Manage the complete incident lifecycle from detection to lessons learned.",
+    name: "Incident Management",
+    description: "6-Phasen-Workflow nach NIST mit automatischer Nachweisverknüpfung zu A.5.24.",
     color: "bg-red-500/10 text-red-500"
   },
   {
     icon: Shield,
-    name: "SOC Operations",
-    description: "Centralized alert triage, case management, and investigation workflows.",
+    name: "SOC-Modul",
+    description: "Alert-Triage, Case Management und Playbooks — verknüpft mit A.8.16.",
     color: "bg-blue-500/10 text-blue-500"
   },
   {
     icon: Bug,
     name: "Vulnerability Management",
-    description: "Track, prioritize, and remediate vulnerabilities with NVD integration.",
+    description: "CVE-Tracking mit NVD/EPSS/KEV-Integration und Nachweis für A.8.8.",
     color: "bg-orange-500/10 text-orange-500"
   },
   {
     icon: Target,
-    name: "Risk Management",
-    description: "Identify, assess, and mitigate organizational risks systematically.",
+    name: "Risikomanagement",
+    description: "Risikoregister, Behandlungspläne und Heatmaps nach ISO 27005.",
     color: "bg-purple-500/10 text-purple-500"
   },
   {
     icon: Building2,
-    name: "Third-Party Risk",
-    description: "Evaluate and monitor vendor security posture continuously.",
+    name: "Lieferanten (TPRM)",
+    description: "Lieferantenbewertung und Fragebögen für NIS2 Art. 21 Abs. 2d.",
     color: "bg-cyan-500/10 text-cyan-500"
   },
   {
-    icon: FileCheck,
-    name: "Compliance",
-    description: "Map controls to frameworks and track audit evidence collection.",
+    icon: Scale,
+    name: "Compliance Hub",
+    description: "ISO 27001, NIS2, DORA und BSI IT-Grundschutz in einer Oberfläche.",
     color: "bg-green-500/10 text-green-500"
   },
   {
     icon: Server,
     name: "CMDB",
-    description: "Maintain an inventory of assets and their relationships.",
+    description: "Asset-Inventar mit Abhängigkeiten und Schutzbedarfsfeststellung.",
     color: "bg-slate-500/10 text-slate-500"
   },
   {
     icon: Target,
     name: "Threat Intelligence",
-    description: "Track threats with MITRE ATT&CK mapping and IOC management.",
+    description: "IOC-Verwaltung und MITRE ATT&CK Mapping für Bedrohungsanalyse.",
     color: "bg-pink-500/10 text-pink-500"
   },
   {
     icon: Link2,
-    name: "Integrations",
-    description: "Connect with SIEM, SOAR, ticketing, and security tools.",
+    name: "Integrationen",
+    description: "API und Webhooks für SIEM, Scanner und Ticketing-Systeme.",
     color: "bg-indigo-500/10 text-indigo-500"
   },
   {
     icon: BarChart3,
-    name: "Reporting",
-    description: "Generate executive dashboards and compliance reports.",
+    name: "Dashboards",
+    description: "Kontrollwirksamkeit, Gap-Status und Compliance-Übersichten.",
     color: "bg-amber-500/10 text-amber-500"
   }
 ];
@@ -80,10 +80,10 @@ export function ModulesSection() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Comprehensive Security Modules
+            Operative Module mit Compliance-Verknüpfung
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Every tool your security team needs, integrated into one cohesive platform.
+            Jede operative Aktivität erzeugt automatisch Nachweise für Ihre ISMS-Kontrollen.
           </p>
         </div>
 

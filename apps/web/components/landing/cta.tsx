@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Github } from "lucide-react";
 
 export function CTASection() {
   return (
@@ -8,11 +8,11 @@ export function CTASection() {
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Ready to transform your security operations?
+            Bereit für nachvollziehbare Compliance?
           </h2>
           <p className="text-xl opacity-90 mb-8">
-            Join security teams who trust ISORA to protect their organizations.
-            Start your free trial today.
+            Community Edition kostenlos. Self-Hosted. DSGVO-konform.
+            Multi-Tenancy für Berater und MSSPs inklusive.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
@@ -22,7 +22,7 @@ export function CTASection() {
               className="text-lg px-8"
             >
               <Link href="/register">
-                Start Free Trial
+                Kostenlos starten
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
@@ -32,8 +32,9 @@ export function CTASection() {
               asChild
               className="text-lg px-8 bg-transparent border-primary-foreground/30 hover:bg-primary-foreground/10"
             >
-              <Link href="/login">
-                Sign In
+              <Link href="https://github.com/fbarquez/cyberops-companion" target="_blank">
+                <Github className="mr-2 h-5 w-5" />
+                GitHub
               </Link>
             </Button>
           </div>
