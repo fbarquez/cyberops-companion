@@ -17,6 +17,7 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/fbarquez/cyberops-companion/actions/workflows/ci.yml"><img src="https://github.com/fbarquez/cyberops-companion/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <img src="https://img.shields.io/badge/version-2.0.0-blue.svg" alt="Version">
   <img src="https://img.shields.io/badge/license-AGPL--3.0-green.svg" alt="License">
   <img src="https://img.shields.io/badge/python-3.12+-blue.svg" alt="Python">
