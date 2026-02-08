@@ -4,7 +4,7 @@
 
 ## Overview
 
-This workflow guides organizations through an initial NIS2 assessment using ISOVA. The goal is to create a first orientation report and establish baseline documentation.
+This workflow guides organizations through an initial NIS2 assessment using ISORA. The goal is to create a first orientation report and establish baseline documentation.
 
 **Important:** This workflow provides orientation support. The binding NIS2 classification is made by the competent supervisory authority.
 
