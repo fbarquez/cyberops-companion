@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "description": "Training scenarios for CyberOps Companion ransomware simulation",
+  "description": "Training scenarios for ISORA ransomware simulation",
   "scenarios": [
     {
       "id": "corporate_workstation",

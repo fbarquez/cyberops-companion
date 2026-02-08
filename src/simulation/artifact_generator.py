@@ -145,7 +145,7 @@ Your unique ID: {sim_id}
 
 ================================================================================
                          THIS IS A TRAINING SIMULATION
-          This file was created by CyberOps Companion for educational purposes.
+          This file was created by ISORA for educational purposes.
                          Created: {datetime.now(timezone.utc).isoformat()}
 ================================================================================
 {self.SIMULATION_MARKER}

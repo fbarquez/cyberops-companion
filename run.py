@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Quick start script for CyberOps Companion.
+Quick start script for ISORA.
 
 Usage:
     python run.py          # Start the web UI
@@ -27,7 +27,7 @@ def main():
     # Default: Start Streamlit UI
     app_path = project_root / "src" / "ui" / "app.py"
 
-    print("Starting CyberOps Companion...")
+    print("Starting ISORA...")
     print("Open http://localhost:8501 in your browser")
     print("Press Ctrl+C to stop\n")
 

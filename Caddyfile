@@ -1,5 +1,5 @@
 # =============================================================================
-# CyberOps Companion - Caddy Configuration
+# ISORA - Caddy Configuration
 # =============================================================================
 # Automatic HTTPS with Let's Encrypt
 # Replace {$DOMAIN} with your actual domain or set DOMAIN env variable

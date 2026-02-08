@@ -1,5 +1,5 @@
 """
-Cross-Framework Mapping Module for CyberOps Companion.
+Cross-Framework Mapping Module for ISORA.
 
 Provides mappings between compliance frameworks:
 - BSI IT-Grundschutz <-> NIST CSF 2.0 <-> ISO 27001 <-> OWASP Top 10

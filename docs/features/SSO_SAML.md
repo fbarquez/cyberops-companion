@@ -1,10 +1,10 @@
 # SSO/SAML Integration
 
-This document describes the Single Sign-On (SSO) integration with OAuth2/OIDC support for enterprise authentication in CyberOps Companion.
+This document describes the Single Sign-On (SSO) integration with OAuth2/OIDC support for enterprise authentication in ISORA.
 
 ## Overview
 
-CyberOps Companion supports enterprise SSO authentication through OAuth2/OIDC protocols, enabling seamless integration with identity providers like Google Workspace, Microsoft Entra ID (Azure AD), and Okta.
+ISORA supports enterprise SSO authentication through OAuth2/OIDC protocols, enabling seamless integration with identity providers like Google Workspace, Microsoft Entra ID (Azure AD), and Okta.
 
 ## Supported Providers
 

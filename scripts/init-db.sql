@@ -1,4 +1,4 @@
--- CyberOps Companion Database Initialization Script
+-- ISORA Database Initialization Script
 -- This script runs automatically when the PostgreSQL container is first created
 
 -- Enable required extensions
@@ -45,5 +45,5 @@ $$ LANGUAGE plpgsql;
 -- Log initialization
 DO $$
 BEGIN
-    RAISE NOTICE 'CyberOps Companion database initialized successfully at %', NOW();
+    RAISE NOTICE 'ISORA database initialized successfully at %', NOW();
 END $$;

@@ -202,7 +202,7 @@ class BSIMeldungGenerator:
 
         Args:
             incident_id: Incident identifier
-            incident_data: Incident details from CyberOps Companion
+            incident_data: Incident details from ISORA
             organization_data: Organization information
             contact_data: Contact person information
 
@@ -594,7 +594,7 @@ class BSIMeldungGenerator:
             "",
             "---",
             "",
-            "*Diese Meldung wurde mit CyberOps Companion generiert.*",
+            "*Diese Meldung wurde mit ISORA generiert.*",
             "",
             f"*Generiert am: {datetime.now().strftime('%d.%m.%Y %H:%M')} Uhr*",
         ])
@@ -771,7 +771,7 @@ class BSIMeldungGenerator:
     </div>
 
     <div class="footer">
-        <p>Diese Meldung wurde mit CyberOps Companion generiert.</p>
+        <p>Diese Meldung wurde mit ISORA generiert.</p>
         <p>Generiert am: {datetime.now().strftime('%d.%m.%Y %H:%M')} Uhr</p>
     </div>
 </body>

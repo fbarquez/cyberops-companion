@@ -12,7 +12,7 @@ We release patches for security vulnerabilities in the following versions:
 
 ## Reporting a Vulnerability
 
-We take the security of CyberOps Companion seriously. If you believe you have found a security vulnerability, please report it to us as described below.
+We take the security of ISORA seriously. If you believe you have found a security vulnerability, please report it to us as described below.
 
 ### How to Report
 
@@ -50,7 +50,7 @@ We support safe harbor for security researchers who:
 
 ## Security Best Practices for Deployment
 
-When deploying CyberOps Companion, please follow these security recommendations:
+When deploying ISORA, please follow these security recommendations:
 
 ### Environment Variables
 
@@ -88,7 +88,7 @@ When deploying CyberOps Companion, please follow these security recommendations:
 
 ## Security Features
 
-CyberOps Companion includes several built-in security features:
+ISORA includes several built-in security features:
 
 - **JWT Authentication** with configurable expiration
 - **Role-Based Access Control (RBAC)** with granular permissions
@@ -107,4 +107,4 @@ We would like to thank the following security researchers for responsibly disclo
 
 ---
 
-Thank you for helping keep CyberOps Companion and its users safe!
+Thank you for helping keep ISORA and its users safe!

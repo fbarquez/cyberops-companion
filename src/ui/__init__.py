@@ -1,4 +1,4 @@
-"""UI module for CyberOps Companion."""
+"""UI module for ISORA."""
 
 from .components import (
     render_phase_indicator,

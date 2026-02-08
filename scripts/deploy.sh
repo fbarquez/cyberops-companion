@@ -1,6 +1,6 @@
 #!/bin/bash
 # =============================================================================
-# CyberOps Companion - Production Deployment Script
+# ISORA - Production Deployment Script
 # =============================================================================
 set -e
 
@@ -13,7 +13,7 @@ NC='\033[0m' # No Color
 
 echo -e "${BLUE}"
 echo "╔═══════════════════════════════════════════════════════════════╗"
-echo "║           CyberOps Companion - Production Deploy              ║"
+echo "║           ISORA - Production Deploy              ║"
 echo "╚═══════════════════════════════════════════════════════════════╝"
 echo -e "${NC}"
 

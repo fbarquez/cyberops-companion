@@ -1,5 +1,5 @@
 """
-Integrations Module - Compliance Hub for CyberOps Companion.
+Integrations Module - Compliance Hub for ISORA.
 
 Provides integrations with regulatory frameworks and threat intelligence:
 - BSI IT-Grundschutz (Germany)

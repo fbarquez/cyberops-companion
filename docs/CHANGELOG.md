@@ -21,7 +21,7 @@ See [FUTURE_ROADMAP.md](./FUTURE_ROADMAP.md) for specifications.
 
 ### Changed
 
-#### Project Rebrand: CyberOps Companion → ISORA
+#### Project Rebrand: ISORA → ISORA
 
 **ISORA** = **I**SMS **O**perations & **R**isk **A**ssurance
 
@@ -1066,5 +1066,5 @@ Complete audit trail system for compliance and forensics.
 - GitHub repository initialization
 
 ### Renamed
-- Project renamed from "IR Companion" to "CyberOps Companion"
+- Project renamed from "IR Companion" to "ISORA"
 - Updated all references in code, configs, and documentation

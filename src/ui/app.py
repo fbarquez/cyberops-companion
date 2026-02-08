@@ -1,5 +1,5 @@
 """
-CyberOps Companion - Main Streamlit Application
+ISORA - Main Streamlit Application
 
 Incident Response Decision Support Tool
 """
@@ -102,7 +102,7 @@ def format_elapsed(start_time: datetime) -> str:
 def main():
     config = get_config()
     st.set_page_config(
-        page_title="CyberOps Companion",
+        page_title="ISORA",
         layout="wide",
         initial_sidebar_state="expanded",
     )
@@ -129,7 +129,7 @@ def main():
 
     # Sidebar - clean and simple
     with st.sidebar:
-        st.header("CyberOps Companion")
+        st.header("ISORA")
 
         if st.session_state.incident:
             incident = st.session_state.incident
@@ -248,7 +248,7 @@ def main():
 
 
 def render_home(lang: str):
-    st.title("CyberOps Companion")
+    st.title("ISORA")
     st.write(t("app.subtitle", lang))
 
     st.divider()

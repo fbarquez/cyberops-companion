@@ -8,7 +8,7 @@ COMMUNITY_DIR="/home/fb-user/Desktop/practicas/proyecto/cyberops-companion"
 ENTERPRISE_DIR="/home/fb-user/Desktop/practicas/proyecto/cyberops-companion-enterprise"
 
 echo "=========================================="
-echo "  CyberOps Companion Enterprise Integration"
+echo "  ISORA Enterprise Integration"
 echo "=========================================="
 echo ""
 

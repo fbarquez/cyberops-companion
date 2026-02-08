@@ -1,5 +1,5 @@
 """
-OWASP Integration Module for CyberOps Companion.
+OWASP Integration Module for ISORA.
 
 Provides:
 - OWASP Top 10 (2021) vulnerability categorization

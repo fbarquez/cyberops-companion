@@ -2,7 +2,7 @@
 
 ## Resumen
 
-Esta documentacion describe la implementacion del sistema multi-tenant en CyberOps Companion, que permite a multiples organizaciones usar la plataforma con aislamiento completo de datos.
+Esta documentacion describe la implementacion del sistema multi-tenant en ISORA, que permite a multiples organizaciones usar la plataforma con aislamiento completo de datos.
 
 **Fecha de implementacion:** 2026-02-01
 **Version:** 1.0.0
@@ -27,7 +27,7 @@ Esta documentacion describe la implementacion del sistema multi-tenant en CyberO
 
 ### Por que Multi-Tenancy?
 
-Antes de esta implementacion, CyberOps Companion era una aplicacion **single-tenant**, lo que significaba:
+Antes de esta implementacion, ISORA era una aplicacion **single-tenant**, lo que significaba:
 
 - Todos los usuarios compartian los mismos datos
 - No habia aislamiento entre equipos u organizaciones

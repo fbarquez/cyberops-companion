@@ -1,5 +1,5 @@
 """
-MITRE ATT&CK Navigator Components for CyberOps Companion.
+MITRE ATT&CK Navigator Components for ISORA.
 
 Visual matrix display of ATT&CK techniques with detection status tracking.
 """
@@ -941,7 +941,7 @@ def _export_markdown(layer: NavigatorLayer, integration: MITREATTACKIntegration)
         "",
         "---",
         "",
-        "*Generiert mit CyberOps Companion MITRE ATT&CK Navigator*",
+        "*Generiert mit ISORA MITRE ATT&CK Navigator*",
     ])
 
     return "\n".join(lines)
@@ -1030,7 +1030,7 @@ def _export_pdf(layer: NavigatorLayer, integration: MITREATTACKIntegration) -> b
     # Footer
     pdf.ln(10)
     pdf.set_font("Helvetica", "I", 8)
-    pdf.cell(0, 10, "Generiert mit CyberOps Companion", align="C")
+    pdf.cell(0, 10, "Generiert mit ISORA", align="C")
 
     return bytes(pdf.output())
 

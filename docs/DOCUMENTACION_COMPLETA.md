@@ -1,4 +1,4 @@
-# CyberOps Companion - Documentacion Completa
+# ISORA - Documentacion Completa
 
 **Fecha de actualizacion:** 2026-02-01
 **Version actual:** 0.10.0
@@ -8,7 +8,7 @@
 
 ## Indice
 
-1. [Que es CyberOps Companion](#1-que-es-cyberops-companion)
+1. [Que es ISORA](#1-que-es-cyberops-companion)
 2. [Arquitectura del Sistema](#2-arquitectura-del-sistema)
 3. [Estado Actual y Fases](#3-estado-actual-y-fases)
 4. [Funcionalidades Implementadas](#4-funcionalidades-implementadas)
@@ -18,11 +18,11 @@
 
 ---
 
-## 1. Que es CyberOps Companion
+## 1. Que es ISORA
 
 ### Descripcion General
 
-CyberOps Companion es una **plataforma integral de operaciones de ciberseguridad** disenada para centralizar y automatizar las funciones criticas de un equipo de seguridad. Integra multiples modulos que cubren todo el ciclo de vida de la seguridad:
+ISORA es una **plataforma integral de operaciones de ciberseguridad** disenada para centralizar y automatizar las funciones criticas de un equipo de seguridad. Integra multiples modulos que cubren todo el ciclo de vida de la seguridad:
 
 | Modulo | Proposito |
 |--------|-----------|
@@ -38,7 +38,7 @@ CyberOps Companion es una **plataforma integral de operaciones de ciberseguridad
 
 ### Por que existe este proyecto
 
-Las organizaciones enfrentan multiples herramientas fragmentadas para gestionar su seguridad. CyberOps Companion unifica estas funciones en una sola plataforma, eliminando silos de informacion y mejorando la eficiencia operativa del equipo de seguridad.
+Las organizaciones enfrentan multiples herramientas fragmentadas para gestionar su seguridad. ISORA unifica estas funciones en una sola plataforma, eliminando silos de informacion y mejorando la eficiencia operativa del equipo de seguridad.
 
 ---
 
@@ -436,7 +436,7 @@ Futuro      │ Fase 3 - Multi-tenancy, Rate Limiting
 **Que es:** Soporte multi-idioma (actualmente Ingles y Aleman).
 
 **Por que:**
-- CyberOps Companion esta pensado para uso global
+- ISORA esta pensado para uso global
 - Empresas multinacionales necesitan interfaces en idioma local
 - Aleman fue el primer idioma adicional por demanda
 
@@ -701,7 +701,7 @@ RATE_LIMITS = {
 
 ## Resumen
 
-CyberOps Companion es una plataforma madura que ha completado 3 fases de desarrollo:
+ISORA es una plataforma madura que ha completado 3 fases de desarrollo:
 
 - **Fase 0-1:** Fundamentos solidos (auth, i18n, background tasks, onboarding)
 - **Fase 2:** Features avanzados (WebSocket, uploads, analytics, mobile)

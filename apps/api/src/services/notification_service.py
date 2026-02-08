@@ -472,7 +472,7 @@ class NotificationService:
             test_payload = {
                 "event_type": "test",
                 "timestamp": datetime.utcnow().isoformat(),
-                "message": "This is a test notification from CyberOps Companion"
+                "message": "This is a test notification from ISORA"
             }
 
         request_headers = headers or {}

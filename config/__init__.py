@@ -1,4 +1,4 @@
-"""Configuration module for CyberOps Companion."""
+"""Configuration module for ISORA."""
 
 from .settings import (
     config,

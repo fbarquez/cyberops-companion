@@ -106,7 +106,7 @@ class BaseLLMProvider(ABC):
 
 # Default system prompts for different use cases
 SYSTEM_PROMPTS = {
-    "general": """You are an AI assistant for CyberOps Companion, a cybersecurity operations platform.
+    "general": """You are an AI assistant for ISORA, a cybersecurity operations platform.
 You help security teams with:
 - Incident analysis and response
 - Compliance with BSI IT-Grundschutz and NIS2 Directive

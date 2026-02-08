@@ -1,5 +1,5 @@
 """
-Playbook Generator Components for CyberOps Companion.
+Playbook Generator Components for ISORA.
 
 Generates automated incident response playbooks based on incident type.
 """
@@ -1842,7 +1842,7 @@ def _generate_playbook_pdf(playbook: Playbook) -> bytes:
     # Footer
     pdf.ln(10)
     pdf.set_font("Helvetica", "I", 8)
-    pdf.cell(0, 10, f"Generiert von CyberOps Companion | {datetime.now().strftime('%Y-%m-%d %H:%M')}", align="C")
+    pdf.cell(0, 10, f"Generiert von ISORA | {datetime.now().strftime('%Y-%m-%d %H:%M')}", align="C")
 
     return bytes(pdf.output())
 
@@ -1952,7 +1952,7 @@ def _generate_playbook_latex(playbook: Playbook) -> str:
     latex += f"""
 \\vfill
 \\begin{{center}}
-\\small Generiert von CyberOps Companion | {datetime.now().strftime('%Y-%m-%d %H:%M')}
+\\small Generiert von ISORA | {datetime.now().strftime('%Y-%m-%d %H:%M')}
 \\end{{center}}
 
 \\end{{document}}
@@ -2023,7 +2023,7 @@ def _generate_playbook_markdown(playbook: Playbook) -> str:
         md += f"- {item}\n"
     md += "\n"
 
-    md += f"\n---\n*Generiert von CyberOps Companion | {datetime.now().strftime('%Y-%m-%d %H:%M')}*\n"
+    md += f"\n---\n*Generiert von ISORA | {datetime.now().strftime('%Y-%m-%d %H:%M')}*\n"
 
     return md
 

@@ -1,6 +1,6 @@
 # Mobile Responsive Design
 
-Complete mobile-first responsive implementation for CyberOps Companion.
+Complete mobile-first responsive implementation for ISORA.
 
 ---
 

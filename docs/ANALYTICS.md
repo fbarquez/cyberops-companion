@@ -8,7 +8,7 @@
 
 ## Overview
 
-The CyberOps Companion includes a comprehensive analytics system that provides visual insights, security scoring, SLA tracking, and analyst performance metrics. This document describes the architecture, components, and usage of the analytics features.
+The ISORA includes a comprehensive analytics system that provides visual insights, security scoring, SLA tracking, and analyst performance metrics. This document describes the architecture, components, and usage of the analytics features.
 
 ### What's Included (Phase 2A + 2B)
 

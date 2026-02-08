@@ -1,5 +1,5 @@
 """
-Translations module for CyberOps Companion.
+Translations module for ISORA.
 
 Supports German (default) and English.
 """
@@ -9,7 +9,7 @@ from typing import Dict, Any
 # German translations (default)
 DE: Dict[str, Any] = {
     "app": {
-        "title": "CyberOps Companion",
+        "title": "ISORA",
         "subtitle": "Incident Response Entscheidungsunterstuetzungswerkzeug",
         "version": "Version",
         "decision_support_tool": "Entscheidungsunterstuetzungswerkzeug",
@@ -39,7 +39,7 @@ DE: Dict[str, Any] = {
         "do_not_power_off": "System NICHT ausschalten - fluechtige Beweise gehen verloren!",
     },
     "home": {
-        "welcome": "Willkommen bei CyberOps Companion",
+        "welcome": "Willkommen bei ISORA",
         "description": "Ein Entscheidungsunterstuetzungswerkzeug fuer die Reaktion auf Ransomware-Vorfaelle.",
         "tool_helps": "Dieses Werkzeug hilft Ihnen bei:",
         "help_items": [
@@ -527,7 +527,7 @@ DE: Dict[str, Any] = {
 # English translations
 EN: Dict[str, Any] = {
     "app": {
-        "title": "CyberOps Companion",
+        "title": "ISORA",
         "subtitle": "Incident Response Decision Support Tool",
         "version": "Version",
         "decision_support_tool": "Decision Support Tool",
@@ -557,7 +557,7 @@ EN: Dict[str, Any] = {
         "do_not_power_off": "Do NOT power off systems - volatile evidence will be lost!",
     },
     "home": {
-        "welcome": "Welcome to CyberOps Companion",
+        "welcome": "Welcome to ISORA",
         "description": "A decision support tool for ransomware incident response.",
         "tool_helps": "This tool helps you:",
         "help_items": [
@@ -1055,7 +1055,7 @@ def get_text(key: str, lang: str = DEFAULT_LANGUAGE) -> Any:
     """
     Get translated text by dot-notation key.
 
-    Example: get_text("home.welcome", "de") -> "Willkommen bei CyberOps Companion"
+    Example: get_text("home.welcome", "de") -> "Willkommen bei ISORA"
     """
     translations = LANGUAGES.get(lang, LANGUAGES[DEFAULT_LANGUAGE])
 

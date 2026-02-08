@@ -1,5 +1,5 @@
 """
-Pytest configuration and fixtures for CyberOps Companion API tests.
+Pytest configuration and fixtures for ISORA API tests.
 """
 
 import asyncio

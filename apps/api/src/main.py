@@ -75,7 +75,7 @@ async def health_check():
 async def root():
     """Root endpoint."""
     return {
-        "name": "CyberOps Companion API",
+        "name": "ISORA API",
         "version": "2.0.0",
         "docs": "/api/docs",
     }

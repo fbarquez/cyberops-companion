@@ -1,6 +1,6 @@
 # Vulnerability Scanner Integration Guide
 
-This guide explains how to configure and use vulnerability scanners (Nessus, OpenVAS, Qualys) with CyberOps Companion.
+This guide explains how to configure and use vulnerability scanners (Nessus, OpenVAS, Qualys) with ISORA.
 
 ## Table of Contents
 
@@ -20,7 +20,7 @@ This guide explains how to configure and use vulnerability scanners (Nessus, Ope
 
 ## Overview
 
-CyberOps Companion integrates with enterprise vulnerability scanners to provide:
+ISORA integrates with enterprise vulnerability scanners to provide:
 
 - **Unified vulnerability management** - Aggregate findings from multiple scanners
 - **Real-time scan progress** - WebSocket-based progress updates

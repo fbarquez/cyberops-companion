@@ -66,7 +66,7 @@ class QualysAdapter(BaseScannerAdapter):
                 verify=self.config.verify_ssl,
                 timeout=self.config.timeout,
                 headers={
-                    "X-Requested-With": "CyberOps Companion",
+                    "X-Requested-With": "ISORA",
                     "Accept": "application/xml",
                 },
             )

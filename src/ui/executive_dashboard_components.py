@@ -1,5 +1,5 @@
 """
-Executive Dashboard Components for CyberOps Companion.
+Executive Dashboard Components for ISORA.
 
 Professional, minimalist dashboard for management-level visibility.
 """
@@ -827,7 +827,7 @@ def _generate_html_report(incident, metrics: IncidentMetrics, phase_tracker) -> 
     </table>
 
     <div class="footer">
-        <p>Generiert von CyberOps Companion | {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</p>
+        <p>Generiert von ISORA | {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</p>
     </div>
 </body>
 </html>"""
@@ -1047,7 +1047,7 @@ Compliance Score & {metrics.compliance_score:.0f}\\% \\\\
 \\vfill
 
 \\begin{{center}}
-\\small Generiert von CyberOps Companion | {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+\\small Generiert von ISORA | {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
 \\end{{center}}
 
 \\end{{document}}
@@ -1174,6 +1174,6 @@ def _generate_pdf_report(incident, metrics: IncidentMetrics, phase_tracker) -> b
     # Footer
     pdf.ln(20)
     pdf.set_font("Helvetica", "I", 8)
-    pdf.cell(0, 10, f"Generiert von CyberOps Companion | {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}", align="C")
+    pdf.cell(0, 10, f"Generiert von ISORA | {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}", align="C")
 
     return bytes(pdf.output())

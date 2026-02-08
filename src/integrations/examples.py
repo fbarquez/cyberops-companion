@@ -2,7 +2,7 @@
 Compliance Hub - Usage Examples
 
 This module demonstrates how to use the Compliance Hub integrations
-in your CyberOps Companion application.
+in your ISORA application.
 
 Run with: python -m src.integrations.examples
 """
@@ -320,15 +320,15 @@ def example_nvd_cve_search():
 
 def example_integration_with_cyberops_companion():
     """
-    Example: Integration with CyberOps Companion's existing workflow.
+    Example: Integration with ISORA's existing workflow.
     """
     print("\n" + "="*60)
-    print("Example 8: Integration with CyberOps Companion Workflow")
+    print("Example 8: Integration with ISORA Workflow")
     print("="*60)
 
     print("""
 This example shows how to integrate the Compliance Hub with
-CyberOps Companion's existing incident workflow.
+ISORA's existing incident workflow.
 
 Code snippet for app.py or workflow.py:
 
@@ -346,7 +346,7 @@ compliance_hub.preload_data()
 
 # When checking phase compliance:
 def check_phase_compliance(incident, checklist, evidence_logger):
-    # Gather data from existing CyberOps Companion models
+    # Gather data from existing ISORA models
     completed_actions = [
         item.id for item in checklist.items
         if item.status == "completed"
@@ -386,7 +386,7 @@ def enrich_incident(incident, iocs):
 def main():
     """Run all examples."""
     print("\n" + "#"*60)
-    print("# CyberOps Companion - Compliance Hub Examples")
+    print("# ISORA - Compliance Hub Examples")
     print("#"*60)
 
     # Run examples that work offline

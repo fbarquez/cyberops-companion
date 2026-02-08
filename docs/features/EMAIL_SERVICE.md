@@ -33,7 +33,7 @@ SMTP_PORT=587
 SMTP_USER=your-email@gmail.com
 SMTP_PASSWORD=your-app-password
 SMTP_FROM=noreply@yourdomain.com
-SMTP_FROM_NAME=CyberOps Companion
+SMTP_FROM_NAME=ISORA
 SMTP_TLS=true
 SMTP_SSL=false
 ```

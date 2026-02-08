@@ -1,11 +1,11 @@
-# CyberOps Companion - Makefile
+# ISORA - Makefile
 # Common commands for development and deployment
 
 .PHONY: help dev prod build up down logs clean test migrate shell db-shell
 
 # Default target
 help:
-	@echo "CyberOps Companion - Available Commands"
+	@echo "ISORA - Available Commands"
 	@echo "========================================"
 	@echo ""
 	@echo "Development:"

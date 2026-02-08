@@ -1,5 +1,5 @@
 """
-IOC Enrichment UI Components for CyberOps Companion.
+IOC Enrichment UI Components for ISORA.
 
 Provides Streamlit components for IOC enrichment functionality.
 """

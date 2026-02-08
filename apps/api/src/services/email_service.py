@@ -210,7 +210,7 @@ class EmailService:
                     <tr>
                         <td style="padding: 30px 40px; background-color: #18181b; border-radius: 8px 8px 0 0;">
                             <h1 style="margin: 0; color: #ffffff; font-size: 24px; font-weight: 600;">
-                                CyberOps Companion
+                                ISORA
                             </h1>
                         </td>
                     </tr>
@@ -245,7 +245,7 @@ class EmailService:
                     <tr>
                         <td style="padding: 30px 40px; background-color: #f4f4f5; border-radius: 0 0 8px 8px;">
                             <p style="margin: 0; color: #71717a; font-size: 14px;">
-                                This is an automated notification from CyberOps Companion.
+                                This is an automated notification from ISORA.
                             </p>
                             <p style="margin: 8px 0 0; color: #a1a1aa; font-size: 12px;">
                                 Sent at {datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")} UTC
@@ -362,7 +362,7 @@ class EmailService:
 
         return await self.send_email(
             to=to,
-            subject="Password Reset - CyberOps Companion",
+            subject="Password Reset - ISORA",
             body_html=body_html,
         )
 
@@ -374,7 +374,7 @@ class EmailService:
     ) -> bool:
         """Send a welcome email to new users."""
         context = {
-            "title": f"Welcome to CyberOps Companion, {username}!",
+            "title": f"Welcome to ISORA, {username}!",
             "message": "Your account has been created successfully. You can now log in to access the security operations platform.",
             "priority": "normal",
             "action_url": login_url,
@@ -386,7 +386,7 @@ class EmailService:
 
         return await self.send_email(
             to=to,
-            subject="Welcome to CyberOps Companion",
+            subject="Welcome to ISORA",
             body_html=body_html,
         )
 
@@ -395,7 +395,7 @@ class EmailService:
         return await self.send_notification_email(
             to=to,
             title="Test Email",
-            message="This is a test email from CyberOps Companion. If you received this, your email configuration is working correctly.",
+            message="This is a test email from ISORA. If you received this, your email configuration is working correctly.",
             priority="normal",
             notification_type="test",
         )

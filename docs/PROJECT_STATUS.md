@@ -1,4 +1,4 @@
-# CyberOps Companion - Project Status
+# ISORA - Project Status
 
 **Last Updated:** 2026-02-05 (Current Session)
 **Project Start:** 2026-01 (Migrated from IR Companion)
@@ -13,7 +13,7 @@
 
 ## Project Overview
 
-CyberOps Companion is a comprehensive cybersecurity operations platform that integrates:
+ISORA is a comprehensive cybersecurity operations platform that integrates:
 - Incident Response Management
 - SOC Operations (Alerts, Cases, Investigations)
 - Vulnerability Management
@@ -33,7 +33,7 @@ CyberOps Companion is a comprehensive cybersecurity operations platform that int
 
 | Task | Status | Date Completed |
 |------|--------|----------------|
-| Project Rename (IR Companion → CyberOps Companion) | ✅ Complete | 2026-01-30 |
+| Project Rename (IR Companion → ISORA) | ✅ Complete | 2026-01-30 |
 | GitHub Repository Setup | ✅ Complete | 2026-01-30 |
 | i18n Translation Migration | ✅ Complete | 2026-01-31 |
 | Email Service (SMTP) | ✅ Complete | 2026-01-31 |

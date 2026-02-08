@@ -1,8 +1,8 @@
-# CyberOps Companion - Project Documentation
+# ISORA - Project Documentation
 
 ## Overview
 
-**CyberOps Companion** is an open-source, enterprise-grade cybersecurity operations platform designed for German and EU enterprises. It provides a unified solution for incident response, compliance management, threat intelligence, vulnerability management, and security operations.
+**ISORA** is an open-source, enterprise-grade cybersecurity operations platform designed for German and EU enterprises. It provides a unified solution for incident response, compliance management, threat intelligence, vulnerability management, and security operations.
 
 **Version**: 2.0.0
 **License**: Apache 2.0
@@ -35,7 +35,7 @@ The cybersecurity market is fragmented into two silos:
 
 ### Our Solution: One Integrated Platform
 
-CyberOps Companion is the **only platform that connects your SOC with your ISMS**. Every alert, incident, and vulnerability automatically feeds your compliance evidence.
+ISORA is the **only platform that connects your SOC with your ISMS**. Every alert, incident, and vulnerability automatically feeds your compliance evidence.
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐

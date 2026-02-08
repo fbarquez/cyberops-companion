@@ -1,5 +1,5 @@
 """
-BSI Meldung UI Components for CyberOps Companion.
+BSI Meldung UI Components for ISORA.
 
 Provides Streamlit components for:
 - BSI incident notification form

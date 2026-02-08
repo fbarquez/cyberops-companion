@@ -1,5 +1,5 @@
 """
-IOC Auto-Enrichment Module for CyberOps Companion.
+IOC Auto-Enrichment Module for ISORA.
 
 Provides automated enrichment of Indicators of Compromise (IOCs) using
 multiple threat intelligence sources:

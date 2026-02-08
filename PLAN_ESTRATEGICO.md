@@ -1,4 +1,4 @@
-# CyberOps Companion - Plan Estrategico
+# ISORA - Plan Estrategico
 
 ## Documento de Vision, Estrategia y Roadmap
 
@@ -28,9 +28,9 @@
 
 ## 1. Resumen Ejecutivo
 
-### Que es CyberOps Companion
+### Que es ISORA
 
-CyberOps Companion es una plataforma integral de operaciones de ciberseguridad que unifica la gestion de incidentes, cumplimiento normativo, gestion de riesgos y operaciones de seguridad (SecOps) en una sola solucion.
+ISORA es una plataforma integral de operaciones de ciberseguridad que unifica la gestion de incidentes, cumplimiento normativo, gestion de riesgos y operaciones de seguridad (SecOps) en una sola solucion.
 
 ### Problema que Resuelve
 
@@ -77,7 +77,7 @@ Una plataforma europea-first que integra:
 ```
 ESTADO ACTUAL                         VISION FUTURA
 ---------------------------           ---------------------------
-CyberOps Companion                    -->   CYBEROPS COMPANION
+ISORA                    -->   CYBEROPS COMPANION
 ---------------------------           ---------------------------
 Respuesta a ransomware          -->   Gestion integral de incidentes
 Herramienta individual          -->   Plataforma colaborativa
@@ -1046,7 +1046,7 @@ FASE 3: Global (Ano 3+)
 
 ### Decisiones Pendientes
 
-1. Nombre final del producto (CyberOps Companion vs otro)
+1. Nombre final del producto (ISORA vs otro)
 2. Dominio y branding
 3. Licencia especifica para open source (AGPL vs Apache vs otro)
 4. Hosting para version cloud (AWS vs Azure vs Hetzner)
@@ -1091,6 +1091,6 @@ FASE 3: Global (Ano 3+)
 
 ---
 
-**Documento preparado para:** CyberOps Companion Project
+**Documento preparado para:** ISORA Project
 **Ultima actualizacion:** Enero 2025
 **Proximo revision:** Febrero 2025

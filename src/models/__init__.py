@@ -1,4 +1,4 @@
-"""Data models for CyberOps Companion."""
+"""Data models for ISORA."""
 
 from .incident import Incident, IncidentStatus, IncidentSeverity
 from .evidence import EvidenceEntry, EvidenceType, ArtifactReference

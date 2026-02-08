@@ -1,4 +1,4 @@
-"""Utility modules for CyberOps Companion."""
+"""Utility modules for ISORA."""
 
 from .helpers import (
     generate_incident_id,

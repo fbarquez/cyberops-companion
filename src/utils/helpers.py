@@ -1,5 +1,5 @@
 """
-Helper utilities for CyberOps Companion.
+Helper utilities for ISORA.
 """
 
 from datetime import datetime, timezone

@@ -1,4 +1,4 @@
-"""Simulation module for CyberOps Companion."""
+"""Simulation module for ISORA."""
 
 from .scenario_runner import ScenarioRunner, SimulationScenario
 from .artifact_generator import ArtifactGenerator

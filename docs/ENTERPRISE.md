@@ -1,4 +1,4 @@
-# CyberOps Companion - Enterprise Edition
+# ISORA - Enterprise Edition
 
 **Status:** Available
 **License:** Commercial License
@@ -7,7 +7,7 @@
 
 ## Overview
 
-CyberOps Companion Enterprise extends the open-source Community edition with advanced compliance modules, AI-powered assistance, and priority support. Designed for organizations requiring comprehensive regulatory compliance and enterprise-grade features.
+ISORA Enterprise extends the open-source Community edition with advanced compliance modules, AI-powered assistance, and priority support. Designed for organizations requiring comprehensive regulatory compliance and enterprise-grade features.
 
 ---
 
@@ -474,4 +474,4 @@ Enterprise features are included in the standard installation. Enable them by:
 
 ---
 
-*CyberOps Companion Enterprise - Comprehensive Compliance for Security Teams*
+*ISORA Enterprise - Comprehensive Compliance for Security Teams*

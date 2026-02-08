@@ -1,5 +1,5 @@
 """
-Keyboard Shortcuts for CyberOps Companion
+Keyboard Shortcuts for ISORA
 
 Provides keyboard navigation and shortcuts for common actions.
 Uses JavaScript injection since Streamlit has limited native keyboard support.
@@ -154,7 +154,7 @@ def get_keyboard_shortcuts_js() -> str:
             }
         });
 
-        console.log('CyberOps Companion keyboard shortcuts initialized');
+        console.log('ISORA keyboard shortcuts initialized');
     })();
     </script>
     """

@@ -1,6 +1,6 @@
-# CyberOps Companion Documentation
+# ISORA Documentation
 
-Welcome to the CyberOps Companion documentation.
+Welcome to the ISORA documentation.
 
 ---
 

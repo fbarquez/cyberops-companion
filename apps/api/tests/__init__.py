@@ -1,5 +1,5 @@
 """
-CyberOps Companion API Tests.
+ISORA API Tests.
 
 Test organization:
 - tests/api/ - API endpoint tests

@@ -1,4 +1,4 @@
-"""Core business logic for CyberOps Companion."""
+"""Core business logic for ISORA."""
 
 from .workflow import WorkflowEngine
 from .evidence_logger import EvidenceLogger

@@ -1,5 +1,5 @@
 """
-CyberOps Companion - Incident Response Decision Support Tool
+ISORA - Incident Response Decision Support Tool
 
 A lightweight, operator-focused decision support tool designed to guide
 security personnel through ransomware incident response.

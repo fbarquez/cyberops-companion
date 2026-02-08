@@ -1,5 +1,5 @@
 """
-UI Components for CyberOps Companion
+UI Components for ISORA
 
 Reusable Streamlit components for the incident response interface.
 """

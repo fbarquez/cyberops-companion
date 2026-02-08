@@ -1,6 +1,6 @@
 # UX Patterns Guide
 
-This document defines the standard UX patterns used throughout CyberOps Companion. Follow these patterns to maintain consistency across all modules.
+This document defines the standard UX patterns used throughout ISORA. Follow these patterns to maintain consistency across all modules.
 
 ---
 

@@ -1,4 +1,4 @@
-# CyberOps Companion - Future Roadmap
+# ISORA - Future Roadmap
 
 **Last Updated:** 2026-02-05
 

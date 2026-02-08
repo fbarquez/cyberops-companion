@@ -26,7 +26,7 @@ class ArtifactReference(BaseModel):
     """
     Reference to an evidence artifact.
 
-    Note: CyberOps Companion does NOT store actual files, only references
+    Note: ISORA does NOT store actual files, only references
     and hashes to maintain forensic integrity.
     """
     filename: str

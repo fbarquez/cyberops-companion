@@ -1,5 +1,5 @@
 """
-Logging configuration for CyberOps Companion.
+Logging configuration for ISORA.
 """
 
 import logging

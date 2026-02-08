@@ -1,6 +1,6 @@
 # 🆓 Deploy Gratis en Oracle Cloud Free Tier
 
-Guía para desplegar CyberOps Companion 100% gratis usando Oracle Cloud.
+Guía para desplegar ISORA 100% gratis usando Oracle Cloud.
 
 ## ¿Por qué Oracle Cloud?
 
@@ -89,7 +89,7 @@ docker compose version
 
 ---
 
-## Paso 5: Desplegar CyberOps Companion
+## Paso 5: Desplegar ISORA
 
 ```bash
 # Clonar repositorio

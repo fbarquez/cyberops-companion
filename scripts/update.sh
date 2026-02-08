@@ -1,6 +1,6 @@
 #!/bin/bash
 # =============================================================================
-# CyberOps Companion - Update Script (Zero-Downtime)
+# ISORA - Update Script (Zero-Downtime)
 # =============================================================================
 # Run this to update the application after pushing new code
 # =============================================================================
@@ -13,7 +13,7 @@ BLUE='\033[0;34m'
 NC='\033[0m'
 
 echo -e "${BLUE}╔═══════════════════════════════════════════════════════════════╗"
-echo "║           CyberOps Companion - Update                         ║"
+echo "║           ISORA - Update                         ║"
 echo "╚═══════════════════════════════════════════════════════════════╝${NC}"
 
 # Check if running in correct directory

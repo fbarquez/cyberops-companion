@@ -1,5 +1,5 @@
 """
-Compliance and Threat Intelligence UI Components for CyberOps Companion.
+Compliance and Threat Intelligence UI Components for ISORA.
 
 Provides Streamlit components for displaying:
 - Compliance validation results

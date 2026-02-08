@@ -1,5 +1,5 @@
 """
-Lessons Learned Database Components for CyberOps Companion.
+Lessons Learned Database Components for ISORA.
 
 Document, search, and analyze lessons from past incidents.
 """
@@ -847,6 +847,6 @@ def _generate_pdf_export(lessons: List[LessonLearned]) -> bytes:
     # Footer
     pdf.ln(10)
     pdf.set_font("Helvetica", "I", 8)
-    pdf.cell(0, 10, "Generiert mit CyberOps Companion", align="C")
+    pdf.cell(0, 10, "Generiert mit ISORA", align="C")
 
     return bytes(pdf.output())

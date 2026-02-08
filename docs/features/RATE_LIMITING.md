@@ -2,7 +2,7 @@
 
 ## Resumen
 
-Esta documentacion describe la implementacion del sistema de rate limiting en CyberOps Companion, que protege la API contra abuso y garantiza un uso justo de los recursos basado en el plan de suscripcion de cada organizacion.
+Esta documentacion describe la implementacion del sistema de rate limiting en ISORA, que protege la API contra abuso y garantiza un uso justo de los recursos basado en el plan de suscripcion de cada organizacion.
 
 **Fecha de implementacion:** 2026-02-01
 **Version:** 1.0.0

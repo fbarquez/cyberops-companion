@@ -1,7 +1,7 @@
 """
-CyberOps Companion - Configuration Settings
+ISORA - Configuration Settings
 
-Central configuration for the CyberOps Companion application.
+Central configuration for the ISORA application.
 All settings can be overridden via environment variables.
 """
 
@@ -39,7 +39,7 @@ class LoggingConfig:
 @dataclass
 class UIConfig:
     """Streamlit UI configuration."""
-    page_title: str = "CyberOps Companion"
+    page_title: str = "ISORA"
     page_icon: str = "🛡️"
     layout: str = "wide"
     initial_sidebar_state: str = "expanded"
@@ -82,7 +82,7 @@ class ExportConfig:
 @dataclass
 class AppConfig:
     """Main application configuration."""
-    app_name: str = "CyberOps Companion"
+    app_name: str = "ISORA"
     version: str = "2.0.0"
     debug: bool = False
 

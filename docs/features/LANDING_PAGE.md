@@ -1,6 +1,6 @@
 # Landing Page
 
-The landing page is the public-facing entry point for unauthenticated users visiting CyberOps Companion.
+The landing page is the public-facing entry point for unauthenticated users visiting ISORA.
 
 ## Overview
 
