@@ -10,6 +10,112 @@
 
 ---
 
+## Key Differentiator: ISMS + SOC Integration
+
+### The Problem with Current Tools
+
+The cybersecurity market is fragmented into two silos:
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    CURRENT MARKET                                │
+├────────────────────────────┬────────────────────────────────────┤
+│   COMPLIANCE TOOLS         │         SOC TOOLS                  │
+│   (Vanta, Drata, OneTrust) │    (Splunk, QRadar, TheHive)      │
+├────────────────────────────┼────────────────────────────────────┤
+│   ✓ ISO 27001, SOC 2       │    ✓ Alerts & Cases               │
+│   ✓ Policy Management      │    ✓ Threat Intelligence          │
+│   ✓ Risk Assessments       │    ✓ SIEM Integration             │
+│   ✗ No real SOC            │    ✗ Compliance = afterthought    │
+├────────────────────────────┼────────────────────────────────────┤
+│   "We're compliant"        │    "We detect threats"            │
+│   but can't prove it works │    but can't prove compliance     │
+└────────────────────────────┴────────────────────────────────────┘
+```
+
+### Our Solution: One Integrated Platform
+
+CyberOps Companion is the **only platform that connects your SOC with your ISMS**. Every alert, incident, and vulnerability automatically feeds your compliance evidence.
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                   CYBEROPS COMPANION                             │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│   ┌─────────────┐      ┌─────────────┐      ┌─────────────┐    │
+│   │    ISMS     │ ←──→ │     SOC     │ ←──→ │  EVIDENCE   │    │
+│   │             │      │             │      │             │    │
+│   │ • ISO 27001 │      │ • Incidents │      │ • Audit Log │    │
+│   │ • DORA      │      │ • Alerts    │      │ • Reports   │    │
+│   │ • NIS2      │      │ • Threats   │      │ • Metrics   │    │
+│   │ • BSI       │      │ • Vulns     │      │ • Timeline  │    │
+│   │ • Policies  │      │ • Playbooks │      │ • Exports   │    │
+│   └─────────────┘      └─────────────┘      └─────────────┘    │
+│          │                    │                    │            │
+│          └────────────────────┴────────────────────┘            │
+│                    FULLY CONNECTED                               │
+│                                                                  │
+│   Security Operations ARE the Compliance Evidence               │
+│                                                                  │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### How It Works: The Compliance Loop
+
+```
+1. REGULATION REQUIREMENT
+   └── DORA Art. 17: "You must detect and report ICT incidents"
+
+2. FRAMEWORK CONTROL
+   └── ISO 27001 A.5.24: "Implement incident management process"
+
+3. SOC OPERATION
+   └── Alert detected → Case created → Incident managed → Resolved
+
+4. AUTOMATIC EVIDENCE
+   └── Incident record linked to A.5.24 with full timeline
+
+5. AUDIT READY
+   └── Auditor asks for proof → Export 47 incidents with metadata
+   └── Control effectiveness: 94% based on real operational data
+```
+
+### Competitive Comparison
+
+| Capability | Vanta/Drata | Splunk/QRadar | CyberOps |
+|------------|-------------|---------------|----------|
+| Manage security incidents | ❌ Manual/external | ✅ Yes | ✅ Yes |
+| Map incidents to ISO 27001 | ❌ No | ❌ No | ✅ Automatic |
+| Generate compliance evidence | ⚠️ Screenshots | ⚠️ Raw logs | ✅ Integrated |
+| Report to BaFin/BSI (DORA/NIS2) | ❌ No | ❌ No | ✅ Built-in |
+| Real-time control effectiveness | ⚠️ Manual assessment | ❌ No | ✅ Live metrics |
+| Threat Intel → Risk Register | ❌ No | ❌ No | ✅ Connected |
+| Single audit trail | ❌ Multiple tools | ❌ Multiple tools | ✅ One system |
+
+### Value Proposition
+
+**Without CyberOps:**
+```
+├── Splunk detects incident
+├── Analyst manages it in Splunk
+├── Compliance officer asks "Are we DORA compliant?"
+├── Nobody can connect the data
+├── Auditor arrives → panic → manual screenshots
+└── Result: Non-conformity or fine
+```
+
+**With CyberOps:**
+```
+├── SOC detects incident
+├── System auto-links to DORA Art.17, ISO A.5.24
+├── Evidence generated in real-time
+├── Dashboard shows: "Control A.5.24: 94% effective, 47 incidents"
+├── Auditor arrives → PDF export → done
+└── Result: Certification without stress
+```
+
+---
+
 ## Architecture
 
 ### Technology Stack
@@ -639,6 +745,140 @@ b708a72 feat: implement onboarding wizard with regulation detection
 cee5ff0 feat(web): add threat feed management UI
 8d9d030 feat: implement CTI feed integration (MISP, OTX, VirusTotal)
 839b633 feat(web): integrate scan progress UI into vulnerabilities page
+```
+
+---
+
+## ISMS ↔ SOC Integration Points
+
+This section details the specific connections between compliance (ISMS) and security operations (SOC).
+
+### Integration Matrix
+
+| SOC Activity | ISMS Connection | Evidence Generated |
+|--------------|-----------------|-------------------|
+| **Incident Response** | ISO 27001 A.5.24, A.5.26 | Incident records, timeline, resolution |
+| **Alert Triage** | DORA Art. 17, NIS2 Art. 23 | Alert classification, response time |
+| **Threat Detection** | ISO 27001 A.8.16 | Detection logs, IOC matches |
+| **Vulnerability Scan** | ISO 27001 A.8.8, DORA Art. 25 | Scan reports, remediation tracking |
+| **Playbook Execution** | ISO 27001 A.5.24 | Automated response evidence |
+| **Case Investigation** | DORA Art. 17 | Investigation timeline, findings |
+| **Shift Handover** | ISO 27001 A.6.1 | Operational continuity records |
+
+### Control ↔ Operation Mapping
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│ ISO 27001 A.5.24 (Incident Management)                          │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│  CONTROL REQUIREMENT          SOC EVIDENCE                      │
+│  ──────────────────          ────────────                       │
+│  "Plan incident response" → Playbooks defined in system         │
+│  "Detect incidents"       → Alerts from SIEM integration        │
+│  "Respond to incidents"   → Case management with timeline       │
+│  "Learn from incidents"   → Post-incident reports               │
+│  "Preserve evidence"      → SHA-256 verified evidence chain     │
+│                                                                  │
+│  EFFECTIVENESS METRIC: Response time, resolution rate           │
+│                                                                  │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│ DORA Article 17 (ICT Incident Management)                       │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│  DORA REQUIREMENT             SOC EVIDENCE                      │
+│  ────────────────             ────────────                      │
+│  "Detect anomalies"       → Alert correlation engine            │
+│  "Classify incidents"     → Severity classification system      │
+│  "Report major incidents" → BaFin notification workflow         │
+│  "Root cause analysis"    → Post-incident investigation         │
+│  "Track trends"           → Incident analytics dashboard        │
+│                                                                  │
+│  REPORTING: Initial (4h), Intermediate (72h), Final (1mo)      │
+│                                                                  │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│ NIS2 Article 21 (Cybersecurity Risk Management)                 │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│  NIS2 REQUIREMENT             SOC EVIDENCE                      │
+│  ────────────────             ────────────                      │
+│  "Incident handling"      → Full incident lifecycle tracking    │
+│  "Crisis management"      → BCM integration with exercises      │
+│  "Supply chain security"  → TPRM vendor assessments            │
+│  "Vulnerability handling" → Scan results and remediation       │
+│  "Security testing"       → Penetration test tracking          │
+│                                                                  │
+│  REPORTING: 24h initial, 72h full notification                 │
+│                                                                  │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### Automatic Evidence Flow
+
+```
+SOC OPERATION                      ISMS EVIDENCE
+─────────────                      ─────────────
+
+Analyst creates incident     ───→  Evidence: Incident created
+    │                               - Timestamp
+    │                               - Creator
+    │                               - Initial classification
+    ▼
+Analyst adds IOCs            ───→  Evidence: Threat indicators
+    │                               - IOC type and value
+    │                               - Source attribution
+    │                               - Enrichment data
+    ▼
+Playbook executes            ───→  Evidence: Response actions
+    │                               - Automated steps
+    │                               - Execution time
+    │                               - Results
+    ▼
+Incident resolved            ───→  Evidence: Resolution
+    │                               - Resolution time (MTTR)
+    │                               - Root cause
+    │                               - Lessons learned
+    ▼
+Post-incident report         ───→  Evidence: Continuous improvement
+                                    - Recommendations
+                                    - Control updates
+                                    - Training needs
+
+ALL EVIDENCE LINKED TO:
+├── ISO 27001 controls (A.5.24, A.5.26, A.8.16)
+├── DORA pillars (P2: Incident Reporting)
+├── NIS2 articles (Art. 21, Art. 23)
+└── BSI modules (DER.2.1, DER.2.2)
+```
+
+### Dashboard Integration
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│ COMPLIANCE DASHBOARD                                             │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│  ISO 27001 Control Status                SOC Metrics            │
+│  ────────────────────────                ───────────            │
+│  A.5.24 Incident Mgmt: 94%   ←────────   47 incidents handled   │
+│  A.8.8 Vuln Mgmt: 87%        ←────────   312 vulns remediated  │
+│  A.8.16 Monitoring: 91%      ←────────   99.2% alert coverage   │
+│                                                                  │
+│  DORA Compliance                         Real-time Ops          │
+│  ───────────────                         ────────────           │
+│  P2 Incident Report: 96%     ←────────   Avg response: 2.3h    │
+│  P3 Resilience Test: 88%     ←────────   Last test: 5 days ago │
+│                                                                  │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │ Control effectiveness calculated from ACTUAL OPERATIONS │   │
+│  │ Not self-assessments. Not checkboxes. Real data.        │   │
+│  └─────────────────────────────────────────────────────────┘   │
+│                                                                  │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
 ---
