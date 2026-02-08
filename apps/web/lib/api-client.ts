@@ -777,6 +777,73 @@ export const threatsAPI = {
   // Stats
   getStats: (token: string) =>
     request("/api/v1/threats/stats", { token }),
+
+  // Threat Feeds
+  listFeeds: (token: string, params?: {
+    feed_type?: string;
+    enabled?: boolean;
+    search?: string;
+  }) => {
+    const query = new URLSearchParams();
+    if (params?.feed_type) query.set("feed_type", params.feed_type);
+    if (params?.enabled !== undefined) query.set("enabled", params.enabled.toString());
+    if (params?.search) query.set("search", params.search);
+    return request(`/api/v1/threats/feeds?${query}`, { token });
+  },
+
+  getFeed: (token: string, id: string) =>
+    request(`/api/v1/threats/feeds/${id}`, { token }),
+
+  createFeed: (token: string, data: {
+    name: string;
+    feed_type: string;
+    base_url?: string;
+    enabled?: boolean;
+    sync_interval_minutes?: number;
+    config?: Record<string, any>;
+  }) =>
+    request("/api/v1/threats/feeds", {
+      method: "POST",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  updateFeed: (token: string, id: string, data: {
+    name?: string;
+    base_url?: string;
+    enabled?: boolean;
+    sync_interval_minutes?: number;
+    config?: Record<string, any>;
+  }) =>
+    request(`/api/v1/threats/feeds/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  deleteFeed: (token: string, id: string) =>
+    request(`/api/v1/threats/feeds/${id}`, {
+      method: "DELETE",
+      token,
+    }),
+
+  syncFeed: (token: string, id: string) =>
+    request(`/api/v1/threats/feeds/${id}/sync`, {
+      method: "POST",
+      token,
+    }),
+
+  testFeedConnection: (token: string, id: string) =>
+    request(`/api/v1/threats/feeds/${id}/test`, {
+      method: "POST",
+      token,
+    }),
+
+  getFeedSyncHistory: (token: string, id: string, params?: { limit?: number }) => {
+    const query = new URLSearchParams();
+    if (params?.limit) query.set("limit", params.limit.toString());
+    return request(`/api/v1/threats/feeds/${id}/sync-history?${query}`, { token });
+  },
 };
 
 // Vulnerability Management
