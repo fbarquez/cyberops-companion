@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { Sidebar } from "@/components/navigation/sidebar";
 import { MobileSidebar } from "@/components/shared/mobile-sidebar";
 import { CommandPalette } from "@/components/navigation/command-palette";
@@ -19,8 +19,12 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
+  const pathname = usePathname();
   const { isAuthenticated, isLoading, loadUser } = useAuthStore();
   const { isComplete: isOnboardingComplete } = useOnboardingStore();
+
+  // Check if we're on the onboarding page
+  const isOnboardingPage = pathname === "/onboarding";
 
   useEffect(() => {
     loadUser();
@@ -34,10 +38,11 @@ export default function DashboardLayout({
 
   useEffect(() => {
     // Redirect to onboarding if not complete (only for authenticated users)
-    if (!isLoading && isAuthenticated && !isOnboardingComplete) {
+    // But don't redirect if we're already on the onboarding page
+    if (!isLoading && isAuthenticated && !isOnboardingComplete && !isOnboardingPage) {
       router.push("/onboarding");
     }
-  }, [isAuthenticated, isLoading, isOnboardingComplete, router]);
+  }, [isAuthenticated, isLoading, isOnboardingComplete, isOnboardingPage, router]);
 
   if (isLoading || !isAuthenticated) {
     return (
@@ -47,7 +52,16 @@ export default function DashboardLayout({
     );
   }
 
-  // Show loading while checking onboarding status
+  // Allow onboarding page to render even if onboarding is not complete
+  if (isOnboardingPage) {
+    return (
+      <div className="min-h-screen bg-background">
+        {children}
+      </div>
+    );
+  }
+
+  // Show loading while checking onboarding status for other pages
   if (!isOnboardingComplete) {
     return (
       <div className="flex items-center justify-center h-screen">
