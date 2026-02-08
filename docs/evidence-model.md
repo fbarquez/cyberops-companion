@@ -1,10 +1,10 @@
 # Evidence Model
 
-> Documentation for ISOVA's evidence management system
+> Documentation for ISORA's evidence management system
 
 ## Overview
 
-ISOVA uses a structured evidence model to capture, version, and verify compliance documentation. Each evidence record includes cryptographic integrity verification and full audit trail.
+ISORA uses a structured evidence model to capture, version, and verify compliance documentation. Each evidence record includes cryptographic integrity verification and full audit trail.
 
 ## Data Model
 
@@ -406,4 +406,4 @@ CREATE INDEX idx_evidence_valid_until ON evidence(valid_until) WHERE valid_until
 
 ## Disclaimer
 
-Evidence created in ISOVA is internal documentation. Attestations are confirmations made in good faith and do not constitute formal audit evidence in the sense of certification. For formal certification audits, additional documentation may be required.
+Evidence created in ISORA is internal documentation. Attestations are confirmations made in good faith and do not constitute formal audit evidence in the sense of certification. For formal certification audits, additional documentation may be required.
