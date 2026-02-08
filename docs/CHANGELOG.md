@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to CyberOps Companion are documented in this file.
+All notable changes to ISORA are documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
@@ -9,12 +9,118 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### Planned (Future)
-- ML/Predictive Analytics (Phase 2C - when more data is available)
-- Real scanner integration (Nessus, OpenVAS, Qualys)
-- Anomaly detection
-- Incident prediction
+- ML/Predictive Analytics (Phase 2C - when production data is available)
+- Advanced anomaly detection
+- Incident prediction models
 
-See [FUTURE_ROADMAP.md](./FUTURE_ROADMAP.md) for detailed specifications.
+See [FUTURE_ROADMAP.md](./FUTURE_ROADMAP.md) for specifications.
+
+---
+
+## [2.0.0] - 2026-02-08
+
+### Changed
+
+#### Project Rebrand: CyberOps Companion → ISORA
+
+**ISORA** = **I**SMS **O**perations & **R**isk **A**ssurance
+
+Complete rebrand of the platform with new positioning for the DACH market:
+- New name and branding across all components
+- Updated README with open-core model (Community AGPL + Enterprise Commercial)
+- German-first documentation for target market
+- Professional positioning for regulated enterprises
+
+#### Open-Core Model
+
+Established clear Community vs Enterprise feature split:
+
+**Community Edition (AGPL-3.0):**
+- Full SOC operations (incidents, alerts, cases, playbooks)
+- Vulnerability management with NVD/EPSS/KEV
+- Risk management and TPRM
+- CMDB and threat intelligence
+- ISMS ↔ SOC Evidence Bridge
+- Basic multi-tenancy and evidence management
+- SSO (OAuth2/OIDC) and audit logging
+
+**Enterprise Edition (Commercial):**
+- Auditor View + ZIP Audit Pack
+- PDF Reports (DIN 5008 / BSI-Methodik) + Branding
+- Evidence Lifecycle Advanced (approvals, expirations, reminders)
+- Full NIS2 + DORA + BSI IT-Grundschutz Wizards
+- Production integrations (Scanner, SIEM) + AI Copilot + SLA
+
+### Added
+
+#### ISMS ↔ SOC Evidence Bridge
+
+New system that automatically links operational activities to compliance controls:
+
+| Activity | Linked Control | Generated Evidence |
+|----------|---------------|-------------------|
+| Incident resolved | A.5.24 | Response time, resolution docs |
+| Alert triaged | A.8.16 | Detection metrics |
+| Vulnerability scanned | A.8.8 | Scan reports, remediation status |
+| Playbook executed | A.5.26 | Automation evidence |
+| Training completed | A.6.3 | Completion certificates |
+
+**Backend:**
+- `models/evidence_bridge.py` - ControlEvidenceLink, ControlEffectiveness, EvidenceLinkingRule
+- `schemas/evidence_bridge.py` - API schemas for bridge operations
+- `services/evidence_bridge_service.py` - Linking logic and effectiveness calculation
+- `api/v1/evidence_bridge.py` - REST endpoints for bridge management
+
+**Frontend:**
+- `components/compliance/EvidenceBridgeDashboard.tsx` - Bridge statistics and overview
+- `app/(dashboard)/compliance/assurance/bridge/` - Bridge pages
+
+#### DORA Compliance Module
+
+Complete Digital Operational Resilience Act (EU) assessment:
+
+- 5 pillars: ICT Risk Management, Incident Reporting, Resilience Testing, Third-Party Risk, Information Sharing
+- 28 requirements with weighted scoring
+- Entity-type aware (16+ financial entity types)
+- Gap analysis and remediation planning
+
+**Files:**
+- `models/dora.py`, `schemas/dora.py`, `services/dora_service.py`, `api/v1/dora.py`
+- Frontend wizard at `/compliance/regulatory/dora`
+
+#### Threat Intelligence Feed Integration
+
+Integration with external threat feeds:
+
+- MISP (Malware Information Sharing Platform)
+- AlienVault OTX
+- VirusTotal
+- Configurable sync intervals and IOC import
+
+**Files:**
+- `services/threat_feed_service.py`
+- `api/v1/threats.py` - Feed management endpoints
+- Frontend: `/threats/feeds` management UI
+
+#### Vulnerability Scanner Integration
+
+Real scanner integration framework:
+
+- Nessus, OpenVAS, Qualys, Rapid7, AWS Inspector, Azure Defender
+- Credential management and scan scheduling
+- Real-time progress tracking
+- Finding import and deduplication
+
+**Files:**
+- `services/scanner_integration_service.py`
+- `api/v1/vulnerabilities.py` - Scanner endpoints
+- Frontend: Scan progress UI in vulnerabilities page
+
+### Documentation
+
+- `docs/nis2-workflow.md` - NIS2 assessment workflow
+- `docs/evidence-model.md` - Evidence management system
+- Updated README with DACH market focus and compliance disclaimer
 
 ---
 

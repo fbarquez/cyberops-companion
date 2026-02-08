@@ -127,3 +127,16 @@ docker-compose.override.yml
 
 # Obsidian
 .obsidian/
+
+# Internal docs (not for public repo)
+docs/CAREER_MATERIALS.md
+docs/STRATEGIC_ANALYSIS.md
+docs/PUSH_PLAN_FINAL.md
+docs/OPEN_SOURCE_LAUNCH_PLAN.md
+docs/PRODUCT_PLAN_EVIDENCE.md
+docs/PRODUCT_PLAN_EVIDENCE_V2.md
+docs/ICP_DACH.md
+docs/USE_CASES_BERATUNG.md
+docs/PILOT_DEMO_SCRIPT.md
+docs/PILOT_DEMO_SCRIPT_V2.md
+docs/ARCHITECTURE_EVIDENCE.md
