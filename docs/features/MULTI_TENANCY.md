@@ -550,7 +550,6 @@ UPDATE incidents SET tenant_id = 'default-org-id' WHERE tenant_id IS NULL;
 
 ## Referencias
 
-- **Plan de implementacion:** `~/.claude/plans/dapper-mapping-wreath.md`
 - **Migraciones:** `apps/api/alembic/versions/`
 - **Modelos:** `apps/api/src/models/organization.py`
 - **Servicios:** `apps/api/src/services/organization_service.py`

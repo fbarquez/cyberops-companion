@@ -320,4 +320,4 @@ All actions are logged for compliance and forensic purposes:
 
 | Version | Date | Author | Changes |
 |---------|------|--------|---------|
-| 1.0 | 2026-02-05 | Claude Opus 4.5 | Initial documentation |
+| 1.0 | 2026-02-05 | ISORA Team | Initial documentation |

@@ -2,7 +2,6 @@
 Attack Path Analysis Models
 
 Models for analyzing potential attack paths through infrastructure.
-Based on the plan at ~/.claude/plans/attack-path-analysis.md
 """
 
 import enum
