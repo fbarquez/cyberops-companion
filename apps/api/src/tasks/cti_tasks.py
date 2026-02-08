@@ -6,7 +6,11 @@ Background tasks for synchronizing threat intelligence feeds.
 import asyncio
 import logging
 from datetime import datetime
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from src.models.threat_intel import IOC
+    from src.integrations.cti_feeds.base import NormalizedIOC
 
 from celery import shared_task
 

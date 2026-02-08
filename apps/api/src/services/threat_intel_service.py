@@ -4,8 +4,12 @@ Threat Intelligence Service.
 Manages IOCs, Threat Actors, and Campaigns with enrichment capabilities.
 """
 from datetime import datetime
-from typing import Optional, List, Dict, Any
+from typing import Optional, List, Dict, Any, TYPE_CHECKING
 from uuid import UUID
+
+if TYPE_CHECKING:
+    from src.schemas.threat_intel import ThreatFeedUpdate, FeedSyncResponse
+
 from sqlalchemy import select, func, and_, or_
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
