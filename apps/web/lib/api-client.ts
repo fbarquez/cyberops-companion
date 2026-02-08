@@ -951,6 +951,12 @@ export const vulnerabilitiesAPI = {
       token,
     }),
 
+  cancelScan: (token: string, id: string) =>
+    request(`/api/v1/vulnerabilities/scans/${id}/cancel`, {
+      method: "POST",
+      token,
+    }),
+
   // Import
   importVulnerabilities: (token: string, data: {
     scanner: string;

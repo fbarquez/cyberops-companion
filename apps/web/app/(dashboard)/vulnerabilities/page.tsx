@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   Bug,
@@ -18,6 +18,9 @@ import {
   Trash2,
   FileUp,
   Activity,
+  Play,
+  Ban,
+  Loader2,
 } from "lucide-react";
 import { Header } from "@/components/shared/header";
 import { Button } from "@/components/ui/button";
@@ -62,6 +65,11 @@ import { useTranslations } from "@/hooks/use-translations";
 import { vulnerabilitiesAPI } from "@/lib/api-client";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import {
+  ScanProgressCard,
+  ScanProgressDialog,
+  useScanProgressDialog,
+} from "@/components/vulnerabilities";
 
 interface Vulnerability {
   id: string;
@@ -103,6 +111,24 @@ interface CVE {
   cvss_score?: number;
   severity?: string;
   is_kev: boolean;
+}
+
+interface VulnerabilityScan {
+  id: string;
+  name: string;
+  scan_type: string;
+  scanner: string;
+  status: "pending" | "running" | "completed" | "failed" | "cancelled";
+  target_scope?: string;
+  total_findings?: number;
+  critical_count?: number;
+  high_count?: number;
+  medium_count?: number;
+  low_count?: number;
+  info_count?: number;
+  started_at?: string;
+  completed_at?: string;
+  created_at: string;
 }
 
 interface VulnStats {
@@ -179,6 +205,16 @@ export default function VulnerabilitiesPage() {
     criticality: "medium",
     environment: "production",
   });
+  const [showNewScanDialog, setShowNewScanDialog] = useState(false);
+  const [newScan, setNewScan] = useState({
+    name: "",
+    scan_type: "network",
+    scanner: "nessus",
+    target_scope: "",
+  });
+
+  // Scan progress dialog
+  const { dialogState: scanProgressDialogState, openDialog: openScanProgressDialog, setOpen: setScanProgressDialogOpen } = useScanProgressDialog();
 
   // Fetch stats
   const { data: stats, isLoading: statsLoading } = useQuery({
@@ -209,6 +245,18 @@ export default function VulnerabilitiesPage() {
         total: number;
       }>,
     enabled: !!token,
+  });
+
+  // Fetch scans
+  const { data: scansData, isLoading: scansLoading, refetch: refetchScans } = useQuery({
+    queryKey: ["scans"],
+    queryFn: () =>
+      vulnerabilitiesAPI.listScans(token!, { page_size: 50 }) as Promise<{
+        scans: VulnerabilityScan[];
+        total: number;
+      }>,
+    enabled: !!token,
+    refetchInterval: 30000, // Poll every 30 seconds for running scans
   });
 
   // Create vulnerability mutation
@@ -276,10 +324,55 @@ export default function VulnerabilitiesPage() {
     },
   });
 
+  // Create scan mutation
+  const createScanMutation = useMutation({
+    mutationFn: (data: typeof newScan) =>
+      vulnerabilitiesAPI.createScan(token!, data) as Promise<VulnerabilityScan>,
+    onSuccess: async (scan) => {
+      setShowNewScanDialog(false);
+      setNewScan({ name: "", scan_type: "network", scanner: "nessus", target_scope: "" });
+      toast.success("Scan created, starting...");
+      // Start the scan immediately
+      startScanMutation.mutate(scan.id);
+    },
+    onError: (error: any) => {
+      toast.error(error.message || "Failed to create scan");
+    },
+  });
+
+  // Start scan mutation
+  const startScanMutation = useMutation({
+    mutationFn: (id: string) => vulnerabilitiesAPI.startScan(token!, id),
+    onSuccess: (_, scanId) => {
+      queryClient.invalidateQueries({ queryKey: ["scans"] });
+      // Find the scan name from scansData
+      const scan = scansData?.scans?.find((s) => s.id === scanId);
+      openScanProgressDialog(scanId, scan?.name || "Vulnerability Scan");
+    },
+    onError: (error: any) => {
+      toast.error(error.message || "Failed to start scan");
+      queryClient.invalidateQueries({ queryKey: ["scans"] });
+    },
+  });
+
+  // Cancel scan mutation
+  const cancelScanMutation = useMutation({
+    mutationFn: (id: string) => vulnerabilitiesAPI.cancelScan(token!, id),
+    onSuccess: () => {
+      toast.info("Scan cancellation requested");
+      queryClient.invalidateQueries({ queryKey: ["scans"] });
+    },
+    onError: (error: any) => {
+      toast.error(error.message || "Failed to cancel scan");
+    },
+  });
+
   if (statsLoading) return <PageLoading />;
 
   const vulnerabilities = vulnsData?.vulnerabilities || [];
   const assets = assetsData?.assets || [];
+  const scans = scansData?.scans || [];
+  const runningScans = scans.filter((s) => s.status === "running" || s.status === "pending");
 
   const openPercent = stats?.total_vulnerabilities
     ? Math.round((stats.open_vulnerabilities / stats.total_vulnerabilities) * 100)
@@ -754,19 +847,176 @@ export default function VulnerabilitiesPage() {
           </TabsContent>
 
           {/* Scans Tab */}
-          <TabsContent value="scans" className="mt-4">
-            <Card>
-              <CardContent className="py-8 text-center text-muted-foreground">
-                <Scan className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                <p>{t("vulnerabilities.noScans")}</p>
-                <Button className="mt-4" variant="outline">
-                  <Plus className="h-4 w-4 mr-2" />
-                  {t("vulnerabilities.newScan")}
+          <TabsContent value="scans" className="mt-4 space-y-4">
+            {/* Actions */}
+            <div className="flex items-center justify-between">
+              <div className="text-sm text-muted-foreground">
+                {scans.length} {t("vulnerabilities.scansTotal")} | {runningScans.length} {t("vulnerabilities.scansRunning")}
+              </div>
+              <div className="flex gap-2">
+                <Button variant="outline" size="sm" onClick={() => refetchScans()}>
+                  <RefreshCw className="h-4 w-4 mr-2" />
+                  {t("vulnerabilities.refresh")}
                 </Button>
+                <Dialog open={showNewScanDialog} onOpenChange={setShowNewScanDialog}>
+                  <DialogTrigger asChild>
+                    <Button size="sm">
+                      <Plus className="h-4 w-4 mr-2" />
+                      {t("vulnerabilities.newScan")}
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>{t("vulnerabilities.newScanTitle")}</DialogTitle>
+                      <DialogDescription>{t("vulnerabilities.newScanDescription")}</DialogDescription>
+                    </DialogHeader>
+                    <div className="space-y-4">
+                      <div>
+                        <Label>{t("vulnerabilities.scanName")}</Label>
+                        <Input
+                          placeholder={t("vulnerabilities.scanNamePlaceholder")}
+                          value={newScan.name}
+                          onChange={(e) => setNewScan({ ...newScan, name: e.target.value })}
+                        />
+                      </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <Label>{t("vulnerabilities.scanType")}</Label>
+                          <Select
+                            value={newScan.scan_type}
+                            onValueChange={(v) => setNewScan({ ...newScan, scan_type: v })}
+                          >
+                            <SelectTrigger>
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="network">{t("vulnerabilities.networkScan")}</SelectItem>
+                              <SelectItem value="web_app">{t("vulnerabilities.webAppScan")}</SelectItem>
+                              <SelectItem value="container">{t("vulnerabilities.containerScan")}</SelectItem>
+                              <SelectItem value="cloud">{t("vulnerabilities.cloudScan")}</SelectItem>
+                              <SelectItem value="code">{t("vulnerabilities.codeScan")}</SelectItem>
+                              <SelectItem value="compliance">{t("vulnerabilities.complianceScan")}</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div>
+                          <Label>{t("vulnerabilities.scanner")}</Label>
+                          <Select
+                            value={newScan.scanner}
+                            onValueChange={(v) => setNewScan({ ...newScan, scanner: v })}
+                          >
+                            <SelectTrigger>
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="nessus">Nessus</SelectItem>
+                              <SelectItem value="openvas">OpenVAS</SelectItem>
+                              <SelectItem value="qualys">Qualys</SelectItem>
+                              <SelectItem value="trivy">Trivy</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      </div>
+                      <div>
+                        <Label>{t("vulnerabilities.targetScope")}</Label>
+                        <Textarea
+                          placeholder={t("vulnerabilities.targetScopePlaceholder")}
+                          value={newScan.target_scope}
+                          onChange={(e) => setNewScan({ ...newScan, target_scope: e.target.value })}
+                          rows={3}
+                        />
+                        <p className="text-xs text-muted-foreground mt-1">
+                          {t("vulnerabilities.targetScopeHint")}
+                        </p>
+                      </div>
+                    </div>
+                    <DialogFooter>
+                      <Button
+                        onClick={() => createScanMutation.mutate(newScan)}
+                        disabled={!newScan.name || createScanMutation.isPending}
+                      >
+                        {createScanMutation.isPending ? (
+                          <>
+                            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                            {t("vulnerabilities.creating")}
+                          </>
+                        ) : (
+                          <>
+                            <Play className="h-4 w-4 mr-2" />
+                            {t("vulnerabilities.createAndStart")}
+                          </>
+                        )}
+                      </Button>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
+              </div>
+            </div>
+
+            {/* Running Scans */}
+            {runningScans.length > 0 && (
+              <div className="space-y-3">
+                <h3 className="text-sm font-medium">{t("vulnerabilities.activeScans")}</h3>
+                <div className="grid gap-4 md:grid-cols-2">
+                  {runningScans.map((scan) => (
+                    <ScanProgressCard
+                      key={scan.id}
+                      scanId={scan.id}
+                      scanName={scan.name}
+                      onCancel={() => cancelScanMutation.mutate(scan.id)}
+                      onComplete={() => {
+                        refetchScans();
+                        refetchVulns();
+                        queryClient.invalidateQueries({ queryKey: ["vuln-stats"] });
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Scans List */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-sm">{t("vulnerabilities.scanHistory")}</CardTitle>
+              </CardHeader>
+              <CardContent className="p-0">
+                {scansLoading ? (
+                  <div className="p-8 text-center">{t("vulnerabilities.loading")}</div>
+                ) : scans.length > 0 ? (
+                  <div className="divide-y">
+                    {scans.map((scan) => (
+                      <ScanRow
+                        key={scan.id}
+                        scan={scan}
+                        onStart={() => startScanMutation.mutate(scan.id)}
+                        onCancel={() => cancelScanMutation.mutate(scan.id)}
+                        isStarting={startScanMutation.isPending}
+                        t={t}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="p-8 text-center text-muted-foreground">
+                    <Scan className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                    <p>{t("vulnerabilities.noScans")}</p>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </TabsContent>
         </Tabs>
+
+        {/* Scan Progress Dialog */}
+        <ScanProgressDialog
+          {...scanProgressDialogState}
+          onOpenChange={setScanProgressDialogOpen}
+          onComplete={() => {
+            refetchScans();
+            refetchVulns();
+            queryClient.invalidateQueries({ queryKey: ["vuln-stats"] });
+          }}
+        />
       </div>
     </div>
   );
@@ -885,6 +1135,140 @@ function AssetRow({ asset, t }: { asset: Asset; t: (key: string) => string }) {
         {asset.vulnerability_count > 0 && (
           <Badge variant="outline">{asset.vulnerability_count} {t("vulnerabilities.vulns")}</Badge>
         )}
+      </div>
+    </div>
+  );
+}
+
+const scanStatusConfig: Record<
+  VulnerabilityScan["status"],
+  { icon: React.ReactNode; label: string; color: string }
+> = {
+  pending: {
+    icon: <Clock className="h-4 w-4" />,
+    label: "Pending",
+    color: "text-muted-foreground",
+  },
+  running: {
+    icon: <Loader2 className="h-4 w-4 animate-spin" />,
+    label: "Running",
+    color: "text-blue-500",
+  },
+  completed: {
+    icon: <CheckCircle className="h-4 w-4" />,
+    label: "Completed",
+    color: "text-green-500",
+  },
+  failed: {
+    icon: <XCircle className="h-4 w-4" />,
+    label: "Failed",
+    color: "text-red-500",
+  },
+  cancelled: {
+    icon: <Ban className="h-4 w-4" />,
+    label: "Cancelled",
+    color: "text-orange-500",
+  },
+};
+
+function ScanRow({
+  scan,
+  onStart,
+  onCancel,
+  isStarting,
+  t,
+}: {
+  scan: VulnerabilityScan;
+  onStart: () => void;
+  onCancel: () => void;
+  isStarting: boolean;
+  t: (key: string) => string;
+}) {
+  const config = scanStatusConfig[scan.status];
+  const isRunning = scan.status === "running" || scan.status === "pending";
+  const isCompleted = scan.status === "completed";
+
+  return (
+    <div className="flex items-center justify-between p-4 hover:bg-muted/50">
+      <div className="flex items-center gap-4">
+        <div className={cn("shrink-0", config.color)}>{config.icon}</div>
+        <div>
+          <div className="font-medium">{scan.name}</div>
+          <div className="flex items-center gap-2 mt-1">
+            <Badge variant="outline" className="text-xs">
+              {scan.scan_type.replace("_", " ")}
+            </Badge>
+            <Badge variant="secondary" className="text-xs">
+              {scan.scanner}
+            </Badge>
+            {scan.started_at && (
+              <span className="text-xs text-muted-foreground">
+                {new Date(scan.started_at).toLocaleDateString()}
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div className="flex items-center gap-4">
+        {/* Findings summary for completed scans */}
+        {isCompleted && scan.total_findings !== undefined && (
+          <div className="flex items-center gap-2">
+            <span className="text-sm font-medium">{scan.total_findings} findings</span>
+            {(scan.critical_count ?? 0) > 0 && (
+              <Badge variant="destructive" className="text-xs">
+                {scan.critical_count} critical
+              </Badge>
+            )}
+            {(scan.high_count ?? 0) > 0 && (
+              <Badge variant="destructive" className="text-xs bg-orange-500">
+                {scan.high_count} high
+              </Badge>
+            )}
+          </div>
+        )}
+
+        {/* Status badge */}
+        <Badge
+          variant={
+            scan.status === "completed"
+              ? "default"
+              : scan.status === "failed"
+              ? "destructive"
+              : "secondary"
+          }
+          className={cn("gap-1", config.color)}
+        >
+          {config.label}
+        </Badge>
+
+        {/* Actions */}
+        <div className="flex gap-1">
+          {scan.status === "pending" && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={onStart}
+              disabled={isStarting}
+            >
+              {isStarting ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Play className="h-4 w-4" />
+              )}
+            </Button>
+          )}
+          {isRunning && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={onCancel}
+              className="text-orange-500 hover:text-orange-600"
+            >
+              <Ban className="h-4 w-4" />
+            </Button>
+          )}
+        </div>
       </div>
     </div>
   );
