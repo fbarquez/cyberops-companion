@@ -251,7 +251,7 @@ function AssuranceModuleCard({
                 <Badge variant="outline" className="text-xs">
                   {module.stats.linked}/{module.stats.total} linked
                 </Badge>
-                {module.stats.pending > 0 && (
+                {(module.stats.pending ?? 0) > 0 && (
                   <Badge variant="secondary" className="text-xs">
                     {module.stats.pending} pending
                   </Badge>
@@ -264,7 +264,7 @@ function AssuranceModuleCard({
                   <CheckCircle className="h-3 w-3 mr-1" />
                   {module.stats.passed} passed
                 </Badge>
-                {module.stats.failed > 0 && (
+                {(module.stats.failed ?? 0) > 0 && (
                   <Badge variant="outline" className="text-xs text-red-600">
                     <XCircle className="h-3 w-3 mr-1" />
                     {module.stats.failed} failed
@@ -277,7 +277,7 @@ function AssuranceModuleCard({
                 <Badge variant="outline" className="text-xs">
                   {module.stats.completed} completed
                 </Badge>
-                {module.stats.inProgress > 0 && (
+                {(module.stats.inProgress ?? 0) > 0 && (
                   <Badge variant="secondary" className="text-xs">
                     <Clock className="h-3 w-3 mr-1" />
                     {module.stats.inProgress} in progress
@@ -297,7 +297,7 @@ function AssuranceModuleCard({
             )}
             {module.id === "incidents" && (
               <>
-                {module.stats.open > 0 && (
+                {(module.stats.open ?? 0) > 0 && (
                   <Badge variant="destructive" className="text-xs">
                     {module.stats.open} open
                   </Badge>
