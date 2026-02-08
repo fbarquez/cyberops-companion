@@ -1,7 +1,7 @@
 """API v1 router aggregating all endpoints."""
 from fastapi import APIRouter
 
-from src.api.v1 import auth, sso, incidents, evidence, checklists, decisions, compliance, tools, threats, vulnerabilities, risks, cmdb, soc, tprm, integrations, reporting, notifications, user_management, attachments, analytics, audit, organizations, iso27001, bcm, attack_paths, documents, training, bsi_grundschutz, nis2, dora, copilot, onboarding
+from src.api.v1 import auth, sso, incidents, evidence, checklists, decisions, compliance, tools, threats, vulnerabilities, risks, cmdb, soc, tprm, integrations, reporting, notifications, user_management, attachments, analytics, audit, organizations, iso27001, bcm, attack_paths, documents, training, bsi_grundschutz, nis2, dora, copilot, onboarding, evidence_bridge
 
 api_router = APIRouter()
 
@@ -40,3 +40,6 @@ api_router.include_router(nis2.router, tags=["NIS2 Compliance"])
 api_router.include_router(dora.router, tags=["DORA Compliance"])
 api_router.include_router(copilot.router, tags=["AI Copilot"])
 api_router.include_router(onboarding.router, tags=["Onboarding"])
+
+# ISMS ↔ SOC Bridge
+api_router.include_router(evidence_bridge.router, tags=["Evidence Bridge"])
