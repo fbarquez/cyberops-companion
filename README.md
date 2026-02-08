@@ -11,7 +11,7 @@
 <p align="center">
   <a href="#nis2-start-in-2030-minuten">NIS2 Quick Start</a> •
   <a href="#features">Features</a> •
-  <a href="#community-vs-enterprise">Editionen</a> •
+  <a href="#community-vs-enterprise-open-core">Editionen</a> •
   <a href="#für-berater-und-mssps">Partner</a> •
   <a href="#quick-start">Installation</a>
 </p>
@@ -67,38 +67,36 @@ Diese Verknüpfung ermöglicht eine nachvollziehbare Dokumentation der Kontrollw
 
 ---
 
-## Community vs Enterprise
+## Community vs. Enterprise (Open-Core)
 
-ISORA folgt dem **Open-Core-Modell**. Die Community Edition deckt den operativen Sicherheitsbetrieb vollständig ab. Die Enterprise Edition richtet sich an Organisationen mit Audit-Anforderungen und komplexen Compliance-Projekten.
+ISORA ist **partner- und OSS-freundlich**: Die Community Edition ist mandantenfähig, damit Berater und MSSPs ISORA direkt bei Kunden einsetzen können.
+Enterprise differenziert sich nicht durch „Grundfunktionen", sondern durch **Audit-Grade Capabilities**.
 
-### Community Edition (AGPL-3.0)
+| Aspekt | Community (AGPL-3.0) | Enterprise (Kommerziell) |
+|--------|----------------------|--------------------------|
+| **Multi-Tenancy (Mandanten)** | ✅ Basic (Mandanten, Rollen, Permissions) | ✅ Advanced (SLA-Hardening, Enterprise-Policies) |
+| **Core ISMS** (Assets, Risks, Controls, SoA) | ✅ Enthalten | ✅ Enthalten |
+| **Evidenz (Evidence)** | ✅ Basic (Attestation + File, SHA-256, Validität) | ✅ Advanced (Approvals, Expirations, Reminders, Reviews, Audit-Pack) |
+| **NIS2** | ✅ Quick Start / Basis-Flow | ✅ Full Wizard + Dashboards + Gap-Priorisierung |
+| **BSI IT-Grundschutz** | ✅ Basis-Tracking | ✅ Full Wizard + Reports + Workflows |
+| **PDF Reports** | — | ✅ DIN 5008 / BSI-Methodik + Branding |
+| **Auditor View** | — | ✅ Read-Only Auditor Portal + Export (ZIP Audit Pack) |
+| **Integrationen** | ✅ Basis (API, Webhooks) | ✅ Production Integrations (Scanner, Tickets, SIEM) |
+| **AI Copilot** | — | ✅ Multi-LLM (inkl. Ollama lokal) + Governance |
+| **Support** | Community (GitHub Issues) | ✅ SLA + Support (DE/EN) |
+| **Code-Pflichten** | AGPL: Bei SaaS-Angebot Quellcode der Änderungen bereitstellen* | Keine AGPL-Pflichten |
 
-Vollständiger operativer Stack — keine künstlichen Einschränkungen:
+*\* **Zur AGPL-Lizenz:** Wenn Sie ISORA modifizieren und als Netzwerkdienst (SaaS) anbieten, müssen Sie den Quellcode Ihrer Änderungen den Nutzern des Dienstes zugänglich machen. Rein interne Nutzung ohne Bereitstellung an Dritte löst keine Veröffentlichungspflicht aus.*
 
-| Bereich | Funktionen |
-|---------|------------|
-| **SOC Operations** | Incident Management, Alert-Triage, Cases, Playbooks |
-| **Vulnerability Management** | CVE-Tracking, NVD/EPSS/KEV-Integration |
-| **Risk Management** | Risikoregister, Behandlungspläne, Heatmaps |
-| **TPRM** | Lieferantenbewertung, Fragebögen |
-| **CMDB** | Asset-Inventar, Abhängigkeiten |
-| **Threat Intelligence** | IOC-Verwaltung, MITRE ATT&CK |
-| **ISMS ↔ SOC Bridge** | Automatische Nachweis-Verknüpfung |
-| **Evidence (Basis)** | Upload, Bestätigungen, Kontrollen-Zuordnung |
-| **Multi-Tenancy (Basis)** | Mandantentrennung, eigene Daten |
-| **Plattform** | SSO (OAuth2/OIDC), Audit-Logging, DE/EN |
+**Warum Enterprise? (5 Killer Features)**
 
-### Enterprise Edition
+1. **Auditor View + ZIP Audit Pack** — Revisionssichere Übergabe an externe Prüfer
+2. **PDF Reports nach DIN 5008 / BSI-Methodik** — Inkl. Logo und Custom Branding
+3. **Evidence Lifecycle Advanced** — Freigaben, Ablauferinnerungen, Reviews
+4. **Full NIS2 + Full BSI Wizards** — Inkl. Dashboards und Priorisierung
+5. **Integrationen + AI Copilot + SLA** — Enterprise-Betrieb mit garantierten Reaktionszeiten
 
-Fünf Erweiterungen für Audit-Readiness und Skalierung:
-
-| # | Enterprise Feature | Beschreibung |
-|---|-------------------|--------------|
-| 1 | **Auditor View + Audit Pack** | Read-Only Zugang für externe Prüfer, ZIP-Export aller Nachweise mit Prüfsummen |
-| 2 | **Professionelle Reports** | PDF-Reports nach DIN 5008 / BSI 200-2 Format, Custom Branding, Management Summary |
-| 3 | **Evidence Lifecycle** | Freigabe-Workflows, Ablauferinnerungen, Versionierung mit Änderungshistorie |
-| 4 | **Compliance Wizards** | Vollständige NIS2 + DORA + BSI IT-Grundschutz Wizards, Cross-Framework Mapping, Compliance-Dashboards |
-| 5 | **Integrationen + Support** | Scanner-Anbindung (Nessus, Qualys), SIEM-Integration, AI Copilot, SLA mit garantierten Reaktionszeiten |
+**Hinweis:** Enterprise-Code ist separat lizenziert und nicht Teil des Open-Source-Repositories.
 
 **Lizenzierung**: Pro Mandant/Jahr. Kontakt für Teststellung: [enterprise@isora.dev](mailto:enterprise@isora.dev)
 
@@ -118,17 +116,6 @@ Interesse an einer Partnerschaft? Kontakt: [partner@isora.dev](mailto:partner@is
 
 ## Features
 
-### Compliance-Dokumentation
-
-| Modul | Community | Enterprise |
-|-------|:---------:|:----------:|
-| ISO 27001:2022 (93 Kontrollen) | ✅ | ✅ |
-| NIS2 Basis-Assessment | ✅ | ✅ |
-| NIS2 Vollständiger Wizard | — | ✅ |
-| DORA (5 Säulen, 28 Anforderungen) | — | ✅ |
-| BSI IT-Grundschutz Mapping | — | ✅ |
-| Cross-Framework Mapping | — | ✅ |
-
 ### Operativer Sicherheitsbetrieb
 
 | Modul | Beschreibung |
@@ -137,6 +124,21 @@ Interesse an einer Partnerschaft? Kontakt: [partner@isora.dev](mailto:partner@is
 | **SOC-Modul** | Alert-Triage, Case Management, Playbooks |
 | **Vulnerability Management** | CVE-Tracking, NVD/EPSS/KEV-Integration |
 | **Threat Intelligence** | IOC-Verwaltung, MITRE ATT&CK Mapping |
+| **Risk Management** | Risikoregister, Behandlungspläne, Heatmaps |
+| **TPRM** | Lieferantenbewertung, Fragebögen |
+| **CMDB** | Asset-Inventar, Abhängigkeiten |
+
+### Compliance-Dokumentation
+
+| Modul | Community | Enterprise |
+|-------|:---------:|:----------:|
+| ISO 27001:2022 (93 Kontrollen) | ✅ | ✅ |
+| NIS2 Basis-Assessment | ✅ | ✅ |
+| NIS2 Vollständiger Wizard | — | ✅ |
+| DORA (5 Säulen, 28 Anforderungen) | — | ✅ |
+| BSI IT-Grundschutz Mapping | ✅ | ✅ |
+| BSI Full Wizard + Reports | — | ✅ |
+| Cross-Framework Mapping | — | ✅ |
 
 ### Nachweisführung
 
@@ -145,6 +147,7 @@ Interesse an einer Partnerschaft? Kontakt: [partner@isora.dev](mailto:partner@is
 | Evidence Upload + Bestätigungen | ✅ | ✅ |
 | Kontrollen-Zuordnung | ✅ | ✅ |
 | ISMS ↔ SOC Bridge | ✅ | ✅ |
+| SHA-256 Integritätsprüfung | ✅ | ✅ |
 | Freigabe-Workflows | — | ✅ |
 | Ablauferinnerungen | — | ✅ |
 | Versionierung + Historie | — | ✅ |
@@ -156,7 +159,7 @@ Interesse an einer Partnerschaft? Kontakt: [partner@isora.dev](mailto:partner@is
 | **Multi-Tenancy** | Mandantentrennung (Basis in Community, erweitert in Enterprise) |
 | **SSO** | OAuth2/OIDC (Google, Microsoft, Okta) |
 | **Audit-Logging** | Lückenlose Protokollierung aller Aktionen |
-| **Dateianhänge** | Upload mit SHA-256 Integritätsprüfung |
+| **Dateianhänge** | Upload mit Integritätsprüfung |
 | **Mehrsprachigkeit** | Deutsch, Englisch |
 
 ---
@@ -279,7 +282,7 @@ Beiträge sind willkommen. Siehe [CONTRIBUTING.md](CONTRIBUTING.md) für Richtli
 
 Dieses Projekt steht unter der **AGPL-3.0-Lizenz** — siehe [LICENSE](LICENSE).
 
-Die **Enterprise Edition** ist unter einer kommerziellen Lizenz verfügbar.
+Die **Enterprise Edition** ist unter einer kommerziellen Lizenz verfügbar und nicht Teil dieses Repositories.
 
 ---
 
