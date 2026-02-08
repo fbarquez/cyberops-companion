@@ -18,6 +18,7 @@ import {
   CheckCircle,
   Clock,
   XCircle,
+  Link2,
 } from "lucide-react";
 import { useTranslations } from "@/hooks/use-translations";
 
@@ -76,6 +77,17 @@ const assuranceModules = [
     href: "/compliance/assurance/incidents",
     color: "from-red-500 to-red-600",
     stats: { open: 3, resolved: 47, avgResolution: "4.2h" },
+  },
+  {
+    id: "bridge",
+    name: "ISMS ↔ SOC Bridge",
+    nameDE: "ISMS ↔ SOC Brücke",
+    description: "Auto-link operations to controls, measure effectiveness",
+    descriptionDE: "Operationen automatisch mit Kontrollen verknüpfen, Wirksamkeit messen",
+    icon: Link2,
+    href: "/compliance/assurance/bridge",
+    color: "from-indigo-500 to-indigo-600",
+    stats: { linked: 1247, controls: 93, score: 87 },
   },
 ];
 
@@ -198,6 +210,12 @@ export default function AssuranceLayerPage() {
                   Report Incident
                 </Button>
               </Link>
+              <Link href="/compliance/assurance/bridge">
+                <Button variant="outline" size="sm">
+                  <Link2 className="h-4 w-4 mr-2" />
+                  View Evidence Bridge
+                </Button>
+              </Link>
             </div>
           </CardContent>
         </Card>
@@ -286,6 +304,19 @@ function AssuranceModuleCard({
                 )}
                 <Badge variant="outline" className="text-xs">
                   {module.stats.resolved} resolved
+                </Badge>
+              </>
+            )}
+            {module.id === "bridge" && (
+              <>
+                <Badge variant="outline" className="text-xs">
+                  {module.stats.linked} linked
+                </Badge>
+                <Badge variant="outline" className="text-xs">
+                  {module.stats.controls} controls
+                </Badge>
+                <Badge variant="outline" className="text-xs text-green-600">
+                  {module.stats.score}% effective
                 </Badge>
               </>
             )}
