@@ -1,1 +1,1 @@
-"""CyberOps Companion API."""
+"""ISORA API - ISMS Operations & Risk Assurance."""

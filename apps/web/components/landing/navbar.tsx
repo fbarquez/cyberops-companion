@@ -19,7 +19,7 @@ export function LandingNavbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
             <Shield className="h-8 w-8 text-primary" />
-            <span className="text-xl font-bold">CyberOps Companion</span>
+            <span className="text-xl font-bold">ISORA</span>
           </Link>
 
           {/* Desktop Navigation */}

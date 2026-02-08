@@ -1,6 +1,6 @@
 """
-CyberOps Companion API - FastAPI Backend
-Security Operations & Incident Response Platform
+ISORA API - FastAPI Backend
+ISMS Operations & Risk Assurance Platform
 """
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
@@ -35,9 +35,9 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="CyberOps Companion API",
+    title="ISORA API",
     version="2.0.0",
-    description="Security Operations & Incident Response Platform",
+    description="ISMS Operations & Risk Assurance Platform",
     lifespan=lifespan,
     docs_url="/api/docs",
     redoc_url="/api/redoc",

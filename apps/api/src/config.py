@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     """Application settings."""
 
     # App
-    APP_NAME: str = "CyberOps Companion"
+    APP_NAME: str = "ISORA"
     DEBUG: bool = False
     SECRET_KEY: str = "your-secret-key-change-in-production"
 
@@ -42,7 +42,7 @@ class Settings(BaseSettings):
     SMTP_USER: str = ""
     SMTP_PASSWORD: str = ""
     SMTP_FROM: str = ""
-    SMTP_FROM_NAME: str = "CyberOps Companion"
+    SMTP_FROM_NAME: str = "ISORA"
     SMTP_TLS: bool = True
     SMTP_SSL: bool = False
     EMAIL_ENABLED: bool = False  # Set to True when SMTP is configured

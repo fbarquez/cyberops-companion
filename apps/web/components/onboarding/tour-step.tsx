@@ -90,7 +90,7 @@ export function TourStep({ onNext, onBack }: TourStepProps) {
       <div className="text-center mb-8">
         <h2 className="text-2xl font-bold mb-2">Quick Platform Tour</h2>
         <p className="text-muted-foreground">
-          Learn about key features to get the most out of CyberOps Companion
+          Learn about key features to get the most out of ISORA
         </p>
       </div>
 
