@@ -17,6 +17,7 @@ import {
   MoreHorizontal,
   Upload,
   Link2,
+  Rss,
 } from "lucide-react";
 import { Header } from "@/components/shared/header";
 import { Button } from "@/components/ui/button";
@@ -62,6 +63,7 @@ import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { ActorsList } from "@/components/threats/ActorsList";
 import { CampaignsList } from "@/components/threats/CampaignsList";
+import { FeedsList } from "@/components/threats/FeedsList";
 import { LinkingDialog } from "@/components/threats/LinkingDialog";
 
 interface IOC {
@@ -309,6 +311,7 @@ export default function ThreatsPage() {
               <TabsTrigger value="iocs">{t("threats.iocs")}</TabsTrigger>
               <TabsTrigger value="actors">{t("threats.actors")}</TabsTrigger>
               <TabsTrigger value="campaigns">{t("threats.campaigns")}</TabsTrigger>
+              <TabsTrigger value="feeds">Feeds</TabsTrigger>
             </TabsList>
 
             <div className="flex gap-2">
@@ -552,6 +555,11 @@ export default function ThreatsPage() {
           {/* Campaigns Tab */}
           <TabsContent value="campaigns" className="mt-4">
             <CampaignsList />
+          </TabsContent>
+
+          {/* Feeds Tab */}
+          <TabsContent value="feeds" className="mt-4">
+            <FeedsList />
           </TabsContent>
         </Tabs>
 
