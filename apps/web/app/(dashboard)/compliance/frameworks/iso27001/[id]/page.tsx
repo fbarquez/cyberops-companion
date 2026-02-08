@@ -463,7 +463,7 @@ export default function ISO27001AssessmentPage() {
       <div className="flex flex-col items-center justify-center h-full gap-4">
         <AlertCircle className="h-12 w-12 text-muted-foreground" />
         <p className="text-muted-foreground">Assessment not found</p>
-        <Button onClick={() => router.push("/compliance/iso27001")}>
+        <Button onClick={() => router.push("/compliance/frameworks/iso27001")}>
           <ArrowLeft className="h-4 w-4 mr-2" />
           Back to Assessments
         </Button>
@@ -477,7 +477,7 @@ export default function ISO27001AssessmentPage() {
         title={assessment.name}
         actions={
           <div className="flex gap-2">
-            <Button variant="outline" onClick={() => router.push("/compliance/iso27001")}>
+            <Button variant="outline" onClick={() => router.push("/compliance/frameworks/iso27001")}>
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back
             </Button>

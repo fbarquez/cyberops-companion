@@ -261,7 +261,7 @@ export default function BausteinDetailPage() {
     <div className="flex flex-col h-full">
       <Header
         title={`${baustein.baustein_id} - ${baustein.titel}`}
-        backHref="/compliance/bsi"
+        backHref="/compliance/frameworks/bsi"
       >
         <Select value={schutzbedarf} onValueChange={setSchutzbedarf}>
           <SelectTrigger className="w-40">

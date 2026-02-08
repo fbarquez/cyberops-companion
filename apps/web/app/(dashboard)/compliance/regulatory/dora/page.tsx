@@ -12,7 +12,7 @@ import {
   Clock,
   Trash2,
   ArrowRight,
-  Building2,
+  Landmark,
   BarChart3,
   List,
 } from "lucide-react";
@@ -37,21 +37,21 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PageLoading } from "@/components/shared/loading";
 import { useAuthStore } from "@/stores/auth-store";
 import { toast } from "sonner";
-import { NIS2Dashboard } from "@/components/compliance";
+import { DORADashboard } from "@/components/compliance";
 
 // API functions
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
-const nis2API = {
+const doraAPI = {
   listAssessments: async (token: string) => {
-    const res = await fetch(`${API_URL}/api/v1/nis2/assessments`, {
+    const res = await fetch(`${API_URL}/api/v1/dora/assessments`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     if (!res.ok) throw new Error("Failed to fetch assessments");
     return res.json();
   },
   createAssessment: async (token: string, data: { name: string; description?: string }) => {
-    const res = await fetch(`${API_URL}/api/v1/nis2/assessments`, {
+    const res = await fetch(`${API_URL}/api/v1/dora/assessments`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -63,7 +63,7 @@ const nis2API = {
     return res.json();
   },
   deleteAssessment: async (token: string, id: string) => {
-    const res = await fetch(`${API_URL}/api/v1/nis2/assessments/${id}`, {
+    const res = await fetch(`${API_URL}/api/v1/dora/assessments/${id}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -79,13 +79,26 @@ const STATUS_CONFIG = {
   archived: { label: "Archived", color: "bg-gray-100 text-gray-600", icon: FileText },
 };
 
-const ENTITY_TYPE_CONFIG = {
-  essential: { label: "Essential Entity", color: "bg-red-100 text-red-800" },
-  important: { label: "Important Entity", color: "bg-yellow-100 text-yellow-800" },
-  out_of_scope: { label: "Out of Scope", color: "bg-gray-100 text-gray-600" },
+const ENTITY_TYPE_LABELS: Record<string, string> = {
+  credit_institution: "Credit Institution",
+  investment_firm: "Investment Firm",
+  payment_institution: "Payment Institution",
+  e_money_institution: "E-Money Institution",
+  insurance_undertaking: "Insurance Undertaking",
+  reinsurance_undertaking: "Reinsurance Undertaking",
+  ucits_manager: "UCITS Manager",
+  aifm: "AIFM",
+  ccp: "Central Counterparty",
+  csd: "Central Securities Depository",
+  trading_venue: "Trading Venue",
+  casp: "Crypto-Asset Service Provider",
+  crowdfunding: "Crowdfunding Provider",
+  cra: "Credit Rating Agency",
+  pension_fund: "Pension Fund",
+  ict_provider: "ICT Service Provider",
 };
 
-export default function NIS2AssessmentsPage() {
+export default function DORAAssessmentsPage() {
   const { token } = useAuthStore();
   const queryClient = useQueryClient();
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -93,17 +106,17 @@ export default function NIS2AssessmentsPage() {
   const [newAssessment, setNewAssessment] = useState({ name: "", description: "" });
 
   const { data, isLoading } = useQuery({
-    queryKey: ["nis2-assessments"],
-    queryFn: () => nis2API.listAssessments(token!),
+    queryKey: ["dora-assessments"],
+    queryFn: () => doraAPI.listAssessments(token!),
     enabled: !!token,
   });
 
   const createMutation = useMutation({
     mutationFn: (data: { name: string; description?: string }) =>
-      nis2API.createAssessment(token!, data),
+      doraAPI.createAssessment(token!, data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["nis2-assessments"] });
-      queryClient.invalidateQueries({ queryKey: ["nis2-dashboard"] });
+      queryClient.invalidateQueries({ queryKey: ["dora-assessments"] });
+      queryClient.invalidateQueries({ queryKey: ["dora-dashboard"] });
       setCreateDialogOpen(false);
       setNewAssessment({ name: "", description: "" });
       toast.success("Assessment created");
@@ -115,10 +128,10 @@ export default function NIS2AssessmentsPage() {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id: string) => nis2API.deleteAssessment(token!, id),
+    mutationFn: (id: string) => doraAPI.deleteAssessment(token!, id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["nis2-assessments"] });
-      queryClient.invalidateQueries({ queryKey: ["nis2-dashboard"] });
+      queryClient.invalidateQueries({ queryKey: ["dora-assessments"] });
+      queryClient.invalidateQueries({ queryKey: ["dora-dashboard"] });
       toast.success("Assessment deleted");
     },
     onError: () => {
@@ -130,7 +143,7 @@ export default function NIS2AssessmentsPage() {
 
   return (
     <div className="flex flex-col h-full">
-      <Header title="NIS2 Compliance Assessment">
+      <Header title="DORA Compliance Assessment">
         <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
           <DialogTrigger asChild>
             <Button>
@@ -140,9 +153,9 @@ export default function NIS2AssessmentsPage() {
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Create NIS2 Assessment</DialogTitle>
+              <DialogTitle>Create DORA Assessment</DialogTitle>
               <DialogDescription>
-                Start a new NIS2 compliance assessment for your organization.
+                Start a new DORA (Digital Operational Resilience Act) compliance assessment.
               </DialogDescription>
             </DialogHeader>
             <div className="space-y-4 py-4">
@@ -150,7 +163,7 @@ export default function NIS2AssessmentsPage() {
                 <Label htmlFor="name">Assessment Name</Label>
                 <Input
                   id="name"
-                  placeholder="e.g., Q1 2024 NIS2 Assessment"
+                  placeholder="e.g., Q1 2025 DORA Assessment"
                   value={newAssessment.name}
                   onChange={(e) => setNewAssessment({ ...newAssessment, name: e.target.value })}
                 />
@@ -195,25 +208,25 @@ export default function NIS2AssessmentsPage() {
         </div>
 
         <TabsContent value="dashboard" className="flex-1 overflow-y-auto p-4 md:p-6 m-0">
-          <NIS2Dashboard />
+          <DORADashboard />
         </TabsContent>
 
         <TabsContent value="assessments" className="flex-1 overflow-y-auto p-4 md:p-6 m-0">
           {/* Info Banner */}
-          <Card className="mb-6 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950 dark:to-indigo-950 border-blue-200">
+          <Card className="mb-6 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-950 dark:to-purple-950 border-indigo-200">
             <CardContent className="py-4">
               <div className="flex items-start gap-4">
-                <div className="p-2 bg-blue-100 dark:bg-blue-900 rounded-lg">
-                  <Shield className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                <div className="p-2 bg-indigo-100 dark:bg-indigo-900 rounded-lg">
+                  <Shield className="h-6 w-6 text-indigo-600 dark:text-indigo-400" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-blue-900 dark:text-blue-100">
-                    EU NIS2 Directive Compliance
+                  <h3 className="font-semibold text-indigo-900 dark:text-indigo-100">
+                    EU DORA Regulation (2022/2554)
                   </h3>
-                  <p className="text-sm text-blue-700 dark:text-blue-300 mt-1">
-                    The NIS2 Directive requires essential and important entities to implement
-                    cybersecurity risk-management measures. Use this wizard to assess your
-                    organization&apos;s compliance status.
+                  <p className="text-sm text-indigo-700 dark:text-indigo-300 mt-1">
+                    The Digital Operational Resilience Act establishes requirements for ICT risk management,
+                    incident reporting, resilience testing, and third-party risk management for financial entities.
+                    Application date: January 17, 2025.
                   </p>
                 </div>
               </div>
@@ -225,10 +238,10 @@ export default function NIS2AssessmentsPage() {
           ) : assessments.length === 0 ? (
             <Card className="text-center py-12">
               <CardContent>
-                <Building2 className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                <Landmark className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                 <h3 className="text-lg font-semibold mb-2">No Assessments Yet</h3>
                 <p className="text-muted-foreground mb-4">
-                  Create your first NIS2 compliance assessment to get started.
+                  Create your first DORA compliance assessment to evaluate your digital operational resilience.
                 </p>
                 <Button onClick={() => setCreateDialogOpen(true)}>
                   <Plus className="h-4 w-4 mr-2" />
@@ -262,14 +275,19 @@ function AssessmentCard({
 }) {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const statusConfig = STATUS_CONFIG[assessment.status as keyof typeof STATUS_CONFIG] || STATUS_CONFIG.draft;
-  const entityConfig = assessment.entity_type
-    ? ENTITY_TYPE_CONFIG[assessment.entity_type as keyof typeof ENTITY_TYPE_CONFIG]
-    : null;
+  const entityLabel = assessment.entity_type ? ENTITY_TYPE_LABELS[assessment.entity_type] : null;
   const StatusIcon = statusConfig.icon;
 
   const handleDelete = () => {
     onDelete();
     setDeleteDialogOpen(false);
+  };
+
+  const getScoreColor = (score: number) => {
+    if (score >= 85) return "text-green-600";
+    if (score >= 70) return "text-lime-600";
+    if (score >= 50) return "text-yellow-600";
+    return "text-red-600";
   };
 
   return (
@@ -291,17 +309,32 @@ function AssessmentCard({
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
-        {entityConfig && (
-          <Badge variant="outline" className={entityConfig.color}>
-            {entityConfig.label}
-          </Badge>
-        )}
+        <div className="flex flex-wrap gap-2">
+          {entityLabel && (
+            <Badge variant="outline">
+              <Landmark className="h-3 w-3 mr-1" />
+              {entityLabel}
+            </Badge>
+          )}
+          {assessment.is_ctpp && (
+            <Badge variant="outline" className="bg-purple-50 text-purple-700 border-purple-200">
+              CTPP
+            </Badge>
+          )}
+          {assessment.simplified_framework && (
+            <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
+              Simplified
+            </Badge>
+          )}
+        </div>
 
-        {assessment.entity_type && assessment.entity_type !== "out_of_scope" && (
+        {assessment.entity_type && (
           <div className="space-y-2">
             <div className="flex items-center justify-between text-sm">
               <span className="text-muted-foreground">Compliance Score</span>
-              <span className="font-medium">{assessment.overall_score.toFixed(0)}%</span>
+              <span className={`font-medium ${getScoreColor(assessment.overall_score)}`}>
+                {assessment.overall_score.toFixed(0)}%
+              </span>
             </div>
             <Progress value={assessment.overall_score} className="h-2" />
             <div className="flex items-center gap-4 text-xs text-muted-foreground">
@@ -346,7 +379,7 @@ function AssessmentCard({
             </DialogContent>
           </Dialog>
 
-          <Link href={`/compliance/nis2/${assessment.id}`}>
+          <Link href={`/compliance/regulatory/dora/${assessment.id}`}>
             <Button size="sm">
               {assessment.status === "draft" ? "Start Wizard" : "Continue"}
               <ArrowRight className="h-4 w-4 ml-2" />

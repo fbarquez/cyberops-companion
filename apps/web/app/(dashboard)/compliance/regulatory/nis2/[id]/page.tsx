@@ -330,7 +330,7 @@ export default function NIS2WizardPage() {
     <div className="flex flex-col h-full">
       <Header
         title={`${assessment?.name || "NIS2 Assessment"} - Step ${currentStep}/${STEPS.length}`}
-        backHref="/compliance/nis2"
+        backHref="/compliance/regulatory/nis2"
       />
 
       {/* Progress Steps */}
