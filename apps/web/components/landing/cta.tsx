@@ -11,7 +11,7 @@ export function CTASection() {
             Ready to transform your security operations?
           </h2>
           <p className="text-xl opacity-90 mb-8">
-            Join security teams who trust CyberOps Companion to protect their organizations.
+            Join security teams who trust ISORA to protect their organizations.
             Start your free trial today.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

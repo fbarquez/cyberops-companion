@@ -36,10 +36,10 @@ export function Footer() {
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4">
               <Shield className="h-6 w-6 text-primary" />
-              <span className="font-bold">CyberOps</span>
+              <span className="font-bold">ISORA</span>
             </Link>
             <p className="text-sm text-muted-foreground">
-              Enterprise security operations platform for modern organizations.
+              ISMS Operations & Risk Assurance Platform.
             </p>
           </div>
 
@@ -112,7 +112,7 @@ export function Footer() {
         {/* Bottom */}
         <div className="border-t mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} CyberOps Companion. All rights reserved.
+            &copy; {new Date().getFullYear()} ISORA. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
             <Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">

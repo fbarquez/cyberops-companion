@@ -16,8 +16,8 @@ export function SidebarHeader() {
         </div>
         {!sidebarCollapsed && (
           <div className="flex flex-col">
-            <span className="text-base font-semibold leading-tight">CyberOps</span>
-            <span className="text-xs text-muted-foreground leading-tight">Companion</span>
+            <span className="text-base font-semibold leading-tight">ISORA</span>
+            <span className="text-xs text-muted-foreground leading-tight">Risk Assurance</span>
           </div>
         )}
       </div>

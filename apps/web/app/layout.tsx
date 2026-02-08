@@ -6,8 +6,8 @@ import { Providers } from "@/components/shared/providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "CyberOps Companion",
-  description: "Security Operations & Incident Response Platform",
+  title: "ISORA",
+  description: "ISMS Operations & Risk Assurance Platform",
 };
 
 export default function RootLayout({

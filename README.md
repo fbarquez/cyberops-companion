@@ -1,10 +1,13 @@
 <p align="center">
-  <h1 align="center">CyberOps Companion</h1>
+  <h1 align="center">ISORA</h1>
   <p align="center">
-    <strong>Open-Source Cybersecurity Operations Platform</strong>
+    <strong>ISMS Operations & Risk Assurance Platform</strong>
   </p>
   <p align="center">
-    Unified platform for Security Operations, Incident Response, Risk Management, and Compliance
+    <em>ISMS-Anforderungen in überprüfbare Aktivitäten und Evidenzen</em>
+  </p>
+  <p align="center">
+    Unified platform for Compliance Operations, Risk Management, and Security Assurance
   </p>
 </p>
 
@@ -26,22 +29,27 @@
 
 ---
 
-## What is CyberOps Companion?
+## What is ISORA?
 
-CyberOps Companion is a comprehensive, open-source cybersecurity operations platform designed for security teams and organizations. It provides a unified interface for managing:
+ISORA (**I**SMS **O**perations & **R**isk **A**ssurance) is a comprehensive platform that bridges the gap between compliance requirements and operational security. Unlike traditional GRC tools that focus solely on documentation, ISORA connects your ISMS controls directly to security operations, generating verifiable evidence from real activities.
 
-- **Incident Response** - Full lifecycle management with NIST-aligned phases
-- **SOC Operations** - Alert triage, case management, and SOAR playbooks
-- **Vulnerability Management** - CVE tracking with NVD integration
-- **Risk Management** - Risk register with FAIR methodology
-- **Compliance** - Multi-framework support (NIST, ISO 27001)
-- **Threat Intelligence** - IOC management and MITRE ATT&CK mapping
+### Key Differentiator: ISMS ↔ SOC Bridge
+
+ISORA automatically links operational activities to compliance controls:
+
+| When this happens... | ISORA links to... | Evidence generated |
+|---------------------|-------------------|-------------------|
+| Incident resolved | A.5.24 (Incident Management) | Response time, resolution proof |
+| Alert triaged | A.8.16 (Monitoring) | Detection metrics |
+| Vulnerability scanned | A.8.8 (Technical Vulnerabilities) | Scan reports, remediation tracking |
+| Playbook executed | A.5.26 (Response to Incidents) | Automation evidence |
+| Training completed | A.6.3 (Awareness) | Completion certificates |
 
 ---
 
 ## Community vs Enterprise
 
-CyberOps Companion follows an **Open Core** model:
+ISORA follows an **Open Core** model:
 
 | Feature | Community (Free) | Enterprise |
 |---------|:----------------:|:----------:|
@@ -52,20 +60,16 @@ CyberOps Companion follows an **Open Core** model:
 | TPRM (Third-Party Risk) | ✅ | ✅ |
 | CMDB | ✅ | ✅ |
 | Threat Intelligence | ✅ | ✅ |
-| Compliance (NIST, ISO 27001) | ✅ | ✅ |
-| Reporting & Analytics | ✅ | ✅ |
-| WebSocket Notifications | ✅ | ✅ |
-| File Attachments | ✅ | ✅ |
+| ISO 27001:2022 Compliance | ✅ | ✅ |
+| ISMS ↔ SOC Evidence Bridge | ✅ | ✅ |
 | Multi-language (EN/DE) | ✅ | ✅ |
-| RBAC (Role-Based Access) | ✅ | ✅ |
 | SSO/SAML | ✅ | ✅ |
 | Multi-tenancy | ✅ | ✅ |
-| Audit Logging | ✅ | ✅ |
 | **AI Copilot** | ❌ | ✅ |
-| **BSI IT-Grundschutz** | ❌ | ✅ |
+| **DORA Compliance** | ❌ | ✅ |
 | **NIS2 Assessment** | ❌ | ✅ |
+| **BSI IT-Grundschutz** | ❌ | ✅ |
 | **Priority Support** | ❌ | ✅ |
-| **SLA Guarantee** | ❌ | ✅ |
 
 **Interested in Enterprise?** Contact us for licensing options.
 
@@ -73,18 +77,33 @@ CyberOps Companion follows an **Open Core** model:
 
 ## Features
 
-### Core Modules
+### Compliance Layer (ISMS)
 
 | Module | Description |
 |--------|-------------|
-| **Incident Management** | 6-phase NIST workflow, evidence chain, decision trees, checklists |
-| **SOC Module** | Alert management, case correlation, playbook automation, MTTD/MTTR metrics |
-| **Vulnerability Management** | CVE tracking, NVD/EPSS/KEV integration, CVSS scoring |
-| **Risk Management** | Risk register, FAIR methodology, Monte Carlo simulations |
-| **TPRM** | Third-party risk assessments, vendor management |
-| **CMDB** | Configuration items, asset inventory, relationships |
-| **Compliance** | NIST CSF, ISO 27001:2022 (93 controls, 6-step wizard) |
-| **Threat Intelligence** | IOC management, threat actors, campaigns, MITRE ATT&CK |
+| **ISO 27001:2022** | 93 controls, 6-step assessment wizard |
+| **DORA** | 5 pillars, 28 requirements, entity-type aware |
+| **NIS2** | Essential/Important entity classification |
+| **BSI IT-Grundschutz** | German standard compliance |
+| **Onboarding Wizard** | Auto-detect applicable regulations |
+
+### Operations Layer (SOC)
+
+| Module | Description |
+|--------|-------------|
+| **Incident Management** | 6-phase NIST workflow, evidence chain |
+| **SOC Module** | Alert triage, case management, playbooks |
+| **Vulnerability Management** | CVE tracking, NVD/EPSS/KEV integration |
+| **Threat Intelligence** | IOC management, MITRE ATT&CK mapping |
+
+### Assurance Layer (Evidence)
+
+| Module | Description |
+|--------|-------------|
+| **Evidence Bridge** | Auto-link operations to controls |
+| **Control Effectiveness** | Calculated from real operational data |
+| **BCM & Resilience** | BIA, recovery plans, exercises |
+| **Audit Management** | Internal/external audit tracking |
 
 ### Platform Features
 
@@ -92,20 +111,10 @@ CyberOps Companion follows an **Open Core** model:
 |---------|-------------|
 | **Multi-tenancy** | Complete data isolation per organization |
 | **SSO/SAML** | OAuth2/OIDC with Google, Microsoft, Okta |
-| **Audit Logging** | Comprehensive audit trail for compliance |
-| **Rate Limiting** | Redis-based API protection |
-| **RBAC** | Role-based access control (Admin, Manager, Lead, Analyst) |
+| **Audit Logging** | Comprehensive audit trail |
 | **Real-time Updates** | WebSocket notifications |
 | **File Attachments** | Evidence upload with SHA-256 integrity |
 | **i18n** | Multi-language support (EN/DE) |
-
-### Technical Highlights
-
-- **Evidence Chain**: Forensic-grade logging with SHA-256 hash verification
-- **Background Tasks**: Celery-powered async operations
-- **Real-time**: WebSocket notifications for instant updates
-- **API-first**: 185+ REST endpoints with OpenAPI documentation
-- **Modern Stack**: FastAPI + Next.js 14 + PostgreSQL + Redis
 
 ---
 
@@ -113,19 +122,17 @@ CyberOps Companion follows an **Open Core** model:
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                        CyberOps Companion                        │
+│                            ISORA                                 │
 ├─────────────────────────────────────────────────────────────────┤
 │  Frontend (Next.js 14)                                          │
 │  ├── App Router + TypeScript                                    │
 │  ├── Tailwind CSS + shadcn/ui                                   │
-│  ├── Zustand + React Query                                      │
-│  └── Real-time WebSocket                                        │
+│  └── Zustand + React Query                                      │
 ├─────────────────────────────────────────────────────────────────┤
 │  Backend (FastAPI)                                              │
 │  ├── SQLAlchemy 2.0 (async)                                     │
 │  ├── Pydantic 2.0 validation                                    │
-│  ├── JWT + RBAC authentication                                  │
-│  └── Celery background tasks                                    │
+│  └── 190+ REST endpoints                                        │
 ├─────────────────────────────────────────────────────────────────┤
 │  Data Layer                                                     │
 │  ├── PostgreSQL 16 (primary database)                           │
@@ -169,7 +176,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed development setup instructio
 ## Project Structure
 
 ```
-cyberops-companion/
+isora/
 ├── apps/
 │   ├── api/                 # FastAPI Backend
 │   │   └── src/
@@ -182,11 +189,9 @@ cyberops-companion/
 │   └── web/                 # Next.js Frontend
 │       ├── app/             # App Router pages
 │       ├── components/      # React components
-│       ├── hooks/           # Custom hooks
-│       └── lib/             # Utilities
+│       └── hooks/           # Custom hooks
 │
 ├── docs/                    # Documentation
-├── data/                    # Data files (MITRE, templates)
 └── scripts/                 # Utility scripts
 ```
 
@@ -196,9 +201,8 @@ cyberops-companion/
 
 | Document | Description |
 |----------|-------------|
-| [Project Status](docs/PROJECT_STATUS.md) | Current development status |
+| [Project Documentation](docs/PROJECT_DOCUMENTATION.md) | Complete project overview |
 | [Changelog](docs/CHANGELOG.md) | Version history |
-| [Future Roadmap](docs/FUTURE_ROADMAP.md) | Planned features |
 | [API Documentation](http://localhost:8000/api/docs) | OpenAPI/Swagger |
 
 ### Feature Documentation
@@ -206,33 +210,17 @@ cyberops-companion/
 - [ISO 27001:2022 Compliance](docs/features/ISO27001.md)
 - [Multi-tenancy](docs/features/MULTI_TENANCY.md)
 - [SSO/SAML](docs/features/SSO_SAML.md)
-- [Rate Limiting](docs/features/RATE_LIMITING.md)
 - [Audit Logging](docs/features/AUDIT_LOGGING.md)
-- [WebSocket Notifications](docs/features/WEBSOCKET_NOTIFICATIONS.md)
-- [File Uploads](docs/features/FILE_UPLOADS.md)
 
 ---
 
-## Roadmap
+## Target Market: DACH Region
 
-### Completed
+ISORA is optimized for German-speaking markets (DACH):
 
-- [x] **Phase 0**: Foundation (i18n, Email, NVD API, RBAC)
-- [x] **Phase 1**: Enhanced Features (Celery, Onboarding, Landing Page)
-- [x] **Phase 2**: Advanced Features (WebSockets, File Uploads, Analytics, Mobile)
-- [x] **Phase 3**: Enterprise Features (Multi-tenancy, SSO, Audit, Rate Limiting)
-
-### Planned (Community)
-
-- [ ] ML-based anomaly detection
-- [ ] Predictive incident analytics
-- [ ] Additional compliance frameworks
-
-### Enterprise Only
-
-- [ ] AI Copilot (multi-LLM support)
-- [ ] BSI IT-Grundschutz compliance
-- [ ] NIS2 Directive assessment
+- **DE/AT/CH** - Native German language support
+- **Regulatory Focus** - DORA, NIS2, BSI IT-Grundschutz, KRITIS
+- **Industry Verticals** - Financial services, healthcare, manufacturing
 
 ---
 
@@ -250,26 +238,13 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guid
 
 ---
 
-## Community
-
-- [GitHub Issues](../../issues) - Bug reports and feature requests
-- [GitHub Discussions](../../discussions) - Questions and ideas
-
----
-
 ## License
 
 This project is licensed under the **AGPL-3.0 License** - see the [LICENSE](LICENSE) file for details.
 
-### What this means
-
-- You can use, modify, and distribute this software
-- If you modify and distribute, you must share your changes under AGPL-3.0
-- Network use (SaaS) requires sharing source code with users
-
 **Enterprise Edition** is available under a commercial license for organizations requiring:
 - AI Copilot features
-- BSI IT-Grundschutz / NIS2 compliance modules
+- DORA / NIS2 / BSI IT-Grundschutz modules
 - Priority support and SLA guarantees
 
 ---
@@ -280,7 +255,6 @@ This project is licensed under the **AGPL-3.0 License** - see the [LICENSE](LICE
 - [Next.js](https://nextjs.org/) - React framework
 - [shadcn/ui](https://ui.shadcn.com/) - UI components
 - [MITRE ATT&CK](https://attack.mitre.org/) - Threat framework
-- [NIST](https://www.nist.gov/) - Cybersecurity frameworks
 
 ---
 

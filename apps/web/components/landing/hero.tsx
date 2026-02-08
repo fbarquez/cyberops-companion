@@ -77,7 +77,7 @@ export function HeroSection() {
                 <div className="w-3 h-3 rounded-full bg-green-500" />
               </div>
               <div className="flex-1 text-center text-sm text-muted-foreground">
-                CyberOps Companion - Security Dashboard
+                ISORA - Compliance Dashboard
               </div>
             </div>
             <div className="p-6 bg-gradient-to-br from-muted/30 to-muted/10">

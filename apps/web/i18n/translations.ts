@@ -2,8 +2,8 @@ const translations = {
   en: {
     // App
     app: {
-      title: "CyberOps Companion",
-      subtitle: "Security Operations & Incident Response Platform",
+      title: "ISORA",
+      subtitle: "ISMS Operations & Risk Assurance Platform",
     },
     // Navigation
     nav: {
@@ -1923,7 +1923,7 @@ const translations = {
     },
     // Onboarding Wizard
     onboarding: {
-      title: "Welcome to CyberOps Companion",
+      title: "Welcome to ISORA",
       subtitle: "Let's set up your organization's compliance profile",
       // Progress
       step: "Step",
@@ -2025,8 +2025,8 @@ const translations = {
   de: {
     // App
     app: {
-      title: "CyberOps Companion",
-      subtitle: "Plattform für Security Operations & Incident Response",
+      title: "ISORA",
+      subtitle: "ISMS Operations & Risk Assurance Plattform",
     },
     // Navigation
     nav: {
@@ -3933,7 +3933,7 @@ const translations = {
     },
     // Onboarding Wizard
     onboarding: {
-      title: "Willkommen bei CyberOps Companion",
+      title: "Willkommen bei ISORA",
       subtitle: "Lassen Sie uns das Compliance-Profil Ihrer Organisation einrichten",
       // Progress
       step: "Schritt",

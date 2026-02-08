@@ -42,7 +42,7 @@ export function CompleteStep({ onComplete }: CompleteStepProps) {
         </div>
         <h1 className="text-3xl font-bold mb-4">You're all set!</h1>
         <p className="text-lg text-muted-foreground">
-          Your CyberOps Companion account is ready. Let's secure your organization!
+          Your ISORA account is ready. Let's secure your organization!
         </p>
       </div>
 
