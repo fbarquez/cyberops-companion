@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button";
 import {
   Shield,
   Menu,
-  X
+  X,
+  Github
 } from "lucide-react";
 
 export function LandingNavbar() {
@@ -28,20 +29,21 @@ export function LandingNavbar() {
               Features
             </Link>
             <Link href="#modules" className="text-muted-foreground hover:text-foreground transition-colors">
-              Modules
+              Module
             </Link>
-            <Link href="#about" className="text-muted-foreground hover:text-foreground transition-colors">
-              About
+            <Link href="https://github.com/fbarquez/cyberops-companion" target="_blank" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">
+              <Github className="h-4 w-4" />
+              GitHub
             </Link>
           </div>
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-4">
             <Button variant="ghost" asChild>
-              <Link href="/login">Sign In</Link>
+              <Link href="/login">Anmelden</Link>
             </Button>
             <Button asChild>
-              <Link href="/register">Get Started</Link>
+              <Link href="/register">Kostenlos starten</Link>
             </Button>
           </div>
 
@@ -70,21 +72,23 @@ export function LandingNavbar() {
                 className="text-muted-foreground hover:text-foreground transition-colors"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Modules
+                Module
               </Link>
               <Link
-                href="#about"
-                className="text-muted-foreground hover:text-foreground transition-colors"
+                href="https://github.com/fbarquez/cyberops-companion"
+                target="_blank"
+                className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                About
+                <Github className="h-4 w-4" />
+                GitHub
               </Link>
               <div className="flex flex-col gap-2 pt-4 border-t">
                 <Button variant="outline" asChild className="w-full">
-                  <Link href="/login">Sign In</Link>
+                  <Link href="/login">Anmelden</Link>
                 </Button>
                 <Button asChild className="w-full">
-                  <Link href="/register">Get Started</Link>
+                  <Link href="/register">Kostenlos starten</Link>
                 </Button>
               </div>
             </div>
