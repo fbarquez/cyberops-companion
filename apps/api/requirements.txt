@@ -36,6 +36,11 @@ python-gvm>=24.1.0  # OpenVAS/GVM integration
 lxml>=5.0.0  # XML parsing for scanner responses
 defusedxml>=0.7.0  # Secure XML parsing
 
+# Threat Intelligence Feeds
+pymisp>=2.4.180  # MISP integration
+OTXv2>=1.5.12  # AlienVault OTX integration
+vt-py>=0.18.0  # VirusTotal integration
+
 # Email
 aiosmtplib>=3.0.0
 jinja2>=3.1.0

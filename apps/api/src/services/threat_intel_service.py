@@ -607,3 +607,338 @@ class ThreatIntelService:
             active_campaigns=active_campaigns,
             recent_iocs=recent_iocs,
         )
+
+    # ============== Feed Management Methods ==============
+
+    async def create_feed(self, data: ThreatFeedCreate) -> ThreatFeed:
+        """Create a new threat feed."""
+        feed = ThreatFeed(
+            name=data.name,
+            feed_type=data.feed_type.lower(),
+            url=data.url,
+            api_key=data.api_key,
+            auth_config=data.auth_config or {},
+            is_enabled=True,
+            sync_interval_minutes=data.sync_interval_minutes,
+            ioc_types=data.ioc_types or [],
+            min_confidence=data.min_confidence,
+        )
+        self.db.add(feed)
+        await self.db.commit()
+        await self.db.refresh(feed)
+        return feed
+
+    async def get_feed(self, feed_id: str) -> Optional[ThreatFeed]:
+        """Get a threat feed by ID."""
+        result = await self.db.execute(
+            select(ThreatFeed).where(ThreatFeed.id == feed_id)
+        )
+        return result.scalar_one_or_none()
+
+    async def list_feeds(
+        self,
+        is_enabled: Optional[bool] = None,
+        feed_type: Optional[str] = None,
+    ) -> tuple[List[ThreatFeed], int]:
+        """List threat feeds with filtering."""
+        query = select(ThreatFeed)
+
+        conditions = []
+        if is_enabled is not None:
+            conditions.append(ThreatFeed.is_enabled == is_enabled)
+        if feed_type:
+            conditions.append(ThreatFeed.feed_type == feed_type.lower())
+
+        if conditions:
+            query = query.where(and_(*conditions))
+
+        # Get total
+        count_query = select(func.count()).select_from(query.subquery())
+        total_result = await self.db.execute(count_query)
+        total = total_result.scalar()
+
+        query = query.order_by(ThreatFeed.name)
+        result = await self.db.execute(query)
+        feeds = result.scalars().all()
+
+        return list(feeds), total
+
+    async def update_feed(
+        self,
+        feed_id: str,
+        data: "ThreatFeedUpdate",
+    ) -> Optional[ThreatFeed]:
+        """Update a threat feed."""
+        from src.schemas.threat_intel import ThreatFeedUpdate
+
+        feed = await self.get_feed(feed_id)
+        if not feed:
+            return None
+
+        update_data = data.model_dump(exclude_unset=True)
+        for field, value in update_data.items():
+            setattr(feed, field, value)
+
+        feed.updated_at = datetime.utcnow()
+        await self.db.commit()
+        await self.db.refresh(feed)
+        return feed
+
+    async def delete_feed(self, feed_id: str) -> bool:
+        """Delete a threat feed."""
+        feed = await self.get_feed(feed_id)
+        if not feed:
+            return False
+
+        await self.db.delete(feed)
+        await self.db.commit()
+        return True
+
+    async def sync_feed(self, feed_id: str) -> "FeedSyncResponse":
+        """
+        Synchronize a threat feed and import IOCs.
+
+        Returns FeedSyncResponse with results.
+        """
+        from src.schemas.threat_intel import FeedSyncResponse
+        from src.integrations.cti_feeds import (
+            get_feed_adapter,
+            FeedConfig,
+            FeedType,
+        )
+        from src.integrations.cti_feeds.feed_normalizer import (
+            deduplicate_iocs,
+            filter_iocs,
+            normalize_ioc_value,
+            calculate_risk_score,
+        )
+        from src.integrations.cti_feeds.exceptions import CTIFeedError
+
+        feed = await self.get_feed(feed_id)
+        if not feed:
+            return FeedSyncResponse(
+                feed_id=feed_id,
+                feed_type="unknown",
+                success=False,
+                errors=["Feed not found"],
+            )
+
+        start_time = datetime.utcnow()
+        result = FeedSyncResponse(
+            feed_id=feed_id,
+            feed_type=feed.feed_type,
+            success=False,
+            sync_started_at=start_time,
+        )
+
+        adapter = None
+        try:
+            config = FeedConfig.from_threat_feed(feed)
+            adapter = get_feed_adapter(config)
+
+            # Fetch IOCs
+            since = feed.last_sync if feed.last_sync else None
+            iocs = await adapter.fetch_iocs(since=since, limit=5000)
+            result.iocs_fetched = len(iocs)
+
+            # Filter and deduplicate
+            allowed_types = None
+            if feed.ioc_types:
+                from src.integrations.cti_feeds.base import IOCType as FeedIOCType
+                try:
+                    allowed_types = [FeedIOCType(t) for t in feed.ioc_types]
+                except ValueError:
+                    pass
+
+            iocs = filter_iocs(
+                iocs,
+                min_confidence=feed.min_confidence or 0.0,
+                allowed_types=allowed_types,
+            )
+            iocs = deduplicate_iocs(iocs)
+
+            # Import IOCs
+            for normalized_ioc in iocs:
+                try:
+                    existing_result = await self.db.execute(
+                        select(IOC).where(
+                            IOC.value == normalize_ioc_value(
+                                normalized_ioc.value, normalized_ioc.type
+                            ),
+                            IOC.type == IOCType(normalized_ioc.type.value),
+                        )
+                    )
+                    existing = existing_result.scalar_one_or_none()
+
+                    if existing:
+                        self._update_ioc_from_normalized(existing, normalized_ioc)
+                        result.iocs_updated += 1
+                    else:
+                        new_ioc = self._create_ioc_from_normalized(normalized_ioc)
+                        self.db.add(new_ioc)
+                        result.iocs_new += 1
+
+                except Exception as e:
+                    result.iocs_skipped += 1
+                    result.warnings.append(f"Error importing {normalized_ioc.value}: {str(e)}")
+
+            # Update feed status
+            feed.last_sync = datetime.utcnow()
+            feed.last_sync_status = "success"
+            feed.last_sync_count = result.iocs_new + result.iocs_updated
+
+            await self.db.commit()
+
+            result.success = True
+            result.sync_completed_at = datetime.utcnow()
+            result.duration_seconds = (
+                result.sync_completed_at - start_time
+            ).total_seconds()
+
+        except CTIFeedError as e:
+            result.errors.append(str(e))
+            feed.last_sync_status = "error"
+            await self.db.commit()
+
+        except Exception as e:
+            result.errors.append(str(e))
+            feed.last_sync_status = "error"
+            await self.db.commit()
+
+        finally:
+            if adapter:
+                await adapter.close()
+
+        return result
+
+    async def test_feed_connection(self, feed_id: str) -> bool:
+        """Test connection to a threat feed."""
+        from src.integrations.cti_feeds import get_feed_adapter, FeedConfig
+
+        feed = await self.get_feed(feed_id)
+        if not feed:
+            raise ValueError("Feed not found")
+
+        adapter = None
+        try:
+            config = FeedConfig.from_threat_feed(feed)
+            adapter = get_feed_adapter(config)
+            return await adapter.test_connection()
+        finally:
+            if adapter:
+                await adapter.close()
+
+    async def get_feed_sync_history(
+        self,
+        feed_id: str,
+        limit: int = 10,
+    ) -> List:
+        """Get sync history for a feed."""
+        from src.models.integrations import IntegrationSyncLog
+        from src.schemas.threat_intel import FeedSyncHistoryResponse
+
+        # Note: We're reusing IntegrationSyncLog for feed sync history
+        # In a production system, you might want a separate ThreatFeedSyncLog model
+        result = await self.db.execute(
+            select(IntegrationSyncLog)
+            .where(IntegrationSyncLog.integration_id == feed_id)
+            .order_by(IntegrationSyncLog.started_at.desc())
+            .limit(limit)
+        )
+        logs = result.scalars().all()
+
+        return [
+            FeedSyncHistoryResponse(
+                id=str(log.id),
+                feed_id=feed_id,
+                sync_type=log.sync_type or "manual",
+                started_at=log.started_at,
+                completed_at=log.completed_at,
+                duration_seconds=log.duration_seconds,
+                status=log.status or "unknown",
+                records_fetched=log.records_fetched,
+                records_created=log.records_created,
+                records_updated=log.records_updated,
+                records_failed=log.records_failed,
+                error_message=log.error_message,
+            )
+            for log in logs
+        ]
+
+    def _create_ioc_from_normalized(self, normalized) -> IOC:
+        """Create an IOC model from a NormalizedIOC."""
+        from src.integrations.cti_feeds.feed_normalizer import calculate_risk_score
+
+        return IOC(
+            value=normalized.value.lower().strip(),
+            type=IOCType(normalized.type.value),
+            status=IOCStatus.ACTIVE,
+            threat_level=ThreatLevel(normalized.threat_level.value),
+            risk_score=calculate_risk_score(normalized),
+            confidence=normalized.confidence,
+            description=normalized.description,
+            tags=normalized.tags[:20],
+            categories=normalized.categories[:10],
+            source=normalized.source,
+            source_ref=normalized.source_ref,
+            first_seen=normalized.first_seen,
+            last_seen=normalized.last_seen or datetime.utcnow(),
+            country=normalized.country,
+            asn=normalized.asn,
+            mitre_techniques=normalized.mitre_techniques[:15],
+            enrichment_data=normalized.raw_data,
+            last_enriched=datetime.utcnow(),
+        )
+
+    def _update_ioc_from_normalized(self, ioc: IOC, normalized) -> None:
+        """Update an existing IOC with data from a NormalizedIOC."""
+        from src.integrations.cti_feeds.feed_normalizer import calculate_risk_score
+
+        # Update threat level if higher
+        threat_priority = {
+            ThreatLevel.CRITICAL: 4,
+            ThreatLevel.HIGH: 3,
+            ThreatLevel.MEDIUM: 2,
+            ThreatLevel.LOW: 1,
+            ThreatLevel.UNKNOWN: 0,
+        }
+        new_level = ThreatLevel(normalized.threat_level.value)
+        if threat_priority.get(new_level, 0) > threat_priority.get(ioc.threat_level, 0):
+            ioc.threat_level = new_level
+
+        # Update confidence if higher
+        if normalized.confidence > ioc.confidence:
+            ioc.confidence = normalized.confidence
+
+        # Merge tags
+        existing_tags = set(ioc.tags or [])
+        existing_tags.update(normalized.tags)
+        ioc.tags = list(existing_tags)[:20]
+
+        # Merge categories
+        existing_cats = set(ioc.categories or [])
+        existing_cats.update(normalized.categories)
+        ioc.categories = list(existing_cats)[:10]
+
+        # Update sources
+        if normalized.source and normalized.source not in (ioc.source or ""):
+            ioc.source = f"{ioc.source},{normalized.source}" if ioc.source else normalized.source
+
+        # Update last_seen
+        ioc.last_seen = datetime.utcnow()
+
+        # Update risk score
+        ioc.risk_score = max(ioc.risk_score, calculate_risk_score(normalized))
+
+        # Merge MITRE techniques
+        existing_mitre = set(ioc.mitre_techniques or [])
+        existing_mitre.update(normalized.mitre_techniques)
+        ioc.mitre_techniques = list(existing_mitre)[:15]
+
+        # Update enrichment data
+        enrichment = ioc.enrichment_data or {}
+        enrichment.update(normalized.raw_data)
+        ioc.enrichment_data = enrichment
+
+        ioc.last_enriched = datetime.utcnow()
+        ioc.updated_at = datetime.utcnow()

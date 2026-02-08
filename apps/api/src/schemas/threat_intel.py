@@ -270,14 +270,29 @@ class CampaignListResponse(BaseModel):
 
 
 # Feed Schemas
-class ThreatFeedCreate(BaseModel):
+class ThreatFeedBase(BaseModel):
     name: str
-    feed_type: str = Field(..., description="Feed type: misp, otx, taxii, csv, stix")
+    feed_type: str = Field(..., description="Feed type: misp, otx, virustotal, opencti, taxii")
     url: Optional[str] = None
     api_key: Optional[str] = None
     sync_interval_minutes: int = 60
     ioc_types: List[str] = Field(default_factory=list)
     min_confidence: float = 0.0
+
+
+class ThreatFeedCreate(ThreatFeedBase):
+    auth_config: Optional[Dict[str, Any]] = Field(default_factory=dict)
+
+
+class ThreatFeedUpdate(BaseModel):
+    name: Optional[str] = None
+    url: Optional[str] = None
+    api_key: Optional[str] = None
+    is_enabled: Optional[bool] = None
+    sync_interval_minutes: Optional[int] = None
+    ioc_types: Optional[List[str]] = None
+    min_confidence: Optional[float] = None
+    auth_config: Optional[Dict[str, Any]] = None
 
 
 class ThreatFeedResponse(BaseModel):
@@ -290,10 +305,55 @@ class ThreatFeedResponse(BaseModel):
     last_sync: Optional[datetime] = None
     last_sync_status: Optional[str] = None
     last_sync_count: int = 0
+    ioc_types: List[str] = []
+    min_confidence: float = 0.0
     created_at: datetime
+    updated_at: Optional[datetime] = None
 
     class Config:
         from_attributes = True
+
+
+class ThreatFeedListResponse(BaseModel):
+    total: int
+    feeds: List[ThreatFeedResponse]
+
+
+class FeedSyncResponse(BaseModel):
+    feed_id: str
+    feed_type: str
+    success: bool
+    iocs_fetched: int = 0
+    iocs_new: int = 0
+    iocs_updated: int = 0
+    iocs_skipped: int = 0
+    errors: List[str] = []
+    warnings: List[str] = []
+    duration_seconds: float = 0.0
+    sync_started_at: Optional[datetime] = None
+    sync_completed_at: Optional[datetime] = None
+
+
+class FeedTestResponse(BaseModel):
+    success: bool
+    message: str
+    feed_type: str
+    feed_id: Optional[str] = None
+
+
+class FeedSyncHistoryResponse(BaseModel):
+    id: str
+    feed_id: str
+    sync_type: str
+    started_at: datetime
+    completed_at: Optional[datetime] = None
+    duration_seconds: Optional[int] = None
+    status: str
+    records_fetched: int = 0
+    records_created: int = 0
+    records_updated: int = 0
+    records_failed: int = 0
+    error_message: Optional[str] = None
 
 
 # Statistics

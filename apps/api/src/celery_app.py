@@ -16,6 +16,7 @@ celery_app = Celery(
     include=[
         "src.tasks.scan_tasks",
         "src.tasks.notification_tasks",
+        "src.tasks.cti_tasks",
     ]
 )
 
@@ -41,6 +42,7 @@ celery_app.conf.update(
         Queue("default", routing_key="default"),
         Queue("scans", routing_key="scans.#"),
         Queue("notifications", routing_key="notifications.#"),
+        Queue("cti", routing_key="cti.#"),
     ),
     task_default_queue="default",
     task_default_exchange="default",
@@ -50,6 +52,7 @@ celery_app.conf.update(
     task_routes={
         "src.tasks.scan_tasks.*": {"queue": "scans"},
         "src.tasks.notification_tasks.*": {"queue": "notifications"},
+        "src.tasks.cti_tasks.*": {"queue": "cti"},
     },
 
     # Retry settings
@@ -63,6 +66,11 @@ celery_app.conf.update(
 
     # Beat scheduler (for periodic tasks)
     beat_schedule={
+        # Sync all threat intelligence feeds every hour
+        "sync-threat-feeds": {
+            "task": "src.tasks.cti_tasks.sync_all_threat_feeds",
+            "schedule": 3600.0,  # 1 hour in seconds
+        },
         # Example: Run vulnerability sync every 6 hours
         # "sync-nvd-updates": {
         #     "task": "src.tasks.scan_tasks.sync_nvd_updates",

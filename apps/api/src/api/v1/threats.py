@@ -16,7 +16,9 @@ from src.schemas.threat_intel import (
     EnrichIOCRequest, EnrichBatchRequest, EnrichmentResponse,
     ThreatActorCreate, ThreatActorUpdate, ThreatActorResponse, ThreatActorListResponse,
     CampaignCreate, CampaignUpdate, CampaignResponse, CampaignListResponse,
-    ThreatIntelStats, IOCTypeEnum, IOCStatusEnum, ThreatLevelEnum
+    ThreatIntelStats, IOCTypeEnum, IOCStatusEnum, ThreatLevelEnum,
+    ThreatFeedCreate, ThreatFeedUpdate, ThreatFeedResponse, ThreatFeedListResponse,
+    FeedSyncResponse, FeedTestResponse, FeedSyncHistoryResponse,
 )
 from src.services.threat_intel_service import ThreatIntelService
 
@@ -448,6 +450,173 @@ async def get_stats(
     return await service.get_stats()
 
 
+# ============== Feed Management ==============
+
+@router.get("/feeds", response_model=ThreatFeedListResponse, summary="List threat feeds")
+async def list_feeds(
+    is_enabled: Optional[bool] = Query(None, description="Filter by enabled status"),
+    feed_type: Optional[str] = Query(None, description="Filter by feed type"),
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """
+    List all configured threat intelligence feeds.
+    """
+    service = ThreatIntelService(db)
+    feeds, total = await service.list_feeds(is_enabled=is_enabled, feed_type=feed_type)
+    return ThreatFeedListResponse(
+        total=total,
+        feeds=[_feed_to_response(f) for f in feeds]
+    )
+
+
+@router.post("/feeds", response_model=ThreatFeedResponse, status_code=status.HTTP_201_CREATED, summary="Create threat feed")
+async def create_feed(
+    data: ThreatFeedCreate,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """
+    Create a new threat intelligence feed configuration.
+    """
+    service = ThreatIntelService(db)
+    feed = await service.create_feed(data)
+    return _feed_to_response(feed)
+
+
+@router.get("/feeds/{feed_id}", response_model=ThreatFeedResponse, summary="Get threat feed")
+async def get_feed(
+    feed_id: str,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """
+    Get a specific threat feed by ID.
+    """
+    service = ThreatIntelService(db)
+    feed = await service.get_feed(feed_id)
+    if not feed:
+        raise HTTPException(status_code=404, detail="Feed not found")
+    return _feed_to_response(feed)
+
+
+@router.patch("/feeds/{feed_id}", response_model=ThreatFeedResponse, summary="Update threat feed")
+async def update_feed(
+    feed_id: str,
+    data: ThreatFeedUpdate,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """
+    Update a threat feed configuration.
+    """
+    service = ThreatIntelService(db)
+    feed = await service.update_feed(feed_id, data)
+    if not feed:
+        raise HTTPException(status_code=404, detail="Feed not found")
+    return _feed_to_response(feed)
+
+
+@router.delete("/feeds/{feed_id}", status_code=status.HTTP_204_NO_CONTENT, summary="Delete threat feed")
+async def delete_feed(
+    feed_id: str,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """
+    Delete a threat feed.
+    """
+    service = ThreatIntelService(db)
+    deleted = await service.delete_feed(feed_id)
+    if not deleted:
+        raise HTTPException(status_code=404, detail="Feed not found")
+
+
+@router.post("/feeds/{feed_id}/sync", response_model=FeedSyncResponse, summary="Sync threat feed")
+async def sync_feed(
+    feed_id: str,
+    background: bool = Query(False, description="Run sync in background"),
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """
+    Manually trigger a sync for a threat feed.
+
+    Set background=true to run the sync asynchronously via Celery.
+    """
+    service = ThreatIntelService(db)
+    feed = await service.get_feed(feed_id)
+    if not feed:
+        raise HTTPException(status_code=404, detail="Feed not found")
+
+    if background:
+        from src.tasks.cti_tasks import sync_threat_feed
+        task = sync_threat_feed.delay(feed_id)
+        return FeedSyncResponse(
+            feed_id=feed_id,
+            feed_type=feed.feed_type,
+            success=True,
+            iocs_fetched=0,
+            iocs_new=0,
+            iocs_updated=0,
+            errors=[],
+            warnings=[f"Sync started in background. Task ID: {task.id}"],
+        )
+
+    result = await service.sync_feed(feed_id)
+    return result
+
+
+@router.post("/feeds/{feed_id}/test", response_model=FeedTestResponse, summary="Test feed connection")
+async def test_feed_connection(
+    feed_id: str,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """
+    Test connection to a threat feed.
+    """
+    service = ThreatIntelService(db)
+    feed = await service.get_feed(feed_id)
+    if not feed:
+        raise HTTPException(status_code=404, detail="Feed not found")
+
+    try:
+        success = await service.test_feed_connection(feed_id)
+        return FeedTestResponse(
+            success=success,
+            message="Connection successful" if success else "Connection failed",
+            feed_type=feed.feed_type,
+            feed_id=feed_id,
+        )
+    except Exception as e:
+        return FeedTestResponse(
+            success=False,
+            message=str(e),
+            feed_type=feed.feed_type,
+            feed_id=feed_id,
+        )
+
+
+@router.get("/feeds/{feed_id}/sync-history", response_model=List[FeedSyncHistoryResponse], summary="Get feed sync history")
+async def get_feed_sync_history(
+    feed_id: str,
+    limit: int = Query(10, ge=1, le=100),
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """
+    Get sync history for a threat feed.
+    """
+    service = ThreatIntelService(db)
+    feed = await service.get_feed(feed_id)
+    if not feed:
+        raise HTTPException(status_code=404, detail="Feed not found")
+
+    history = await service.get_feed_sync_history(feed_id, limit)
+    return history
+
+
 # ============== Helper Functions ==============
 
 def _ioc_to_response(ioc) -> IOCResponse:
@@ -521,4 +690,23 @@ def _campaign_to_response(campaign) -> CampaignResponse:
         ioc_count=getattr(campaign, 'ioc_count', 0) or 0,
         actor_count=getattr(campaign, 'actor_count', 0) or 0,
         created_at=campaign.created_at,
+    )
+
+
+def _feed_to_response(feed) -> ThreatFeedResponse:
+    """Convert ThreatFeed model to response schema."""
+    return ThreatFeedResponse(
+        id=str(feed.id),
+        name=feed.name,
+        feed_type=feed.feed_type,
+        url=feed.url,
+        is_enabled=feed.is_enabled,
+        sync_interval_minutes=feed.sync_interval_minutes,
+        last_sync=feed.last_sync,
+        last_sync_status=feed.last_sync_status,
+        last_sync_count=feed.last_sync_count,
+        ioc_types=feed.ioc_types or [],
+        min_confidence=feed.min_confidence,
+        created_at=feed.created_at,
+        updated_at=feed.updated_at,
     )
