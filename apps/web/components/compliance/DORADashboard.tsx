@@ -6,15 +6,17 @@ import {
   TrendingUp,
   FileText,
   Shield,
-  ShieldAlert,
   ShieldCheck,
-  ShieldX,
   AlertTriangle,
   CheckCircle,
   Clock,
   Download,
   ArrowRight,
-  Building2,
+  Landmark,
+  Users,
+  TestTube,
+  Share2,
+  ShieldAlert,
 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -25,25 +27,13 @@ import { useAuthStore } from "@/stores/auth-store";
 interface DashboardStats {
   total_assessments: number;
   completed_assessments: number;
+  in_progress_assessments: number;
+  draft_assessments: number;
   average_score: number;
   total_gaps: number;
   critical_gaps: number;
-  by_status: {
-    draft: number;
-    in_progress: number;
-    completed: number;
-    archived: number;
-  };
-  by_entity_type: {
-    essential: number;
-    important: number;
-    out_of_scope: number;
-  };
-  by_sector: Array<{
-    sector: string;
-    count: number;
-    avg_score: number;
-  }>;
+  by_entity_type: Record<string, number>;
+  pillar_scores: Record<string, number>;
   recent_assessments: Array<{
     id: string;
     name: string;
@@ -66,20 +56,41 @@ const STATUS_CONFIG = {
   archived: { label: "Archived", color: "bg-gray-100 text-gray-600", icon: FileText },
 };
 
-const ENTITY_TYPE_CONFIG = {
-  essential: { label: "Essential", color: "text-red-600", bgColor: "bg-red-100" },
-  important: { label: "Important", color: "text-yellow-600", bgColor: "bg-yellow-100" },
-  out_of_scope: { label: "Out of Scope", color: "text-gray-500", bgColor: "bg-gray-100" },
+const PILLAR_CONFIG: Record<string, { label: string; icon: React.ElementType; color: string }> = {
+  ict_risk_management: { label: "ICT Risk Management", icon: ShieldCheck, color: "text-blue-600" },
+  incident_reporting: { label: "Incident Reporting", icon: AlertTriangle, color: "text-orange-600" },
+  resilience_testing: { label: "Resilience Testing", icon: TestTube, color: "text-purple-600" },
+  third_party_risk: { label: "Third-Party Risk", icon: Users, color: "text-green-600" },
+  information_sharing: { label: "Information Sharing", icon: Share2, color: "text-cyan-600" },
 };
 
-export function NIS2Dashboard() {
+const ENTITY_TYPE_LABELS: Record<string, string> = {
+  credit_institution: "Credit Institution",
+  investment_firm: "Investment Firm",
+  payment_institution: "Payment Institution",
+  e_money_institution: "E-Money Institution",
+  insurance_undertaking: "Insurance Undertaking",
+  reinsurance_undertaking: "Reinsurance Undertaking",
+  ucits_manager: "UCITS Manager",
+  aifm: "AIFM",
+  ccp: "Central Counterparty",
+  csd: "Central Securities Depository",
+  trading_venue: "Trading Venue",
+  casp: "Crypto-Asset Service Provider",
+  crowdfunding: "Crowdfunding Provider",
+  cra: "Credit Rating Agency",
+  pension_fund: "Pension Fund",
+  ict_provider: "ICT Service Provider",
+};
+
+export function DORADashboard() {
   const { token } = useAuthStore();
 
   const { data: stats, isLoading } = useQuery<DashboardStats>({
-    queryKey: ["nis2-dashboard"],
+    queryKey: ["dora-dashboard"],
     queryFn: async () => {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
-      const response = await fetch(`${apiUrl}/api/v1/nis2/dashboard`, {
+      const response = await fetch(`${apiUrl}/api/v1/dora/dashboard`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!response.ok) throw new Error("Failed to fetch dashboard stats");
@@ -97,13 +108,16 @@ export function NIS2Dashboard() {
 
     if (format === "json") {
       content = JSON.stringify(stats, null, 2);
-      filename = `nis2-dashboard-${new Date().toISOString().split("T")[0]}.json`;
+      filename = `dora-dashboard-${new Date().toISOString().split("T")[0]}.json`;
       mimeType = "application/json";
     } else {
-      const headers = ["Sector", "Assessment Count", "Average Score"];
-      const rows = stats.by_sector.map((s) => [s.sector, s.count, s.avg_score]);
+      const headers = ["Pillar", "Average Score"];
+      const rows = Object.entries(stats.pillar_scores).map(([pillar, score]) => [
+        PILLAR_CONFIG[pillar]?.label || pillar,
+        score,
+      ]);
       content = [headers.join(","), ...rows.map((r) => r.join(","))].join("\n");
-      filename = `nis2-dashboard-${new Date().toISOString().split("T")[0]}.csv`;
+      filename = `dora-dashboard-${new Date().toISOString().split("T")[0]}.csv`;
       mimeType = "text/csv";
     }
 
@@ -129,10 +143,17 @@ export function NIS2Dashboard() {
   if (!stats) return null;
 
   const getScoreColor = (score: number) => {
-    if (score >= 80) return "text-green-600";
-    if (score >= 60) return "text-yellow-600";
-    if (score >= 40) return "text-orange-600";
+    if (score >= 85) return "text-green-600";
+    if (score >= 70) return "text-lime-600";
+    if (score >= 50) return "text-yellow-600";
     return "text-red-600";
+  };
+
+  const getScoreBadge = (score: number) => {
+    if (score >= 85) return { label: "Fully Compliant", color: "bg-green-100 text-green-800" };
+    if (score >= 70) return { label: "Largely Compliant", color: "bg-lime-100 text-lime-800" };
+    if (score >= 50) return { label: "Partially Compliant", color: "bg-yellow-100 text-yellow-800" };
+    return { label: "Non-Compliant", color: "bg-red-100 text-red-800" };
   };
 
   return (
@@ -149,6 +170,11 @@ export function NIS2Dashboard() {
               {stats.average_score}%
             </div>
             <Progress value={stats.average_score} className="mt-2 h-2" />
+            {stats.average_score > 0 && (
+              <Badge className={`mt-2 ${getScoreBadge(stats.average_score).color}`}>
+                {getScoreBadge(stats.average_score).label}
+              </Badge>
+            )}
           </CardContent>
         </Card>
 
@@ -160,20 +186,7 @@ export function NIS2Dashboard() {
           <CardContent>
             <div className="text-2xl font-bold">{stats.total_assessments}</div>
             <p className="text-xs text-muted-foreground">
-              {stats.completed_assessments} completed
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Essential</CardTitle>
-            <ShieldAlert className="h-4 w-4 text-red-600" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-red-600">{stats.by_entity_type.essential}</div>
-            <p className="text-xs text-muted-foreground">
-              entities classified
+              {stats.completed_assessments} completed, {stats.in_progress_assessments} in progress
             </p>
           </CardContent>
         </Card>
@@ -186,20 +199,35 @@ export function NIS2Dashboard() {
           <CardContent>
             <div className="text-2xl font-bold text-yellow-600">{stats.total_gaps}</div>
             <p className="text-xs text-muted-foreground">
-              {stats.critical_gaps} critical
+              {stats.critical_gaps} critical priority
             </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Important</CardTitle>
-            <Shield className="h-4 w-4 text-yellow-600" />
+            <CardTitle className="text-sm font-medium">Critical Gaps</CardTitle>
+            <ShieldAlert className="h-4 w-4 text-red-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-yellow-600">{stats.by_entity_type.important}</div>
+            <div className="text-2xl font-bold text-red-600">{stats.critical_gaps}</div>
             <p className="text-xs text-muted-foreground">
-              entities classified
+              require immediate attention
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Entity Types</CardTitle>
+            <Landmark className="h-4 w-4 text-indigo-600" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-indigo-600">
+              {Object.keys(stats.by_entity_type).length}
+            </div>
+            <p className="text-xs text-muted-foreground">
+              covered in assessments
             </p>
           </CardContent>
         </Card>
@@ -217,6 +245,32 @@ export function NIS2Dashboard() {
         </Button>
       </div>
 
+      {/* Pillar Scores */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Compliance by Pillar</CardTitle>
+          <CardDescription>Average scores across DORA&apos;s 5 pillars</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid gap-4 md:grid-cols-5">
+            {Object.entries(PILLAR_CONFIG).map(([key, config]) => {
+              const score = stats.pillar_scores[key] || 0;
+              const Icon = config.icon;
+              return (
+                <div key={key} className="text-center p-4 rounded-lg border">
+                  <Icon className={`h-8 w-8 mx-auto mb-2 ${config.color}`} />
+                  <p className="text-xs font-medium mb-1">{config.label}</p>
+                  <p className={`text-2xl font-bold ${getScoreColor(score)}`}>
+                    {score}%
+                  </p>
+                  <Progress value={score} className="mt-2 h-1" />
+                </div>
+              );
+            })}
+          </div>
+        </CardContent>
+      </Card>
+
       <div className="grid gap-6 md:grid-cols-2">
         {/* Status Distribution */}
         <Card>
@@ -226,20 +280,24 @@ export function NIS2Dashboard() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {Object.entries(stats.by_status).map(([status, count]) => {
-                const config = STATUS_CONFIG[status as keyof typeof STATUS_CONFIG];
+              {[
+                { key: "draft", value: stats.draft_assessments },
+                { key: "in_progress", value: stats.in_progress_assessments },
+                { key: "completed", value: stats.completed_assessments },
+              ].map(({ key, value }) => {
+                const config = STATUS_CONFIG[key as keyof typeof STATUS_CONFIG];
                 const percentage = stats.total_assessments > 0
-                  ? (count / stats.total_assessments) * 100
+                  ? (value / stats.total_assessments) * 100
                   : 0;
 
                 return (
-                  <div key={status} className="space-y-2">
+                  <div key={key} className="space-y-2">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <Badge className={config.color}>{config.label}</Badge>
                       </div>
                       <span className="text-sm font-medium">
-                        {count} ({percentage.toFixed(0)}%)
+                        {value} ({percentage.toFixed(0)}%)
                       </span>
                     </div>
                     <Progress value={percentage} className="h-2" />
@@ -253,86 +311,52 @@ export function NIS2Dashboard() {
         {/* Entity Type Distribution */}
         <Card>
           <CardHeader>
-            <CardTitle>Entity Classification</CardTitle>
-            <CardDescription>Distribution by NIS2 entity type</CardDescription>
+            <CardTitle>Entity Types</CardTitle>
+            <CardDescription>Financial entities assessed under DORA</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              {Object.entries(stats.by_entity_type).map(([type, count]) => {
-                const config = ENTITY_TYPE_CONFIG[type as keyof typeof ENTITY_TYPE_CONFIG];
-                const percentage = stats.total_assessments > 0
-                  ? (count / stats.total_assessments) * 100
-                  : 0;
+            {Object.keys(stats.by_entity_type).length > 0 ? (
+              <div className="space-y-3">
+                {Object.entries(stats.by_entity_type).slice(0, 6).map(([type, count]) => {
+                  const percentage = stats.total_assessments > 0
+                    ? (count / stats.total_assessments) * 100
+                    : 0;
 
-                return (
-                  <div key={type} className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <div className={`w-3 h-3 rounded-full ${config.bgColor}`} />
-                        <span className={`font-medium ${config.color}`}>{config.label}</span>
+                  return (
+                    <div key={type} className="space-y-1">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm font-medium">
+                          {ENTITY_TYPE_LABELS[type] || type.replace(/_/g, " ")}
+                        </span>
+                        <span className="text-sm text-muted-foreground">
+                          {count} ({percentage.toFixed(0)}%)
+                        </span>
                       </div>
-                      <span className="text-sm font-medium">
-                        {count} ({percentage.toFixed(0)}%)
-                      </span>
+                      <Progress value={percentage} className="h-1" />
                     </div>
-                    <Progress value={percentage} className="h-2" />
-                  </div>
-                );
-              })}
-            </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <p className="text-sm text-muted-foreground">
+                No entity types recorded yet. Complete assessments to see distribution.
+              </p>
+            )}
           </CardContent>
         </Card>
       </div>
-
-      {/* Sector Breakdown */}
-      {stats.by_sector.length > 0 && (
-        <Card>
-          <CardHeader>
-            <CardTitle>Assessments by Sector</CardTitle>
-            <CardDescription>Breakdown of assessments across NIS2 sectors</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {stats.by_sector.map((sector) => (
-                <div key={sector.sector} className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Building2 className="h-4 w-4 text-muted-foreground" />
-                      <span className="font-medium text-sm">
-                        {sector.sector.replace(/_/g, " ")}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-4 text-sm">
-                      <span className="text-muted-foreground">
-                        {sector.count} assessment{sector.count !== 1 ? "s" : ""}
-                      </span>
-                      <span className={`font-bold ${getScoreColor(sector.avg_score)}`}>
-                        {sector.avg_score}%
-                      </span>
-                    </div>
-                  </div>
-                  <Progress value={sector.avg_score} className="h-2" />
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      )}
 
       {/* Recent Assessments */}
       {stats.recent_assessments.length > 0 && (
         <Card>
           <CardHeader>
             <CardTitle>Recent Assessments</CardTitle>
-            <CardDescription>Latest NIS2 assessments</CardDescription>
+            <CardDescription>Latest DORA compliance assessments</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               {stats.recent_assessments.map((assessment) => {
                 const statusConfig = STATUS_CONFIG[assessment.status as keyof typeof STATUS_CONFIG] || STATUS_CONFIG.draft;
-                const entityConfig = assessment.entity_type
-                  ? ENTITY_TYPE_CONFIG[assessment.entity_type as keyof typeof ENTITY_TYPE_CONFIG]
-                  : null;
 
                 return (
                   <div
@@ -346,9 +370,9 @@ export function NIS2Dashboard() {
                           <Badge className={statusConfig.color} variant="secondary">
                             {statusConfig.label}
                           </Badge>
-                          {entityConfig && (
-                            <Badge variant="outline" className={entityConfig.color}>
-                              {entityConfig.label}
+                          {assessment.entity_type && (
+                            <Badge variant="outline">
+                              {ENTITY_TYPE_LABELS[assessment.entity_type] || assessment.entity_type}
                             </Badge>
                           )}
                         </div>
@@ -360,7 +384,7 @@ export function NIS2Dashboard() {
                           {assessment.overall_score}%
                         </span>
                       )}
-                      <Link href={`/compliance/regulatory/nis2/${assessment.id}`}>
+                      <Link href={`/compliance/regulatory/dora/${assessment.id}`}>
                         <Button variant="ghost" size="sm">
                           <ArrowRight className="h-4 w-4" />
                         </Button>
@@ -402,29 +426,35 @@ export function NIS2Dashboard() {
         </Card>
       )}
 
-      {/* NIS2 Info */}
+      {/* DORA Info */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-sm">About NIS2 Directive</CardTitle>
+          <CardTitle className="text-sm">About DORA (EU 2022/2554)</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-3 gap-4 text-sm">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
             <div>
-              <span className="font-medium text-red-600">Essential Entities</span>
+              <span className="font-medium text-blue-600">5 Pillars</span>
               <p className="text-muted-foreground text-xs">
-                Annex I sectors: Energy, Transport, Banking, Health, Digital Infrastructure, etc.
+                ICT Risk, Incident Reporting, Testing, Third-Party, Information Sharing
               </p>
             </div>
             <div>
-              <span className="font-medium text-yellow-600">Important Entities</span>
+              <span className="font-medium text-green-600">28 Requirements</span>
               <p className="text-muted-foreground text-xs">
-                Annex II sectors: Postal, Waste, Food, Manufacturing, Digital Providers, etc.
+                Covering Articles 5-45 of the regulation
               </p>
             </div>
             <div>
-              <span className="font-medium">Deadline</span>
+              <span className="font-medium text-purple-600">20+ Entity Types</span>
               <p className="text-muted-foreground text-xs">
-                Member states must transpose NIS2 by October 17, 2024
+                From credit institutions to crypto-asset providers
+              </p>
+            </div>
+            <div>
+              <span className="font-medium text-red-600">Deadline</span>
+              <p className="text-muted-foreground text-xs">
+                Application date: January 17, 2025
               </p>
             </div>
           </div>

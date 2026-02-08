@@ -157,7 +157,7 @@ export default function ISO27001Page() {
       setNewAssessment({ name: "", description: "" });
       // Navigate to the new assessment wizard
       if (data && typeof data === 'object' && 'id' in data) {
-        router.push(`/compliance/iso27001/${data.id}`);
+        router.push(`/compliance/frameworks/iso27001/${data.id}`);
       }
     },
   });
@@ -394,7 +394,7 @@ export default function ISO27001Page() {
                       <div
                         key={assessment.id}
                         className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors"
-                        onClick={() => router.push(`/compliance/iso27001/${assessment.id}`)}
+                        onClick={() => router.push(`/compliance/frameworks/iso27001/${assessment.id}`)}
                       >
                         <div className="space-y-1">
                           <div className="flex items-center gap-2">
@@ -501,7 +501,7 @@ export default function ISO27001Page() {
                               </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
-                              <DropdownMenuItem onClick={() => router.push(`/compliance/iso27001/${assessment.id}`)}>
+                              <DropdownMenuItem onClick={() => router.push(`/compliance/frameworks/iso27001/${assessment.id}`)}>
                                 <Eye className="h-4 w-4 mr-2" />
                                 Open Assessment
                               </DropdownMenuItem>

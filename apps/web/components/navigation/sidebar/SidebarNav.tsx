@@ -13,6 +13,7 @@ import {
   ShieldCheck,
   Building,
   Globe,
+  Landmark,
   RefreshCw,
   FileText,
   GraduationCap,
@@ -61,9 +62,11 @@ export function SidebarNav() {
 
       {/* Compliance */}
       <SidebarNavGroup id="compliance" label="Compliance">
-        <SidebarNavItem href="/compliance/iso27001" icon={ShieldCheck} label={t("nav.iso27001")} />
-        <SidebarNavItem href="/compliance/bsi" icon={Building} label={t("nav.bsi")} />
-        <SidebarNavItem href="/compliance/nis2" icon={Globe} label={t("nav.nis2")} />
+        <SidebarNavItem href="/compliance" icon={Scale} label={t("nav.complianceHub")} />
+        <SidebarNavItem href="/compliance/regulatory/nis2" icon={Globe} label={t("nav.nis2")} />
+        <SidebarNavItem href="/compliance/regulatory/dora" icon={Landmark} label={t("nav.dora")} />
+        <SidebarNavItem href="/compliance/frameworks/iso27001" icon={ShieldCheck} label={t("nav.iso27001")} />
+        <SidebarNavItem href="/compliance/frameworks/bsi" icon={Building} label={t("nav.bsi")} />
         <SidebarNavItem href="/bcm" icon={RefreshCw} label={t("nav.bcm")} />
       </SidebarNavGroup>
 

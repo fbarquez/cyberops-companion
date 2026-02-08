@@ -32,6 +32,9 @@ import {
   Route,
   Building,
   Globe,
+  Landmark,
+  FileCheck,
+  TestTube,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useUIStore } from "@/stores/ui-store";
@@ -48,14 +51,33 @@ const navItems = [
   { href: "/attack-paths", icon: Route, labelKey: "nav.attackPaths" },
   { href: "/cmdb", icon: Server, labelKey: "nav.cmdb" },
   { href: "/tprm", icon: Building2, labelKey: "nav.tprm" },
+  { href: "/compliance", icon: Scale, labelKey: "nav.complianceHub" },
   {
-    label: "Compliance",
-    labelKey: "nav.compliance",
+    label: "Regulatory",
+    labelKey: "nav.regulatory",
     children: [
-      { href: "/compliance/iso27001", icon: ShieldCheck, labelKey: "nav.iso27001" },
-      { href: "/compliance/bsi", icon: Building, labelKey: "nav.bsi" },
-      { href: "/compliance/nis2", icon: Globe, labelKey: "nav.nis2" },
-      { href: "/bcm", icon: RefreshCw, labelKey: "nav.bcm" },
+      { href: "/compliance/regulatory/nis2", icon: Globe, labelKey: "nav.nis2" },
+      { href: "/compliance/regulatory/dora", icon: Landmark, labelKey: "nav.dora" },
+    ],
+  },
+  {
+    label: "Frameworks",
+    labelKey: "nav.frameworks",
+    children: [
+      { href: "/compliance/frameworks/iso27001", icon: ShieldCheck, labelKey: "nav.iso27001" },
+      { href: "/compliance/frameworks/bsi", icon: Building, labelKey: "nav.bsi" },
+    ],
+  },
+  {
+    label: "Assurance",
+    labelKey: "nav.assurance",
+    children: [
+      { href: "/compliance/assurance", icon: FileCheck, labelKey: "nav.assuranceHub" },
+      { href: "/compliance/assurance/evidence", icon: FileText, labelKey: "nav.evidence" },
+      { href: "/compliance/assurance/testing", icon: TestTube, labelKey: "nav.testing" },
+      { href: "/compliance/assurance/audits", icon: ClipboardList, labelKey: "nav.audits" },
+      { href: "/compliance/assurance/bcm", icon: RefreshCw, labelKey: "nav.bcm" },
+      { href: "/compliance/assurance/incidents", icon: AlertTriangle, labelKey: "nav.incidentsShort" },
     ],
   },
   { href: "/documents", icon: FileText, labelKey: "nav.documents" },

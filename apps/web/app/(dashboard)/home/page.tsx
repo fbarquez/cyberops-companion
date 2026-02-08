@@ -102,7 +102,7 @@ export default function HomePage() {
               icon={Shield}
               description="Overall compliance status"
               trend={{ value: 3, direction: "up" }}
-              href="/compliance/iso27001"
+              href="/compliance"
               variant="success"
             />
           </div>

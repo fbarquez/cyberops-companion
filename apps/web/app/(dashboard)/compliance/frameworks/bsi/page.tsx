@@ -337,7 +337,7 @@ function BausteinCard({ baustein }: { baustein: BSIBaustein }) {
   });
 
   return (
-    <Link href={`/compliance/bsi/${encodeURIComponent(baustein.baustein_id)}`}>
+    <Link href={`/compliance/frameworks/bsi/${encodeURIComponent(baustein.baustein_id)}`}>
       <Card className="hover:shadow-md transition-shadow cursor-pointer h-full">
         <CardHeader className="pb-2">
           <div className="flex items-start justify-between">
