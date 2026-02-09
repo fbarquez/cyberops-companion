@@ -1,8 +1,29 @@
 """
 KRITIS (Kritische Infrastrukturen) Compliance Models
 
-Models for German Critical Infrastructure Protection compliance.
-Based on BSI-Gesetz (BSI Act) and BSI-KritisV regulation.
+Official Sources:
+-----------------
+- BSI-Gesetz (BSI Act):
+  https://www.gesetze-im-internet.de/bsig_2009/
+
+- BSI-Kritisverordnung (KRITIS Regulation):
+  https://www.gesetze-im-internet.de/bsi-kritisv/
+
+- BSI KRITIS Overview:
+  https://www.bsi.bund.de/DE/Themen/KRITIS-und-regulierte-Unternehmen/Kritische-Infrastrukturen/kritische-infrastrukturen_node.html
+
+- UP KRITIS (Public-Private Partnership):
+  https://www.bsi.bund.de/DE/Themen/KRITIS-und-regulierte-Unternehmen/UP-KRITIS/up-kritis_node.html
+
+- KRITIS Sector Documentation:
+  https://www.kritis.bund.de/
+
+KRITIS Sectors: Energy, Water, Food, IT/Telecom, Health, Finance, Transport, Government
+
+Thresholds: Defined in BSI-KritisV Annex (e.g., 500,000 people served)
+
+Note: Requirements based on BSI-Gesetz §8a (security measures) and
+BSI-KritisV sector-specific thresholds. Aligned with NIS2 implementation.
 """
 
 import enum

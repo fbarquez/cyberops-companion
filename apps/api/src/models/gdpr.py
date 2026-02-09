@@ -1,8 +1,29 @@
 """
 GDPR Compliance Models
 
-GDPR (General Data Protection Regulation) is the EU regulation on data protection
-and privacy, applicable to all organizations processing personal data of EU residents.
+Official Sources:
+-----------------
+- Regulation (EU) 2016/679 (GDPR):
+  https://eur-lex.europa.eu/eli/reg/2016/679/oj
+
+- European Data Protection Board (EDPB) Guidelines:
+  https://edpb.europa.eu/our-work-tools/general-guidance/gdpr-guidelines-recommendations-best-practices_en
+
+- European Commission GDPR Overview:
+  https://commission.europa.eu/law/law-topic/data-protection_en
+
+- National DPA Resources (examples):
+  - Germany (BfDI): https://www.bfdi.bund.de/
+  - France (CNIL): https://www.cnil.fr/
+  - UK (ICO): https://ico.org.uk/
+
+In Force Since: May 25, 2018
+
+Key Articles: Art. 5 (Principles), Art. 6 (Lawful basis), Art. 12-23 (Data subject rights),
+Art. 24-43 (Controller/Processor obligations), Art. 44-49 (International transfers),
+Art. 82-84 (Remedies, liability, penalties)
+
+Note: Requirements based on GDPR articles and EDPB guidelines.
 """
 
 from enum import Enum

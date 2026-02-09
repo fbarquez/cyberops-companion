@@ -1,7 +1,24 @@
 """
-COBIT 2019 Models
+COBIT 2019 Models - IT Governance Framework assessments.
 
-Data models for COBIT 2019 IT Governance Framework assessments.
+Official Sources:
+-----------------
+- ISACA COBIT 2019 Framework:
+  https://www.isaca.org/resources/cobit
+
+- COBIT 2019 Design Guide:
+  https://www.isaca.org/resources/cobit/cobit-2019-design-guide
+
+- COBIT 2019 Implementation Guide:
+  https://www.isaca.org/resources/cobit/cobit-2019-implementation-guide
+
+- ISACA COBIT Assessment Programme:
+  https://www.isaca.org/credentialing/cobit-certifications
+
+Note: COBIT 2019 is a proprietary framework by ISACA.
+Full documentation requires ISACA membership or purchase.
+Objective names and domains are based on publicly available information.
+Capability levels follow ISO/IEC 33000 (SPICE) model.
 """
 
 from enum import Enum

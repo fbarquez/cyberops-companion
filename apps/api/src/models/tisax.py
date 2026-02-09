@@ -1,8 +1,33 @@
 """
 TISAX Compliance Models
 
-TISAX (Trusted Information Security Assessment Exchange) is the automotive
-industry standard for information security assessment, based on VDA ISA.
+Official Sources:
+-----------------
+- ENX Association (TISAX Operator):
+  https://www.enx.com/tisax/
+
+- TISAX Participant Handbook:
+  https://www.enx.com/tisax/tisax-documents/
+
+- VDA ISA (Information Security Assessment) Catalog:
+  https://www.vda.de/en/topics/information-security
+
+- TISAX Assessment Providers:
+  https://www.enx.com/tisax/tisax-assessment-providers/
+
+- TISAX Portal (Registration Required):
+  https://portal.enx.com/
+
+TISAX Levels:
+- AL1: Normal protection needs
+- AL2: High protection needs
+- AL3: Very high protection needs
+
+Assessment Labels: Information Security, Prototype Protection, Data Protection
+
+Note: TISAX is managed by ENX Association. VDA ISA catalog is the assessment
+basis. Full catalog requires VDA membership. Label structure based on publicly
+available TISAX documentation.
 """
 
 from enum import Enum

@@ -1,4 +1,25 @@
-"""DORA (Digital Operational Resilience Act) compliance models."""
+"""
+DORA (Digital Operational Resilience Act) compliance models.
+
+Official Sources:
+-----------------
+- Regulation (EU) 2022/2554 (DORA):
+  https://eur-lex.europa.eu/eli/reg/2022/2554/oj
+
+- DORA Regulatory Technical Standards (RTS):
+  https://www.eba.europa.eu/regulation-and-policy/operational-resilience
+
+- European Commission DORA Overview:
+  https://finance.ec.europa.eu/digital-finance/digital-operational-resilience-act-dora_en
+
+- ESAs Joint Committee DORA Resources:
+  https://www.eiopa.europa.eu/browse/digitalisation-and-cyber/dora_en
+
+Application Date: January 17, 2025
+
+Note: Requirements are based on Articles 5-45 of the regulation.
+Weights and sub-requirements are interpretations for assessment purposes.
+"""
 import enum
 from datetime import datetime
 from typing import Optional

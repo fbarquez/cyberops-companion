@@ -1,7 +1,31 @@
 """
 NIST Cybersecurity Framework 2.0 Models
 
-Database models and reference data for NIST CSF assessments.
+Official Sources:
+-----------------
+- NIST Cybersecurity Framework 2.0 (February 2024):
+  https://www.nist.gov/cyberframework
+
+- CSF 2.0 Core (Excel/JSON):
+  https://www.nist.gov/document/csf-20-core-spreadsheet
+
+- NIST CSF 2.0 Reference Tool:
+  https://csf.tools/
+
+- NIST SP 800-53 Rev. 5 (Security Controls):
+  https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final
+
+- NIST Informative References:
+  https://www.nist.gov/cyberframework/informative-references
+
+CSF 2.0 Released: February 26, 2024
+
+Functions: GOVERN (new), IDENTIFY, PROTECT, DETECT, RESPOND, RECOVER
+Categories: 22 total across 6 functions
+Subcategories: 106 total
+
+Note: This is the public US government framework. Control mappings and
+implementation tiers are based on official NIST publications.
 """
 
 import uuid

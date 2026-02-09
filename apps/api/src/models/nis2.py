@@ -1,4 +1,28 @@
-"""NIS2 Directive compliance models."""
+"""
+NIS2 Directive compliance models.
+
+Official Sources:
+-----------------
+- Directive (EU) 2022/2555 (NIS2):
+  https://eur-lex.europa.eu/eli/dir/2022/2555/oj
+
+- ENISA NIS2 Resources:
+  https://www.enisa.europa.eu/topics/cybersecurity-policy/nis-directive-new
+
+- European Commission NIS2 Overview:
+  https://digital-strategy.ec.europa.eu/en/policies/nis2-directive
+
+- NIS Cooperation Group Guidelines:
+  https://digital-strategy.ec.europa.eu/en/policies/nis-cooperation-group
+
+Transposition Deadline: October 17, 2024
+Application: From October 18, 2024
+
+Sectors: Annex I (Essential) and Annex II (Important) entities.
+Measures: Article 21 cybersecurity risk-management measures.
+
+Note: Requirements based on Article 21. Classification based on Annexes I/II.
+"""
 import enum
 from datetime import datetime
 from typing import Optional, List

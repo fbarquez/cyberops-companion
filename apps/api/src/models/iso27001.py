@@ -1,7 +1,29 @@
 """
 ISO 27001:2022 Compliance Models.
 
-Database models for ISO 27001:2022 controls, assessments, and Statement of Applicability.
+Official Sources:
+-----------------
+- ISO/IEC 27001:2022 (Purchase required):
+  https://www.iso.org/standard/27001
+
+- ISO/IEC 27002:2022 (Control guidance):
+  https://www.iso.org/standard/75652.html
+
+- ISO 27001 Certification Bodies:
+  https://www.iso.org/certification.html
+
+- Free Resources:
+  - ISO 27001 Overview: https://www.iso.org/isoiec-27001-information-security.html
+  - ISO 27000 Family: https://www.iso.org/iso-27001-information-security.html
+
+2022 Edition Changes:
+- Controls reorganized into 4 themes (Organizational, People, Physical, Technological)
+- Annex A: 93 controls (reduced from 114 in 2013 edition)
+- 11 new controls added, several merged
+
+Note: ISO standards are copyrighted and must be purchased from ISO or national bodies.
+Control names and structure used here are based on publicly available information.
+Full implementation guidance requires the official ISO/IEC 27002:2022 document.
 """
 from datetime import datetime
 from typing import Optional, List

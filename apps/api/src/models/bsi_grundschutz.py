@@ -1,7 +1,30 @@
-"""BSI IT-Grundschutz 2023 models.
+"""
+BSI IT-Grundschutz 2023 Models
 
-Implements the complete BSI IT-Grundschutz catalog with 111 Bausteine,
-~1000+ Anforderungen (requirements), and tenant-scoped compliance tracking.
+Official Sources:
+-----------------
+- BSI IT-Grundschutz Kompendium (Free Download):
+  https://www.bsi.bund.de/DE/Themen/Unternehmen-und-Organisationen/Standards-und-Zertifizierung/IT-Grundschutz/IT-Grundschutz-Kompendium/it-grundschutz-kompendium_node.html
+
+- BSI IT-Grundschutz Standards:
+  https://www.bsi.bund.de/DE/Themen/Unternehmen-und-Organisationen/Standards-und-Zertifizierung/IT-Grundschutz/BSI-Standards/bsi-standards_node.html
+
+- BSI Standard 200-1: ISMS
+- BSI Standard 200-2: IT-Grundschutz Methodology
+- BSI Standard 200-3: Risk Analysis
+- BSI Standard 200-4: Business Continuity Management
+
+- IT-Grundschutz Profile:
+  https://www.bsi.bund.de/DE/Themen/Unternehmen-und-Organisationen/Standards-und-Zertifizierung/IT-Grundschutz/IT-Grundschutz-Profile/it-grundschutz-profile_node.html
+
+- GSTOOL (BSI Legacy Tool):
+  https://www.bsi.bund.de/DE/Themen/Unternehmen-und-Organisationen/Standards-und-Zertifizierung/IT-Grundschutz/GSTOOL/gstool_node.html
+
+Edition 2023: 111 Bausteine (building blocks), ~1000+ Anforderungen (requirements)
+Schichten: ISMS, ORP, CON, OPS, DER, APP, SYS, IND, NET, INF
+
+Note: BSI IT-Grundschutz Kompendium is publicly available in German.
+Bausteine and Anforderungen are transcribed from official BSI publications.
 """
 import enum
 from datetime import datetime
