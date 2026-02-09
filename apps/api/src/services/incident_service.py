@@ -17,7 +17,7 @@ class IncidentService:
     def __init__(self, db: AsyncSession):
         self.db = db
 
-    async def create(self, data: IncidentCreate, user_id: str) -> Incident:
+    async def create(self, data: IncidentCreate, user_id: str, tenant_id: str) -> Incident:
         """Create a new incident."""
         incident = Incident(
             id=str(uuid4()),
@@ -31,6 +31,7 @@ class IncidentService:
             analyst_email=data.analyst_email,
             detected_at=data.detected_at,
             created_by=user_id,
+            tenant_id=tenant_id,
             current_phase=IRPhase.DETECTION.value,
             phase_history={IRPhase.DETECTION.value: datetime.utcnow().isoformat()},
         )
@@ -117,7 +118,7 @@ class IncidentService:
         return True
 
     async def add_affected_system(
-        self, incident_id: str, data: AffectedSystemCreate
+        self, incident_id: str, data: AffectedSystemCreate, tenant_id: str
     ) -> Optional[AffectedSystem]:
         """Add an affected system to an incident."""
         incident = await self.get_by_id(incident_id)
@@ -132,6 +133,7 @@ class IncidentService:
             department=data.department,
             criticality=data.criticality,
             notes=data.notes,
+            tenant_id=tenant_id,
         )
         self.db.add(system)
         await self.db.flush()

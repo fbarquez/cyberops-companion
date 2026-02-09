@@ -1,7 +1,7 @@
 """Decision tree endpoints."""
 from fastapi import APIRouter, HTTPException, status, Query
 
-from src.api.deps import DBSession, CurrentUser
+from src.api.deps import DBSession, CurrentUser, UserWithTenant
 from src.schemas.decision import (
     DecisionTreeResponse, DecisionNodeResponse, DecisionMake,
     DecisionPathResponse, DecisionHistoryResponse,
@@ -106,9 +106,10 @@ async def make_decision(
     tree_id: str,
     data: DecisionMake,
     db: DBSession,
-    current_user: CurrentUser,
+    user_context: UserWithTenant,
 ):
     """Make a decision in the tree."""
+    current_user, context = user_context
     decision_service = DecisionService(db)
     evidence_service = EvidenceService(db)
 
@@ -140,6 +141,7 @@ async def make_decision(
             user_id=current_user.id,
             operator_name=current_user.full_name,
             phase=current_node.phase,
+            tenant_id=context.tenant_id,
         )
 
         return path

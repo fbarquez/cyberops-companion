@@ -21,6 +21,7 @@ class EvidenceService:
         data: EvidenceCreate,
         user_id: str,
         operator_name: str,
+        tenant_id: str,
     ) -> EvidenceEntry:
         """
         Create a new evidence entry with hash chain linkage.
@@ -44,6 +45,7 @@ class EvidenceService:
             tags=data.tags or [],
             timestamp=datetime.utcnow(),
             created_by=user_id,
+            tenant_id=tenant_id,
         )
 
         # Finalize with hash chain linkage
@@ -122,6 +124,7 @@ class EvidenceService:
         user_id: str,
         operator_name: str,
         phase: str,
+        tenant_id: str,
     ) -> EvidenceEntry:
         """Log a decision as an evidence entry."""
         data = EvidenceCreate(
@@ -133,7 +136,7 @@ class EvidenceService:
             decision_rationale=rationale,
             tags=["decision", decision_id],
         )
-        return await self.create_entry(incident_id, data, user_id, operator_name)
+        return await self.create_entry(incident_id, data, user_id, operator_name, tenant_id)
 
     async def export_chain(
         self,

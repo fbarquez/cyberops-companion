@@ -24,6 +24,7 @@ os.environ["SECRET_KEY"] = "test-app-secret-key-for-testing-32chars"
 from src.main import app
 from src.db.database import Base, get_db
 from src.models.user import User
+from src.models.organization import Organization, OrganizationMember, OrganizationMemberRole, OrganizationStatus, OrganizationPlan
 from src.core.security import create_access_token
 from src.services.auth_service import AuthService
 
@@ -113,12 +114,33 @@ def sync_client(db_session: AsyncSession) -> Generator[TestClient, None, None]:
 
 
 # =============================================================================
+# Organization Fixtures
+# =============================================================================
+
+@pytest_asyncio.fixture
+async def test_organization(db_session: AsyncSession) -> Organization:
+    """Create a test organization (tenant)."""
+    org = Organization(
+        id=str(uuid4()),
+        name="Test Organization",
+        slug="test-org",
+        status=OrganizationStatus.ACTIVE,
+        plan=OrganizationPlan.PROFESSIONAL,
+        created_at=datetime.now(timezone.utc),
+    )
+    db_session.add(org)
+    await db_session.commit()
+    await db_session.refresh(org)
+    return org
+
+
+# =============================================================================
 # User Fixtures
 # =============================================================================
 
 @pytest_asyncio.fixture
-async def test_user(db_session: AsyncSession) -> User:
-    """Create a test user."""
+async def test_user(db_session: AsyncSession, test_organization: Organization) -> User:
+    """Create a test user with organization membership."""
     from src.models.user import UserRole
     user = User(
         id=str(uuid4()),
@@ -130,14 +152,29 @@ async def test_user(db_session: AsyncSession) -> User:
         created_at=datetime.now(timezone.utc),
     )
     db_session.add(user)
+    await db_session.flush()
+
+    # Create organization membership
+    membership = OrganizationMember(
+        id=str(uuid4()),
+        organization_id=test_organization.id,
+        user_id=user.id,
+        org_role=OrganizationMemberRole.MEMBER,
+        is_default=True,
+        joined_at=datetime.now(timezone.utc),
+    )
+    db_session.add(membership)
     await db_session.commit()
     await db_session.refresh(user)
+
+    # Store tenant_id on user for easy access in tests
+    user.tenant_id = test_organization.id
     return user
 
 
 @pytest_asyncio.fixture
-async def admin_user(db_session: AsyncSession) -> User:
-    """Create an admin test user."""
+async def admin_user(db_session: AsyncSession, test_organization: Organization) -> User:
+    """Create an admin test user with organization membership."""
     from src.models.user import UserRole
     user = User(
         id=str(uuid4()),
@@ -149,14 +186,29 @@ async def admin_user(db_session: AsyncSession) -> User:
         created_at=datetime.now(timezone.utc),
     )
     db_session.add(user)
+    await db_session.flush()
+
+    # Create organization membership as admin
+    membership = OrganizationMember(
+        id=str(uuid4()),
+        organization_id=test_organization.id,
+        user_id=user.id,
+        org_role=OrganizationMemberRole.ADMIN,
+        is_default=True,
+        joined_at=datetime.now(timezone.utc),
+    )
+    db_session.add(membership)
     await db_session.commit()
     await db_session.refresh(user)
+
+    # Store tenant_id on user for easy access in tests
+    user.tenant_id = test_organization.id
     return user
 
 
 @pytest_asyncio.fixture
-async def lead_user(db_session: AsyncSession) -> User:
-    """Create a lead test user."""
+async def lead_user(db_session: AsyncSession, test_organization: Organization) -> User:
+    """Create a lead test user with organization membership."""
     from src.models.user import UserRole
     user = User(
         id=str(uuid4()),
@@ -168,8 +220,23 @@ async def lead_user(db_session: AsyncSession) -> User:
         created_at=datetime.now(timezone.utc),
     )
     db_session.add(user)
+    await db_session.flush()
+
+    # Create organization membership
+    membership = OrganizationMember(
+        id=str(uuid4()),
+        organization_id=test_organization.id,
+        user_id=user.id,
+        org_role=OrganizationMemberRole.MEMBER,
+        is_default=True,
+        joined_at=datetime.now(timezone.utc),
+    )
+    db_session.add(membership)
     await db_session.commit()
     await db_session.refresh(user)
+
+    # Store tenant_id on user for easy access in tests
+    user.tenant_id = test_organization.id
     return user
 
 
@@ -179,20 +246,38 @@ async def lead_user(db_session: AsyncSession) -> User:
 
 @pytest.fixture
 def test_token(test_user: User) -> str:
-    """Create access token for test user."""
-    return create_access_token(data={"sub": test_user.id, "role": test_user.role.value})
+    """Create access token for test user with tenant context."""
+    return create_access_token(data={
+        "sub": test_user.id,
+        "role": test_user.role.value,
+        "tenant_id": test_user.tenant_id,
+        "org_role": "member",
+        "available_tenants": [test_user.tenant_id],
+    })
 
 
 @pytest.fixture
 def admin_token(admin_user: User) -> str:
-    """Create access token for admin user."""
-    return create_access_token(data={"sub": admin_user.id, "role": admin_user.role.value})
+    """Create access token for admin user with tenant context."""
+    return create_access_token(data={
+        "sub": admin_user.id,
+        "role": admin_user.role.value,
+        "tenant_id": admin_user.tenant_id,
+        "org_role": "admin",
+        "available_tenants": [admin_user.tenant_id],
+    })
 
 
 @pytest.fixture
 def lead_token(lead_user: User) -> str:
-    """Create access token for lead user."""
-    return create_access_token(data={"sub": lead_user.id, "role": lead_user.role.value})
+    """Create access token for lead user with tenant context."""
+    return create_access_token(data={
+        "sub": lead_user.id,
+        "role": lead_user.role.value,
+        "tenant_id": lead_user.tenant_id,
+        "org_role": "member",
+        "available_tenants": [lead_user.tenant_id],
+    })
 
 
 def auth_headers(token: str) -> dict:

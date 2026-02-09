@@ -4,7 +4,7 @@ from typing import Optional
 from fastapi import APIRouter, HTTPException, status, Query
 from fastapi.responses import PlainTextResponse
 
-from src.api.deps import DBSession, CurrentUser
+from src.api.deps import DBSession, CurrentUser, UserWithTenant
 from src.models.evidence import EvidenceType
 from src.schemas.evidence import (
     EvidenceCreate, EvidenceResponse, EvidenceChainResponse, ChainVerificationResult,
@@ -24,15 +24,17 @@ async def create_evidence_entry(
     incident_id: str,
     data: EvidenceCreate,
     db: DBSession,
-    current_user: CurrentUser,
+    user_context: UserWithTenant,
 ):
     """Create a new evidence entry with hash chain linkage."""
+    current_user, context = user_context
     service = EvidenceService(db)
     entry = await service.create_entry(
         incident_id=incident_id,
         data=data,
         user_id=current_user.id,
         operator_name=current_user.full_name,
+        tenant_id=context.tenant_id,
     )
     return entry
 

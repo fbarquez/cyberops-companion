@@ -3,7 +3,7 @@ from typing import Optional
 
 from fastapi import APIRouter, HTTPException, status, Query
 
-from src.api.deps import DBSession, CurrentUser, LeadUser
+from src.api.deps import DBSession, CurrentUser, LeadUser, UserWithTenant
 from src.models.incident import IncidentStatus
 from src.schemas.incident import (
     IncidentCreate, IncidentUpdate, IncidentResponse, IncidentList,
@@ -21,11 +21,12 @@ router = APIRouter()
 async def create_incident(
     data: IncidentCreate,
     db: DBSession,
-    current_user: CurrentUser,
+    user_context: UserWithTenant,
 ):
     """Create a new incident."""
+    current_user, context = user_context
     service = IncidentService(db)
-    incident = await service.create(data, current_user.id)
+    incident = await service.create(data, current_user.id, context.tenant_id)
 
     # Log audit action
     audit_service = AuditService(db)
@@ -179,11 +180,12 @@ async def add_affected_system(
     incident_id: str,
     data: AffectedSystemCreate,
     db: DBSession,
-    current_user: CurrentUser,
+    user_context: UserWithTenant,
 ):
     """Add an affected system to an incident."""
+    current_user, context = user_context
     service = IncidentService(db)
-    system = await service.add_affected_system(incident_id, data)
+    system = await service.add_affected_system(incident_id, data, context.tenant_id)
 
     if not system:
         raise HTTPException(
