@@ -12,7 +12,6 @@ from sqlalchemy import (
     ForeignKey, Table, Enum as SQLEnum, JSON
 )
 from sqlalchemy.orm import relationship, Mapped, mapped_column
-from sqlalchemy.dialects.postgresql import ARRAY
 import enum
 
 from src.db.database import Base
@@ -163,11 +162,11 @@ class ConfigurationItem(Base):
     vendor: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
 
     # Compliance
-    compliance_requirements = mapped_column(ARRAY(String), default=[])
+    compliance_requirements = mapped_column(JSON, default=[])
     data_classification: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
 
     # Metadata
-    tags = mapped_column(ARRAY(String), default=[])
+    tags = mapped_column(JSON, default=[])
     custom_attributes = mapped_column(JSON, default={})
 
     # Dates
@@ -218,7 +217,7 @@ class SoftwareItem(Base):
     end_of_support_date: Mapped[Optional[datetime]] = mapped_column(DateTime, nullable=True)
 
     # Metadata
-    tags = mapped_column(ARRAY(String), default=[])
+    tags = mapped_column(JSON, default=[])
 
     # Timestamps
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
@@ -479,7 +478,7 @@ class AssetChange(Base):
     # Before/After state
     previous_state = mapped_column(JSON, default={})
     new_state = mapped_column(JSON, default={})
-    changed_fields = mapped_column(ARRAY(String), default=[])
+    changed_fields = mapped_column(JSON, default=[])
 
     # Change management
     change_ticket: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)

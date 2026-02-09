@@ -11,7 +11,6 @@ from sqlalchemy import (
     ForeignKey, Table, Enum as SQLEnum, JSON
 )
 from sqlalchemy.orm import relationship, Mapped, mapped_column
-from sqlalchemy.dialects.postgresql import ARRAY
 import enum
 
 from src.db.database import Base
@@ -106,8 +105,8 @@ class IOC(Base):
 
     # Metadata
     description: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
-    tags = mapped_column(ARRAY(String), default=[])
-    categories = mapped_column(ARRAY(String), default=[])
+    tags = mapped_column(JSON, default=[])
+    categories = mapped_column(JSON, default=[])
 
     # Source information
     source: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
@@ -122,7 +121,7 @@ class IOC(Base):
     asn: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
 
     # MITRE ATT&CK mapping
-    mitre_techniques = mapped_column(ARRAY(String), default=[])
+    mitre_techniques = mapped_column(JSON, default=[])
 
     # Timestamps
     first_seen: Mapped[Optional[datetime]] = mapped_column(DateTime, nullable=True)
@@ -157,7 +156,7 @@ class ThreatActor(Base):
 
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=lambda: str(uuid4()))
     name: Mapped[str] = mapped_column(String(255), nullable=False, unique=True, index=True)
-    aliases = mapped_column(ARRAY(String), default=[])
+    aliases = mapped_column(JSON, default=[])
 
     # Classification
     motivation = mapped_column(SQLEnum(ActorMotivation), default=ActorMotivation.UNKNOWN)
@@ -167,12 +166,12 @@ class ThreatActor(Base):
     # Details
     description: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     country_of_origin: Mapped[Optional[str]] = mapped_column(String(3), nullable=True)
-    target_sectors = mapped_column(ARRAY(String), default=[])
-    target_countries = mapped_column(ARRAY(String), default=[])
+    target_sectors = mapped_column(JSON, default=[])
+    target_countries = mapped_column(JSON, default=[])
 
     # TTPs (Tactics, Techniques, and Procedures)
-    mitre_techniques = mapped_column(ARRAY(String), default=[])
-    tools_used = mapped_column(ARRAY(String), default=[])
+    mitre_techniques = mapped_column(JSON, default=[])
+    tools_used = mapped_column(JSON, default=[])
 
     # Activity tracking
     first_seen: Mapped[Optional[datetime]] = mapped_column(DateTime, nullable=True)
@@ -215,8 +214,8 @@ class Campaign(Base):
     objectives: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
 
     # Targets
-    target_sectors = mapped_column(ARRAY(String), default=[])
-    target_countries = mapped_column(ARRAY(String), default=[])
+    target_sectors = mapped_column(JSON, default=[])
+    target_countries = mapped_column(JSON, default=[])
 
     # Timeline
     start_date: Mapped[Optional[datetime]] = mapped_column(DateTime, nullable=True)
@@ -224,9 +223,9 @@ class Campaign(Base):
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
 
     # TTPs
-    mitre_techniques = mapped_column(ARRAY(String), default=[])
-    attack_vectors = mapped_column(ARRAY(String), default=[])
-    malware_used = mapped_column(ARRAY(String), default=[])
+    mitre_techniques = mapped_column(JSON, default=[])
+    attack_vectors = mapped_column(JSON, default=[])
+    malware_used = mapped_column(JSON, default=[])
 
     # Impact assessment
     estimated_victims: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
@@ -273,7 +272,7 @@ class ThreatFeed(Base):
     last_sync_count: Mapped[int] = mapped_column(Integer, default=0)
 
     # Filtering
-    ioc_types = mapped_column(ARRAY(String), default=[])
+    ioc_types = mapped_column(JSON, default=[])
     min_confidence: Mapped[float] = mapped_column(Float, default=0.0)
 
     # Timestamps

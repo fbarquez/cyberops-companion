@@ -8,8 +8,9 @@ from typing import Optional, List
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.db.session import get_db
-from src.api.v1.auth import get_current_user, User
+from src.db.database import get_db
+from src.api.deps import get_current_user
+from src.models.user import User
 from src.services.gdpr_service import GDPRAssessmentService
 from src.models.gdpr import GDPRAssessmentStatus
 from src.schemas.gdpr import (

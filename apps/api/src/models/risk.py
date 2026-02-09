@@ -11,7 +11,6 @@ from sqlalchemy import (
     ForeignKey, Table, Enum as SQLEnum, JSON
 )
 from sqlalchemy.orm import relationship, Mapped, mapped_column
-from sqlalchemy.dialects.postgresql import ARRAY
 import enum
 
 from src.db.database import Base
@@ -176,16 +175,16 @@ class Risk(TenantMixin, Base):
     department: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
 
     # Affected Areas
-    affected_assets = mapped_column(ARRAY(String), default=[])
-    affected_processes = mapped_column(ARRAY(String), default=[])
-    affected_data_types = mapped_column(ARRAY(String), default=[])
+    affected_assets = mapped_column(JSON, default=[])
+    affected_processes = mapped_column(JSON, default=[])
+    affected_data_types = mapped_column(JSON, default=[])
 
     # Compliance mapping
-    compliance_frameworks = mapped_column(ARRAY(String), default=[])  # ISO27001, NIST, etc.
-    compliance_controls = mapped_column(ARRAY(String), default=[])
+    compliance_frameworks = mapped_column(JSON, default=[])  # ISO27001, NIST, etc.
+    compliance_controls = mapped_column(JSON, default=[])
 
     # Metadata
-    tags = mapped_column(ARRAY(String), default=[])
+    tags = mapped_column(JSON, default=[])
     external_refs = mapped_column(JSON, default={})
 
     # Review
@@ -248,8 +247,8 @@ class RiskControl(TenantMixin, Base):
     control_owner: Mapped[Optional[str]] = mapped_column(String(36), ForeignKey("users.id"), nullable=True)
 
     # Compliance mapping
-    compliance_frameworks = mapped_column(ARRAY(String), default=[])
-    compliance_control_ids = mapped_column(ARRAY(String), default=[])
+    compliance_frameworks = mapped_column(JSON, default=[])
+    compliance_control_ids = mapped_column(JSON, default=[])
 
     # Timestamps
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)

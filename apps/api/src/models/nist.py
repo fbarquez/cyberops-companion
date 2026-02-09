@@ -12,7 +12,7 @@ from enum import Enum
 from sqlalchemy import Column, String, Text, Integer, Float, Boolean, DateTime, ForeignKey, JSON
 from sqlalchemy.orm import relationship
 
-from src.db.base import Base
+from src.db.database import Base
 
 
 # =============================================================================

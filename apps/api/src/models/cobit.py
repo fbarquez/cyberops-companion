@@ -11,7 +11,7 @@ from dataclasses import dataclass
 from sqlalchemy import Column, String, Integer, Float, Boolean, DateTime, Text, JSON, ForeignKey, Enum as SQLEnum
 from sqlalchemy.orm import relationship
 
-from src.db.base_class import Base
+from src.db.database import Base
 
 
 # =============================================================================
